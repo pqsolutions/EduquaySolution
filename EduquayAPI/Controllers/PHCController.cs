@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,23 +24,27 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddPHC(PHCRequest pdata)
+        public ActionResult<string> AddPHC(PHCRequest pData)
         {
-            var phc = _phcService.Add(pdata);
-            if (phc == null)
-            {
-                return NotFound();
+
+            try
+            { 
+                var phc = _phcService.Add(pData);
+                return string.IsNullOrEmpty(phc) ? $"Unable to add PHC data" : phc;
             }
-            return phc;
+            catch (Exception e)
+            {
+                return $"Unable to add PHC data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public PHCResponse GetPHCs()
         {
             try
             {
-                var phcs = _phcService.Retreive();
+                var phcs = _phcService.Retrieve();
                 return phcs.Count == 0 ? new PHCResponse { Status = "true", Message = "No PHC found", PHCDetails = new List<PHC>() } : new PHCResponse { Status = "true", Message = string.Empty, PHCDetails = phcs };
             }
             catch (Exception e)
@@ -49,12 +54,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public PHCResponse GetPHC(int code)
         {
             try
             {
-                var phcs = _phcService.Retreive(code);
+                var phcs = _phcService.Retrieve(code);
                 return phcs.Count == 0 ? new PHCResponse { Status = "true", Message = "No PHC found", PHCDetails = new List<PHC>() } : new PHCResponse { Status = "true", Message = string.Empty, PHCDetails = phcs };
             }
             catch (Exception e)

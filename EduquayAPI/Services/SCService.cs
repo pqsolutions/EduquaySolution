@@ -18,21 +18,44 @@ namespace EduquayAPI.Services
             _scData = new SCDataFactory().Create();
         }
 
-        public string Add(SCRequest sdata)
+        public string Add(SCRequest sData)
         {
-            var result = _scData.Add(sdata);
-            return result;
+            try
+            {
+                if (sData.IsActive.ToLower() != "true")
+                {
+                    sData.IsActive = "false";
+                }
+                if (sData.CHCId <= 0)
+                {
+                    return "Invalid CHC Id";
+                }
+                if (sData.PHCId <= 0)
+                {
+                    return "Invalid PHC Id";
+                }
+                if (sData.HNIN_ID <= 0)
+                {
+                    return "Invalid HNIN Id";
+                }
+                var result = _scData.Add(sData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add SC data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add SC data - {e.Message}";
+            }
         }
 
-        public List<SC> Retreive(int code)
+        public List<SC> Retrieve(int code)
         {
-            var sc = _scData.Retreive(code);
+            var sc = _scData.Retrieve(code);
             return sc;
         }
 
-        public List<SC> Retreive()
+        public List<SC> Retrieve()
         {
-            var allSCs = _scData.Retreive();
+            var allSCs = _scData.Retrieve();
             return allSCs;
         }
     }

@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface ICHCService
     {
-        string Add(CHCRequest cdata);
-        List<CHC> Retreive(int code);
-        List<CHC> Retreive();
+        string Add(CHCRequest cData);
+        List<CHC> Retrieve(int code);
+        List<CHC> Retrieve();
     }
 }

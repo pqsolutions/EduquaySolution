@@ -18,21 +18,33 @@ namespace EduquayAPI.Services
             _stateData = new StateDataFactory().Create();
         }
 
-        public string AddState(StateRequest sdata)
+        public string AddState(StateRequest sData)
         {
-            var result = _stateData.Add(sdata);
-            return result;
+
+            try
+            {
+                if (sData.IsActive.ToLower() != "true")
+                {
+                    sData.IsActive = "false";
+                }
+                var result = _stateData.Add(sData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add state data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add state data - {e.Message}";
+            }
         }
 
-        public List<State> Retreive(int code)
+        public List<State> Retrieve(int code)
         {
-            var state = _stateData.Retreive(code);
+            var state = _stateData.Retrieve(code);
             return state;
         }
 
-        public List<State> Retreive()
+        public List<State> Retrieve()
         {
-            var allStates = _stateData.Retreive();
+            var allStates = _stateData.Retrieve();
             return allStates;
         }
     }

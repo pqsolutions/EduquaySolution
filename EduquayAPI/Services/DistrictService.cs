@@ -15,20 +15,35 @@ namespace EduquayAPI.Services
         {
             _districtData = new DistrictDataFactory().Create();
         }
-        public string AddDistrict(DistrictRequest ddata)
+        public string AddDistrict(DistrictRequest dData)
         {
-            var result = _districtData.Add(ddata);
-            return result;
+            try
+            {
+                if (dData.StateId <= 0)
+                {
+                    return "Invalid State Id";
+                }
+                if (dData.IsActive.ToLower() != "true")
+                {
+                    dData.IsActive = "false";
+                }
+                var result = _districtData.Add(dData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add district data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add district data - {e.Message}";
+            }
         }
-        public List<District> Retreive(int code)
+        public List<District> Retrieve(int code)
         {
-            var district = _districtData.Retreive(code);
+            var district = _districtData.Retrieve(code);
             return district;
         }
 
-        public List<District> Retreive()
+        public List<District> Retrieve()
         {
-            var allDistricts = _districtData.Retreive();
+            var allDistricts = _districtData.Retrieve();
             return allDistricts;
         }
     }

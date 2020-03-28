@@ -9,9 +9,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface IHNINData
     {
-        string Add(HNINRequest hdata);
-        List<HNIN> Retreive(int code);
-        List<HNIN> Retreive();
+        string Add(HNINRequest hData);
+        List<HNIN> Retrieve(int code);
+        List<HNIN> Retrieve();
     }
     public interface IHNINDataFactory
     {

@@ -17,21 +17,48 @@ namespace EduquayAPI.Services
         {
             _chcData = new CHCDataFactory().Create();
         }
-        public string Add(CHCRequest cdata)
+        public string Add(CHCRequest cData)
         {
-            var result = _chcData.Add(cdata);
-            return result;
+            try
+            {
+                if (cData.DistrictId <= 0)
+                {
+                    return "Invalid District Id";
+                }
+                if (cData.BlockId <= 0)
+                {
+                    return "Invalid Block Id";
+                }
+                if (cData.HNIN_ID <= 0)
+                {
+                    return "Invalid HNIN Id";
+                }
+                if (cData.IsActive.ToLower() != "true")
+                {
+                    cData.IsActive = "false";
+                }
+                if (cData.Istestingfacility.ToLower() != "true")
+                {
+                    cData.Istestingfacility = "false";
+                }
+                var result = _chcData.Add(cData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add CHC data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add CHC data - {e.Message}";
+            }
         }
 
-        public List<CHC> Retreive(int code)
+        public List<CHC> Retrieve(int code)
         {
-            var chc = _chcData.Retreive(code);
+            var chc = _chcData.Retrieve(code);
             return chc;
         }
 
-        public List<CHC> Retreive()
+        public List<CHC> Retrieve()
         {
-            var allCHCs = _chcData.Retreive();
+            var allCHCs = _chcData.Retrieve();
             return allCHCs;
         }
     }

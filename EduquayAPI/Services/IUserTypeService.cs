@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IUserTypeService
     {
-        string Add(UserTypeRequest utdata);
-        List<UserType> Retreive(int code);
-        List<UserType> Retreive();
+        string Add(UserTypeRequest utData);
+        List<UserType> Retrieve(int code);
+        List<UserType> Retrieve();
     }
 }

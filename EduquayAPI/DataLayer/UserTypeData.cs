@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(UserTypeRequest utdata)
+        public string Add(UserTypeRequest utData)
         {
             try
             {
@@ -28,11 +28,11 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@UserType", utdata.UserTypename ?? utdata.UserTypename),
-                    new SqlParameter("@Isactive", utdata.IsActive ?? utdata.IsActive),
-                    new SqlParameter("@Comments", utdata.Comments ?? utdata.Comments),
-                    new SqlParameter("@Createdby", utdata.CreatedBy),
-                    new SqlParameter("@Updatedby", utdata.UpdatedBy),
+                    new SqlParameter("@UserType", utData.UserTypename ?? utData.UserTypename),
+                    new SqlParameter("@Isactive", utData.IsActive ?? utData.IsActive),
+                    new SqlParameter("@Comments", utData.Comments ?? utData.Comments),
+                    new SqlParameter("@Createdby", utData.CreatedBy),
+                    new SqlParameter("@Updatedby", utData.UpdatedBy),
 
                     retVal
                 };
@@ -45,7 +45,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<UserType> Retreive(int code)
+        public List<UserType> Retrieve(int code)
         {
             string stProc = FetchUserType;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -53,7 +53,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<UserType> Retreive()
+        public List<UserType> Retrieve()
         {
             string stProc = FetchUserTypes;
             var pList = new List<SqlParameter>();

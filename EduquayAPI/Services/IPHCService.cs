@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IPHCService
     {
-        string Add(PHCRequest pdata);
-        List<PHC> Retreive(int code);
-        List<PHC> Retreive();
+        string Add(PHCRequest pData);
+        List<PHC> Retrieve(int code);
+        List<PHC> Retrieve();
     }
 }

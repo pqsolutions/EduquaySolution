@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,23 +24,26 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddDistrict(DistrictRequest ddata)
+        public ActionResult<string> AddDistrict(DistrictRequest dData)
         {
-            var district = _districtService.AddDistrict(ddata);
-            if (district == null)
+            try
             {
-                return NotFound();
+                var district = _districtService.AddDistrict(dData);
+                return string.IsNullOrEmpty(district) ? $"Unable to add district data" : district;
             }
-            return district;
+            catch (Exception e)
+            {
+                return $"Unable to add district data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public DistrictResponse GetDistricts()
         {
             try
             {
-                var districts = _districtService.Retreive();
+                var districts = _districtService.Retrieve();
                 return districts.Count == 0 ? new DistrictResponse { Status = "true", Message = "No districts found", Districts = new List<District>() } : new DistrictResponse { Status = "true", Message = string.Empty, Districts = districts };
             }
             catch (Exception e)
@@ -54,7 +58,7 @@ namespace EduquayAPI.Controllers
         {
             try
             {
-                var districts = _districtService.Retreive(code);
+                var districts = _districtService.Retrieve(code);
                 return districts.Count == 0 ? new DistrictResponse { Status = "true", Message = "No district found", Districts = new List<District>() } : new DistrictResponse { Status = "true", Message = string.Empty, Districts = districts };
             }
             catch (Exception e)

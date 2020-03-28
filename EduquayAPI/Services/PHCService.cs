@@ -16,21 +16,40 @@ namespace EduquayAPI.Services
         {
             _phcData = new PHCDataFactory().Create();
         }
-        public string Add(PHCRequest pdata)
+        public string Add(PHCRequest pData)
         {
-            var result = _phcData.Add(pdata);
-            return result;
+            try
+            {
+                if (pData.IsActive.ToLower() != "true")
+                {
+                    pData.IsActive = "false";
+                }
+                if (pData.CHCId <= 0)
+                {
+                    return "Invalid CHC Id";
+                }
+                if (pData.HNIN_ID <= 0)
+                {
+                    return "Invalid HNIN Id";
+                }
+                var result = _phcData.Add(pData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add PHC data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add PHC data - {e.Message}";
+            }
         }
 
-        public List<PHC> Retreive(int code)
+        public List<PHC> Retrieve(int code)
         {
-            var phc = _phcData.Retreive(code);
+            var phc = _phcData.Retrieve(code);
             return phc;
         }
 
-        public List<PHC> Retreive()
+        public List<PHC> Retrieve()
         {
-            var allPHCs = _phcData.Retreive();
+            var allPHCs = _phcData.Retrieve();
             return allPHCs;
         }
     }

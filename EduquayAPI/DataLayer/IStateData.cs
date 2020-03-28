@@ -10,9 +10,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface IStateData
     {
-        string Add(StateRequest sdata);
-        List<State> Retreive(int code);
-        List<State> Retreive();
+        string Add(StateRequest sData);
+        List<State> Retrieve(int code);
+        List<State> Retrieve();
     }
     public interface IStateDataFactory
     {

@@ -18,7 +18,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(HNINRequest hdata)
+        public string Add(HNINRequest hData)
         {
             try
             {
@@ -27,25 +27,25 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@Facilitytype_ID", hdata.Facilitytype_ID),
-                    new SqlParameter("@Facility_name", hdata.@Facility_name ?? hdata.Facility_name),
-                    new SqlParameter("@NIN2HFI", hdata.NIN2HFI ?? hdata.NIN2HFI),
-                    new SqlParameter("@StateID", hdata.StateId),
-                    new SqlParameter("@DistrictID", hdata.DistrictId),
-                    new SqlParameter("@Taluka", hdata.Taluka ?? hdata.Taluka),
-                    new SqlParameter("@BlockID", hdata.BlockId),
-                    new SqlParameter("@Address", hdata.Address ?? hdata.Address),
-                    new SqlParameter("@Pincode", hdata.Pincode ?? hdata.Pincode),
-                    new SqlParameter("@Landline", hdata.Landline ?? hdata.Landline),
-                    new SqlParameter("@Incharge_name", hdata.Incharge_name ?? hdata.Incharge_name),
-                    new SqlParameter("@Incharge_contactno", hdata.Incharge_contactno ?? hdata.Incharge_contactno),
-                    new SqlParameter("@Incharge_EmailId", hdata.Incharge_EmailId ?? hdata.Incharge_EmailId),
-                    new SqlParameter("@Isactive", hdata.IsActive ?? hdata.IsActive),
-                    new SqlParameter("@Latitude", hdata.Latitude ?? hdata.Latitude),
-                    new SqlParameter("@Longitude", hdata.Longitude ?? hdata.Longitude),
-                    new SqlParameter("@Comments", hdata.Comments ?? hdata.Comments),
-                    new SqlParameter("@Createdby", hdata.CreatedBy),
-                    new SqlParameter("@Updatedby", hdata.UpdatedBy),
+                    new SqlParameter("@Facilitytype_ID", hData.Facilitytype_ID),
+                    new SqlParameter("@Facility_name", hData.@Facility_name ?? hData.Facility_name),
+                    new SqlParameter("@NIN2HFI", hData.NIN2HFI ?? hData.NIN2HFI),
+                    new SqlParameter("@StateID", hData.StateId),
+                    new SqlParameter("@DistrictID", hData.DistrictId),
+                    new SqlParameter("@Taluka", hData.Taluka ?? hData.Taluka),
+                    new SqlParameter("@BlockID", hData.BlockId),
+                    new SqlParameter("@Address", hData.Address ?? hData.Address),
+                    new SqlParameter("@Pincode", hData.Pincode ?? hData.Pincode),
+                    new SqlParameter("@Landline", hData.Landline ?? hData.Landline),
+                    new SqlParameter("@Incharge_name", hData.Incharge_name ?? hData.Incharge_name),
+                    new SqlParameter("@Incharge_contactno", hData.Incharge_contactno ?? hData.Incharge_contactno),
+                    new SqlParameter("@Incharge_EmailId", hData.Incharge_EmailId ?? hData.Incharge_EmailId),
+                    new SqlParameter("@Isactive", hData.IsActive ?? hData.IsActive),
+                    new SqlParameter("@Latitude", hData.Latitude ?? hData.Latitude),
+                    new SqlParameter("@Longitude", hData.Longitude ?? hData.Longitude),
+                    new SqlParameter("@Comments", hData.Comments ?? hData.Comments),
+                    new SqlParameter("@Createdby", hData.CreatedBy),
+                    new SqlParameter("@Updatedby", hData.UpdatedBy),
 
                     retVal
                 };
@@ -58,7 +58,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<HNIN> Retreive(int code)
+        public List<HNIN> Retrieve(int code)
         {
             string stProc = FetchHNIN;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -66,7 +66,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<HNIN> Retreive()
+        public List<HNIN> Retrieve()
         {
             string stProc = FetchHNINs;
             var pList = new List<SqlParameter>();

@@ -18,7 +18,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(PHCRequest pdata)
+        public string Add(PHCRequest pData)
         {
             try
             {
@@ -27,16 +27,16 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {                    
-                    new SqlParameter("@CHCID", pdata.CHCId),
-                    new SqlParameter("@HNIN_ID", pdata.HNIN_ID),
-                    new SqlParameter("@PHC_gov_code", pdata.PHC_gov_code),
-                    new SqlParameter("@PHCname", pdata.PHCname  ?? pdata.PHCname),                   
-                    new SqlParameter("@Isactive", pdata.IsActive ?? pdata.IsActive),
-                    new SqlParameter("@Latitude", pdata.Latitude ?? pdata.Latitude),
-                    new SqlParameter("@Longitude", pdata.Longitude ?? pdata.Longitude),
-                    new SqlParameter("@Comments", pdata.Comments ?? pdata.Comments),
-                    new SqlParameter("@Createdby", pdata.CreatedBy),
-                    new SqlParameter("@Updatedby", pdata.UpdatedBy),
+                    new SqlParameter("@CHCID", pData.CHCId),
+                    new SqlParameter("@HNIN_ID", pData.HNIN_ID),
+                    new SqlParameter("@PHC_gov_code", pData.PHC_gov_code),
+                    new SqlParameter("@PHCname", pData.PHCname  ?? pData.PHCname),                   
+                    new SqlParameter("@Isactive", pData.IsActive ?? pData.IsActive),
+                    new SqlParameter("@Latitude", pData.Latitude ?? pData.Latitude),
+                    new SqlParameter("@Longitude", pData.Longitude ?? pData.Longitude),
+                    new SqlParameter("@Comments", pData.Comments ?? pData.Comments),
+                    new SqlParameter("@Createdby", pData.CreatedBy),
+                    new SqlParameter("@Updatedby", pData.UpdatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -48,7 +48,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<PHC> Retreive(int code)
+        public List<PHC> Retrieve(int code)
         {
             string stProc = FetchPHC;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -56,7 +56,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<PHC> Retreive()
+        public List<PHC> Retrieve()
         {
             string stProc = FetchAllPHCs;
             var pList = new List<SqlParameter>();

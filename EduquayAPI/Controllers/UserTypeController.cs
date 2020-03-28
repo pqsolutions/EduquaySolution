@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,25 +24,29 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddUserType(UserTypeRequest utdata)
+        public ActionResult<string> AddUserType(UserTypeRequest utData)
         {
-            var usertype = _userTypeService.Add(utdata);
-            if (usertype == null)
-            {
-                return NotFound();
+
+            try
+            { 
+                var userType = _userTypeService.Add(utData);
+                return string.IsNullOrEmpty(userType) ? $"Unable to add user type data" : userType;
             }
-            return usertype;
+            catch (Exception e)
+            {
+                return $"Unable to add user type data - {e.Message}";
+            }
         }
 
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public UserTypeResponse GetUserTypes()
         {
             try
             {
-                var usertypes = _userTypeService.Retreive();
-                return usertypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = usertypes };
+                var userTypes = _userTypeService.Retrieve();
+                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
             }
             catch (Exception e)
             {
@@ -50,13 +55,13 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public UserTypeResponse GetUserType(int code)
         {
             try
             {
-                var usertypes = _userTypeService.Retreive(code);
-                return usertypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = usertypes };
+                var userTypes = _userTypeService.Retrieve(code);
+                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
             }
             catch (Exception e)
             {

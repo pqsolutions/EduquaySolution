@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface ISCService
     {
-        string Add(SCRequest sdata);
-        List<SC> Retreive(int code);
-        List<SC> Retreive();
+        string Add(SCRequest sData);
+        List<SC> Retrieve(int code);
+        List<SC> Retrieve();
     }
 }

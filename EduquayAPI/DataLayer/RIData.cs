@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(RIRequest rdata)
+        public string Add(RIRequest rData)
         {
             try
             {
@@ -29,17 +29,17 @@ namespace EduquayAPI.DataLayer
                 var pList = new List<SqlParameter>
                 {
                    
-                    new SqlParameter("@PHCID", rdata.PHCId),
-                     new SqlParameter("@SCID", rdata.SCId),                    
-                    new SqlParameter("@RI_gov_code", rdata.RI_gov_code),
-                    new SqlParameter("@RIsite", rdata.RIsite  ?? rdata.RIsite),
-                    new SqlParameter("@Pincode", rdata.Pincode  ?? rdata.Pincode),
-                    new SqlParameter("@Isactive", rdata.IsActive ?? rdata.IsActive),
-                    new SqlParameter("@Latitude", rdata.Latitude ?? rdata.Latitude),
-                    new SqlParameter("@Longitude", rdata.Longitude ?? rdata.Longitude),
-                    new SqlParameter("@Comments", rdata.Comments ?? rdata.Comments),
-                    new SqlParameter("@Createdby", rdata.CreatedBy),
-                    new SqlParameter("@Updatedby", rdata.UpdatedBy),
+                    new SqlParameter("@PHCID", rData.PHCId),
+                     new SqlParameter("@SCID", rData.SCId),                    
+                    new SqlParameter("@RI_gov_code", rData.RI_gov_code),
+                    new SqlParameter("@RIsite", rData.RIsite  ?? rData.RIsite),
+                    new SqlParameter("@Pincode", rData.Pincode  ?? rData.Pincode),
+                    new SqlParameter("@Isactive", rData.IsActive ?? rData.IsActive),
+                    new SqlParameter("@Latitude", rData.Latitude ?? rData.Latitude),
+                    new SqlParameter("@Longitude", rData.Longitude ?? rData.Longitude),
+                    new SqlParameter("@Comments", rData.Comments ?? rData.Comments),
+                    new SqlParameter("@Createdby", rData.CreatedBy),
+                    new SqlParameter("@Updatedby", rData.UpdatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -52,7 +52,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<RI> Retreive(int code)
+        public List<RI> Retrieve(int code)
         {
             string stProc = FetchRI;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -60,7 +60,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<RI> Retreive()
+        public List<RI> Retrieve()
         {
             string stProc = FetchAllRIs;
             var pList = new List<SqlParameter>();

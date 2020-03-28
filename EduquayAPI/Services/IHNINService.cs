@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IHNINService
     {
-        string Add(HNINRequest hdata);
-        List<HNIN> Retreive(int code);
-        List<HNIN> Retreive();
+        string Add(HNINRequest hData);
+        List<HNIN> Retrieve(int code);
+        List<HNIN> Retrieve();
     }
 }
