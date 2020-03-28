@@ -11,27 +11,38 @@ namespace EduquayAPI.Services
     public class FacilityTypeService : IFacilityTypeService
     {
 
-        private readonly IFacilityTypeData _facilitytypeData;
+        private readonly IFacilityTypeData _facilityTypeData;
 
         public FacilityTypeService(IFacilityTypeDataFactory facilitytypeDataFactory)
         {
-            _facilitytypeData = new FacilityTypeDataFactory().Create();
+            _facilityTypeData = new FacilityTypeDataFactory().Create();
         }
-        public string Add(FacilityTypeRequest ftdata)
+        public string Add(FacilityTypeRequest ftData)
         {
-            var result = _facilitytypeData.Add(ftdata);
-            return result;
+            try
+            {
+                if (ftData.IsActive.ToLower() != "true")
+                {
+                    ftData.IsActive = "false";
+                }
+                var result = _facilityTypeData.Add(ftData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add facility type data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add facility type data - {e.Message}";
+            }
         }
 
-        public List<FacilityType> Retreive(int code)
+        public List<FacilityType> Retrieve(int code)
         {
-            var facilityType = _facilitytypeData.Retreive(code);
+            var facilityType = _facilityTypeData.Retrieve(code);
             return facilityType;
         }
 
-        public List<FacilityType> Retreive()
+        public List<FacilityType> Retrieve()
         {
-            var allFacilityTypes = _facilitytypeData.Retreive();
+            var allFacilityTypes = _facilityTypeData.Retrieve();
             return allFacilityTypes;
         }
     }

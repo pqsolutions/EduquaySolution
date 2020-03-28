@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(SCRequest sdata)
+        public string Add(SCRequest sData)
         {
             try
             {
@@ -28,18 +28,18 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@CHCID", sdata.CHCId),
-                    new SqlParameter("@PHCID", sdata.PHCId),
-                    new SqlParameter("@HNIN_ID", sdata.HNIN_ID),
-                    new SqlParameter("@SC_gov_code", sdata.SC_gov_code),
-                    new SqlParameter("@SCname", sdata.SCname  ?? sdata.SCname),
-                    new SqlParameter("@Pincode", sdata.Pincode  ?? sdata.Pincode),
-                    new SqlParameter("@Isactive", sdata.IsActive ?? sdata.IsActive),
-                    new SqlParameter("@Latitude", sdata.Latitude ?? sdata.Latitude),
-                    new SqlParameter("@Longitude", sdata.Longitude ?? sdata.Longitude),
-                    new SqlParameter("@Comments", sdata.Comments ?? sdata.Comments),
-                    new SqlParameter("@Createdby", sdata.CreatedBy),
-                    new SqlParameter("@Updatedby", sdata.UpdatedBy),
+                    new SqlParameter("@CHCID", sData.CHCId),
+                    new SqlParameter("@PHCID", sData.PHCId),
+                    new SqlParameter("@HNIN_ID", sData.HNIN_ID),
+                    new SqlParameter("@SC_gov_code", sData.SC_gov_code),
+                    new SqlParameter("@SCname", sData.SCname  ?? sData.SCname),
+                    new SqlParameter("@Pincode", sData.Pincode  ?? sData.Pincode),
+                    new SqlParameter("@Isactive", sData.IsActive ?? sData.IsActive),
+                    new SqlParameter("@Latitude", sData.Latitude ?? sData.Latitude),
+                    new SqlParameter("@Longitude", sData.Longitude ?? sData.Longitude),
+                    new SqlParameter("@Comments", sData.Comments ?? sData.Comments),
+                    new SqlParameter("@Createdby", sData.CreatedBy),
+                    new SqlParameter("@Updatedby", sData.UpdatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -52,7 +52,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<SC> Retreive(int code)
+        public List<SC> Retrieve(int code)
         {
             string stProc = FetchSC;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -60,7 +60,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<SC> Retreive()
+        public List<SC> Retrieve()
         {
             string stProc = FetchAllSCs;
             var pList = new List<SqlParameter>();

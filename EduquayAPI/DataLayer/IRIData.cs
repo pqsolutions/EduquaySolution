@@ -10,9 +10,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface IRIData
     {
-        string Add(RIRequest rdata);
-        List<RI> Retreive(int code);
-        List<RI> Retreive();
+        string Add(RIRequest rData);
+        List<RI> Retrieve(int code);
+        List<RI> Retrieve();
     }
     public interface IRIDataFactory
     {

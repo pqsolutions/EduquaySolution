@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IFacilityTypeService
     {
-        string Add(FacilityTypeRequest ftdata);
-        List<FacilityType> Retreive(int code);
-        List<FacilityType> Retreive();
+        string Add(FacilityTypeRequest ftData);
+        List<FacilityType> Retrieve(int code);
+        List<FacilityType> Retrieve();
     }
 }

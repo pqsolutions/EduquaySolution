@@ -48,14 +48,14 @@ namespace EduquayAPI.DataLayer
                 throw e;
             }
         }
-        public List<State> Retreive(int code)
+        public List<State> Retrieve(int code)
         {
             string stProc = FetchState;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
             var allData = UtilityDL.FillData<State>(stProc, pList);
             return allData;
         }
-        public List<State> Retreive()
+        public List<State> Retrieve()
         {
             string stProc = FetchStates;
             var pList = new List<SqlParameter>();

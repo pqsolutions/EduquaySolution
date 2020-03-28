@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,24 +24,27 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(FacilityTypeRequest ftdata)
+        public ActionResult<string> Add(FacilityTypeRequest ftData)
         {
-            var facilitytype = _facilityTypeService.Add(ftdata);
-            if (facilitytype == null)
+            try
             {
-                return NotFound();
+                var facilityType = _facilityTypeService.Add(ftData);
+                return string.IsNullOrEmpty(facilityType) ? $"Unable to add facility type data" : facilityType;
             }
-            return facilitytype;
+            catch (Exception e)
+            {
+                return $"Unable to add facility type data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public FacilityTypeResponse GetFacilityTypes()
         {
             try
             {
-                var facilitytypes = _facilityTypeService.Retreive();
-                return facilitytypes.Count == 0 ? new FacilityTypeResponse { Status = "true", Message = "No facilty type found", FacilityType = new List<FacilityType>() } : new FacilityTypeResponse { Status = "true", Message = string.Empty, FacilityType = facilitytypes };
+                var facilityTypes = _facilityTypeService.Retrieve();
+                return facilityTypes.Count == 0 ? new FacilityTypeResponse { Status = "true", Message = "No facilty type found", FacilityType = new List<FacilityType>() } : new FacilityTypeResponse { Status = "true", Message = string.Empty, FacilityType = facilityTypes };
             }
             catch (Exception e)
             {
@@ -49,13 +53,13 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public FacilityTypeResponse GetFacilityType(int code)
         {
             try
             {
-                var facilitytypes = _facilityTypeService.Retreive(code);
-                return facilitytypes.Count == 0 ? new FacilityTypeResponse { Status = "true", Message = "No facility type found", FacilityType = new List<FacilityType>() } : new FacilityTypeResponse { Status = "true", Message = string.Empty, FacilityType = facilitytypes };
+                var facilityTypes = _facilityTypeService.Retrieve(code);
+                return facilityTypes.Count == 0 ? new FacilityTypeResponse { Status = "true", Message = "No facility type found", FacilityType = new List<FacilityType>() } : new FacilityTypeResponse { Status = "true", Message = string.Empty, FacilityType = facilityTypes };
             }
             catch (Exception e)
             {

@@ -12,8 +12,8 @@ namespace EduquayAPI.DataLayer
     public interface IBlockData
     {
         string AddBlock(BlockRequest bData);
-        List<Block> Retreive(int code);
-        List<Block> Retreive();
+        List<Block> Retrieve(int code);
+        List<Block> Retrieve();
     }
 
     public interface IBlockDataFactory

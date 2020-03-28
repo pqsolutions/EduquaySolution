@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IDistrictService
     {
-        string AddDistrict(DistrictRequest sdata);
-        List<District> Retreive(int code);
-        List<District> Retreive();
+        string AddDistrict(DistrictRequest sData);
+        List<District> Retrieve(int code);
+        List<District> Retrieve();
     }
 }

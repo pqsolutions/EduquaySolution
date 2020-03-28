@@ -10,8 +10,8 @@ namespace EduquayAPI.Services
 {
     public interface IStateService
     {
-        string AddState(StateRequest sdata);
-        List<State> Retreive(int code);
-        List<State> Retreive();
+        string AddState(StateRequest sData);
+        List<State> Retrieve(int code);
+        List<State> Retrieve();
     }
 }

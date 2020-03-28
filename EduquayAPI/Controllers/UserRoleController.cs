@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,24 +25,28 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddUserRole(UserRoleRequest urdata)
+        public ActionResult<string> AddUserRole(UserRoleRequest urData)
         {
-            var userrole = _userRoleService.Add(urdata);
-            if (userrole == null)
-            {
-                return NotFound();
+            try
+            { 
+            
+                var userRole = _userRoleService.Add(urData);
+                return string.IsNullOrEmpty(userRole) ? $"Unable to add user role data" : userRole;
             }
-            return userrole;
+            catch (Exception e)
+            {
+                return $"Unable to add user role data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public UserRoleResponse GetUserRoles()
         {
             try
             {
-                var userroles = _userRoleService.Retreive();
-                return userroles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userroles };
+                var userRoles = _userRoleService.Retrieve();
+                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
             }
             catch (Exception e)
             {
@@ -50,13 +55,13 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public UserRoleResponse GetUserType(int code)
         {
             try
             {
-                var userroles = _userRoleService.Retreive(code);
-                return userroles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userroles };
+                var userRoles = _userRoleService.Retrieve(code);
+                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
             }
             catch (Exception e)
             {

@@ -10,9 +10,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface IDistrictData
     {
-        string Add(DistrictRequest ddata);
-        List<District> Retreive(int code);
-        List<District> Retreive();
+        string Add(DistrictRequest dData);
+        List<District> Retrieve(int code);
+        List<District> Retrieve();
     }
     public interface IDistrictDataFactory
     {

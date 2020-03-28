@@ -48,7 +48,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<Block> Retreive(int code)
+        public List<Block> Retrieve(int code)
         {
             string stProc = FetchBlock;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -56,7 +56,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<Block> Retreive()
+        public List<Block> Retrieve()
         {
             string stProc = FetchAllBlocks;
             var pList = new List<SqlParameter>();

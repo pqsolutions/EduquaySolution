@@ -9,8 +9,8 @@ namespace EduquayAPI.Services
 {
     public interface IUserRoleService
     {
-        string Add(UserRoleRequest urdata);
-        List<UserRole> Retreive(int code);
-        List<UserRole> Retreive();
+        string Add(UserRoleRequest urData);
+        List<UserRole> Retrieve(int code);
+        List<UserRole> Retrieve();
     }
 }

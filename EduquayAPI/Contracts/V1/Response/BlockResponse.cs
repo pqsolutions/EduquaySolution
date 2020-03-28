@@ -11,5 +11,5 @@ namespace EduquayAPI.Contracts.V1.Response
         public string Status { get; set; }
         public string Message { get; set; }
         public List<Block> Blocks { get; set; }
-    }
+    } 
 }

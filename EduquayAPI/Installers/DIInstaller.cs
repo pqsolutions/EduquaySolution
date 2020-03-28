@@ -53,6 +53,12 @@ namespace EduquayAPI.Installers
             services.AddScoped<IUserTypeDataFactory, UserTypeDataFactory>();
             services.AddScoped<IUserTypeService, UserTypeService>();
 
+            services.AddScoped<IGovIDTypeDataFactory, GovIDTypeDataFactory>();
+            services.AddScoped<IGovIDTypeService, GovIDTypeService>();
+
+            services.AddScoped<ISubjectTypeDataFactory, SubjectTypeDataFactory>();
+            services.AddScoped<ISubjectTypeService, SubjectTypeService>();
+
             services.AddSingleton<DbConnect>();
         }
     }

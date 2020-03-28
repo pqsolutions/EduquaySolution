@@ -17,21 +17,41 @@ namespace EduquayAPI.Services
         {
             _riData = new RIDataFactory().Create();
         }
-        public string Add(RIRequest rdata)
+        public string Add(RIRequest rData)
         {
-            var result = _riData.Add(rdata);
-            return result;
+            try
+            {
+
+                if (rData.IsActive.ToLower() != "true")
+                {
+                    rData.IsActive = "false";
+                }
+                if (rData.PHCId <= 0)
+                {
+                    return "Invalid PHC Id";
+                }
+                if (rData.SCId <= 0)
+                {
+                    return "Invalid SC Id";
+                }
+                var result = _riData.Add(rData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add RI data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add RI data - {e.Message}";
+            }
         }
 
-        public List<RI> Retreive(int code)
+        public List<RI> Retrieve(int code)
         {
-            var ri = _riData.Retreive(code);
+            var ri = _riData.Retrieve(code);
             return ri;
         }
 
-        public List<RI> Retreive()
+        public List<RI> Retrieve()
         {
-            var allRIs = _riData.Retreive();
+            var allRIs = _riData.Retrieve();
             return allRIs;
         }
     }

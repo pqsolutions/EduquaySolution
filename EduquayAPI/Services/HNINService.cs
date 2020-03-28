@@ -16,21 +16,49 @@ namespace EduquayAPI.Services
         {
             _hninData = new HNINDataFactory().Create();
         }
-        public string Add(HNINRequest hdata)
+        public string Add(HNINRequest hData)
         {
-            var result = _hninData.Add(hdata);
-            return result;
+            try
+            {
+                if (hData.IsActive.ToLower() != "true")
+                {
+                    hData.IsActive = "false";
+                }
+                if (hData.Facilitytype_ID <= 0)
+                {
+                    return "Invalid Facility Type Id";
+                }
+                if (hData.StateId <= 0)
+                {
+                    return "Invalid State Id";
+                }
+                if (hData.DistrictId <= 0)
+                {
+                    return "Invalid District Id";
+                }
+                if (hData.BlockId <= 0)
+                {
+                    return "Invalid Block Id";
+                }
+
+                var result = _hninData.Add(hData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add HNIN data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add HNIN data - {e.Message}";
+            }
         }
 
-        public List<HNIN> Retreive(int code)
+        public List<HNIN> Retrieve(int code)
         {
-            var hnin = _hninData.Retreive(code);
+            var hnin = _hninData.Retrieve(code);
             return hnin;
         }
 
-        public List<HNIN> Retreive()
+        public List<HNIN> Retrieve()
         {
-            var allHNIN = _hninData.Retreive();
+            var allHNIN = _hninData.Retrieve();
             return allHNIN;
         }
     }

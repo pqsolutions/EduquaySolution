@@ -10,9 +10,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface ICHCData
     {
-        string Add(CHCRequest cdata);
-        List<CHC> Retreive(int code);
-        List<CHC> Retreive();
+        string Add(CHCRequest cData);
+        List<CHC> Retrieve(int code);
+        List<CHC> Retrieve();
     }
     public interface ICHCDataFactory
     {

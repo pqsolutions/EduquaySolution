@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,23 +24,26 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddSC(SCRequest sdata)
+        public ActionResult<string> AddSC(SCRequest sData)
         {
-            var sc = _scService.Add(sdata);
-            if (sc == null)
-            {
-                return NotFound();
+            try
+            { 
+                var sc = _scService.Add(sData);
+                return string.IsNullOrEmpty(sc) ? $"Unable to add SC data" : sc;
             }
-            return sc;
+            catch (Exception e)
+            {
+                return $"Unable to add SC data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public SCResponse GetSCs()
         {
             try
             {
-                var scs = _scService.Retreive();
+                var scs = _scService.Retrieve();
                 return scs.Count == 0 ? new SCResponse { Status = "true", Message = "No SC found", SCDetails = new List<SC>() } : new SCResponse { Status = "true", Message = string.Empty, SCDetails = scs };
             }
             catch (Exception e)
@@ -49,12 +53,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public SCResponse GetSC(int code)
         {
             try
             {
-                var scs = _scService.Retreive(code);
+                var scs = _scService.Retrieve(code);
                 return scs.Count == 0 ? new SCResponse { Status = "true", Message = "No SC found", SCDetails = new List<SC>() } : new SCResponse { Status = "true", Message = string.Empty, SCDetails = scs };
             }
             catch (Exception e)

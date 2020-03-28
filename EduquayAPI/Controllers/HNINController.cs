@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,23 +24,27 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(HNINRequest hdata)
+        public ActionResult<string> Add(HNINRequest hData)
         {
-            var hnin = _hninService.Add(hdata);
-            if (hnin == null)
+
+            try
             {
-                return NotFound();
+                var hnin = _hninService.Add(hData);
+                return string.IsNullOrEmpty(hnin) ? $"Unable to add HNIN data" : hnin;
             }
-            return hnin;
+            catch (Exception e)
+            {
+                return $"Unable to add HNIN data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public HNINResponse GetHNINs()
         {
             try
             {
-                var hnins = _hninService.Retreive();
+                var hnins = _hninService.Retrieve();
                 return hnins.Count == 0 ? new HNINResponse { Status = "true", Message = "No HNIN found", HNIN = new List<HNIN>() } : new HNINResponse { Status = "true", Message = string.Empty, HNIN = hnins };
             }
             catch (Exception e)
@@ -49,12 +54,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public HNINResponse GetHNIN(int code)
         {
             try
             {
-                var hnins = _hninService.Retreive(code);
+                var hnins = _hninService.Retrieve(code);
                 return hnins.Count == 0 ? new HNINResponse { Status = "true", Message = "No HNIN found", HNIN = new List<HNIN>() } : new HNINResponse { Status = "true", Message = string.Empty, HNIN = hnins };
             }
             catch (Exception e)

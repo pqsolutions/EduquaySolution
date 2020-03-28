@@ -9,9 +9,9 @@ namespace EduquayAPI.DataLayer
 {
     public interface IUserTypeData
     {
-        string Add(UserTypeRequest utdata);
-        List<UserType> Retreive(int code);
-        List<UserType> Retreive();
+        string Add(UserTypeRequest utData);
+        List<UserType> Retrieve(int code);
+        List<UserType> Retrieve();
     }
     public interface IUserTypeDataFactory
     {

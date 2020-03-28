@@ -20,7 +20,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(FacilityTypeRequest ftdata)
+        public string Add(FacilityTypeRequest ftData)
         {
             try
             {
@@ -29,11 +29,11 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@Facility_typename", ftdata.Facility_typename ?? ftdata.Facility_typename),
-                    new SqlParameter("@Isactive", ftdata.IsActive ?? ftdata.IsActive),                   
-                    new SqlParameter("@Comments", ftdata.Comments ?? ftdata.Comments),
-                    new SqlParameter("@Createdby", ftdata.CreatedBy),
-                    new SqlParameter("@Updatedby", ftdata.UpdatedBy),
+                    new SqlParameter("@Facility_typename", ftData.Facility_typename ?? ftData.Facility_typename),
+                    new SqlParameter("@Isactive", ftData.IsActive ?? ftData.IsActive),                   
+                    new SqlParameter("@Comments", ftData.Comments ?? ftData.Comments),
+                    new SqlParameter("@Createdby", ftData.CreatedBy),
+                    new SqlParameter("@Updatedby", ftData.UpdatedBy),
 
                     retVal
                 };
@@ -46,7 +46,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<FacilityType> Retreive(int code)
+        public List<FacilityType> Retrieve(int code)
         {
             string stProc = FetchFacilityType;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -54,7 +54,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<FacilityType> Retreive()
+        public List<FacilityType> Retrieve()
         {
             string stProc = FetchFacilityTypes;
             var pList = new List<SqlParameter>();

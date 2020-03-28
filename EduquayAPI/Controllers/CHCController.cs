@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -22,23 +23,27 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddCHC(CHCRequest cdata)
+        public ActionResult<string> AddCHC(CHCRequest cData)
         {
-            var chc = _chcService.Add(cdata);
-            if (chc == null)
+            try
             {
-                return NotFound();
+                var chc = _chcService.Add(cData);
+                return string.IsNullOrEmpty(chc) ? $"Unable to add CHC data" : chc;
             }
-            return chc;
+            catch (Exception e)
+            {
+                return $"Unable to add CHC data - {e.Message}";
+            }
+
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public CHCResponse GetCHCs()
         {
             try
             {
-                var chcs = _chcService.Retreive();
+                var chcs = _chcService.Retrieve();
                 return chcs.Count == 0 ? new CHCResponse { Status = "true", Message = "No CHC found", CHCDetails = new List<CHC>() } : new CHCResponse { Status = "true", Message = string.Empty, CHCDetails = chcs };
             }
             catch (Exception e)
@@ -48,12 +53,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public CHCResponse GetCHC(int code)
         {
             try
             {
-                var chcs = _chcService.Retreive(code);
+                var chcs = _chcService.Retrieve(code);
                 return chcs.Count == 0 ? new CHCResponse { Status = "true", Message = "No CHC found", CHCDetails = new List<CHC>() } : new CHCResponse { Status = "true", Message = string.Empty, CHCDetails = chcs };
             }
             catch (Exception e)

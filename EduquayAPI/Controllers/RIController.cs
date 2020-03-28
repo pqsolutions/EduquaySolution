@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,23 +25,26 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddRI(RIRequest rdata)
+        public ActionResult<string> AddRI(RIRequest rData)
         {
-            var ri = _riService.Add(rdata);
-            if (ri == null)
-            {
-                return NotFound();
+            try 
+            { 
+                var ri = _riService.Add(rData);
+                return string.IsNullOrEmpty(ri) ? $"Unable to add RI data" : ri;
             }
-            return ri;
+            catch (Exception e)
+            {
+                return $"Unable to add RI data - {e.Message}";
+            }
         }
 
         [HttpGet]
-        [Route("Retreive")]
+        [Route("Retrieve")]
         public RIResponse GetRIs()
         {
             try
             {
-                var ris = _riService.Retreive();
+                var ris = _riService.Retrieve();
                 return ris.Count == 0 ? new RIResponse { Status = "true", Message = "No RI found",RIDetails = new List<RI>() } : new RIResponse { Status = "true", Message = string.Empty, RIDetails = ris };
             }
             catch (Exception e)
@@ -50,12 +54,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retreive/{code}")]
+        [Route("Retrieve/{code}")]
         public RIResponse GetRI(int code)
         {
             try
             {
-                var ris = _riService.Retreive(code);
+                var ris = _riService.Retrieve(code);
                 return ris.Count == 0 ? new RIResponse { Status = "true", Message = "No RI found", RIDetails = new List<RI>() } : new RIResponse { Status = "true", Message = string.Empty, RIDetails = ris };
             }
             catch (Exception e)

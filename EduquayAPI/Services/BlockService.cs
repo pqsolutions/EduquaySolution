@@ -21,24 +21,34 @@ namespace EduquayAPI.Services
         {
             try
             {
+                if (bData.DistrictId <= 0)
+                {
+                    return "Invalid District Id";
+                }
+                if (bData.IsActive.ToLower() != "true")
+                {
+                    bData.IsActive = "false";
+                }
+
                 var result = _blockData.AddBlock(bData);
-                return result;
+                return string.IsNullOrEmpty(result) ? $"Unable to add block data" : result;
             }
             catch (Exception e)
             {
                 return $"Unable to add block data - {e.Message}";
             }
+
         }
 
         public List<Block> Retrieve(int code)
         {
-            var block = _blockData.Retreive(code);
+            var block = _blockData.Retrieve(code);
             return block;
         }
 
         public List<Block> Retrieve()
         {
-            var allBlocks = _blockData.Retreive();
+            var allBlocks = _blockData.Retrieve();
             return allBlocks;
         }
     }

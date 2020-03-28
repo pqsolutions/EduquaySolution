@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
 
         }
 
-        public string Add(DistrictRequest ddata)
+        public string Add(DistrictRequest dData)
         {
             try
             {
@@ -28,15 +28,15 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@District_gov_code", ddata.District_gov_code),
-                    new SqlParameter("@StateID", ddata.StateId),
-                    new SqlParameter("@Districtname", ddata.Districtname  ?? ddata.Districtname),
-                    new SqlParameter("@Isactive", ddata.IsActive ?? ddata.IsActive),
-                    new SqlParameter("@Latitude", ddata.Latitude ?? ddata.Latitude),
-                    new SqlParameter("@Longitude", ddata.Longitude ?? ddata.Longitude),
-                    new SqlParameter("@Comments", ddata.Comments ?? ddata.Comments),
-                    new SqlParameter("@Createdby", ddata.CreatedBy),
-                    new SqlParameter("@Updatedby", ddata.UpdatedBy),
+                    new SqlParameter("@District_gov_code", dData.District_gov_code),
+                    new SqlParameter("@StateID", dData.StateId),
+                    new SqlParameter("@Districtname", dData.Districtname  ?? dData.Districtname),
+                    new SqlParameter("@Isactive", dData.IsActive ?? dData.IsActive),
+                    new SqlParameter("@Latitude", dData.Latitude ?? dData.Latitude),
+                    new SqlParameter("@Longitude", dData.Longitude ?? dData.Longitude),
+                    new SqlParameter("@Comments", dData.Comments ?? dData.Comments),
+                    new SqlParameter("@Createdby", dData.CreatedBy),
+                    new SqlParameter("@Updatedby", dData.UpdatedBy),
 
                     retVal
                 };
@@ -49,7 +49,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<District> Retreive(int code)
+        public List<District> Retrieve(int code)
         {
             string stProc = FetchDistrict;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -57,7 +57,7 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<District> Retreive()
+        public List<District> Retrieve()
         {
             string stProc = FetchDistricts;
             var pList = new List<SqlParameter>();

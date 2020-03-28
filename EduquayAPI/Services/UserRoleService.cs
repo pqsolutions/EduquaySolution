@@ -11,27 +11,42 @@ namespace EduquayAPI.Services
 {
     public class UserRoleService : IUserRoleService
     {
-        private readonly IUserRoleData _userroleData;
+        private readonly IUserRoleData _userRoleData;
 
-        public UserRoleService(IUserRoleDataFactory userroleDataFactory)
+        public UserRoleService(IUserRoleDataFactory userRoleDataFactory)
         {
-            _userroleData = new UserRoleDataFactory().Create();
+            _userRoleData = new UserRoleDataFactory().Create();
         }
-        public string Add(UserRoleRequest urdata)
+        public string Add(UserRoleRequest urData)
         {
-            var result = _userroleData.Add(urdata);
-            return result;
+            try
+            {
+                if (urData.IsActive.ToLower() != "true")
+                {
+                    urData.IsActive = "false";
+                }
+                if (urData.UserTypeId <= 0)
+                {
+                    return "Invalid UserType Id";
+                }
+                var result = _userRoleData.Add(urData);
+                return string.IsNullOrEmpty(result) ? $"Unable to add user role data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to add user role data - {e.Message}";
+            }
         }
 
-        public List<UserRole> Retreive(int code)
+        public List<UserRole> Retrieve(int code)
         {
-            var userRole = _userroleData.Retreive(code);
+            var userRole = _userRoleData.Retrieve(code);
             return userRole;
         }
 
-        public List<UserRole> Retreive()
+        public List<UserRole> Retrieve()
         {
-            var allUserRoles = _userroleData.Retreive();
+            var allUserRoles = _userRoleData.Retrieve();
             return allUserRoles;
         }
     }

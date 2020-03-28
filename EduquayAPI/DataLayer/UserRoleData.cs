@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
 
         }
 
-        public string Add(UserRoleRequest urdata)
+        public string Add(UserRoleRequest urData)
         {
             try
             {
@@ -28,12 +28,12 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@UserTypeID", urdata.UserTypeId),
-                    new SqlParameter("@Userrolename", urdata.Userrolename ?? urdata.Userrolename),
-                    new SqlParameter("@Isactive", urdata.IsActive ?? urdata.IsActive),
-                    new SqlParameter("@Comments", urdata.Comments ?? urdata.Comments),
-                    new SqlParameter("@Createdby", urdata.CreatedBy),
-                    new SqlParameter("@Updatedby", urdata.UpdatedBy),
+                    new SqlParameter("@UserTypeID", urData.UserTypeId),
+                    new SqlParameter("@Userrolename", urData.Userrolename ?? urData.Userrolename),
+                    new SqlParameter("@Isactive", urData.IsActive ?? urData.IsActive),
+                    new SqlParameter("@Comments", urData.Comments ?? urData.Comments),
+                    new SqlParameter("@Createdby", urData.CreatedBy),
+                    new SqlParameter("@Updatedby", urData.UpdatedBy),
 
                     retVal
                 };
@@ -46,7 +46,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<UserRole> Retreive(int code)
+        public List<UserRole> Retrieve(int code)
         {
             string stProc = FetchUserRole;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", code) };
@@ -54,7 +54,7 @@ namespace EduquayAPI.DataLayer
             return allData; throw new NotImplementedException();
         }
 
-        public List<UserRole> Retreive()
+        public List<UserRole> Retrieve()
         {
             string stProc = FetchUserRoles;
             var pList = new List<SqlParameter>();
