@@ -16,7 +16,7 @@ namespace EduquayAPI.Services
         List<User> Retrieve(int code);
         List<User> Retrieve();
         List<User> RetrieveByEmail(string email);
-        List<User> RetrieveByUsername(string userName);
+        List<User> RetrieveByUsername(string username);
         List<User> FindByUserType(int userTypeId);
         List<User> FindByUserRole(int userRoleId);
 

@@ -132,9 +132,9 @@ namespace EduquayAPI.Services
             return users;
         }
 
-        public List<User> RetrieveByUsername(string userName)
+        public List<User> RetrieveByUsername(string username)
         {
-            var users = _usersData.RetrieveByUsername(userName);
+            var users = _usersData.RetrieveByUsername(username);
             return users;
         }
     }

@@ -17,6 +17,6 @@ namespace EduquayAPI.DataLayer
         List<User> RetrieveByUserType(int userTypeId);
         List<User> RetrieveByUserRole(int userRoleId);
         List<User> RetrieveByEmail(string email);
-        List<User> RetrieveByUsername(string userName);
+        List<User> RetrieveByUsername(string username);
     }
 }

@@ -120,12 +120,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveByRole/{userRoleId}")]
-        public UserResponse GetUsersbyRole(int userRoleId)
+        [Route("RetrieveByRole/{roleId}")]
+        public UserResponse GetUsersbyRole(int roleId)
         {
             try
             {
-                var users = _usersService.FindByUserRole(userRoleId);
+                var users = _usersService.FindByUserRole(roleId);
                 return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
@@ -135,12 +135,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveByType/{userTypeId}")]
-        public UserResponse GetUsersbyType(int userTypeId)
+        [Route("RetrieveByType/{typeId}")]
+        public UserResponse GetUsersbyType(int typeId)
         {
             try
             {
-                var users = _usersService.FindByUserType(userTypeId);
+                var users = _usersService.FindByUserType(typeId);
                 return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retrieve/{email}")]
+        [Route("RetrieveByEmail/{email}")]
         public UserResponse GetUsersbyEmail(string email)
         {
             try
@@ -165,12 +165,12 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Retrieve/{username}")]
-        public UserResponse GetUsersbyUsername(string userName)
+        [Route("RetrieveByUsername/{username}")]
+        public UserResponse GetUsersbyUsername(string username)
         {
             try
             {
-                var users = _usersService.RetrieveByUsername(userName);
+                var users = _usersService.RetrieveByUsername(username);
                 return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)

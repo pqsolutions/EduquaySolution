@@ -16,8 +16,8 @@ namespace EduquayAPI.DataLayer
         private const string AddUser = "SPC_AddUser";
         private const string FetchUserByEmail = "SPC_FetchUserByEmail";
         private const string FetchUserByUsername = "SPC_FetchUserByUsername";
-        private const string FetchUserByUserRole = "SPC_FetchUserByUserRole";
-        private const string FetchUserByUserType = "SPC_FetchUserByUserType";
+        private const string FetchUserByUserRole = "SPC_FetchUserByRole";
+        private const string FetchUserByUserType = "SPC_FetchUserByType";
         private const string CheckUserPassword = "SPC_CheckUserPassword";
 
         public UsersData()
@@ -131,10 +131,10 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-        public List<User> RetrieveByUsername(string userName)
+        public List<User> RetrieveByUsername(string username)
         {
             string stProc = FetchUserByUsername;
-            var pList = new List<SqlParameter>() { new SqlParameter("@Username", userName) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@Username", username) };
             var allData = UtilityDL.FillData<User>(stProc, pList);
             return allData;
         }
