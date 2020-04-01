@@ -36,14 +36,14 @@ namespace EduquayAPI.Models
         public string ContactNo1 { get; set; }
         public string ContactNo2 { get; set; }
         public string Email { get; set; }
-        public int? GovIDType_ID { get; set; }
+        public int GovIDType_ID { get; set; }
         public string GovIDType { get; set; }
         public string GovIDDetails { get; set; }
         public string Address { get; set; }
         public string Pincode { get; set; }
         public string Comments { get; set; }
         public string IsActive { get; set; }
-        public string DigitalSignature { get; set; }
+       // public string DigitalSignature { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
@@ -130,8 +130,7 @@ namespace EduquayAPI.Models
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIDType_ID"))
                 this.GovIDType_ID = Convert.ToInt32(reader["GovIDType_ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIDType"))
-                this.GovIDType = Convert.ToString(reader["GovIDType"]);
+
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIDType"))
                 this.GovIDType = Convert.ToString(reader["GovIDType"]);
@@ -151,8 +150,8 @@ namespace EduquayAPI.Models
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Isactive"))
                 this.IsActive = Convert.ToString(reader["Isactive"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DigitalSignature"))
-                this.DigitalSignature = Convert.ToString(reader["DigitalSignature"]);
+            //if (CommonUtility.IsColumnExistsAndNotNull(reader, "DigitalSignature"))
+            //    this.DigitalSignature = Convert.ToString(reader["DigitalSignature"]);
 
         }
     }

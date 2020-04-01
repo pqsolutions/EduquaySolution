@@ -8,7 +8,7 @@ namespace EduquayAPI.DataLayer
 {
     public interface IUserData
     {
-        Task<List<UserModel>> FindByEmailAsync(string email);
+        Task<List<UserModel>> FindByEmailAsync(string email); 
         Task<int> CreateUserAsync(UserModel user, string password);
         Task<List<UserPassword>> CheckPasswordAsync(UserModel user);
 
