@@ -7,6 +7,8 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class AddUserRequest
     {
+
+      
         public int UserType_ID { get; set; }
         public int UserRole_ID { get; set; }
         public string User_gov_code { get; set; }
@@ -29,9 +31,11 @@ namespace EduquayAPI.Contracts.V1.Request
         public string GovIDDetails { get; set; }
         public string Address { get; set; }
         public string Pincode { get; set; }
+        public int CreatedBy { get; set; }
+        public int UpdatedBy { get; set; }
         public string Comments { get; set; }
         public string IsActive { get; set; }
-        public string DigitalSignature { get; set; }
+       // public string DigitalSignature { get; set; }
 
     }
 }

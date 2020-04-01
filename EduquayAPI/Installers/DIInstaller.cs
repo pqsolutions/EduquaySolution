@@ -20,6 +20,12 @@ namespace EduquayAPI.Installers
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<IUsersData, UsersData>();
+            services.AddScoped<IUserIdentityService, UserIdentityService>();
+            services.AddScoped<IUsersService, UsersService>();
+
+
+
             services.AddScoped<IStateDataFactory, StateDataFactory>();
             services.AddScoped<IStateService, StateService>();
 

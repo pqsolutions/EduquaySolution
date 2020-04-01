@@ -7,7 +7,7 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class UserTypeRequest
     {
-        public int Id { get; set; }
+       
         public string UserTypename { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
