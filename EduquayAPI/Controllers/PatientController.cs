@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,7 +17,7 @@ namespace EduquayAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
@@ -30,17 +31,27 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("AddPatient")]
-        public ActionResult<string> AddPatient(Patient pdata)
+        public ActionResult<ServiceResponse> AddPatient(Patient pdata)
         {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding patient data - {JsonConvert.SerializeObject(pdata)}");
-            var patient = _patientService.AddPatient(pdata);
-            if (patient == null)
+            try
             {
-                return NotFound();
+
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Adding patient data - {JsonConvert.SerializeObject(pdata)}");
+                var patient = _patientService.AddPatient(pdata);
+                if (patient == null)
+                {
+                    return NotFound();
+                }
+
+                _logger.LogInformation($"Patient data added successfully - {pdata}");
+                return new ServiceResponse {Status = "true", Message = string.Empty, Result = patient};
             }
-            _logger.LogInformation($"Patient data added successfully - {pdata}");
-            return patient;
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update patient data - {ex.StackTrace}");
+                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to update patient data" };
+            }
         }
 
         [HttpGet]
