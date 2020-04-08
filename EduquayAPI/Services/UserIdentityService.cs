@@ -52,7 +52,7 @@ namespace EduquayAPI.Services
             var createUser = await _usersService.AddNewUserAsync(users, hashPassword);
             var newUser = new User()
             {
-                Email =users.Email,
+                Email = users.Email,
                 Username = users.Username,
             };
             if (!createUser.Succeeded)

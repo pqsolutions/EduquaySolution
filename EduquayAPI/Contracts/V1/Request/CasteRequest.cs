@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Contracts.V1.Request
 {
-    public class FacilityTypeRequest
+    public class CasteRequest
     {
-        public string Facility_typename { get; set; }
+        public string Castename { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
-      
         public int CreatedBy { get; set; }
         public int UpdatedBy { get; set; }
     }

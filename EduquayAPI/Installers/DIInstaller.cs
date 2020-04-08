@@ -24,10 +24,11 @@ namespace EduquayAPI.Installers
             services.AddScoped<IUserIdentityService, UserIdentityService>();
             services.AddScoped<IUsersService, UsersService>();
 
-
-
             services.AddScoped<IStateDataFactory, StateDataFactory>();
             services.AddScoped<IStateService, StateService>();
+
+            services.AddScoped<ISubjectDataFactory, SubjectDataFactory>();
+            services.AddScoped<ISubjectService, SubjectService>();
 
             services.AddScoped<IDistrictDataFactory, DistrictDataFactory>();
             services.AddScoped<IDistrictService, DistrictService>();
@@ -64,6 +65,12 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<ISubjectTypeDataFactory, SubjectTypeDataFactory>();
             services.AddScoped<ISubjectTypeService, SubjectTypeService>();
+
+            services.AddScoped<IReligionDataFactory, ReligionDataFactory>();
+            services.AddScoped<IReligionService, ReligionService>();
+
+            services.AddScoped<ICasteDataFactory, CasteDataFactory>();
+            services.AddScoped<ICasteService, CasteService>();
 
             services.AddSingleton<DbConnect>();
         }
