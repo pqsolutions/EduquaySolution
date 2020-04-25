@@ -41,10 +41,12 @@ namespace EduquayAPI.Installers
                 };
             });
 
+            ///services.AddCors();
             services.AddCors(options =>
             {
-                options.AddPolicy("corsPolicy",builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
+                options.AddPolicy("corsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
             });
+
             services.AddControllers(options =>
             {
                 options.RespectBrowserAcceptHeader = true; // false by default

@@ -52,6 +52,8 @@ namespace EduquayAPI.Models
             Pending
         }
 
+        public static IEnumerable<T> CreateEnumerable<T>(params T[] values) => values;
+
         // <summary> 
         /// Method to check whether column exists or not 
         /// </summary> 

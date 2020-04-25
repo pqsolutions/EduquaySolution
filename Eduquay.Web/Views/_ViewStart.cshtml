@@ -1,0 +1,4 @@
+﻿@{
+    var controller = (((Microsoft.AspNetCore.Http.DefaultHttpContext)ViewContext.HttpContext).Request).Path.Value;
+    Layout = controller.ToString().Contains("Login") || controller.ToString().Contains("/") ? "_LoginLayout" : "_Layout";
+}

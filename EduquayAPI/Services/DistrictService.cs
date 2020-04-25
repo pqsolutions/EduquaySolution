@@ -46,5 +46,35 @@ namespace EduquayAPI.Services
             var allDistricts = _districtData.Retrieve();
             return allDistricts;
         }
+
+        //public void AddSubjectRegistration(Object object)
+        //{
+        //    return _districtData.AddSubjectRegistration(object.SubjectRegistration);
+        //}
+
+        //public void AddSubjectAddressDetails(string params)
+        //{
+
+        //}
+        //public void AddSubjectPregenancyDetails(string params) // 
+        //{
+
+        //}
+        //public void AddSubjectParentDetails(string params)
+        //{
+
+        //}
+
+        //public void NewSubjectRegistration(Object object)
+        //{
+        //    var response = _districtData.AddSubjectRegistration(object.SubjectRegistration);
+
+        //    if (response.subid > 0 && !string.IsNullOrEmpty(response.subUniqueId))
+        //    {
+        //        _districtData.AddSubjectAddressDetails(object.AddressDetails, response.subid, response.subUniqueId);
+        //        _districtData.AddSubjectPregenancyDetails(object.PregnancyDetails, response.subid, response.subUniqueId);
+        //        _districtData.AddSubjectParentDetails(object.ParentDetails, response.subid, response.subUniqueId);
+        //    }
+        //}
     }
 }

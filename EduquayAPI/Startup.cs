@@ -46,16 +46,16 @@ namespace EduquayAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseRouting();
-
+            app.UseCors("corsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapDefaultControllerRoute().RequireCors("corsPolicy");
                 endpoints.MapControllers();
             });
         }

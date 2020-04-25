@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduquayAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class IdentityController : ControllerBase
     {
@@ -54,6 +56,8 @@ namespace EduquayAPI.Controllers
         [HttpPost(ApiRoutes.Identity.Login)]
         public async Task<IActionResult> Login(UserLoginRequest request)
         {
+            try
+            {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new AuthFailedResponse
@@ -67,11 +71,12 @@ namespace EduquayAPI.Controllers
 
             if (!authResponse.Success)
             {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Status = false,
-                    Errors = authResponse.Errors
-                });
+                    return Ok(new AuthFailedResponse
+                    {
+                        Status = false,
+                        Errors = authResponse.Errors
+                    });
+                    
             }
 
             return Ok(new AuthSuccessResponse
@@ -79,6 +84,17 @@ namespace EduquayAPI.Controllers
                 Status = true,
                 Token = authResponse.Token,
             });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new AuthFailedResponse
+                {
+                    Status = true,
+                    Errors = CommonUtility.CreateEnumerable(ex.Message)
+                });
+            }
+
         }
 
         [Authorize]
@@ -91,5 +107,6 @@ namespace EduquayAPI.Controllers
             var userName = claim[0].Value;
             return $"Welcome {userName}";
         }
+
     }
 }

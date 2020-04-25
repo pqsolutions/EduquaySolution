@@ -64,5 +64,24 @@ namespace EduquayAPI.DataLayer
             var allData = UtilityDL.FillData<District>(stProc, pList);
             return allData;
         }
+
+        //public void AddSubjectRegistration(string params)
+        //{
+
+        //}
+
+        //public void AddSubjectAddressDetails(string params)
+        //{
+
+        //}
+        //public void AddSubjectPregenancyDetails(string params)
+        //{
+
+        //}
+        //public void AddSubjectParentDetails(string params)
+        //{
+
+        //}
+
     }
 }
