@@ -92,6 +92,7 @@ namespace EduquayAPI.Services
 
         private AuthenticationResult GenerateAuthenticationResult(UserModel user)
         {
+            var expiryDateTime = DateTime.UtcNow.AddMinutes(2);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -103,7 +104,8 @@ namespace EduquayAPI.Services
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim("id", user.Id.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                //Expires = DateTime.UtcNow.AddHours(2),
+                Expires = expiryDateTime,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -112,7 +114,11 @@ namespace EduquayAPI.Services
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),
+                Username = user.Email,
+                Created = DateTime.UtcNow,
+                Expiry = expiryDateTime,
                 Errors = null
+
             };
         }
     }

@@ -51,7 +51,8 @@ namespace EduquayAPI
 
             app.UseAuthentication();
             app.UseRouting();
-
+            
+            app.UseCors("corsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

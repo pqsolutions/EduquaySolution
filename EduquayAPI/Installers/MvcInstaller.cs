@@ -43,7 +43,7 @@ namespace EduquayAPI.Installers
 
             services.AddCors(options =>
             {
-                options.AddPolicy("corsPolicy",builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
+                options.AddPolicy("corsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
             });
             services.AddControllers(options =>
             {

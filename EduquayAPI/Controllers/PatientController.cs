@@ -17,7 +17,7 @@ namespace EduquayAPI.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
