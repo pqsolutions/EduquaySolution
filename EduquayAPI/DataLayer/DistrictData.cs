@@ -32,8 +32,6 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@StateID", dData.StateId),
                     new SqlParameter("@Districtname", dData.Districtname  ?? dData.Districtname),
                     new SqlParameter("@Isactive", dData.IsActive ?? dData.IsActive),
-                    new SqlParameter("@Latitude", dData.Latitude ?? dData.Latitude),
-                    new SqlParameter("@Longitude", dData.Longitude ?? dData.Longitude),
                     new SqlParameter("@Comments", dData.Comments ?? dData.Comments),
                     new SqlParameter("@Createdby", dData.CreatedBy),
                     new SqlParameter("@Updatedby", dData.UpdatedBy),

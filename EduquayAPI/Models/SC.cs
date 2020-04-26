@@ -13,8 +13,7 @@ namespace EduquayAPI.Models
         public string CHCName { get; set; }
         public int PHCId { get; set; }
         public string PHCName { get; set; }
-        public int HNIN_ID { get; set; }
-        public string NIN2HFI { get; set; }
+        public string HNIN_ID { get; set; }
         public string SC_gov_code { get; set; }
         public string SCname { get; set; }
         public string Pincode { get; set; }
@@ -43,10 +42,7 @@ namespace EduquayAPI.Models
                 this.PHCName = Convert.ToString(reader["PHCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "HNIN_ID"))
-                this.HNIN_ID = Convert.ToInt32(reader["HNIN_ID"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NIN2HFI"))
-                this.NIN2HFI = Convert.ToString(reader["NIN2HFI"]);
+                this.HNIN_ID = Convert.ToString(reader["HNIN_ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SC_gov_code"))
                 this.SC_gov_code = Convert.ToString(reader["SC_gov_code"]);

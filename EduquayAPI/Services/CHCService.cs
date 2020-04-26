@@ -28,11 +28,7 @@ namespace EduquayAPI.Services
                 if (cData.BlockId <= 0)
                 {
                     return "Invalid Block Id";
-                }
-                if (cData.HNIN_ID <= 0)
-                {
-                    return "Invalid HNIN Id";
-                }
+                }              
                 if (cData.IsActive.ToLower() != "true")
                 {
                     cData.IsActive = "false";

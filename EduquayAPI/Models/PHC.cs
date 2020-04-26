@@ -11,11 +11,11 @@ namespace EduquayAPI.Models
     {
         public int Id { get; set; }
         public int CHCId { get; set; }
-        public string CHCName { get; set; }       
-        public int HNIN_ID { get; set; }
-        public string NIN2HFI { get; set; }
+        public string CHCName { get; set; }
+        public string HNIN_ID { get; set; }
         public string PHC_gov_code { get; set; }
-        public string PHCname { get; set; }      
+        public string PHCname { get; set; }
+        public string Pincode { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
         public string Latitude { get; set; }
@@ -32,19 +32,21 @@ namespace EduquayAPI.Models
                 this.CHCId = Convert.ToInt32(reader["CHCID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
-                this.CHCName = Convert.ToString(reader["CHCname"]);           
+                this.CHCName = Convert.ToString(reader["CHCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "HNIN_ID"))
-                this.HNIN_ID = Convert.ToInt32(reader["HNIN_ID"]);
+                this.HNIN_ID = Convert.ToString(reader["HNIN_ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NIN2HFI"))
-                this.NIN2HFI = Convert.ToString(reader["NIN2HFI"]);
+
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHC_gov_code"))
                 this.PHC_gov_code = Convert.ToString(reader["PHC_gov_code"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCname"))
-                this.PHCname = Convert.ToString(reader["PHCname"]);          
+                this.PHCname = Convert.ToString(reader["PHCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
+                this.Pincode = Convert.ToString(reader["Pincode"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
                 this.IsActive = Convert.ToString(reader["IsActive"]);

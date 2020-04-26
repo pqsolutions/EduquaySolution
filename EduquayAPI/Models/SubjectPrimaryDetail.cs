@@ -22,6 +22,7 @@ namespace EduquayAPI.Models
         public string SCname { get; set; }
         public int RIID { get; set; }
         public string RIsite { get; set; }
+        public string SubjectTitle { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -30,6 +31,8 @@ namespace EduquayAPI.Models
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
         public string MobileNo { get; set; }
+        public string EmailId { get; set; }
+        public string DateofRegister { get; set; }
         public string SpouseSubjectID { get; set; }
         public string Spouse_FirstName { get; set; }
         public string Spouse_MiddleName { get; set; }
@@ -86,6 +89,9 @@ namespace EduquayAPI.Models
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIsite"))
                 this.RIsite  = Convert.ToString(reader["RIsite"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTitle"))
+                this.SubjectTitle = Convert.ToString(reader["SubjectTitle"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstName"))
                 this.FirstName  = Convert.ToString(reader["FirstName"]);
 
@@ -106,6 +112,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MobileNo"))
                 this.MobileNo  = Convert.ToString(reader["MobileNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "EmailId"))
+                this.EmailId = Convert.ToString(reader["EmailId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateofRegister"))
+                this.DateofRegister = Convert.ToString(reader["DateofRegister"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MaritalStatus"))
                 this.MaritalStatus   = Convert.ToString(reader["MaritalStatus"]);

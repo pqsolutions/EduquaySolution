@@ -30,10 +30,11 @@ namespace EduquayAPI.DataLayer
                 {
                     new SqlParameter("@BlockID", cData.BlockId),
                     new SqlParameter("@DistrictID", cData.DistrictId),
-                    new SqlParameter("@HNIN_ID", cData.HNIN_ID),
+                    new SqlParameter("@HNIN_ID", cData.HNIN_ID ?? cData.HNIN_ID),
                     new SqlParameter("@CHC_gov_code", cData.CHC_gov_code),
                     new SqlParameter("@CHCname", cData.CHCname  ?? cData.CHCname),
                     new SqlParameter("@Istestingfacility", cData.Istestingfacility ?? cData.Istestingfacility),
+                    new SqlParameter("@Pincode", cData.Pincode ?? cData.Pincode),
                     new SqlParameter("@Isactive", cData.IsActive ?? cData.IsActive),
                     new SqlParameter("@Latitude", cData.Latitude ?? cData.Latitude),
                     new SqlParameter("@Longitude", cData.Longitude ?? cData.Longitude),

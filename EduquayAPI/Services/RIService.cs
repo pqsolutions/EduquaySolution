@@ -34,6 +34,10 @@ namespace EduquayAPI.Services
                 {
                     return "Invalid SC Id";
                 }
+                if (rData.ILRID <= 0)
+                {
+                    return "Invalid ILR Id";
+                }
                 var result = _riData.Add(rData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add RI data" : result;
             }

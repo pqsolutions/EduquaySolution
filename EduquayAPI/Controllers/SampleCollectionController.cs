@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Models;
+using EduquayAPI.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
+
+namespace EduquayAPI.Controllers
+{
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    public class SampleCollectionController : ControllerBase
+    {
+        private readonly ISampleCollectionService _sampleCollectionService;
+        private readonly ILogger<SampleCollectionController> _logger;
+
+        public SampleCollectionController(ISampleCollectionService sampleCollectionService, ILogger<SampleCollectionController> logger)
+        {
+            _sampleCollectionService = sampleCollectionService;
+            _logger = logger;
+        }
+
+        [HttpPost]
+        [Route("Retrieve")]
+        public SubjectSampleResponse GetSubjectList(SubjectSampleRequest ssData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var subjectList = _sampleCollectionService.Retrieve(ssData);
+                _logger.LogInformation($"Received Subject Data {subjectList}");
+                return subjectList.Count == 0 ? new SubjectSampleResponse { Status = "true", Message = "No subjects found", SubjectList = new List<SubjectSamples>() } : new SubjectSampleResponse { Status = "true", Message = string.Empty, SubjectList = subjectList };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving subject data {e.StackTrace}");
+                return new SubjectSampleResponse { Status = "false", Message = e.Message, SubjectList = null };
+            }
+        }
+
+        [HttpPost]
+        [Route("Add")]
+        public ActionResult<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Adding subject sample data - {JsonConvert.SerializeObject(ssData)}");
+                var subjectSample = _sampleCollectionService.AddSample(ssData);
+                if (subjectSample == null)
+                {
+                    return NotFound();
+                }
+                _logger.LogInformation($"subject sample data added successfully - {ssData}");
+                return new ServiceResponse { Status = "true", Message = string.Empty, Result = subjectSample };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to add subject sample data - {ex.StackTrace}");
+                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to add subject sample data" };
+            }
+        }
+    }
+}

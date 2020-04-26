@@ -64,7 +64,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@CHCID", addUser.CHCID),
                     new SqlParameter("@PHCID", addUser.PHCID),
                     new SqlParameter("@SCID", addUser.SCID),
-                    new SqlParameter("@RIID", addUser.RIID),
+                    new SqlParameter("@RIID", addUser.RIID ?? string.Empty ),
                     new SqlParameter("@FirstName", addUser.FirstName ?? addUser.FirstName),
                     new SqlParameter("@MiddleName", addUser.MiddleName ?? string.Empty),
                     new SqlParameter("@LastName", addUser.LastName ?? string.Empty),

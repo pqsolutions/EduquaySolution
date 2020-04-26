@@ -28,9 +28,10 @@ namespace EduquayAPI.DataLayer
                 var pList = new List<SqlParameter>
                 {                    
                     new SqlParameter("@CHCID", pData.CHCId),
-                    new SqlParameter("@HNIN_ID", pData.HNIN_ID),
+                    new SqlParameter("@HNIN_ID", pData.HNIN_ID ?? pData.HNIN_ID),
                     new SqlParameter("@PHC_gov_code", pData.PHC_gov_code),
-                    new SqlParameter("@PHCname", pData.PHCname  ?? pData.PHCname),                   
+                    new SqlParameter("@PHCname", pData.PHCname  ?? pData.PHCname),
+                    new SqlParameter("@Pincode", pData.Pincode  ?? pData.Pincode),
                     new SqlParameter("@Isactive", pData.IsActive ?? pData.IsActive),
                     new SqlParameter("@Latitude", pData.Latitude ?? pData.Latitude),
                     new SqlParameter("@Longitude", pData.Longitude ?? pData.Longitude),

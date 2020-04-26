@@ -8,7 +8,6 @@ namespace EduquayAPI.Models
 {
     public class FacilityType : IFill
     {
-
         public int Id { get; set; }
         public string Facility_typename { get; set; }
         public string IsActive { get; set; }

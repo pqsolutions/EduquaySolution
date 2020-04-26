@@ -30,7 +30,7 @@ namespace EduquayAPI.DataLayer
                 {
                     new SqlParameter("@CHCID", sData.CHCId),
                     new SqlParameter("@PHCID", sData.PHCId),
-                    new SqlParameter("@HNIN_ID", sData.HNIN_ID),
+                    new SqlParameter("@HNIN_ID", sData.HNIN_ID ?? sData.HNIN_ID),
                     new SqlParameter("@SC_gov_code", sData.SC_gov_code),
                     new SqlParameter("@SCname", sData.SCname  ?? sData.SCname),
                     new SqlParameter("@Pincode", sData.Pincode  ?? sData.Pincode),

@@ -23,31 +23,31 @@ namespace EduquayAPI.DataLayer
         }
 
 
-        public string AddSubject(SubjectPrimaryDetailRequest sprData, SubjectAddressDetailRequest saData, SubjectPregnancyDetailRequest spData, SubjectParentDetailRequest spaData)
+        public string AddSubject(SubjectRegistrationRequest subRegData)
         {
             try
             {
 
-                SubjectPrimaryDetail subPrimary = subjectPrimary(sprData);
+                SubjectPrimaryDetail subPrimary = subjectPrimary(subRegData.SubjectPrimaryRequest);
                 if (subPrimary != null)
                 {
                     if (subPrimary.ID > 0)
                     {
                         var subID = subPrimary.ID;
                         var uniqueSubID = subPrimary.UniqueSubjectID;
-                        SubjectAddress(saData, subID);
-                        SubjectPregnancy(spData, subID);
-                        SubjectParent(spaData, subID);
+                        SubjectAddress(subRegData.SubjectAddressRequest, subID);
+                        SubjectPregnancy(subRegData.SubjectPregnancyRequest, subID);
+                        SubjectParent(subRegData.SubjectParentRequest, subID);
                         return "Unique SubjectID generated successfully. The Unique ID is: " + uniqueSubID;
                     }
                     else
                     {
-                        return $"Failed to add subject registration for {sprData.Spouse_FirstName + " " + sprData.Spouse_LastName}";
+                        return $"Failed to add subject registration for {subRegData.SubjectPrimaryRequest.FirstName + " " + subRegData.SubjectPrimaryRequest.LastName}";
                     }
                 }
                 else
                 {
-                    return $"Unable to Register subject for {sprData.Spouse_FirstName + " " + sprData.Spouse_LastName}";
+                    return $"Unable to Register subject for {subRegData.SubjectPrimaryRequest.FirstName + " " + subRegData.SubjectPrimaryRequest.LastName}";
                 }
 
             }
@@ -73,6 +73,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@PHCID", sprData.PHCID),
                     new SqlParameter("@SCID", sprData.SCID),
                     new SqlParameter("@RIID", sprData.RIID),
+                    new SqlParameter("@SubjectTitle", sprData.SubjectTitle ?? sprData.SubjectTitle),
                     new SqlParameter("@FirstName", sprData.FirstName ?? sprData.FirstName),
                     new SqlParameter("@MiddleName", sprData.MiddleName ?? sprData.MiddleName),
                     new SqlParameter("@LastName", sprData.LastName ?? sprData.LastName),
@@ -81,6 +82,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Gender", sprData.Gender ?? sprData.Gender),
                     new SqlParameter("@MaritalStatus", sprData.MaritalStatus ?? sprData.MaritalStatus),
                     new SqlParameter("@MobileNo", sprData.MobileNo ?? sprData.MobileNo),
+                    new SqlParameter("@EmailId", sprData.EmailId ?? sprData.EmailId),
                     new SqlParameter("@SpouseSubjectID", sprData.SpouseSubjectID ?? sprData.SpouseSubjectID),
                     new SqlParameter("@Spouse_FirstName", sprData.Spouse_FirstName ?? sprData.Spouse_FirstName),
                     new SqlParameter("@Spouse_MiddleName", sprData.Spouse_MiddleName ?? sprData.Spouse_MiddleName),
@@ -89,6 +91,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@GovIdType_ID", sprData.GovIdType_ID),
                     new SqlParameter("@GovIdDetail", sprData.GovIdDetail ?? sprData.GovIdDetail),
                     new SqlParameter("@AssignANM_ID", sprData.AssignANM_ID),
+                    new SqlParameter("@DateofRegister", sprData.DateofRegister),
                     new SqlParameter("@Isactive", sprData.IsActive ?? sprData.IsActive),
                     new SqlParameter("@Createdby", sprData.CreatedBy),
                     new SqlParameter("@Updatedby", sprData.UpdatedBy),
@@ -165,7 +168,7 @@ namespace EduquayAPI.DataLayer
 
         public void SubjectParent(SubjectParentDetailRequest spaData, int subID)
         {
-           
+
             try
             {
                 var stProc = AddSubjectParentDetail;
@@ -186,7 +189,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Gaurdian_FirstName", spaData.Gaurdian_FirstName ?? spaData.Gaurdian_FirstName),
                     new SqlParameter("@Gaurdian_MiddleName", spaData.Gaurdian_MiddleName ?? spaData.Gaurdian_MiddleName),
                     new SqlParameter("@Gaurdian_LastName", spaData.Gaurdian_LastName ?? spaData.Gaurdian_LastName),
-                    new SqlParameter("@Gaurdian_ContactNo", spaData.Gaurdian_ContactNo ?? spaData.Gaurdian_ContactNo),                   
+                    new SqlParameter("@Gaurdian_ContactNo", spaData.Gaurdian_ContactNo ?? spaData.Gaurdian_ContactNo),
                     new SqlParameter("@RBSKId", spaData.RBSKId ?? spaData.RBSKId),
                     new SqlParameter("@SchoolName", spaData.SchoolName ?? spaData.SchoolName),
                     new SqlParameter("@SchoolAddress1", spaData.SchoolAddress1 ?? spaData.SchoolAddress1),

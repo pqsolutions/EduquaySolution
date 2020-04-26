@@ -7,8 +7,6 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class AddUserRequest
     {
-
-      
         public int UserType_ID { get; set; }
         public int UserRole_ID { get; set; }
         public string User_gov_code { get; set; }
@@ -20,7 +18,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public int CHCID { get; set; }
         public int PHCID { get; set; }
         public int SCID { get; set; }
-        public int RIID { get; set; }
+        public string  RIID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }

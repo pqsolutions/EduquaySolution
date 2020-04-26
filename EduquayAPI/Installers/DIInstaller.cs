@@ -72,6 +72,24 @@ namespace EduquayAPI.Installers
             services.AddScoped<ICasteDataFactory, CasteDataFactory>();
             services.AddScoped<ICasteService, CasteService>();
 
+            services.AddScoped<ICommunityDataFactory, CommunityDataFactory>();
+            services.AddScoped<ICommunityService, CommunityService>();
+
+            services.AddScoped<IClinicalDiagnosisDataFactory, ClinicalDiagnosisDataFactory>();
+            services.AddScoped<IClinicalDiagnosisService, ClinicalDiagnosisService>();
+
+            services.AddScoped<ITestTypeDataFactory, TestTypeDataFactory>();
+            services.AddScoped<ITestTypeService, TestTypeService>();
+
+            services.AddScoped<IThresholdDataFactory, ThresholdDataFactory>();
+            services.AddScoped<IThresholdService, ThresholdService>();
+
+            services.AddScoped<ISampleCollectionDataFactory, SampleCollectionDataFactory>();
+            services.AddScoped<ISampleCollectionService, SampleCollectionService>();
+
+            services.AddScoped<IANMShipmentDataFactory, ANMShipmentDataFactory>();
+            services.AddScoped<IANMShipmentService , ANMShipmentService>();
+
             services.AddSingleton<DbConnect>();
         }
     }

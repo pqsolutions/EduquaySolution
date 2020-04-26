@@ -9,8 +9,7 @@ namespace EduquayAPI.Services
 {
     public interface ISubjectService
     {
-        string AddSubject(SubjectPrimaryDetailRequest sprData, SubjectAddressDetailRequest saData, SubjectPregnancyDetailRequest spData, SubjectParentDetailRequest spaData);
-
+        string AddSubject(SubjectRegistrationRequest subRegData);
         List<SubjectPrimaryDetail> RetrievePrimaryDetail(string uniqueSubjectId);
         List<SubjectAddresDetail> RetrieveAddressDetail(string uniqueSubjectId);
         List<SubjectPregnancyDetail> RetrievePregnancyDetail(string uniqueSubjectId);

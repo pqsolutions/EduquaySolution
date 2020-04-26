@@ -14,8 +14,8 @@ namespace EduquayAPI.Models
         public string DistrictName { get; set; }
         public int BlockId { get; set; }
         public string BlockName { get; set; }
-        public int HNIN_ID { get; set; }      
-        public string NIN2HFI { get; set; }
+        public string HNIN_ID { get; set; }
+        public string Pincode { get; set; }
         public string CHC_gov_code { get; set; }
         public string CHCname { get; set; }
         public string Istestingfacility { get; set; }
@@ -44,10 +44,8 @@ namespace EduquayAPI.Models
                 this.BlockName = Convert.ToString(reader["Blockname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "HNIN_ID"))
-                this.HNIN_ID = Convert.ToInt32(reader["HNIN_ID"]);
+                this.HNIN_ID = Convert.ToString(reader["HNIN_ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NIN2HFI"))
-                this.NIN2HFI = Convert.ToString(reader["NIN2HFI"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHC_gov_code"))
                 this.CHC_gov_code = Convert.ToString(reader["CHC_gov_code"]);
@@ -57,6 +55,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Istestingfacility"))
                 this.Istestingfacility = Convert.ToString(reader["Istestingfacility"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
+                this.Pincode = Convert.ToString(reader["Pincode"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
                 this.IsActive = Convert.ToString(reader["IsActive"]);
