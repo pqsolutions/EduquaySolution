@@ -28,8 +28,8 @@ namespace EduquayAPI.Models
         public string PHCname { get; set; }
         public int SCID { get; set; }
         public string SCname { get; set; }
-        public int RIID { get; set; }
-        public string RISite { get; set; }
+        public string RIID { get; set; }
+       // public string RISite { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -104,10 +104,10 @@ namespace EduquayAPI.Models
                 this.SCname = Convert.ToString(reader["SCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
-                this.RIID = Convert.ToInt32(reader["RIID"]);
+                this.RIID = Convert.ToString(reader["RIID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIsite"))
-                this.RISite = Convert.ToString(reader["RIsite"]);
+            //if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIsite"))
+            //    this.RISite = Convert.ToString(reader["RIsite"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstName"))
                 this.FirstName = Convert.ToString(reader["FirstName"]);

@@ -15,8 +15,6 @@ namespace EduquayAPI.Models
         public string Districtname { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
         public int CreatedBy { get; set; }
         public int UpdatedBy { get; set; }
 
@@ -42,12 +40,6 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Comments"))
                 this.Comments = Convert.ToString(reader["Comments"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Latitude"))
-                this.Latitude = Convert.ToString(reader["Latitude"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Longitude"))
-                this.Longitude = Convert.ToString(reader["Longitude"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CreatedBy"))
                 this.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);

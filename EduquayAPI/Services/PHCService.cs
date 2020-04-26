@@ -28,10 +28,7 @@ namespace EduquayAPI.Services
                 {
                     return "Invalid CHC Id";
                 }
-                if (pData.HNIN_ID <= 0)
-                {
-                    return "Invalid HNIN Id";
-                }
+               
                 var result = _phcData.Add(pData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add PHC data" : result;
             }

@@ -11,7 +11,7 @@ namespace EduquayAPI.Contracts.V1.Request
       
         public int CHCId { get; set; }      
         public int PHCId { get; set; }      
-        public int HNIN_ID { get; set; }       
+        public string HNIN_ID { get; set; }       
         public string SC_gov_code { get; set; }
         public string SCname { get; set; }
         public string Pincode { get; set; }

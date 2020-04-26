@@ -30,10 +30,11 @@ namespace EduquayAPI.DataLayer
                 {
                    
                     new SqlParameter("@PHCID", rData.PHCId),
-                     new SqlParameter("@SCID", rData.SCId),                    
+                    new SqlParameter("@SCID", rData.SCId),                    
                     new SqlParameter("@RI_gov_code", rData.RI_gov_code),
                     new SqlParameter("@RIsite", rData.RIsite  ?? rData.RIsite),
                     new SqlParameter("@Pincode", rData.Pincode  ?? rData.Pincode),
+                    new SqlParameter("@ILRID" ,rData.ILRID),
                     new SqlParameter("@Isactive", rData.IsActive ?? rData.IsActive),
                     new SqlParameter("@Latitude", rData.Latitude ?? rData.Latitude),
                     new SqlParameter("@Longitude", rData.Longitude ?? rData.Longitude),

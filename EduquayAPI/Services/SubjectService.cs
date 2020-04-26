@@ -18,37 +18,37 @@ namespace EduquayAPI.Services
         {
             _subjectData = new SubjectDataFactory().Create();
         }
-        public string AddSubject(SubjectPrimaryDetailRequest sprData, SubjectAddressDetailRequest saData, SubjectPregnancyDetailRequest spData, SubjectParentDetailRequest spaData)
+        public string AddSubject(SubjectRegistrationRequest subRegData)
         {
             try
             {
-                if (sprData.DistrictID <= 0)
+                if (subRegData.SubjectPrimaryRequest.DistrictID <= 0)
                 {
                     return "Invalid District Id";
                 }
-                if (sprData.CHCID <= 0)
+                if (subRegData.SubjectPrimaryRequest.CHCID <= 0)
                 {
                     return "Invalid CHC Id";
                 }
-                if (sprData.PHCID <= 0)
+                if (subRegData.SubjectPrimaryRequest.PHCID <= 0)
                 {
                     return "Invalid PHC Id";
                 }
-                if (sprData.SCID <= 0)
+                if (subRegData.SubjectPrimaryRequest.SCID <= 0)
                 {
                     return "Invalid SC Id";
                 }
-                if (sprData.RIID <= 0)
+                if (subRegData.SubjectPrimaryRequest.RIID <= 0)
                 {
                     return "Invalid RI Id";
                 }
 
-                if (sprData.IsActive.ToLower() != "true")
+                if (subRegData.SubjectPrimaryRequest.IsActive.ToLower() != "true")
                 {
-                    sprData.IsActive = "false";
+                    subRegData.SubjectPrimaryRequest.IsActive = "false";
                 }
 
-                var result = _subjectData.AddSubject(sprData,saData,spData,spaData);
+                var result = _subjectData.AddSubject(subRegData);
                 return string.IsNullOrEmpty(result) ? $"Unable to generate subject detail" : result;
             }
             catch (Exception e)

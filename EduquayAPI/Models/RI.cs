@@ -16,6 +16,8 @@ namespace EduquayAPI.Models
         public string RI_gov_code { get; set; }
         public string RIsite { get; set; }
         public string Pincode { get; set; }
+        public int ILRID { get; set; }
+        public string ILRPoint { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
         public string Latitude { get; set; }
@@ -48,6 +50,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.Pincode = Convert.ToString(reader["Pincode"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILRID"))
+                this.ILRID = Convert.ToInt32(reader["ILRID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILRPoint"))
+                this.ILRPoint = Convert.ToString(reader["ILRPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
                 this.IsActive = Convert.ToString(reader["IsActive"]);

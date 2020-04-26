@@ -12,6 +12,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string RI_gov_code { get; set; }
         public string RIsite { get; set; }
         public string Pincode { get; set; }
+        public int ILRID { get; set; }
         public string IsActive { get; set; }
         public string Comments { get; set; }
         public string Latitude { get; set; }

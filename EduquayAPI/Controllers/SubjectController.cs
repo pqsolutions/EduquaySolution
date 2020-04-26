@@ -27,15 +27,11 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddSubjects(SubjectRegistrationRequest subreqData)
+        public ActionResult<string> AddSubjects(SubjectRegistrationRequest subRegData)
         {
             try
-            {
-                var sprData = subreqData.SubjectPrimaryRequest;
-                var saData = subreqData.SubjectAddressRequest;
-                var spData = subreqData.SubjectPregnancyRequest;
-                var spaData = subreqData.SubjectParentRequest;
-                var subject = _subjectService.AddSubject(sprData,saData,spData,spaData);
+            {               
+                var subject = _subjectService.AddSubject(subRegData);
                 return string.IsNullOrEmpty(subject) ? $"Unable to generate the subject detail" : subject;
             }
             catch (Exception e)
