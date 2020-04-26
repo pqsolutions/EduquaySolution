@@ -29,8 +29,6 @@ namespace EduquayAPITests.Controllers
                 Blockname = "TestBlockName",
                 IsActive = "true",
                 Comments = "TestComments",
-                Latitude = "12.23",
-                Longitude = "234.23",
                 CreatedBy = 11,
                 UpdatedBy = 10
             };
@@ -45,8 +43,6 @@ namespace EduquayAPITests.Controllers
                       Blockname= "pop",
                       IsActive= "True",
                       Comments= "TestCommentToValidate",
-                      Latitude= null,
-                      Longitude= null,
                       CreatedBy= 20,
                       UpdatedBy= 30
                     },
@@ -59,8 +55,6 @@ namespace EduquayAPITests.Controllers
                       Blockname= "pop1",
                       IsActive= "True",
                       Comments= "string123",
-                      Latitude= null,
-                      Longitude= null,
                       CreatedBy= 10,
                       UpdatedBy= 20
                     }
@@ -75,8 +69,6 @@ namespace EduquayAPITests.Controllers
                 Blockname = "pop1",
                 IsActive = "True",
                 Comments = "TestComments",
-                Latitude = null,
-                Longitude = null,
                 CreatedBy = 10,
                 UpdatedBy = 20
             };

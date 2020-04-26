@@ -8,6 +8,9 @@ namespace EduquayAPI.Contracts.V1.Response
     public class AuthSuccessResponse
     {
         public bool Status { get; set; }
+        public string Username { get; set; }
         public string Token { get; set; }
+        public string Created { get; set; }
+        public string Expiry { get; set; }
     }
 }
