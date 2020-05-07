@@ -13,7 +13,8 @@ export class SampleCollectionService {
   constructor(private constantService: ConstantService, private httpClient: HttpClient) { }
 
   getSampleCollection(){
-    return this.httpClient.get<SampleCollectionResponse>(this.sampleCollectionApi);
+    let apiUrl = this.constantService.API_ENDPOINT + this.sampleCollectionApi;
+    return this.httpClient.get<SampleCollectionResponse>(apiUrl);
   }
 
 }
