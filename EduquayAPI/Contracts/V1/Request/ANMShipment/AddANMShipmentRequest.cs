@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Contracts.V1.Request
+namespace EduquayAPI.Contracts.V1.Request.ANMShipment
 {
     public class AddANMShipmentRequest
     {
         public int SubjectID { get; set; }
         public string UniqueSubjectID { get; set; }
         public int SampleCollectionID { get; set; }
-        public int ShipmentType { get; set; }
+        public string ShipmentFrom { get; set; }
         public string ShipmentID { get; set; }
         public int ANM_ID { get; set; }
         public int TestingCHCID { get; set; }
@@ -21,6 +21,5 @@ namespace EduquayAPI.Contracts.V1.Request
         public string DateofShipment { get; set; }
         public string TimeofShipment { get; set; }
         public int CreatedBy { get; set; }
-
     }
 }

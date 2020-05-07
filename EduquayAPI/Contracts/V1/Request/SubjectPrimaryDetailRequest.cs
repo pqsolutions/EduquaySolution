@@ -8,6 +8,7 @@ namespace EduquayAPI.Contracts.V1.Request
     public class SubjectPrimaryDetailRequest
     {
         public int SubjectTypeID { get; set; }
+        public int ChildSubjectTypeID { get; set; }
         public string UniqueSubjectID { get; set; }
         public int DistrictID { get; set; }
         public int CHCID { get; set; }

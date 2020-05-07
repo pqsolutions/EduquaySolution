@@ -13,10 +13,11 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
+using EduquayAPI.Contracts.V1;
 
 namespace EduquayAPI.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class SampleCollectionController : ControllerBase
     {
@@ -29,6 +30,9 @@ namespace EduquayAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Used for fetch subject list not collected sample of particular ANM
+        /// </summary>
         [HttpPost]
         [Route("Retrieve")]
         public SubjectSampleResponse GetSubjectList(SubjectSampleRequest ssData)
@@ -47,6 +51,9 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used for collect the samples of particular subject
+        /// </summary>
         [HttpPost]
         [Route("Add")]
         public ActionResult<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
