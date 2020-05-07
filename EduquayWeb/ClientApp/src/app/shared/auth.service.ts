@@ -10,7 +10,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
   authresultobj: authResponse;
-  baseUrl: string = 'http://localhost/Eduquayapi/';
+  //baseUrl: string = 'http://localhost/Eduquayapi/';
+  baseUrl: string = 'https://c685e4a8.ngrok.io/Eduquayapi/';
   loginUrl: string = this.baseUrl + 'api/v1/Identity/Login';
   patientUrl: string = this.baseUrl + 'api/v1/Patient/GetPatients';
 
