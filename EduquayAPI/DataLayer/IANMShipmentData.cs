@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Request.ANMShipment;
 using EduquayAPI.Models;
-
+using EduquayAPI.Models.ANMShipment;
 
 namespace EduquayAPI.DataLayer
 {
@@ -13,6 +14,9 @@ namespace EduquayAPI.DataLayer
     {
         string AddANMShipment(AddANMShipmentRequest asData);
         List<ANMPickandPackSamples> Retrieve(int anmCode);
+        List<ANMShipmentLog> RetrieveShipmentLog(int anmCode);
+        List<ANMShipments> Retrieve(string shipmentId);
+        List<ANMShipmentID> GenerateANMShipmentID(ShipmentIDGenerateRequest sgData);
     }
     public interface IANMShipmentDataFactory
     {

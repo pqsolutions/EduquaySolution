@@ -11,6 +11,8 @@ namespace EduquayAPI.Models
         public int ID { get; set; }
         public int SubjectTypeID { get; set; }
         public string SubjectType { get; set; }
+        public int ChildSubjectTypeID { get; set; }
+        public string ChildSubjectType { get; set; }
         public string UniqueSubjectID { get; set; }
         public int DistrictID { get; set; }
         public string Districtname { get; set; }
@@ -55,6 +57,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectType"))
                 this.SubjectType = Convert.ToString(reader["SubjectType"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectTypeID"))
+                this.ChildSubjectTypeID = Convert.ToInt32(reader["ChildSubjectTypeID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectType"))
+                this.ChildSubjectType = Convert.ToString(reader["ChildSubjectType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);

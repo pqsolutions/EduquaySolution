@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Models
+namespace EduquayAPI.Models.ANMShipment
 {
     public class ANMPickandPackSamples : IFill
     {
