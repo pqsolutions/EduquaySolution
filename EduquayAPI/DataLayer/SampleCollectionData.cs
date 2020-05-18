@@ -13,6 +13,7 @@ namespace EduquayAPI.DataLayer
     {
         private const string FetchSubjectNotSampleCollectionbyANM = "SPC_FetchSubjectNotSampleCollectionbyANM";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
+       
 
         public SampleCollectionData()
         {
