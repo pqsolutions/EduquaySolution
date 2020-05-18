@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.DataLayer;
+using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Services;
+using EduquayAPI.Services.ANMNotifications;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -89,6 +91,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IANMShipmentDataFactory, ANMShipmentDataFactory>();
             services.AddScoped<IANMShipmentService , ANMShipmentService>();
+
+            services.AddScoped<IANMNotificationsDataFactory, ANMNotificationsDataFactory>();
+            services.AddScoped<IANMNotificationsService, ANMNotificationsService>();
 
             services.AddSingleton<DbConnect>();
         }

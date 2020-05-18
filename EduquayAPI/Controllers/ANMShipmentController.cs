@@ -71,7 +71,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var shipmentID = _anmShipmentService.GenerateANMShipmentID(sgData);
-                _logger.LogInformation($"Generate ANM ShipmentId {shipmentID}");
+                _logger.LogInformation($"Generated ANM ShipmentId {shipmentID}");
                 return shipmentID.Count == 0 ? new ShipmentIDGenerateResponse { Status = "true", Message = "No Shipment Id found", ShipmentID = new List<ANMShipmentID>() } : new ShipmentIDGenerateResponse { Status = "true", Message = string.Empty, ShipmentID = shipmentID };
             }
             catch (Exception e)
