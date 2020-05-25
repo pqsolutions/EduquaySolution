@@ -4,18 +4,20 @@ import { TokenService } from './token.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   authresultobj: authResponse;
-  //baseUrl: string = 'http://localhost/Eduquayapi/';
-  baseUrl: string = 'https://c685e4a8.ngrok.io/Eduquayapi/';
-  loginUrl: string = this.baseUrl + 'api/v1/Identity/Login';
-  patientUrl: string = this.baseUrl + 'api/v1/Patient/GetPatients';
+  loginApi: string = 'api/v1/Identity/Login';
+  patientApi: string = 'api/v1/Patient/GetPatients';
 
-  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
+  constructor(
+    private httpClient: HttpClient, 
+    private tokenService: TokenService, 
+    private genericService: GenericService) { }
 
   //Observable<HttpResponse<authresult>>
   userAuthentication(emailInput: string, passwordInput: string): Observable<any> {
@@ -31,8 +33,8 @@ export class AuthService {
       headers: httpHeaders
     };
     let postData = { 'email': emailInput, 'password': passwordInput };
-
-    return this.httpClient.post(this.loginUrl, postData, options);
+    let loginUrl = this.genericService.buildApiUrl(this.loginApi);
+    return this.httpClient.post(loginUrl, postData, options);
     // .pipe(
     //   catchError(errorRes => {
     //     let errorMessage = "An unknown error occurred";

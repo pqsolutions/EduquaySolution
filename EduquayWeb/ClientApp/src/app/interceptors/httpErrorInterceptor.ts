@@ -26,6 +26,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             if(error.error.errors !== null) {
               if(error.error.errors.length > 0){
                 return throwError(error.error.errors[0]);
+              }else if(error.error.title != null){
+                return throwError(error.error.title);
               }else if(error.error.errors.Email !== null && error.error.errors.Email.length > 0){
                 return throwError(error.error.errors.Email[0]);
               }

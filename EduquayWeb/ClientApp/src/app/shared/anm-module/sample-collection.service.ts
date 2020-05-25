@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ConstantService } from '../constant.service';
 import { HttpClient } from '@angular/common/http';
 import { SampleCollectionResponse } from './sample-collection-response';
+import { GenericService } from '../generic.service';
+import { SampleCollectionRequest } from './sample-collection-request';
 
 
 @Injectable({
@@ -9,12 +10,14 @@ import { SampleCollectionResponse } from './sample-collection-response';
 })
 export class SampleCollectionService {
 
-  sampleCollectionApi: string = "SampleCollection/Retrieve";
-  constructor(private constantService: ConstantService, private httpClient: HttpClient) { }
+  sampleCollectionApi: string = "api/v1/SampleCollection/Retrieve";
+  constructor(
+    private httpClient: HttpClient, 
+    private genericService: GenericService) { }
 
-  getSampleCollection(){
-    let apiUrl = this.constantService.API_ENDPOINT + this.sampleCollectionApi;
-    return this.httpClient.get<SampleCollectionResponse>(apiUrl);
+  getSampleCollection(scCollection: SampleCollectionRequest){
+    let apiUrl = this.genericService.buildApiUrl(this.sampleCollectionApi);
+    return this.httpClient.post<SampleCollectionResponse>(apiUrl, scCollection);
   }
 
 }

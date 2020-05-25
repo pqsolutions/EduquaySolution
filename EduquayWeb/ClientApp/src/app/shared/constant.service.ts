@@ -8,7 +8,7 @@ export class ConstantService {
   CONSUMER_KEY : String;
 
   constructor() { 
-    this.API_ENDPOINT = 'https://c685e4a8.ngrok.io/eduquayapi/api/v1/';
+    this.API_ENDPOINT = 'http://localhost/eduquayapi/';
     this.CONSUMER_KEY = 'someReallyStupidTextWhichWeHumansCantRead'
   }
 }
