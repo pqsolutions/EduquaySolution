@@ -5,13 +5,14 @@ import { Observable, throwError } from 'rxjs';
 
 import { tap, catchError } from 'rxjs/operators';
 import { TokenService } from '../shared/token.service';
+import { ConstantService } from '../shared/constant.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthInterceptorServiceService implements HttpInterceptor {
 
-    constructor(private router: Router, private tokenService: TokenService) { }
+    constructor(private router: Router, private tokenService: TokenService, private constantService: ConstantService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.headers.get('No-Auth') === "True") {
             return next.handle(req.clone());

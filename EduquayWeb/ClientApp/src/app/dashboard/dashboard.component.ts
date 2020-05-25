@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   constructor(private commonService: CommonService) { }
 
   ngOnInit() {
-    //this.commonService.addJsToElement('assets/assets/js/anm-module/sample-collection.js').onload = () => {
+    //this.commonService.addJsToElement('assets/assets/js/anm/sample-collection.js').onload = () => {
     //  console.log('sample-collection file loaded');
     //};
     //this.commonService.addJsToElement('assets/plugins/flatpickr/collection-flatpickr.js');

@@ -50,7 +50,7 @@
 </div>
 <!--  END MAIN CONTAINER  -->
 
-<i appLoadScript [script]="'assets/assets/js/anm-module/anm-notification.js'"></i>
+<i appLoadScript [script]="'assets/assets/js/anm/anm-notification.js'"></i>
 <i appLoadScript [script]="'assets/plugins/flatpickr/collection-flatpickr.js'"></i>
 <!--<i appLoadScript [script]="'assets/plugins/noUiSlider/custom-nouiSlider.js'"></i>-->
 <i appLoadScript [script]="'assets/assets/js/elements/custom-search.js'"></i>

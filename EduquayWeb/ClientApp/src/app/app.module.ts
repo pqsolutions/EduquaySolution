@@ -13,6 +13,7 @@ import { HttpErrorInterceptor } from './interceptors/httpErrorInterceptor';
 import { AuthGuard } from './shared/auth.guard';
 import { CommonService } from './shared/common.service';
 import { ConstantService } from './shared/constant.service';
+import { GenericService } from './shared/generic.service';
 
 
 
@@ -44,7 +45,8 @@ import { ConstantService } from './shared/constant.service';
     },
     AuthGuard,
     CommonService,
-    ConstantService
+    ConstantService,
+    GenericService
   ],
   bootstrap: [AppComponent]
 })

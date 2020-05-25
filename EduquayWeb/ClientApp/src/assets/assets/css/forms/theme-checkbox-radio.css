@@ -32,23 +32,25 @@
     display: block;
     width: 17px;
     height: 17px;
-    border: 1px solid #bbb;
+    border: 1px solid #1b55e2;
     pointer-events: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: #f8f9fb;
+    background-color: #ffffff;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 50% 50%;
     border-radius: 4px; }
-  .new-control.new-checkbox > input:checked ~ span.new-control-indicator {
-    background: #888ea8; }
+
+  /* .new-control.new-checkbox > input:checked ~ span.new-control-indicator {
+    background: #888ea8; } */
+
     .new-control.new-checkbox > input:checked ~ span.new-control-indicator:after {
       display: block; }
   .new-control.new-checkbox span.new-control-indicator:after {
-    border: solid #fff;
+    border: solid #255bdd;
     top: 50%;
     left: 50%;
     margin-left: -2px;
@@ -60,11 +62,11 @@
     content: '';
     position: absolute;
     display: none;
-    margin-left: -2px;
-    margin-top: -5px;
-    width: 4px;
+    margin-left: -3px;
+    margin-top: -8px;
+    width: 7px;
     height: 8px;
-    height: 8px; }
+    height: 14px; }
 
 /*rounded checkbox*/
 .new-checkbox-rounded span.new-control-indicator {
@@ -116,8 +118,8 @@
 .new-control.new-checkbox.checkbox-dark > input:checked ~ span.new-control-indicator {
   background: #3b3f5c; }
 
-.new-control.new-checkbox[class*="checkbox-outline-"] > input:checked ~ span.new-control-indicator {
-  background-color: transparent; }
+/* .new-control.new-checkbox[class*="checkbox-outline-"] > input:checked ~ span.new-control-indicator {
+  background-color: transparent; } */
 
 .new-control.new-checkbox.checkbox-outline-default > input:checked ~ span.new-control-indicator {
   border: 2px solid #888ea8; }
@@ -174,7 +176,8 @@
     top: 2px;
     left: 15px;
     display: block;
-    border: 1px solid #bbb;
+    border: 1px solid #1b55e2;
+    /* border: 1px solid #bbb; */
     width: 16px;
     height: 16px;
     pointer-events: none;
