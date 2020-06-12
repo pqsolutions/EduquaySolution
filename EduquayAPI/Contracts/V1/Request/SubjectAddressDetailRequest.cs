@@ -15,6 +15,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string Address2 { get; set; }
         public string Address3 { get; set; }
         public string Pincode { get; set; }
+        public string StateName { get; set; }
         public int UpdatedBy { get; set; }
     }
 }

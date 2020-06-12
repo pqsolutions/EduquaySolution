@@ -1,7 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request;
-using EduquayAPI.Contracts.V1.Request.ANMShipment;
-using EduquayAPI.Models;
-using EduquayAPI.Models.ANMShipment;
+﻿using EduquayAPI.Contracts.V1.Request.ANMCHCShipment;
+using EduquayAPI.Models.ANMCHCShipment;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,21 +7,20 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.DataLayer
+namespace EduquayAPI.DataLayer.ANMCHCShipment
 {
-    public class ANMShipmentData : IANMShipmentData
+    public class ANMCHCShipmentData : IANMCHCShipmentData
     {
-        private const string FetchSampleCollectionbyANM = "SPC_FetchSampleCollectionbyANM";
-        private const string FetchShipmentDetailbyANM = "SPC_FetchShipmentDetailbyANM";
-        private const string FetchShipmentDetailbyShipmentID = "SPC_FetchANMShipmentDetailbyShipmentID";
-        private const string AddShipment = "SPC_AddANMShipment";
-        private const string ANMShipmentID = "SPC_GenerateANMShipmentId";
-        public ANMShipmentData()
+        private const string GenerateANMCHCShipmentId = "SPC_GenerateANMCHCShipmentId";
+        private const string AddShipment = "SPC_AddANMCHCShipment";
+        private const string FetchANMCHCShipmentLog = "SPC_FetchANMCHCShipmentDetail";
+        private const string FetchANMCHCShipmentDetail = "SPC_FetchANMCHCShipmentDetailbyShipmentID";
+        public ANMCHCShipmentData()
         {
 
         }
 
-        public string AddANMShipment(AddANMShipmentRequest asData)
+        public string AddANMCHCShipment(AddANMCHCShipmentRequest asData)
         {
             try
             {
@@ -42,6 +39,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@RIID", asData.RIID),
                     new SqlParameter("@ILR_ID", asData.ILR_ID),
                     new SqlParameter("@AVDID", asData.AVDID),
+                    new SqlParameter("@DeliveryExecutiveName", asData.DeliveryExecutiveName ?? asData.DeliveryExecutiveName),
                     new SqlParameter("@ContactNo", asData.ContactNo ?? asData.ContactNo),
                     new SqlParameter("@DateofShipment", asData.DateofShipment ?? asData.DateofShipment),
                     new SqlParameter("@TimeofShipment", asData.TimeofShipment ?? asData.TimeofShipment),
@@ -49,7 +47,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "ANM Shipment added successfully";
+                return "Shipment added successfully";
             }
             catch (Exception e)
             {
@@ -57,49 +55,40 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<ANMShipmentID> GenerateANMShipmentID(GenerateShipmentIdRequest sgData)
+        public List<ANMCHCShipmentID> ANMCHCGenerateShipmentId(ShipmentIdGenerateRequest sgData)
         {
-            string stProc = ANMShipmentID;
+            string stProc = GenerateANMCHCShipmentId;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@SenderId", sgData.SenderId),
                 new SqlParameter("@Source",sgData.Source ?? sgData.Source),
                 new SqlParameter("@ShipmentFrom",sgData.ShipmentFrom ?? sgData.ShipmentFrom),
             };
-            var allData = UtilityDL.FillData<ANMShipmentID>(stProc, pList);
+            var allData = UtilityDL.FillData<ANMCHCShipmentID>(stProc, pList);
             return allData;
         }
 
-        public List<ANMPickandPackSamples> Retrieve(int anmCode)
+        public List<ANMCHCShipmentDetail> RetrieveShipmentDetail(ANMCHCShipmentDetailRequest asData)
         {
-            string stProc = FetchSampleCollectionbyANM;
+            string stProc = FetchANMCHCShipmentDetail;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@ANMID", anmCode),
+                new SqlParameter("@ShipmentID", asData.shipmentId ?? asData.shipmentId),
+                new SqlParameter("@ShipmentFrom", asData.shipmentFrom ?? asData.shipmentFrom),
             };
-            var allData = UtilityDL.FillData<ANMPickandPackSamples>(stProc, pList);
+            var allData = UtilityDL.FillData<ANMCHCShipmentDetail>(stProc, pList);
             return allData;
         }
 
-        public List<ANMShipments> Retrieve(string shipmentId)
+        public List<ANMCHCShipmentLogs> RetrieveShipmentLog(ANMCHCShipmentLogRequest asData)
         {
-            string stProc = FetchShipmentDetailbyShipmentID;
+            string stProc = FetchANMCHCShipmentLog;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@ShipmentID", shipmentId),
+                new SqlParameter("@UserID", asData.userId),
+                new SqlParameter("@ShipmentFrom", asData.shipmentFrom ?? asData.shipmentFrom),
             };
-            var allData = UtilityDL.FillData<ANMShipments>(stProc, pList);
-            return allData;
-        }
-
-        public List<ANMShipmentLog> RetrieveShipmentLog(int anmCode)
-        {
-            string stProc = FetchShipmentDetailbyANM;
-            var pList = new List<SqlParameter>()
-            {
-                new SqlParameter("@ANMID", anmCode),
-            };
-            var allData = UtilityDL.FillData<ANMShipmentLog>(stProc, pList);
+            var allData = UtilityDL.FillData<ANMCHCShipmentLogs>(stProc, pList);
             return allData;
         }
     }

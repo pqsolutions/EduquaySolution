@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Contracts.V1.Request.ANMShipment
 {
-    public class ShipmentIDGenerateRequest
+    public class GenerateShipmentIdRequest
     {
         public int SenderId { get; set; }
         public string Source { get; set; }

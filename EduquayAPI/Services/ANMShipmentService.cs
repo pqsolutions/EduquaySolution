@@ -80,7 +80,7 @@ namespace EduquayAPI.Services
             }
         }
 
-        public List<ANMShipmentID> GenerateANMShipmentID(ShipmentIDGenerateRequest sgData)
+        public List<ANMShipmentID> GenerateANMShipmentID(GenerateShipmentIdRequest sgData)
         {
             var ANMShipmentID = _anmShipmentData.GenerateANMShipmentID(sgData);
             return ANMShipmentID;

@@ -11,7 +11,7 @@ namespace EduquayAPI.DataLayer
 {
     public class SampleCollectionData : ISampleCollectionData
     {
-        private const string FetchSubjectNotSampleCollectionbyANM = "SPC_FetchSubjectNotSampleCollectionbyANM";
+        private const string FetchSubjectNotSampleCollected = "SPC_FetchSubjectNotSampleCollected";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
        
 
@@ -51,13 +51,14 @@ namespace EduquayAPI.DataLayer
 
         public List<SubjectSamples> Retrieve(SubjectSampleRequest ssData)
         {
-            string stProc = FetchSubjectNotSampleCollectionbyANM;
+            string stProc = FetchSubjectNotSampleCollected;
             var pList = new List<SqlParameter>() 
             {
-                new SqlParameter("@ANMID", ssData.ANMID),
+                new SqlParameter("@UserID", ssData.UserID),
                 new SqlParameter("@FromDate", ssData.FromDate ?? ssData.FromDate ),
                 new SqlParameter("@ToDate", ssData.ToDate  ?? ssData.ToDate),
                 new SqlParameter("@SubjectType", ssData.SubjectType),
+                new SqlParameter("@RegisteredFrom", ssData.RegisteredFrom ?? ssData.RegisteredFrom),
             };
             var allData = UtilityDL.FillData<SubjectSamples>(stProc, pList);
             return allData;
