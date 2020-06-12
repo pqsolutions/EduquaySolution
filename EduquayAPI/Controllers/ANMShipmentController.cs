@@ -65,7 +65,7 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("GenerateANMShipmentId")]
-        public ShipmentIDGenerateResponse GetShipmentID(ShipmentIDGenerateRequest sgData)
+        public ShipmentIDGenerateResponse GetShipmentID(GenerateShipmentIdRequest sgData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try

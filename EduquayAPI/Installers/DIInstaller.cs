@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.DataLayer;
+using EduquayAPI.DataLayer.ANMCHCPickandPack;
+using EduquayAPI.DataLayer.ANMCHCShipment;
 using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Services;
+using EduquayAPI.Services.ANMCHCPickandPack;
+using EduquayAPI.Services.ANMCHCShipment;
 using EduquayAPI.Services.ANMNotifications;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -94,6 +98,12 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IANMNotificationsDataFactory, ANMNotificationsDataFactory>();
             services.AddScoped<IANMNotificationsService, ANMNotificationsService>();
+
+            services.AddScoped<IANMCHCPickandPackDataFactory, ANMCHCPickandPackDataFactory>();
+            services.AddScoped<IANMCHCPickandPackService, ANMCHCPickandPackService>();
+
+            services.AddScoped<IANMCHCShipmentDataFactory, ANMCHCShipmentDataFactory>();
+            services.AddScoped<IANMCHCShipmentService, ANMCHCShipmentService>();
 
             services.AddSingleton<DbConnect>();
         }
