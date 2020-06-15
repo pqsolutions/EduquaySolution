@@ -51,11 +51,11 @@ table.dataTable {
   table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:after {
     color: #0e1726; }
 
-.table > tbody:before {
-  line-height: 1em;
+/* .table > tbody:before {
+  line-height: 0em;
   content: "_";
   color: white;
-  display: block; }
+  display: block; } */
 
 .table > tbody {
   border-left: 2px solid #e0e6ed;

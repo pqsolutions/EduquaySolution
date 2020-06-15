@@ -7,6 +7,19 @@ var fd = flatpickr(document.getElementById('sccollectDate'), {
     defaultDate: "today"
 });
 
+$('#linktobuttonupdates').on('click', function () {
+    swal({
+        title: '<p><i class="far fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+        padding: '2em',
+    });
+})
+
+$('#damage-sample-update').on('click', function () {
+    swal({
+        title: '<p><i class="far fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+        padding: '2em',
+    });
+})
 
 // var td = flatpickr(document.getElementById('scToDate'), {
 //     dateFormat: "d/m/Y",
