@@ -21,21 +21,21 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (cData.DistrictId <= 0)
+                if (cData.districtId <= 0)
                 {
                     return "Invalid District Id";
                 }
-                if (cData.BlockId <= 0)
+                if (cData.blockId <= 0)
                 {
                     return "Invalid Block Id";
                 }              
-                if (cData.IsActive.ToLower() != "true")
+                if (cData.isActive.ToLower() != "true")
                 {
-                    cData.IsActive = "false";
+                    cData.isActive = "false";
                 }
-                if (cData.Istestingfacility.ToLower() != "true")
+                if (cData.isTestingFacility.ToLower() != "true")
                 {
-                    cData.Istestingfacility = "false";
+                    cData.isTestingFacility = "false";
                 }
                 var result = _chcData.Add(cData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add CHC data" : result;

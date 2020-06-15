@@ -19,13 +19,13 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (dData.StateId <= 0)
+                if (dData.stateId <= 0)
                 {
                     return "Invalid State Id";
                 }
-                if (dData.IsActive.ToLower() != "true")
+                if (dData.isActive.ToLower() != "true")
                 {
-                    dData.IsActive = "false";
+                    dData.isActive = "false";
                 }
                 var result = _districtData.Add(dData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add district data" : result;

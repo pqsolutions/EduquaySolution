@@ -21,9 +21,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (cdData.Isactive.ToLower() != "true")
+                if (cdData.isActive.ToLower() != "true")
                 {
-                    cdData.Isactive = "false";
+                    cdData.isActive = "false";
                 }
                 var result = _clinicalDiagnosisData.Add(cdData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add clinical diagnosis data" : result;

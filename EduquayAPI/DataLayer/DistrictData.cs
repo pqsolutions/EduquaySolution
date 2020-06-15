@@ -28,13 +28,13 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@District_gov_code", dData.District_gov_code),
-                    new SqlParameter("@StateID", dData.StateId),
-                    new SqlParameter("@Districtname", dData.Districtname  ?? dData.Districtname),
-                    new SqlParameter("@Isactive", dData.IsActive ?? dData.IsActive),
-                    new SqlParameter("@Comments", dData.Comments ?? dData.Comments),
-                    new SqlParameter("@Createdby", dData.CreatedBy),
-                    new SqlParameter("@Updatedby", dData.UpdatedBy),
+                    new SqlParameter("@District_gov_code", dData.districtGovCode),
+                    new SqlParameter("@StateID", dData.stateId),
+                    new SqlParameter("@Districtname", dData.districtName  ?? dData.districtName),
+                    new SqlParameter("@Isactive", dData.isActive ?? dData.isActive),
+                    new SqlParameter("@Comments", dData.comments ?? dData.comments),
+                    new SqlParameter("@Createdby", dData.createdBy),
+                    new SqlParameter("@Updatedby", dData.updatedBy),
 
                     retVal
                 };

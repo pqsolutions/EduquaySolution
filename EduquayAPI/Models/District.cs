@@ -8,44 +8,44 @@ namespace EduquayAPI.Models
 {
     public class District : IFill
     {
-        public int Id { get; set; }
-        public int StateId { get; set; }
-        public string StateName { get; set; }
-        public string District_gov_code { get; set; }
-        public string Districtname { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int id { get; set; }
+        public int stateId { get; set; }
+        public string stateName { get; set; }
+        public string districtGovCode { get; set; }
+        public string districtName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.Id = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "StateId"))
-                this.StateId = Convert.ToInt32(reader["StateId"]);
+                this.stateId = Convert.ToInt32(reader["StateId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Statename"))
-                this.StateName = Convert.ToString(reader["Statename"]);
+                this.stateName = Convert.ToString(reader["Statename"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "District_gov_code"))
-                this.District_gov_code = Convert.ToString(reader["District_gov_code"]);
+                this.districtGovCode = Convert.ToString(reader["District_gov_code"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Districtname"))
-                this.Districtname = Convert.ToString(reader["Districtname"]);
+                this.districtName = Convert.ToString(reader["Districtname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
-                this.IsActive = Convert.ToString(reader["IsActive"]);
+                this.isActive = Convert.ToString(reader["IsActive"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Comments"))
-                this.Comments = Convert.ToString(reader["Comments"]);
+                this.comments = Convert.ToString(reader["Comments"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CreatedBy"))
-                this.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                this.createdBy = Convert.ToInt32(reader["CreatedBy"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UpdatedBy"))
-                this.UpdatedBy = Convert.ToInt32(reader["UpdatedBy"]);
+                this.updatedBy = Convert.ToInt32(reader["UpdatedBy"]);
         }
     }
 }

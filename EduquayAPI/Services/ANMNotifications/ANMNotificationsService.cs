@@ -21,39 +21,39 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-                if (srData.SampleCollectionID <= 0)
+                if (srData.sampleCollectionId <= 0)
                 {
                     return "Invalid Sample ID";
                 }
-                if (srData.SubjectID <= 0)
+                if (srData.subjectId <= 0)
                 {
                     return "Invalid subject Id";
                 }
-                if (string.IsNullOrEmpty(srData.UniqueSubjectID))
+                if (string.IsNullOrEmpty(srData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectID";
                 }
-                if (string.IsNullOrEmpty(srData.BarcodeNo))
+                if (string.IsNullOrEmpty(srData.barcodeNo))
                 {
                     return "Invalid BarcodeNo";
                 }
-                if (string.IsNullOrEmpty(srData.SampleCollectionDate))
+                if (string.IsNullOrEmpty(srData.sampleCollectionDate))
                 {
                     return "Invalid SampleCollection Date";
                 }
-                if (string.IsNullOrEmpty(srData.SampleCollectionTime))
+                if (string.IsNullOrEmpty(srData.sampleCollectionTime))
                 {
                     return "Invalid SampleCollection Time";
                 }
-                if (srData.Reason_Id <= 0)
+                if (srData.reasonId <= 0)
                 {
                     return "Invalid Reason Id";
                 }
-                if (srData.CollectionFrom <= 0)
+                if (srData.collectionFrom <= 0)
                 {
                     return "Invalid Collection From data";
                 }
-                if (srData.CollectedBy <= 0)
+                if (srData.collectedBy <= 0)
                 {
                     return "Invalid Collection By";
                 }
@@ -71,11 +71,11 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-                if (usData.ID <= 0)
+                if (usData.id <= 0)
                 {
                     return "Invalid SampleId";
                 }
-                if (usData.ANMID <= 0)
+                if (usData.anmId <= 0)
                 {
                     return "Invalid ANM Id";
                 }

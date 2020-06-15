@@ -8,96 +8,96 @@ namespace EduquayAPI.Models.ANMCHCShipment
 {
     public class ANMCHCShipmentDetail : IFill
     {
-        public int ID { get; set; }
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string SubjectName { get; set; }
-        public string RCHID { get; set; }
-        public int SampleCollectionID { get; set; }
-        public string Barcode { get; set; }
-        public string ShipmentFrom { get; set; }
-        public string ShipmentID { get; set; }
-        public int ANM_ID { get; set; }
-        public string ANMName { get; set; }
-        public int TestingCHCID { get; set; }
-        public string TestingCHC { get; set; }
-        public int RIID { get; set; }
-        public string RIPoint { get; set; }
-        public int ILR_ID { get; set; }
-        public string ILRPoint { get; set; }
-        public int AVDID { get; set; }
-        public string AVDName { get; set; }
-        public string ContactNo { get; set; }
-        public string ShipmentDate { get; set; }
-        public string ShipmentTime { get; set; }
+        public int id { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string subjectName { get; set; }
+        public string rchId { get; set; }
+        public int sampleCollectionId { get; set; }
+        public string barcode { get; set; }
+        public string shipmentFrom { get; set; }
+        public string shipmentId { get; set; }
+        public int anmId { get; set; }
+        public string anmName { get; set; }
+        public int testingCHCId { get; set; }
+        public string testingCHC { get; set; }
+        public int riId { get; set; }
+        public string riPoint { get; set; }
+        public int ilrId { get; set; }
+        public string ilrPoint { get; set; }
+        public int avdId { get; set; }
+        public string avdName { get; set; }
+        public string contactNo { get; set; }
+        public string shipmentDate { get; set; }
+        public string shipmentTime { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.ID = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.SubjectID = Convert.ToInt32(reader["SubjectID"]);
+                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
-                this.SubjectName = Convert.ToString(reader["SubjectName"]);
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
-                this.RCHID = Convert.ToString(reader["RCHID"]);
+                this.rchId = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionID"))
-                this.SampleCollectionID = Convert.ToInt32(reader["SampleCollectionID"]);
+                this.sampleCollectionId = Convert.ToInt32(reader["SampleCollectionID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Barcode"))
-                this.Barcode = Convert.ToString(reader["Barcode"]);
+                this.barcode = Convert.ToString(reader["Barcode"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentFrom"))
-                this.ShipmentFrom = Convert.ToString(reader["ShipmentFrom"]);
+                this.shipmentFrom = Convert.ToString(reader["ShipmentFrom"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentID"))
-                this.ShipmentID = Convert.ToString(reader["ShipmentID"]);
+                this.shipmentId = Convert.ToString(reader["ShipmentID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANM_ID"))
-                this.ANM_ID = Convert.ToInt32(reader["ANM_ID"]);
+                this.anmId = Convert.ToInt32(reader["ANM_ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
-                this.ANMName = Convert.ToString(reader["ANMName"]);
+                this.anmName = Convert.ToString(reader["ANMName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHCID"))
-                this.TestingCHCID = Convert.ToInt32(reader["TestingCHCID"]);
+                this.testingCHCId = Convert.ToInt32(reader["TestingCHCID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHC"))
-                this.TestingCHC = Convert.ToString(reader["TestingCHC"]);
+                this.testingCHC = Convert.ToString(reader["TestingCHC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
-                this.RIID = Convert.ToInt32(reader["RIID"]);
+                this.riId = Convert.ToInt32(reader["RIID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIPoint"))
-                this.RIPoint = Convert.ToString(reader["RIPoint"]);
+                this.riPoint = Convert.ToString(reader["RIPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILR_ID"))
-                this.ILR_ID = Convert.ToInt32(reader["ILR_ID"]);
+                this.ilrId = Convert.ToInt32(reader["ILR_ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILRPoint"))
-                this.ILRPoint = Convert.ToString(reader["ILRPoint"]);
+                this.ilrPoint = Convert.ToString(reader["ILRPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AVDID"))
-                this.AVDID = Convert.ToInt32(reader["AVDID"]);
+                this.avdId = Convert.ToInt32(reader["AVDID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AVDName"))
-                this.AVDName = Convert.ToString(reader["AVDName"]);
+                this.avdName = Convert.ToString(reader["AVDName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
-                this.ContactNo = Convert.ToString(reader["ContactNo"]);
+                this.contactNo = Convert.ToString(reader["ContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentDate"))
-                this.ShipmentDate = Convert.ToString(reader["ShipmentDate"]);
+                this.shipmentDate = Convert.ToString(reader["ShipmentDate"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentTime"))
-                this.ShipmentTime = Convert.ToString(reader["ShipmentTime"]);
+                this.shipmentTime = Convert.ToString(reader["ShipmentTime"]);
         }
     }
 }

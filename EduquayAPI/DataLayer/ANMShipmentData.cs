@@ -32,20 +32,20 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@SubjectID", asData.SubjectID),
-                    new SqlParameter("@UniqueSubjectID", asData.UniqueSubjectID ?? asData.UniqueSubjectID),
-                    new SqlParameter("@SampleCollectionID", asData.SampleCollectionID),
-                    new SqlParameter("@ShipmentFrom", asData.ShipmentFrom ?? asData.ShipmentFrom),
-                    new SqlParameter("@ShipmentID", asData.ShipmentID ?? asData.ShipmentID),
-                    new SqlParameter("@ANM_ID", asData.ANM_ID),
-                    new SqlParameter("@TestingCHCID", asData.TestingCHCID),
-                    new SqlParameter("@RIID", asData.RIID),
-                    new SqlParameter("@ILR_ID", asData.ILR_ID),
-                    new SqlParameter("@AVDID", asData.AVDID),
-                    new SqlParameter("@ContactNo", asData.ContactNo ?? asData.ContactNo),
-                    new SqlParameter("@DateofShipment", asData.DateofShipment ?? asData.DateofShipment),
-                    new SqlParameter("@TimeofShipment", asData.TimeofShipment ?? asData.TimeofShipment),
-                    new SqlParameter("@Createdby", asData.CreatedBy),
+                    new SqlParameter("@SubjectID", asData.subjectId),
+                    new SqlParameter("@UniqueSubjectID", asData.uniqueSubjectId ?? asData.uniqueSubjectId),
+                    new SqlParameter("@SampleCollectionID", asData.sampleCollectionId),
+                    new SqlParameter("@ShipmentFrom", asData.shipmentFrom ?? asData.shipmentFrom),
+                    new SqlParameter("@ShipmentID", asData.shipmentId ?? asData.shipmentId),
+                    new SqlParameter("@ANM_ID", asData.anmId),
+                    new SqlParameter("@TestingCHCID", asData.testingCHCId),
+                    new SqlParameter("@RIID", asData.riId),
+                    new SqlParameter("@ILR_ID", asData.ilrId),
+                    new SqlParameter("@AVDID", asData.avdId),
+                    new SqlParameter("@ContactNo", asData.contactNo ?? asData.contactNo),
+                    new SqlParameter("@DateofShipment", asData.dateOfShipment ?? asData.dateOfShipment),
+                    new SqlParameter("@TimeofShipment", asData.timeOfShipment ?? asData.timeOfShipment),
+                    new SqlParameter("@Createdby", asData.createdBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -62,9 +62,9 @@ namespace EduquayAPI.DataLayer
             string stProc = ANMShipmentID;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@SenderId", sgData.SenderId),
-                new SqlParameter("@Source",sgData.Source ?? sgData.Source),
-                new SqlParameter("@ShipmentFrom",sgData.ShipmentFrom ?? sgData.ShipmentFrom),
+                new SqlParameter("@SenderId", sgData.senderId),
+                new SqlParameter("@Source",sgData.source ?? sgData.source),
+                new SqlParameter("@ShipmentFrom",sgData.shipmentFrom ?? sgData.shipmentFrom),
             };
             var allData = UtilityDL.FillData<ANMShipmentID>(stProc, pList);
             return allData;

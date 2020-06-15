@@ -22,9 +22,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (addUser.IsActive.ToLower() != "true")
+                if (addUser.isActive.ToLower() != "true")
                 {
-                    addUser.IsActive = "false";
+                    addUser.isActive = "false";
                 }
                 var userId = await _usersData.AddNewUserAsync(addUser,password);
 
@@ -75,7 +75,7 @@ namespace EduquayAPI.Services
                 var userPassword = await _usersData.CheckPasswordAsync(user);
                 if (userPassword.Count <= 0) return false;
                 // check a password
-                var validPassword = BCrypt.Net.BCrypt.Verify(password, userPassword[0].Password);
+                var validPassword = BCrypt.Net.BCrypt.Verify(password, userPassword[0].password);
                 return validPassword;
             }
             catch (Exception e)

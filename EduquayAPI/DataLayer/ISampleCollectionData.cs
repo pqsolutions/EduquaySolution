@@ -12,6 +12,8 @@ namespace EduquayAPI.DataLayer
     {
         string AddSample(AddSubjectSampleRequest ssData);
         List<SubjectSamples> Retrieve(SubjectSampleRequest ssData);
+        List<SampleSubject> Retrieve(int code);
+
     }
     public interface ISampleCollectionDataFactory
     {

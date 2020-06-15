@@ -8,12 +8,12 @@ namespace EduquayAPI.Models.ANMShipment
 {
     public class ANMShipmentID : IFill
     {
-        public string ShipmentID { get; set; }
+        public string shipmentId { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentID"))
-                this.ShipmentID = Convert.ToString(reader["ShipmentID"]);
+                this.shipmentId = Convert.ToString(reader["ShipmentID"]);
         }
     }
 }

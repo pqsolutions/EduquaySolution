@@ -7,18 +7,18 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class RIRequest
     {
-        public int PHCId { get; set; }
-        public int SCId { get; set; }
-        public string RI_gov_code { get; set; }
-        public string RIsite { get; set; }
-        public string Pincode { get; set; }
-        public int ILRID { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int phcId { get; set; }
+        public int scId { get; set; }
+        public string riGovCode { get; set; }
+        public string riSite { get; set; }
+        public string pincode { get; set; }
+        public int ilrId { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public string latitude { get; set; }
+        public string longitude { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
 
     }
 }

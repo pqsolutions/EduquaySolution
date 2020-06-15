@@ -8,31 +8,35 @@ namespace EduquayAPI.Models.ANMCHCPickandPack
 {
     public class ANMCHCPickandPackSamples : IFill
     {
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string SubjectName { get; set; }
-        public string RCHID { get; set; }
-        public string BarcodeNo { get; set; }
-        public string SampleDateTime { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public int sampleCollectionId { get; set; }
+        public string subjectName { get; set; }
+        public string rchId { get; set; }
+        public string barcodeNo { get; set; }
+        public string sampleDateTime { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.SubjectID = Convert.ToInt32(reader["SubjectID"]);
+                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionID"))
+                this.sampleCollectionId = Convert.ToInt32(reader["SampleCollectionID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
-                this.SubjectName = Convert.ToString(reader["SubjectName"]);
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
-                this.RCHID = Convert.ToString(reader["RCHID"]);
+                this.rchId = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
-                this.BarcodeNo = Convert.ToString(reader["BarcodeNo"]);
+                this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleDateTime"))
-                this.SampleDateTime = Convert.ToString(reader["SampleDateTime"]);
+                this.sampleDateTime = Convert.ToString(reader["SampleDateTime"]);
         }
     }
 }

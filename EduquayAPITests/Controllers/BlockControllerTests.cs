@@ -24,13 +24,13 @@ namespace EduquayAPITests.Controllers
         {
             _blockRequest = new BlockRequest
             {
-                DistrictId = 1,
-                Block_gov_code = "101",
-                Blockname = "TestBlockName",
-                IsActive = "true",
-                Comments = "TestComments",
-                CreatedBy = 11,
-                UpdatedBy = 10
+                districtId = 1,
+                blockGovCode = "101",
+                blockName = "TestBlockName",
+                isActive = "true",
+                comments = "TestComments",
+                createdBy = 11,
+                updatedBy = 10
             };
 
             _blocks = new List<Block> {

@@ -7,11 +7,11 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class CommunityRequest
     {
-        public int CasteID { get; set; }
-        public string Communityname { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int casteId { get; set; }
+        public string communityName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
     }
 }

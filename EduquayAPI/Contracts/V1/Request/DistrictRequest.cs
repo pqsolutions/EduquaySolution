@@ -8,12 +8,12 @@ namespace EduquayAPI.Contracts.V1.Request
     public class DistrictRequest
     {
        
-        public int StateId { get; set; }      
-        public string District_gov_code { get; set; }
-        public string Districtname { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int stateId { get; set; }      
+        public string districtGovCode { get; set; }
+        public string districtName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
     }
 }

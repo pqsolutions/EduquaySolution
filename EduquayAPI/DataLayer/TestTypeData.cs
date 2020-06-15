@@ -27,11 +27,11 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@TestType", ttData.TestTypeName ?? ttData.TestTypeName),
-                    new SqlParameter("@Isactive", ttData.Isactive ?? ttData.Isactive),
-                    new SqlParameter("@Comments", ttData.Comments ?? ttData.Comments),
-                    new SqlParameter("@Createdby", ttData.Createdby),
-                    new SqlParameter("@Updatedby", ttData.Updatedby),
+                    new SqlParameter("@TestType", ttData.testTypeName ?? ttData.testTypeName),
+                    new SqlParameter("@Isactive", ttData.isactive ?? ttData.isactive),
+                    new SqlParameter("@Comments", ttData.comments ?? ttData.comments),
+                    new SqlParameter("@Createdby", ttData.createdby),
+                    new SqlParameter("@Updatedby", ttData.updatedby),
 
                     retVal
                 };

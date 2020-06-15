@@ -21,11 +21,11 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (urData.IsActive.ToLower() != "true")
+                if (urData.isActive.ToLower() != "true")
                 {
-                    urData.IsActive = "false";
+                    urData.isActive = "false";
                 }
-                if (urData.UserTypeId <= 0)
+                if (urData.userTypeId <= 0)
                 {
                     return "Invalid UserType Id";
                 }

@@ -9,52 +9,56 @@ namespace EduquayAPI.Models.ANMNotifications
     public class ANMNotificationSample : IFill
     {
 
-        public int ID { get; set; }
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string SubjectName { get; set; }
-        public int SubjectTypeID { get; set; }
-        public string SubjectType { get; set; }
-        public string BarcodeNo { get; set; }
-        public string ContactNo { get; set; }
-        public string GestationalAge { get; set; }
-        public string DateofCollection { get; set; }
-        public string NotifiedStatus { get; set; }
+        public int id { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string subjectName { get; set; }
+        public string rchID { get; set; }
+        public int subjectTypeId { get; set; }
+        public string subjectType { get; set; }
+        public string barcodeNo { get; set; }
+        public string contactNo { get; set; }
+        public string gestationalAge { get; set; }
+        public string dateOfCollection { get; set; }
+        public string notifiedStatus { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.ID = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.SubjectID = Convert.ToInt32(reader["SubjectID"]);
+                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
-                this.SubjectName = Convert.ToString(reader["SubjectName"]);
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
+                this.rchID = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
-                this.SubjectTypeID = Convert.ToInt32(reader["SubjectTypeID"]);
+                this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectType"))
-                this.SubjectType = Convert.ToString(reader["SubjectType"]);
+                this.subjectType = Convert.ToString(reader["SubjectType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
-                this.BarcodeNo = Convert.ToString(reader["BarcodeNo"]);
+                this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateofCollection"))
-                this.DateofCollection = Convert.ToString(reader["DateofCollection"]);
+                this.dateOfCollection = Convert.ToString(reader["DateofCollection"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
-                this.ContactNo = Convert.ToString(reader["ContactNo"]);
+                this.contactNo = Convert.ToString(reader["ContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GestationalAge"))
-                this.GestationalAge = Convert.ToString(reader["GestationalAge"]);
+                this.gestationalAge = Convert.ToString(reader["GestationalAge"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "NotifiedStatus"))
-                this.NotifiedStatus = Convert.ToString(reader["NotifiedStatus"]);
+                this.notifiedStatus = Convert.ToString(reader["NotifiedStatus"]);
 
         }
     }

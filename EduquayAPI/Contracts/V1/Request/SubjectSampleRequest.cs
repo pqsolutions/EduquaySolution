@@ -7,10 +7,10 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class SubjectSampleRequest
     {
-        public int UserID { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
-        public int SubjectType { get; set; }
-        public string RegisteredFrom { get; set; }
+        public int userId { get; set; }
+        public string fromDate { get; set; }
+        public string toDate { get; set; }
+        public int subjectType { get; set; }
+        public string registeredFrom { get; set; }
     }
 }

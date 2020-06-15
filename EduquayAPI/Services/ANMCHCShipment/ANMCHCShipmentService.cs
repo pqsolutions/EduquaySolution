@@ -21,40 +21,40 @@ namespace EduquayAPI.Services.ANMCHCShipment
         {
             try
             {
-                if (asData.SubjectID <= 0)
+                if (asData.subjectId <= 0)
                 {
                     return "Invalid Subject Id";
                 }
-                if (string.IsNullOrEmpty(asData.UniqueSubjectID))
+                if (string.IsNullOrEmpty(asData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectId";
                 }
-                if (asData.SampleCollectionID <= 0)
+                if (asData.sampleCollectionId <= 0)
                 {
                     return "Invalid sample Id";
                 }
-                if (string.IsNullOrEmpty(asData.ShipmentID))
+                if (string.IsNullOrEmpty(asData.shipmentId))
                 {
                     return "Invalid Shipment Id";
                 }
-                if (asData.ANM_ID <= 0)
+                if (asData.anmId <= 0)
                 {
                     return "Invalid ANM Id";
                 }
-                if (asData.TestingCHCID <= 0)
+                if (asData.testingCHCId <= 0)
                 {
                     return "Invalid Tenting Center  Id";
                 }
-                if (asData.RIID <= 0)
+                if (asData.riId <= 0)
                 {
                     return "Invalid RI  Id";
                 }
                
-                if (string.IsNullOrEmpty(asData.DateofShipment))
+                if (string.IsNullOrEmpty(asData.dateOfShipment))
                 {
                     return "Invalid Shipment Date";
                 }
-                if (string.IsNullOrEmpty(asData.TimeofShipment))
+                if (string.IsNullOrEmpty(asData.timeOfShipment))
                 {
                     return "Invalid Shipment Time";
                 }

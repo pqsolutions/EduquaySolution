@@ -23,9 +23,9 @@ namespace EduquayAPI.Services
 
             try
             {
-                if (sData.IsActive.ToLower() != "true")
+                if (sData.isActive.ToLower() != "true")
                 {
-                    sData.IsActive = "false";
+                    sData.isActive = "false";
                 }
                 var result = _stateData.Add(sData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add state data" : result;

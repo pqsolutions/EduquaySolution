@@ -8,11 +8,11 @@ namespace EduquayAPI.Models
 {
     public class UsersPassword : IFill
     {
-        public string Password { get; set; }
+        public string password { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Password"))
-                this.Password = Convert.ToString(reader["Password"]);
+                this.password = Convert.ToString(reader["Password"]);
         }
     }
 }

@@ -22,15 +22,15 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (sData.IsActive.ToLower() != "true")
+                if (sData.isActive.ToLower() != "true")
                 {
-                    sData.IsActive = "false";
+                    sData.isActive = "false";
                 }
-                if (sData.CHCId <= 0)
+                if (sData.chcId <= 0)
                 {
                     return "Invalid CHC Id";
                 }
-                if (sData.PHCId <= 0)
+                if (sData.phcId <= 0)
                 {
                     return "Invalid PHC Id";
                 }

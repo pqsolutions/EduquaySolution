@@ -32,11 +32,11 @@ namespace EduquayAPI.DataLayer
                 var pList = new List<SqlParameter>
                 {
                    
-                    new SqlParameter("@Diagnosisname",  cdData.DiagnosisName    ??  cdData.DiagnosisName),
-                    new SqlParameter("@Isactive",  cdData.Isactive ??  cdData.Isactive),
-                    new SqlParameter("@Comments",  cdData.Comments ??  cdData.Comments),
-                    new SqlParameter("@Createdby",  cdData.Createdby),
-                    new SqlParameter("@Updatedby",  cdData.Updatedby),
+                    new SqlParameter("@Diagnosisname",  cdData.diagnosisName    ??  cdData.diagnosisName),
+                    new SqlParameter("@Isactive",  cdData.isActive ??  cdData.isActive),
+                    new SqlParameter("@Comments",  cdData.comments ??  cdData.comments),
+                    new SqlParameter("@Createdby",  cdData.createdBy),
+                    new SqlParameter("@Updatedby",  cdData.updatedBy),
 
                     retVal
                 };

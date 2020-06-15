@@ -8,160 +8,160 @@ namespace EduquayAPI.Models
 {
     public class SubjectPrimaryDetail:IFill
     {
-        public int ID { get; set; }
-        public int SubjectTypeID { get; set; }
-        public string SubjectType { get; set; }
-        public int ChildSubjectTypeID { get; set; }
-        public string ChildSubjectType { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public int DistrictID { get; set; }
-        public string Districtname { get; set; }
-        public int CHCID { get; set; }
-        public string CHCname { get; set; }
-        public int PHCID { get; set; }
-        public string PHCname { get; set; }
-        public int SCID { get; set; }
-        public string SCname { get; set; }
-        public int RIID { get; set; }
-        public string RIsite { get; set; }
-        public string SubjectTitle { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string DOB { get; set; }
-        public int Age { get; set; }
-        public string Gender { get; set; }
-        public string MaritalStatus { get; set; }
-        public string MobileNo { get; set; }
-        public string EmailId { get; set; }
-        public string DateofRegister { get; set; }
-        public string SpouseSubjectID { get; set; }
-        public string Spouse_FirstName { get; set; }
-        public string Spouse_MiddleName { get; set; }
-        public string Spouse_LastName { get; set; }
-        public string Spouse_ContactNo { get; set; }
-        public int GovIdType_ID { get; set; }
-        public string GovIdType { get; set; }
-        public string GovIdDetail { get; set; }
-        public int AssignANM_ID { get; set; }
-        public string ANMName { get; set; }
-        public string IsActive { get; set; }
+        public int id { get; set; }
+        public int subjectTypeId { get; set; }
+        public string subjectType { get; set; }
+        public int childSubjectTypeId { get; set; }
+        public string childSubjectType { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public int districtId { get; set; }
+        public string districtName { get; set; }
+        public int chcId { get; set; }
+        public string chcName { get; set; }
+        public int phcId { get; set; }
+        public string phcName { get; set; }
+        public int scId { get; set; }
+        public string scName { get; set; }
+        public int riId { get; set; }
+        public string riSite { get; set; }
+        public string subjectTitle { get; set; }
+        public string firstName { get; set; }
+        public string middleName { get; set; }
+        public string lastName { get; set; }
+        public string dob { get; set; }
+        public int age { get; set; }
+        public string gender { get; set; }
+        public string maritalStatus { get; set; }
+        public string mobileNo { get; set; }
+        public string emailId { get; set; }
+        public string dateOfRegister { get; set; }
+        public string spouseSubjectId { get; set; }
+        public string spouseFirstName { get; set; }
+        public string spouseMiddleName { get; set; }
+        public string spouseLastName { get; set; }
+        public string spouseContactNo { get; set; }
+        public int govIdTypeId { get; set; }
+        public string govIdType { get; set; }
+        public string govIdDetail { get; set; }
+        public int assignANMId { get; set; }
+        public string anmName { get; set; }
+        public string isActive { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.ID = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
-                this.SubjectTypeID = Convert.ToInt32(reader["SubjectTypeID"]);
+                this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectType"))
-                this.SubjectType = Convert.ToString(reader["SubjectType"]);
+                this.subjectType = Convert.ToString(reader["SubjectType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectTypeID"))
-                this.ChildSubjectTypeID = Convert.ToInt32(reader["ChildSubjectTypeID"]);
+                this.childSubjectTypeId = Convert.ToInt32(reader["ChildSubjectTypeID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectType"))
-                this.ChildSubjectType = Convert.ToString(reader["ChildSubjectType"]);
+                this.childSubjectType = Convert.ToString(reader["ChildSubjectType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DistrictID"))
-                this.DistrictID = Convert.ToInt32(reader["DistrictID"]);
+                this.districtId = Convert.ToInt32(reader["DistrictID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Districtname"))
-                this.Districtname = Convert.ToString(reader["Districtname"]);
+                this.districtName = Convert.ToString(reader["Districtname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCID"))
-                this.CHCID  = Convert.ToInt32(reader["CHCID"]);
+                this.chcId  = Convert.ToInt32(reader["CHCID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
-                this.CHCname  = Convert.ToString(reader["CHCname"]);
+                this.chcName  = Convert.ToString(reader["CHCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCID"))
-                this.PHCID  = Convert.ToInt32(reader["PHCID"]);
+                this.phcId  = Convert.ToInt32(reader["PHCID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCname"))
-                this.PHCname = Convert.ToString(reader["PHCname"]);
+                this.phcName = Convert.ToString(reader["PHCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCID"))
-                this.SCID  = Convert.ToInt32(reader["SCID"]);
+                this.scId  = Convert.ToInt32(reader["SCID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCname"))
-                this.SCname  = Convert.ToString(reader["SCname"]);
+                this.scName  = Convert.ToString(reader["SCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
-                this.RIID  = Convert.ToInt32(reader["RIID"]);
+                this.riId  = Convert.ToInt32(reader["RIID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIsite"))
-                this.RIsite  = Convert.ToString(reader["RIsite"]);
+                this.riSite  = Convert.ToString(reader["RIsite"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTitle"))
-                this.SubjectTitle = Convert.ToString(reader["SubjectTitle"]);
+                this.subjectTitle = Convert.ToString(reader["SubjectTitle"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstName"))
-                this.FirstName  = Convert.ToString(reader["FirstName"]);
+                this.firstName  = Convert.ToString(reader["FirstName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MiddleName"))
-                this.MiddleName  = Convert.ToString(reader["MiddleName"]);
+                this.middleName  = Convert.ToString(reader["MiddleName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "LastName"))
-                this.LastName   = Convert.ToString(reader["LastName"]);
+                this.lastName   = Convert.ToString(reader["LastName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DOB"))
-                this.DOB  = Convert.ToString(reader["DOB"]);
+                this.dob  = Convert.ToString(reader["DOB"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Age"))
-                this.Age  = Convert.ToInt32 (reader["Age"]);
+                this.age  = Convert.ToInt32 (reader["Age"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gender"))
-                this.Gender  = Convert.ToString(reader["Gender"]);
+                this.gender  = Convert.ToString(reader["Gender"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MobileNo"))
-                this.MobileNo  = Convert.ToString(reader["MobileNo"]);
+                this.mobileNo  = Convert.ToString(reader["MobileNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "EmailId"))
-                this.EmailId = Convert.ToString(reader["EmailId"]);
+                this.emailId = Convert.ToString(reader["EmailId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateofRegister"))
-                this.DateofRegister = Convert.ToString(reader["DateofRegister"]);
+                this.dateOfRegister = Convert.ToString(reader["DateofRegister"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MaritalStatus"))
-                this.MaritalStatus   = Convert.ToString(reader["MaritalStatus"]);
+                this.maritalStatus   = Convert.ToString(reader["MaritalStatus"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_FirstName"))
-                this.Spouse_FirstName = Convert.ToString(reader["Spouse_FirstName"]);
+                this.spouseFirstName = Convert.ToString(reader["Spouse_FirstName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_MiddleName"))
-                this.Spouse_MiddleName = Convert.ToString(reader["Spouse_MiddleName"]);
+                this.spouseMiddleName = Convert.ToString(reader["Spouse_MiddleName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_LastName"))
-                this.Spouse_LastName = Convert.ToString(reader["Spouse_LastName"]);
+                this.spouseLastName = Convert.ToString(reader["Spouse_LastName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseSubjectID"))
-                this.SpouseSubjectID = Convert.ToString(reader["SpouseSubjectID"]);
+                this.spouseSubjectId = Convert.ToString(reader["SpouseSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_ContactNo"))
-                this.Spouse_ContactNo = Convert.ToString(reader["Spouse_ContactNo"]);
+                this.spouseContactNo = Convert.ToString(reader["Spouse_ContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIdType_ID"))
-                this.GovIdType_ID = Convert.ToInt32(reader["GovIdType_ID"]);
+                this.govIdTypeId = Convert.ToInt32(reader["GovIdType_ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIdType"))
-                this.GovIdType = Convert.ToString(reader["GovIdType"]);
+                this.govIdType = Convert.ToString(reader["GovIdType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIdDetail"))
-                this.GovIdDetail = Convert.ToString(reader["GovIdDetail"]);
+                this.govIdDetail = Convert.ToString(reader["GovIdDetail"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AssignANM_ID"))
-                this.AssignANM_ID  = Convert.ToInt32(reader["AssignANM_ID"]);
+                this.assignANMId  = Convert.ToInt32(reader["AssignANM_ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
-                this.ANMName = Convert.ToString(reader["ANMName"]);
+                this.anmName = Convert.ToString(reader["ANMName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
-                this.IsActive  = Convert.ToString(reader["IsActive"]);
+                this.isActive  = Convert.ToString(reader["IsActive"]);
 
         }
     }

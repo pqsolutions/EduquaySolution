@@ -21,9 +21,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (rData .IsActive.ToLower() != "true")
+                if (rData .isActive.ToLower() != "true")
                 {
-                    rData.IsActive = "false";
+                    rData.isActive = "false";
                 }
                 var result = _religionData.Add(rData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add religion data" : result;

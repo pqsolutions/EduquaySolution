@@ -7,14 +7,14 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class AddSubjectSampleRequest
     {
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string BarcodeNo { get; set; }
-        public string SampleCollectionDate { get; set; }
-        public string SampleCollectionTime { get; set; }
-        public int Reason_Id { get; set; }
-        public int CollectionFrom { get; set; }
-        public int CollectedBy { get; set; }
-        public int CreatedBy { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string barcodeNo { get; set; }
+        public string sampleCollectionDate { get; set; }
+        public string sampleCollectionTime { get; set; }
+        public int reasonId { get; set; }
+        public int collectionFrom { get; set; }
+        public int collectedBy { get; set; }
+        public int createdBy { get; set; }
     }
 }

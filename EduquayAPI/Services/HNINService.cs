@@ -20,23 +20,23 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (hData.IsActive.ToLower() != "true")
+                if (hData.isActive.ToLower() != "true")
                 {
-                    hData.IsActive = "false";
+                    hData.isActive = "false";
                 }
-                if (hData.Facilitytype_ID <= 0)
+                if (hData.facilityTypeId <= 0)
                 {
                     return "Invalid Facility Type Id";
                 }
-                if (hData.StateId <= 0)
+                if (hData.stateId <= 0)
                 {
                     return "Invalid State Id";
                 }
-                if (hData.DistrictId <= 0)
+                if (hData.districtId <= 0)
                 {
                     return "Invalid District Id";
                 }
-                if (hData.BlockId <= 0)
+                if (hData.blockId <= 0)
                 {
                     return "Invalid Block Id";
                 }

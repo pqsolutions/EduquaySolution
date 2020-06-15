@@ -29,18 +29,18 @@ namespace EduquayAPI.DataLayer
                 var pList = new List<SqlParameter>
                 {
                    
-                    new SqlParameter("@PHCID", rData.PHCId),
-                    new SqlParameter("@SCID", rData.SCId),                    
-                    new SqlParameter("@RI_gov_code", rData.RI_gov_code),
-                    new SqlParameter("@RIsite", rData.RIsite  ?? rData.RIsite),
-                    new SqlParameter("@Pincode", rData.Pincode  ?? rData.Pincode),
-                    new SqlParameter("@ILRID" ,rData.ILRID),
-                    new SqlParameter("@Isactive", rData.IsActive ?? rData.IsActive),
-                    new SqlParameter("@Latitude", rData.Latitude ?? rData.Latitude),
-                    new SqlParameter("@Longitude", rData.Longitude ?? rData.Longitude),
-                    new SqlParameter("@Comments", rData.Comments ?? rData.Comments),
-                    new SqlParameter("@Createdby", rData.CreatedBy),
-                    new SqlParameter("@Updatedby", rData.UpdatedBy),
+                    new SqlParameter("@PHCID", rData.phcId),
+                    new SqlParameter("@SCID", rData.scId),                    
+                    new SqlParameter("@RI_gov_code", rData.riGovCode),
+                    new SqlParameter("@RIsite", rData.riSite  ?? rData.riSite),
+                    new SqlParameter("@Pincode", rData.pincode  ?? rData.pincode),
+                    new SqlParameter("@ILRID" ,rData.ilrId),
+                    new SqlParameter("@Isactive", rData.isActive ?? rData.isActive),
+                    new SqlParameter("@Latitude", rData.latitude ?? rData.latitude),
+                    new SqlParameter("@Longitude", rData.longitude ?? rData.longitude),
+                    new SqlParameter("@Comments", rData.comments ?? rData.comments),
+                    new SqlParameter("@Createdby", rData.createdBy),
+                    new SqlParameter("@Updatedby", rData.updatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);

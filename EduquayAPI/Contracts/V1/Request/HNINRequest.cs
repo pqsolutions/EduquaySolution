@@ -8,25 +8,25 @@ namespace EduquayAPI.Contracts.V1.Request
     public class HNINRequest
     {
        
-        public int Facilitytype_ID { get; set; }       
-        public string Facility_name { get; set; }
-        public string NIN2HFI { get; set; }
-        public int StateId { get; set; }       
-        public int DistrictId { get; set; }       
-        public string Taluka { get; set; }
-        public int BlockId { get; set; }
-        public string Address { get; set; }
-        public string Pincode { get; set; }
-        public string Landline { get; set; }
-        public string Incharge_name { get; set; }
-        public string Incharge_contactno { get; set; }
-        public string Incharge_EmailId { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int facilityTypeId { get; set; }       
+        public string facilityName { get; set; }
+        public string nin2hfi { get; set; }
+        public int stateId { get; set; }       
+        public int districtId { get; set; }       
+        public string taluka { get; set; }
+        public int blockId { get; set; }
+        public string address { get; set; }
+        public string pincode { get; set; }
+        public string landline { get; set; }
+        public string inchargeName { get; set; }
+        public string inchargeContactNo { get; set; }
+        public string inchargeEmailId { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public string latitude { get; set; }
+        public string longitude { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
 
     }
 }

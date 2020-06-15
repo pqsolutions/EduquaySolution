@@ -21,11 +21,11 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (tData.Isactive.ToLower() != "true")
+                if (tData.isActive.ToLower() != "true")
                 {
-                    tData.Isactive = "false";
+                    tData.isActive = "false";
                 }
-                if (tData.TestTypeID <= 0)
+                if (tData.testTypeID <= 0)
                 {
                     return "Invalid Test Type Id";
                 }

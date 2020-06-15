@@ -8,12 +8,12 @@ namespace EduquayAPI.Contracts.V1.Request
     public class BlockRequest
     {
        
-        public int DistrictId { get; set; }
-        public string Block_gov_code { get; set; }
-        public string Blockname { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int districtId { get; set; }
+        public string blockGovCode { get; set; }
+        public string blockName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
     }
 }

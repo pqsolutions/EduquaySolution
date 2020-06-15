@@ -7,10 +7,10 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class TestTypeRequest
     {
-        public string TestTypeName { get; set; }
-        public string Isactive { get; set; }
-        public string Comments { get; set; }
-        public int Createdby { get; set; }
-        public int Updatedby { get; set; }
+        public string testTypeName { get; set; }
+        public string isactive { get; set; }
+        public string comments { get; set; }
+        public int createdby { get; set; }
+        public int updatedby { get; set; }
     }
 }

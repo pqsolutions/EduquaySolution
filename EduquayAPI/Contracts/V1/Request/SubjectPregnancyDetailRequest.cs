@@ -8,15 +8,14 @@ namespace EduquayAPI.Contracts.V1.Request
     public class SubjectPregnancyDetailRequest
     {
       
-        public string RCHID { get; set; }
-        public string ECNumber { get; set; }
-        public string LMP_Date { get; set; }
-        public decimal Gestational_period { get; set; }
-        public int G { get; set; }
-        public int P { get; set; }
-        public int L { get; set; }
-        public int A { get; set; }
-        
-        public int UpdatedBy { get; set; }
+        public string rchId { get; set; }
+        public string ecNumber { get; set; }
+        public string lmpDate { get; set; }
+        public decimal gestationalPeriod { get; set; }
+        public int g { get; set; }
+        public int p { get; set; }
+        public int l { get; set; }
+        public int a { get; set; }
+        public int updatedBy { get; set; }
     }
 }
