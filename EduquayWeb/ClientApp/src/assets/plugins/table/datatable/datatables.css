@@ -13,7 +13,7 @@
  *   https://datatables.net/download
  *
  * To rebuild or modify this file with the latest versions of the included
- * software please visit:
+ * software please visit:div.dataTables_wrapper div.dataTables_length
  *   https://datatables.net/download/#bs4/dt-1.10.16
  *
  * Included libraries:
@@ -25,7 +25,7 @@ table.dataTable {
   margin-top: 6px !important;
   margin-bottom: 6px !important;
   max-width: none !important;
-  /*border-collapse: separate !important;*/
+  /* border-collapse: separate !important; */
   border: none; }
   table.dataTable td, table.dataTable th {
     -webkit-box-sizing: content-box;
@@ -40,7 +40,7 @@ div.dataTables_wrapper div.dataTables_length label {
   font-weight: normal;
   text-align: left;
   white-space: nowrap;
-  color: #888ea8;
+  color: #191a1d;
   font-weight: 600; }
 
 div.dataTables_wrapper div.dataTables_length select {
@@ -74,6 +74,7 @@ div.dataTables_wrapper div.dataTables_info {
 
   div.dataTables_wrapper div.dataTables_length {
     text-align: right;
+    padding-top: 22px;
   }
 
 div.dataTables_wrapper div.dataTables_paginate {
@@ -192,9 +193,17 @@ table.table-bordered.dataTable th, table.table-bordered.dataTable td {
 
 table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable td:last-child {
   border-right-width: 0; }
-
-table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+  
+table.table-bordered.dataTable tbody th {
   border-bottom-width: 0; }
+
+  table.table-bordered.dataTable tbody td {
+    border-bottom-width: 0;
+    border: 1px solid #c9c9c9;
+   }
+
+/* table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+  border-bottom-width: 0; } */
 
 div.dataTables_scrollHead table.table-bordered {
   border-bottom-width: 0; }

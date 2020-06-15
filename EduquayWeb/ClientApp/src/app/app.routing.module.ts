@@ -26,6 +26,12 @@ import { AnmTimeoutSamplesComponent } from './anm-module/anm-timeout-samples/anm
 import { AnmPositiveSubjectsComponent } from './anm-module/anm-positive-subjects/anm-positive-subjects.component';
 import { AnmPndReferralComponent } from './anm-module/anm-pnd-referral/anm-pnd-referral.component';
 import { AnmMtpReferralComponent } from './anm-module/anm-mtp-referral/anm-mtp-referral.component';
+import { AnmSubjectRegistrationComponent } from "./anm-module/registration/anm-subject-registration/anm-subject-registration.component";
+import { AnmAwRegistrationComponent } from "./anm-module/registration/anm-aw-registration/anm-aw-registration.component";
+import { AnmSpouseRegistrationComponent } from "./anm-module/registration/anm-spouse-registration/anm-spouse-registration.component";
+import { AnmStudentRegistrationComponent } from "./anm-module/registration/anm-student-registration/anm-student-registration.component";
+import { AnmWalkinLt18RegistrationComponent } from "./anm-module/registration/anm-walkin-lt18-registration/anm-walkin-lt18-registration.component";
+import { AnmWalkinGt18RegistrationComponent } from "./anm-module/registration/anm-walkin-gt18-registration/anm-walkin-gt18-registration.component";
 
 
 
@@ -58,6 +64,18 @@ const routes: Routes = [
           { path: 'pndreferral', component: AnmPndReferralComponent, pathMatch: 'full' },
           { path: 'mtpreferral', component: AnmMtpReferralComponent, pathMatch: 'full' },
         ]
+      },
+      {
+        path: 'anm-subregn', component: AnmSubjectRegistrationComponent,
+        children:[
+          {path: '', component: AnmAwRegistrationComponent, pathMatch: 'full'},
+          {path: 'awreg', component: AnmAwRegistrationComponent, pathMatch: 'full'},
+          {path: 'spouse', component: AnmSpouseRegistrationComponent, pathMatch: 'full'},
+          {path: 'student', component: AnmStudentRegistrationComponent, pathMatch: 'full'},
+          {path: 'walkin', component: AnmWalkinLt18RegistrationComponent, pathMatch: 'full'},
+          {path: 'otherwalkin', component: AnmWalkinGt18RegistrationComponent, pathMatch: 'full'},
+        ]
+
       },
       { path: 'anm-sample-collection', component: SampleCollectionComponent },
       //{ path: 'test/:id', component: AboutComponent }
@@ -97,4 +115,11 @@ export const RoutingComponents = [
   AnmPndReferralComponent,
   AnmMtpReferralComponent,
   SampleCollectionComponent,
+  AnmSubjectRegistrationComponent,
+  AnmAwRegistrationComponent,
+  AnmSpouseRegistrationComponent,
+  AnmStudentRegistrationComponent,
+  AnmWalkinLt18RegistrationComponent,
+  AnmWalkinGt18RegistrationComponent,
+
 ];

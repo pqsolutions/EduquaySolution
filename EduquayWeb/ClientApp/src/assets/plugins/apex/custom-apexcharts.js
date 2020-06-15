@@ -19,13 +19,10 @@ var sline = {
     curve: 'straight'
   },
   series: [{
-    name: "Desktops",
-    data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+    name: "Positives",
+    data: [10, 41, 35, 51]
   }],
-  title: {
-    text: 'Product Trends by Month',
-    align: 'left'
-  },
+ 
   grid: {
     row: {
       colors: ['#f1f2f3', 'transparent'], // takes an array which will be repeated on columns
@@ -33,7 +30,7 @@ var sline = {
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: ['Feb', 'Mar', 'Apr', 'May'],
   }
 }
 
@@ -178,21 +175,20 @@ var sColStacked = {
         },
     },
     series: [{
-        name: 'PRODUCT A',
+        name: 'WEEK 1',
         data: [44, 55, 41, 67, 22, 43]
     },{
-        name: 'PRODUCT B',
+        name: 'WEEK 2',
         data: [13, 23, 20, 8, 13, 27]
     },{
-        name: 'PRODUCT C',
+        name: 'WEEK 3',
         data: [11, 17, 15, 15, 21, 14]
     },{
-        name: 'PRODUCT D',
+        name: 'WEEK 4',
         data: [21, 7, 25, 13, 22, 8]
     }],
     xaxis: {
-        type: 'datetime',
-        categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT', '01/05/2011 GMT', '01/06/2011 GMT'],
+        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
     },
     legend: {
         position: 'right',
@@ -271,7 +267,7 @@ var options = {
   title: {
     text: 'Traffic Sources'
   },
-  labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+  labels: ['01 Jan 2020', '01 Feb 2020', '01 Mar 2020', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
   xaxis: {
     type: 'datetime'
   },

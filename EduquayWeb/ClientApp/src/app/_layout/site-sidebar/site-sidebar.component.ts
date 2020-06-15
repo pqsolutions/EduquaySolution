@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SiteSidebarComponent implements OnInit {
   @Input() module: string;
-  @Input() subMenum: string;
+  @Input() subMenu: string;
 
   constructor() { }
 

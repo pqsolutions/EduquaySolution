@@ -1,4 +1,3 @@
-
 $('.widget-content .message').on('click', function () {
   swal({
       title: 'Saved succesfully',
@@ -30,6 +29,41 @@ $('#linktobuttoncentralpick').on('click', function () {
    });
 })
 
+$('#linktoinfantshipment').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Shipment ID is THSIK2020321',
+      padding: '2em',
+      showCancelButton: true,
+      confirmButtonText: 'Shipment Log',
+      cancelButtonText: 'Close',
+   }).then(function(result) {
+        if(result.value){
+          location.href="viewshipmentloginfant.html";
+        }
+   });
+})
+
+$('#linktobabyreg').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p><p>Infant Registered Successfully</p>Subject ID is 1234567',
+      padding: '2em',
+   });
+})
+
+$('#linktobuttoninfantcol').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Sample Collected Successfully',
+      padding: '2em',   
+   });
+})
+
+$('#linktofirstcol').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Sample Collected Successfully',
+      padding: '2em',   
+   });
+})
+
 $('#linktobuttonmanual').on('click', function () {
   swal({
       title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
@@ -40,16 +74,60 @@ $('#linktobuttonmanual').on('click', function () {
 
 $('#linktoappointment').on('click', function () {
   swal({
-      title: '<p><i class="fa fa-check-circle"></i></p>Appointment Rescheduled Successfully',
+      title: '<p><i class="fa fa-check-circle"></i></p>Pre PNDT Counselling Rescheduled Successfully on 29/04/2020 at 17:30',
+      padding: '2em',
+      
+   });
+})
+$('#linktoappointmentmtp').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Post PNDT Counselling Rescheduled Successfully on 29/04/2020 at 17:30',
+      padding: '2em',
+      
+   });
+})
+$('#linkbuttonconstnt').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>PNDT Counselling Rescheduled Successfully on 29/04/2020 at 17:30',
       padding: '2em',
       
    });
 })
 
-
 $('#linktobuttoncentral').on('click', function () {
   swal({
       title: 'Shipment Received Successfully',
+      padding: '2em',
+      
+   });
+}) 
+
+$('#linktoinfantsamplecol').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Sample Collected Successfully',
+      padding: '2em',
+      
+   });
+})
+
+$('#linktopendingresult').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>PNDT Updated Successfully',
+      padding: '2em',
+      
+   });
+})
+
+$('#linktomtppending').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>MTP Updated Successfully',
+      padding: '2em',
+      
+   });
+})
+$('#linktomtpcomplete').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>MTP Updated Successfully',
       padding: '2em',
       
    });
@@ -58,6 +136,22 @@ $('#linktobuttoncentral').on('click', function () {
 $('#linktobuttongenetic').on('click', function () {
   swal({
       title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
+      padding: '2em',
+      
+   });
+})
+
+$('#linktobuttoncounsellor').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Pre PNDT Counselling Scheduled Successfully on 14/05/2020 at 13:45',
+      padding: '2em',
+      
+   });
+})
+
+$('#linktomtpcounsellor').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Post PNDT Counselling Successfully on 14/05/2020 at 13:45',
       padding: '2em',
       
    });

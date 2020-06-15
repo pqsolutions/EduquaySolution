@@ -16,7 +16,6 @@ import { ConstantService } from './shared/constant.service';
 import { GenericService } from './shared/generic.service';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
