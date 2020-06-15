@@ -11,6 +11,7 @@ using EduquayAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
 
 namespace EduquayAPI.Controllers
 {
@@ -52,12 +53,14 @@ namespace EduquayAPI.Controllers
             return Ok(new AuthSuccessResponse
             {
                 Status = true,
+                userDetail = await _usersService.FindByUsernameAsync(request.userName),
                 Token = authResponse.Token,
+                Created = new JavaScriptSerializer().Serialize(authResponse.Created),
+                Expiry = new JavaScriptSerializer().Serialize(authResponse.Expiry)
             });
         }
 
         [HttpPost]
-
         [Route("Login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
@@ -83,10 +86,50 @@ namespace EduquayAPI.Controllers
 
             return Ok(new AuthSuccessResponse
             {
-                Status = true,
+                Status = true,                
+                userDetail = await _usersService.FindByUsernameAsync(request.userName),
                 Token = authResponse.Token,
+                Created = new JavaScriptSerializer().Serialize(authResponse.Created),
+                Expiry = new JavaScriptSerializer().Serialize(authResponse.Expiry)
+
             });
         }
+
+
+        [HttpPost]
+        [Route("MobileLogin")]
+        public async Task<IActionResult> MobileLogin(LoginRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Status = false,
+                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
+                });
+            }
+
+            var authResponse = await _userIdentityService.MobileLoginAsync(request.userName, request.password);
+
+            if (!authResponse.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Status = false,
+                    Errors = authResponse.Errors
+                });
+            }
+
+            return Ok(new AuthSuccessResponse
+            {
+                Status = true,
+                userDetail = await _usersService.FindByUsernameAsync(request.userName),
+                Token = authResponse.Token,
+                Created = new JavaScriptSerializer().Serialize(authResponse.Created),
+                Expiry = null,
+            });
+        }
+
 
 
         [HttpGet]

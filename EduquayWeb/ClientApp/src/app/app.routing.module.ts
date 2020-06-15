@@ -32,7 +32,7 @@ import { AnmSpouseRegistrationComponent } from "./anm-module/registration/anm-sp
 import { AnmStudentRegistrationComponent } from "./anm-module/registration/anm-student-registration/anm-student-registration.component";
 import { AnmWalkinLt18RegistrationComponent } from "./anm-module/registration/anm-walkin-lt18-registration/anm-walkin-lt18-registration.component";
 import { AnmWalkinGt18RegistrationComponent } from "./anm-module/registration/anm-walkin-gt18-registration/anm-walkin-gt18-registration.component";
-
+  
 
 
 const routes: Routes = [

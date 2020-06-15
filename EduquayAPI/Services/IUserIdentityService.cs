@@ -12,5 +12,7 @@ namespace EduquayAPI.Services
 
         Task<AuthenticationResult> AddNewRegisterAsync(AddUserRequest user, string password);
         Task<AuthenticationResult> LoginAsync(string userName, string password);
+
+        Task<AuthenticationResult> MobileLoginAsync(string userName, string password);
     }
 }

@@ -69,6 +69,7 @@ namespace EduquayAPI.Services
 
         private AuthenticationResult GenerateAuthenticationResult(User user)
         {
+            var expiryDateTime = DateTime.UtcNow.AddHours(2);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -80,7 +81,7 @@ namespace EduquayAPI.Services
                     new Claim(JwtRegisteredClaimNames.Email, user.email),
                     new Claim("ID", user.id.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddHours(2),
+                Expires = expiryDateTime,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -89,6 +90,38 @@ namespace EduquayAPI.Services
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),
+                Created = DateTime.UtcNow,
+                Expiry = expiryDateTime,               
+                Errors = null
+            };
+        }
+
+
+        private AuthenticationResult GenerateMobileAuthenticationResult(User user)
+        {
+           // var expiryDateTime = DateTime.UtcNow.AddHours(2);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.userName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.email),
+                    new Claim("ID", user.id.ToString()),
+                }),
+              //  Expires = expiryDateTime,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return new AuthenticationResult
+            {
+                Success = true,
+                Token = tokenHandler.WriteToken(token),
+                Created = DateTime.UtcNow,
+               // Expiry = null,
                 Errors = null
             };
         }
@@ -117,6 +150,42 @@ namespace EduquayAPI.Services
                 }
 
                 return GenerateAuthenticationResult(user);
+            }
+            catch (Exception e)
+            {
+                return new AuthenticationResult
+                {
+                    Success = false,
+                    Token = null,
+                    Errors = new[] { e.Message }
+                };
+            }
+        }
+
+        public async Task<AuthenticationResult> MobileLoginAsync(string userName, string password)
+        {
+            try
+            {
+
+                var user = await _usersService.FindByUsernameAsync(userName);
+                if (user == null)
+                {
+                    return new AuthenticationResult
+                    {
+                        Errors = new[] { "User with this Username does not exist" }
+                    };
+                }
+
+                var validPassword = await _usersService.CheckPasswordAsync(user, password);
+                if (!validPassword)
+                {
+                    return new AuthenticationResult
+                    {
+                        Errors = new[] { $"Incorrect Password!" }
+                    };
+                }
+
+                return GenerateMobileAuthenticationResult(user);
             }
             catch (Exception e)
             {
