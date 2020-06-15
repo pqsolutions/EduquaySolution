@@ -22,6 +22,55 @@ namespace EduquayAPI.Services
         {
             try
             {
+                if(asData.SubjectID <=0)
+                {
+                    return "Invalid Subject Id";
+                }
+                if (string.IsNullOrEmpty(asData.UniqueSubjectID))
+                {
+                    return "Invalid UniqueSubjectId";
+                }
+                if (asData.SampleCollectionID <= 0)
+                {
+                    return "Invalid sample Id";
+                }
+                if (string.IsNullOrEmpty(asData.ShipmentID))
+                {
+                    return "Invalid Shipment Id";
+                }
+                if (asData.ANM_ID <= 0)
+                {
+                    return "Invalid ANM Id";
+                }
+                if (asData.TestingCHCID <= 0)
+                {
+                    return "Invalid Tenting Center  Id";
+                }
+                if (asData.RIID <= 0)
+                {
+                    return "Invalid RI  Id";
+                }
+                if (asData.ILR_ID <= 0)
+                {
+                    return "Invalid ILR  Id";
+                }
+                if (asData.AVDID <= 0)
+                {
+                    return "Invalid AVD  Id";
+                }
+                if (string.IsNullOrEmpty(asData.ContactNo))
+                {
+                    return "Invalid Contact No";
+                }
+                if (string.IsNullOrEmpty(asData.DateofShipment))
+                {
+                    return "Invalid Shipment Date";
+                }
+                if (string.IsNullOrEmpty(asData.TimeofShipment))
+                {
+                    return "Invalid Shipment Time";
+                }
+
                 var result = _anmShipmentData.AddANMShipment(asData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add ANM shipment data" : result;
             }
@@ -31,7 +80,7 @@ namespace EduquayAPI.Services
             }
         }
 
-        public List<ANMShipmentID> GenerateANMShipmentID(ShipmentIDGenerateRequest sgData)
+        public List<ANMShipmentID> GenerateANMShipmentID(GenerateShipmentIdRequest sgData)
         {
             var ANMShipmentID = _anmShipmentData.GenerateANMShipmentID(sgData);
             return ANMShipmentID;

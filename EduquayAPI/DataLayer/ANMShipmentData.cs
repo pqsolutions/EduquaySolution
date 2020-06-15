@@ -57,7 +57,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<ANMShipmentID> GenerateANMShipmentID(ShipmentIDGenerateRequest sgData)
+        public List<ANMShipmentID> GenerateANMShipmentID(GenerateShipmentIdRequest sgData)
         {
             string stProc = ANMShipmentID;
             var pList = new List<SqlParameter>()

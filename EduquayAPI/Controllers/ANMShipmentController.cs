@@ -65,13 +65,13 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("GenerateANMShipmentId")]
-        public ShipmentIDGenerateResponse GetShipmentID(ShipmentIDGenerateRequest sgData)
+        public ShipmentIDGenerateResponse GetShipmentID(GenerateShipmentIdRequest sgData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
                 var shipmentID = _anmShipmentService.GenerateANMShipmentID(sgData);
-                _logger.LogInformation($"Generate ANM ShipmentId {shipmentID}");
+                _logger.LogInformation($"Generated ANM ShipmentId {shipmentID}");
                 return shipmentID.Count == 0 ? new ShipmentIDGenerateResponse { Status = "true", Message = "No Shipment Id found", ShipmentID = new List<ANMShipmentID>() } : new ShipmentIDGenerateResponse { Status = "true", Message = string.Empty, ShipmentID = shipmentID };
             }
             catch (Exception e)

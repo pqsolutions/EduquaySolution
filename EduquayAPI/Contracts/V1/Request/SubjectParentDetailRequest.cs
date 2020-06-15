@@ -11,16 +11,20 @@ namespace EduquayAPI.Contracts.V1.Request
         public string Mother_FirstName { get; set; }
         public string Mother_MiddleName { get; set; }
         public string Mother_LastName { get; set; }
-        public string Mother_UniquetID { get; set; }
+        public int Mother_GovIdType_ID { get; set; }
+        public string Mother_GovIdDetail { get; set; }
         public string Mother_ContactNo { get; set; }
         public string Father_FirstName { get; set; }
         public string Father_MiddleName { get; set; }
         public string Father_LastName { get; set; }
-        public string Father_UniquetID { get; set; }
+        public int Father_GovIdType_ID { get; set; }
+        public string Father_GovIdDetail { get; set; }
         public string Father_ContactNo { get; set; }
         public string Gaurdian_FirstName { get; set; }
         public string Gaurdian_MiddleName { get; set; }
         public string Gaurdian_LastName { get; set; }
+        public int Gaurdian_GovIdType_ID { get; set; }
+        public string Gaurdian_GovIdDetail { get; set; }
         public string Gaurdian_ContactNo { get; set; }
         public string RBSKId { get; set; }
         public string SchoolName { get; set; }
@@ -29,7 +33,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string SchoolAddress3 { get; set; }
         public string SchoolPincode { get; set; }
         public string SchoolCity { get; set; }
-        public int SchoolState { get; set; }
+        public string SchoolState { get; set; }
         public string Standard { get; set; }
         public string Section { get; set; }
         public string RollNo { get; set; }     

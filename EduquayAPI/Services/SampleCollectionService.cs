@@ -20,7 +20,40 @@ namespace EduquayAPI.Services
         public string AddSample(AddSubjectSampleRequest ssData)
         {
             try
-            {             
+            {               
+                if (ssData.SubjectID <= 0)
+                {
+                    return "Invalid subject Id";
+                }
+                if (string.IsNullOrEmpty(ssData.UniqueSubjectID))
+                {
+                    return "Invalid UniqueSubjectID";
+                }
+                if (string.IsNullOrEmpty(ssData.BarcodeNo))
+                {
+                    return "Invalid BarcodeNo";
+                }
+                if (string.IsNullOrEmpty(ssData.SampleCollectionDate))
+                {
+                    return "Invalid SampleCollection Date";
+                }
+                if (string.IsNullOrEmpty(ssData.SampleCollectionTime))
+                {
+                    return "Invalid SampleCollection Time";
+                }
+                if (ssData.Reason_Id <= 0)
+                {
+                    return "Invalid Reason Id";
+                }
+                if (ssData.CollectionFrom <= 0)
+                {
+                    return "Invalid Collection From data";
+                }
+                if (ssData.CollectedBy <= 0)
+                {
+                    return "Invalid Collection By";
+                }
+
                 var result = _sampleCollectionData.AddSample(ssData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add samples data" : result;
             }

@@ -15,6 +15,6 @@ namespace EduquayAPI.Services
         List<ANMPickandPackSamples> Retrieve(int anmCode);
         List<ANMShipmentLog> RetrieveShipmentLog(int anmCode);
         List<ANMShipments> Retrieve(string shipmentId);
-        List<ANMShipmentID> GenerateANMShipmentID(ShipmentIDGenerateRequest sgData);
+        List<ANMShipmentID> GenerateANMShipmentID(GenerateShipmentIdRequest sgData);
     }
 }
