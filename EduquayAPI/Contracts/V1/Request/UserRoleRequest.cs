@@ -7,11 +7,11 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class UserRoleRequest
     {
-        public int UserTypeId { get; set; }
-        public string Userrolename { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int userTypeId { get; set; }
+        public string userRoleName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
     }
 }

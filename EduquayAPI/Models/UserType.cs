@@ -8,32 +8,32 @@ namespace EduquayAPI.Models
 {
     public class UserType : IFill
     {
-        public int Id { get; set; }
-        public string UserTypename { get; set; }
-        public string IsActive { get; set; }
-        public string Comments { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int id { get; set; }
+        public string userTypeName { get; set; }
+        public string isActive { get; set; }
+        public string comments { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.Id = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Usertype"))
-                this.UserTypename = Convert.ToString(reader["USertype"]);
+                this.userTypeName = Convert.ToString(reader["USertype"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
-                this.IsActive = Convert.ToString(reader["IsActive"]);
+                this.isActive = Convert.ToString(reader["IsActive"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Comments"))
-                this.Comments = Convert.ToString(reader["Comments"]);
+                this.comments = Convert.ToString(reader["Comments"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CreatedBy"))
-                this.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                this.createdBy = Convert.ToInt32(reader["CreatedBy"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UpdatedBy"))
-                this.UpdatedBy = Convert.ToInt32(reader["UpdatedBy"]);
+                this.updatedBy = Convert.ToInt32(reader["UpdatedBy"]);
         }
     }
 }

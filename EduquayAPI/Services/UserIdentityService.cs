@@ -29,7 +29,7 @@ namespace EduquayAPI.Services
 
         public async Task<AuthenticationResult> AddNewRegisterAsync(AddUserRequest users, string password)
         {
-            var user = await _usersService.FindByUsernameAsync(users.Username);
+            var user = await _usersService.FindByUsernameAsync(users.userName);
             if (user != null)
             {
                 return new AuthenticationResult
@@ -38,7 +38,7 @@ namespace EduquayAPI.Services
                 };
             }
 
-            var userEmail = await _usersService.FindByEmailAsync(users.Email);
+            var userEmail = await _usersService.FindByEmailAsync(users.email);
             if (userEmail != null)
             {
                 return new AuthenticationResult
@@ -52,8 +52,8 @@ namespace EduquayAPI.Services
             var createUser = await _usersService.AddNewUserAsync(users, hashPassword);
             var newUser = new User()
             {
-                Email = users.Email,
-                Username = users.Username,
+                email = users.email,
+                userName = users.userName,
             };
             if (!createUser.Succeeded)
             {
@@ -63,7 +63,7 @@ namespace EduquayAPI.Services
                 };
             }
 
-            newUser.ID = createUser.Id;
+            newUser.id = createUser.Id;
             return GenerateAuthenticationResult(newUser);
         }
 
@@ -75,10 +75,10 @@ namespace EduquayAPI.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.userName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("ID", user.ID.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.email),
+                    new Claim("ID", user.id.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

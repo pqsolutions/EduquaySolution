@@ -20,9 +20,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (utData.IsActive.ToLower() != "true")
+                if (utData.isActive.ToLower() != "true")
                 {
-                    utData.IsActive = "false";
+                    utData.isActive = "false";
                 }
                 var result = _userTypeData.Add(utData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add user type data" : result;

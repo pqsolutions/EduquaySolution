@@ -22,9 +22,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (cData.IsActive.ToLower() != "true")
+                if (cData.isActive.ToLower() != "true")
                 {
-                    cData.IsActive = "false";
+                    cData.isActive = "false";
                 }
                 var result = _casteData.Add(cData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add caste data" : result;

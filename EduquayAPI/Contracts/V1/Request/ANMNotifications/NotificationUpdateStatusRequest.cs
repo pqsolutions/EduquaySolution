@@ -7,8 +7,8 @@ namespace EduquayAPI.Contracts.V1.Request.ANMNotifications
 {
     public class NotificationUpdateStatusRequest
     {
-        public int ID { get; set; }
-        public int Status { get; set; }
-        public int ANMID { get; set; }
+        public int id { get; set; }
+        public int status { get; set; }
+        public int anmId { get; set; }
     }
 }

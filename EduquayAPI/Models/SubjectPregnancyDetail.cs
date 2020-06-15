@@ -8,52 +8,52 @@ namespace EduquayAPI.Models
 {
     public class SubjectPregnancyDetail : IFill
     {
-        public int ID { get; set; }
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string RCHID { get; set; }
-        public string ECNumber { get; set; }
-        public string LMP_Date { get; set; }
-        public decimal Gestational_period { get; set; }
-        public int G { get; set; }
-        public int P { get; set; }
-        public int L { get; set; }
-        public int A { get; set; }
+        public int id { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string rchId { get; set; }
+        public string ecNumber { get; set; }
+        public string lmpDate { get; set; }
+        public decimal gestationalperiod { get; set; }
+        public int g { get; set; }
+        public int p { get; set; }
+        public int l { get; set; }
+        public int a { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.ID = Convert.ToInt32(reader["ID"]);
+                this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.SubjectID = Convert.ToInt32(reader["SubjectID"]);
+                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
-                this.RCHID = Convert.ToString(reader["RCHID"]);
+                this.rchId = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ECNumber"))
-                this.ECNumber = Convert.ToString(reader["ECNumber"]);
+                this.ecNumber = Convert.ToString(reader["ECNumber"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMP_Date"))
-                this.LMP_Date = Convert.ToString(reader["LMP_Date"]);
+                this.lmpDate = Convert.ToString(reader["LMP_Date"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gestational_period"))
-                this.Gestational_period = Convert.ToDecimal(reader["Gestational_period"]);
+                this.gestationalperiod = Convert.ToDecimal(reader["Gestational_period"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "G"))
-                this.G = Convert.ToInt32(reader["G"]);
+                this.g = Convert.ToInt32(reader["G"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "P"))
-                this.P = Convert.ToInt32(reader["P"]);
+                this.p = Convert.ToInt32(reader["P"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "L"))
-                this.L = Convert.ToInt32(reader["L"]);
+                this.l = Convert.ToInt32(reader["L"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "A"))
-                this.A = Convert.ToInt32(reader["A"]);
+                this.a = Convert.ToInt32(reader["A"]);
 
         }
 

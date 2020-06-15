@@ -8,9 +8,9 @@ namespace EduquayAPI.Contracts.V1.Request
     public class SubjectRegistrationRequest
     {   
        
-        public SubjectPrimaryDetailRequest SubjectPrimaryRequest { get; set; }
-        public SubjectAddressDetailRequest SubjectAddressRequest { get; set; }
-        public SubjectPregnancyDetailRequest SubjectPregnancyRequest { get; set; }
-        public SubjectParentDetailRequest SubjectParentRequest { get; set; }
+        public SubjectPrimaryDetailRequest subjectPrimaryRequest { get; set; }
+        public SubjectAddressDetailRequest subjectAddressRequest { get; set; }
+        public SubjectPregnancyDetailRequest subjectPregnancyRequest { get; set; }
+        public SubjectParentDetailRequest subjectParentRequest { get; set; }
     }
 }

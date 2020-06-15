@@ -22,11 +22,11 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (cData.IsActive.ToLower() != "true")
+                if (cData.isActive.ToLower() != "true")
                 {
-                    cData.IsActive = "false";
+                    cData.isActive = "false";
                 }
-                if (cData.CasteID <= 0)
+                if (cData.casteId <= 0)
                 {
                     return "Invalid caste Id";
                 }

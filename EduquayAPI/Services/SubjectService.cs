@@ -22,30 +22,30 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (subRegData.SubjectPrimaryRequest.DistrictID <= 0)
+                if (subRegData.subjectPrimaryRequest.districtId <= 0)
                 {
                     return "Invalid District Id";
                 }
-                if (subRegData.SubjectPrimaryRequest.CHCID <= 0)
+                if (subRegData.subjectPrimaryRequest.chcId <= 0)
                 {
                     return "Invalid CHC Id";
                 }
-                if (subRegData.SubjectPrimaryRequest.PHCID <= 0)
+                if (subRegData.subjectPrimaryRequest.phcId <= 0)
                 {
                     return "Invalid PHC Id";
                 }
-                if (subRegData.SubjectPrimaryRequest.SCID <= 0)
+                if (subRegData.subjectPrimaryRequest.scId <= 0)
                 {
                     return "Invalid SC Id";
                 }
-                if (subRegData.SubjectPrimaryRequest.RIID <= 0)
+                if (subRegData.subjectPrimaryRequest.riId <= 0)
                 {
                     return "Invalid RI Id";
                 }
 
-                if (subRegData.SubjectPrimaryRequest.IsActive.ToLower() != "true")
+                if (subRegData.subjectPrimaryRequest.isActive.ToLower() != "true")
                 {
-                    subRegData.SubjectPrimaryRequest.IsActive = "false";
+                    subRegData.subjectPrimaryRequest.isActive = "false";
                 }
 
                 var result = _subjectData.AddSubject(subRegData);

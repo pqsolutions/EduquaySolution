@@ -8,28 +8,28 @@ namespace EduquayAPI.Models.ANMNotifications
 {
     public class ANMSubjectSample : IFill
     {
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public string SubjectName { get; set; }
-        public int ReasonId { get; set; }
-        public string Reason { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string subjectName { get; set; }
+        public int reasonId { get; set; }
+        public string reason { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.SubjectID = Convert.ToInt32(reader["SubjectID"]);
+                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
-                this.UniqueSubjectID = Convert.ToString(reader["UniqueSubjectID"]);
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
-                this.SubjectName = Convert.ToString(reader["SubjectName"]);
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ReasonId"))
-                this.ReasonId = Convert.ToInt32(reader["ReasonId"]);
+                this.reasonId = Convert.ToInt32(reader["ReasonId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Reason"))
-                this.Reason = Convert.ToString(reader["Reason"]);
+                this.reason = Convert.ToString(reader["Reason"]);
         }
     }
 }

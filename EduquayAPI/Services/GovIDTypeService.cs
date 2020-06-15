@@ -20,9 +20,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (gtData.IsActive.ToLower() != "true")
+                if (gtData.isActive.ToLower() != "true")
                 {
-                    gtData.IsActive = "false";
+                    gtData.isActive = "false";
                 }
                 var result = _govidTypeData.Add(gtData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add GovID Type data" : result;

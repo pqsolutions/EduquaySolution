@@ -7,10 +7,10 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class ClinicalDiagnosisRequest
     {
-        public string DiagnosisName { get; set; }
-        public int Createdby { get; set; }
-        public int Updatedby { get; set; }
-        public string Comments { get; set; }
-        public string Isactive { get; set; }
+        public string diagnosisName { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
+        public string comments { get; set; }
+        public string isActive { get; set; }
     }
 }

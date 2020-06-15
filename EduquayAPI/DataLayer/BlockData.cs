@@ -28,13 +28,13 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@Block_gov_code", bData.Block_gov_code),
-                    new SqlParameter("@DistrictID", bData.DistrictId),
-                    new SqlParameter("@Blockname", bData.Blockname  ?? bData.Blockname),
-                    new SqlParameter("@Isactive", bData.IsActive ?? bData.IsActive),                  
-                    new SqlParameter("@Comments", bData.Comments ?? bData.Comments),
-                    new SqlParameter("@Createdby", bData.CreatedBy),
-                    new SqlParameter("@Updatedby", bData.UpdatedBy),
+                    new SqlParameter("@Block_gov_code", bData.blockGovCode),
+                    new SqlParameter("@DistrictID", bData.districtId),
+                    new SqlParameter("@Blockname", bData.blockName  ?? bData.blockName),
+                    new SqlParameter("@Isactive", bData.isActive ?? bData.isActive),                  
+                    new SqlParameter("@Comments", bData.comments ?? bData.comments),
+                    new SqlParameter("@Createdby", bData.createdBy),
+                    new SqlParameter("@Updatedby", bData.updatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);

@@ -20,9 +20,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (ttData.Isactive.ToLower() != "true")
+                if (ttData.isactive.ToLower() != "true")
                 {
-                    ttData.Isactive = "false";
+                    ttData.isactive = "false";
                 }              
 
                 var result = _testTypeData.Add(ttData);

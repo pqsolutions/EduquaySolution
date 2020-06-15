@@ -8,36 +8,36 @@ namespace EduquayAPI.Contracts.V1.Request
     public class SubjectParentDetailRequest
     {
         
-        public string Mother_FirstName { get; set; }
-        public string Mother_MiddleName { get; set; }
-        public string Mother_LastName { get; set; }
-        public int Mother_GovIdType_ID { get; set; }
-        public string Mother_GovIdDetail { get; set; }
-        public string Mother_ContactNo { get; set; }
-        public string Father_FirstName { get; set; }
-        public string Father_MiddleName { get; set; }
-        public string Father_LastName { get; set; }
-        public int Father_GovIdType_ID { get; set; }
-        public string Father_GovIdDetail { get; set; }
-        public string Father_ContactNo { get; set; }
-        public string Gaurdian_FirstName { get; set; }
-        public string Gaurdian_MiddleName { get; set; }
-        public string Gaurdian_LastName { get; set; }
-        public int Gaurdian_GovIdType_ID { get; set; }
-        public string Gaurdian_GovIdDetail { get; set; }
-        public string Gaurdian_ContactNo { get; set; }
-        public string RBSKId { get; set; }
-        public string SchoolName { get; set; }
-        public string SchoolAddress1 { get; set; }
-        public string SchoolAddress2 { get; set; }
-        public string SchoolAddress3 { get; set; }
-        public string SchoolPincode { get; set; }
-        public string SchoolCity { get; set; }
-        public string SchoolState { get; set; }
-        public string Standard { get; set; }
-        public string Section { get; set; }
-        public string RollNo { get; set; }     
-        public int UpdatedBy { get; set; }
+        public string motherFirstName { get; set; }
+        public string motherMiddleName { get; set; }
+        public string motherLastName { get; set; }
+        public int motherGovIdTypeId { get; set; }
+        public string motherGovIdDetail { get; set; }
+        public string motherContactNo { get; set; }
+        public string fatherFirstName { get; set; }
+        public string fatherMiddleName { get; set; }
+        public string fatherLastName { get; set; }
+        public int fatherGovIdTypeId { get; set; }
+        public string fatherGovIdDetail { get; set; }
+        public string fatherContactNo { get; set; }
+        public string gaurdianFirstName { get; set; }
+        public string gaurdianMiddleName { get; set; }
+        public string gaurdianLastName { get; set; }
+        public int gaurdianGovIdTypeId { get; set; }
+        public string gaurdianGovIdDetail { get; set; }
+        public string gaurdianContactNo { get; set; }
+        public string rbskId { get; set; }
+        public string schoolName { get; set; }
+        public string schoolAddress1 { get; set; }
+        public string schoolAddress2 { get; set; }
+        public string schoolAddress3 { get; set; }
+        public string schoolPincode { get; set; }
+        public string schoolCity { get; set; }
+        public string schoolState { get; set; }
+        public string standard { get; set; }
+        public string section { get; set; }
+        public string rollNo { get; set; }     
+        public int updatedBy { get; set; }
 
     }
 }

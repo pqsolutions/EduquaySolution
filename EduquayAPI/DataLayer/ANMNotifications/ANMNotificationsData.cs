@@ -31,16 +31,16 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@SampleCollectionID", srData.SampleCollectionID),
-                    new SqlParameter("@SubjectID", srData.SubjectID),
-                    new SqlParameter("@UniqueSubjectID", srData.UniqueSubjectID ?? srData.UniqueSubjectID),
-                    new SqlParameter("@BarcodeNo", srData.BarcodeNo ?? srData.BarcodeNo),
-                    new SqlParameter("@SampleCollectionDate", srData.SampleCollectionDate ?? srData.SampleCollectionDate),
-                    new SqlParameter("@SampleCollectionTime", srData.SampleCollectionTime ?? srData.SampleCollectionTime),
-                    new SqlParameter("@Reason_Id", srData.Reason_Id),
-                    new SqlParameter("@CollectionFrom", srData.CollectionFrom),
-                    new SqlParameter("@CollectedBy", srData.CollectedBy),
-                    new SqlParameter("@Createdby", srData.CreatedBy),
+                    new SqlParameter("@SampleCollectionID", srData.sampleCollectionId),
+                    new SqlParameter("@SubjectID", srData.subjectId),
+                    new SqlParameter("@UniqueSubjectID", srData.uniqueSubjectId ?? srData.uniqueSubjectId),
+                    new SqlParameter("@BarcodeNo", srData.barcodeNo ?? srData.barcodeNo),
+                    new SqlParameter("@SampleCollectionDate", srData.sampleCollectionDate ?? srData.sampleCollectionDate),
+                    new SqlParameter("@SampleCollectionTime", srData.sampleCollectionTime ?? srData.sampleCollectionTime),
+                    new SqlParameter("@Reason_Id", srData.reasonId),
+                    new SqlParameter("@CollectionFrom", srData.collectionFrom),
+                    new SqlParameter("@CollectedBy", srData.collectedBy),
+                    new SqlParameter("@Createdby", srData.createdBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -60,9 +60,9 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@ID", usData.ID),
-                    new SqlParameter("@Status", usData.Status),
-                    new SqlParameter("@ANMID", usData.ANMID),                   
+                    new SqlParameter("@ID", usData.id),
+                    new SqlParameter("@Status", usData.status),
+                    new SqlParameter("@ANMID", usData.anmId),                   
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -78,9 +78,9 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             string stProc = FetchANMNotificationSamples;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@ANMID", nsData.ANMID),
-                new SqlParameter("@Notification",nsData.Notification),
-                new SqlParameter("@SearchValue",nsData.SearchValue ?? string.Empty),
+                new SqlParameter("@ANMID", nsData.anmId),
+                new SqlParameter("@Notification",nsData.notification),
+                new SqlParameter("@SearchValue",nsData.searchValue ?? string.Empty),
             };
             var allData = UtilityDL.FillData<ANMNotificationSample>(stProc, pList);
             return allData;

@@ -21,9 +21,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (ftData.IsActive.ToLower() != "true")
+                if (ftData.isActive.ToLower() != "true")
                 {
-                    ftData.IsActive = "false";
+                    ftData.isActive = "false";
                 }
                 var result = _facilityTypeData.Add(ftData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add facility type data" : result;

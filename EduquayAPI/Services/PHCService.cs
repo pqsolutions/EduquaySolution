@@ -20,11 +20,11 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (pData.IsActive.ToLower() != "true")
+                if (pData.isActive.ToLower() != "true")
                 {
-                    pData.IsActive = "false";
+                    pData.isActive = "false";
                 }
-                if (pData.CHCId <= 0)
+                if (pData.chcId <= 0)
                 {
                     return "Invalid CHC Id";
                 }

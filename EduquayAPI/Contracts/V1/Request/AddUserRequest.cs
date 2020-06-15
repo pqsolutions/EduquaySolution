@@ -7,32 +7,32 @@ namespace EduquayAPI.Contracts.V1.Request
 {
     public class AddUserRequest
     {
-        public int UserType_ID { get; set; }
-        public int UserRole_ID { get; set; }
-        public string User_gov_code { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int StateID { get; set; }
-        public int DistrictID { get; set; }
-        public int BlockID { get; set; }
-        public int CHCID { get; set; }
-        public int PHCID { get; set; }
-        public int SCID { get; set; }
-        public string  RIID { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string ContactNo1 { get; set; }
-        public string ContactNo2 { get; set; }
-        public string Email { get; set; }
-        public int GovIDType_ID { get; set; }
-        public string GovIDDetails { get; set; }
-        public string Address { get; set; }
-        public string Pincode { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
-        public string Comments { get; set; }
-        public string IsActive { get; set; }
+        public int userTypeId { get; set; }
+        public int userRoleId { get; set; }
+        public string userGovCode { get; set; }
+        public string userName { get; set; }
+        public string password { get; set; }
+        public int stateId { get; set; }
+        public int districtId { get; set; }
+        public int blockId { get; set; }
+        public int chcId { get; set; }
+        public int phcId { get; set; }
+        public int scId { get; set; }
+        public string  riId { get; set; }
+        public string firstName { get; set; }
+        public string middleName { get; set; }
+        public string lastName { get; set; }
+        public string contactNo1 { get; set; }
+        public string contactNo2 { get; set; }
+        public string email { get; set; }
+        public int govIdTypeId { get; set; }
+        public string govIdDetails { get; set; }
+        public string address { get; set; }
+        public string pincode { get; set; }
+        public int createdBy { get; set; }
+        public int updatedBy { get; set; }
+        public string comments { get; set; }
+        public string isActive { get; set; }
        // public string DigitalSignature { get; set; }
 
     }

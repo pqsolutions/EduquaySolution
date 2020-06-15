@@ -39,7 +39,7 @@ namespace EduquayAPI.Controllers
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
-            var authResponse = await _userIdentityService.AddNewRegisterAsync(request, request.Password);
+            var authResponse = await _userIdentityService.AddNewRegisterAsync(request, request.password);
 
             if (!authResponse.Success)
             {
@@ -70,7 +70,7 @@ namespace EduquayAPI.Controllers
                 });
             }
 
-            var authResponse = await _userIdentityService.LoginAsync(request.UserName, request.Password);
+            var authResponse = await _userIdentityService.LoginAsync(request.userName, request.password);
 
             if (!authResponse.Success)
             {

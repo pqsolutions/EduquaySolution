@@ -27,17 +27,17 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {                    
-                    new SqlParameter("@CHCID", pData.CHCId),
-                    new SqlParameter("@HNIN_ID", pData.HNIN_ID ?? pData.HNIN_ID),
-                    new SqlParameter("@PHC_gov_code", pData.PHC_gov_code),
-                    new SqlParameter("@PHCname", pData.PHCname  ?? pData.PHCname),
-                    new SqlParameter("@Pincode", pData.Pincode  ?? pData.Pincode),
-                    new SqlParameter("@Isactive", pData.IsActive ?? pData.IsActive),
-                    new SqlParameter("@Latitude", pData.Latitude ?? pData.Latitude),
-                    new SqlParameter("@Longitude", pData.Longitude ?? pData.Longitude),
-                    new SqlParameter("@Comments", pData.Comments ?? pData.Comments),
-                    new SqlParameter("@Createdby", pData.CreatedBy),
-                    new SqlParameter("@Updatedby", pData.UpdatedBy),
+                    new SqlParameter("@CHCID", pData.chcId),
+                    new SqlParameter("@HNIN_ID", pData.hninId ?? pData.hninId),
+                    new SqlParameter("@PHC_gov_code", pData.phcGovCode),
+                    new SqlParameter("@PHCname", pData.phcName  ?? pData.phcName),
+                    new SqlParameter("@Pincode", pData.pincode  ?? pData.pincode),
+                    new SqlParameter("@Isactive", pData.isActive ?? pData.isActive),
+                    new SqlParameter("@Latitude", pData.latitude ?? pData.latitude),
+                    new SqlParameter("@Longitude", pData.longitude ?? pData.longitude),
+                    new SqlParameter("@Comments", pData.comments ?? pData.comments),
+                    new SqlParameter("@Createdby", pData.createdBy),
+                    new SqlParameter("@Updatedby", pData.updatedBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);

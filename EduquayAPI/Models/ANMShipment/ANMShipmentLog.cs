@@ -8,32 +8,32 @@ namespace EduquayAPI.Models.ANMShipment
 {
     public class ANMShipmentLog : IFill
     {
-        public string ShipmentID { get; set; }
-        public string ANMName { get; set; }
-        public string TestingCHC { get; set; }
-        public string AVDName { get; set; }
-        public string ILRPoint { get; set; }
-        public string ShipmentDate { get; set; }
+        public string shipmentId { get; set; }
+        public string anmName { get; set; }
+        public string testingCHC { get; set; }
+        public string avdName { get; set; }
+        public string ilrPoint { get; set; }
+        public string shipmentDate { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentID"))
-                this.ShipmentID = Convert.ToString(reader["ShipmentID"]);
+                this.shipmentId = Convert.ToString(reader["ShipmentID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
-                this.ANMName = Convert.ToString(reader["ANMName"]);
+                this.anmName = Convert.ToString(reader["ANMName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHC"))
-                this.TestingCHC = Convert.ToString(reader["TestingCHC"]);
+                this.testingCHC = Convert.ToString(reader["TestingCHC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AVDName"))
-                this.AVDName = Convert.ToString(reader["AVDName"]);
+                this.avdName = Convert.ToString(reader["AVDName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILRPoint"))
-                this.ILRPoint = Convert.ToString(reader["ILRPoint"]);
+                this.ilrPoint = Convert.ToString(reader["ILRPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentDate"))
-                this.ShipmentDate = Convert.ToString(reader["ShipmentDate"]);
+                this.shipmentDate = Convert.ToString(reader["ShipmentDate"]);
         }
     }
 }

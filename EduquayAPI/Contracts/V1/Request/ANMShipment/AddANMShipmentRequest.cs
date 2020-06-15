@@ -7,19 +7,19 @@ namespace EduquayAPI.Contracts.V1.Request.ANMShipment
 {
     public class AddANMShipmentRequest
     {
-        public int SubjectID { get; set; }
-        public string UniqueSubjectID { get; set; }
-        public int SampleCollectionID { get; set; }
-        public string ShipmentFrom { get; set; }
-        public string ShipmentID { get; set; }
-        public int ANM_ID { get; set; }
-        public int TestingCHCID { get; set; }
-        public int RIID { get; set; }
-        public int ILR_ID { get; set; }
-        public int AVDID { get; set; }
-        public string ContactNo { get; set; }
-        public string DateofShipment { get; set; }
-        public string TimeofShipment { get; set; }
-        public int CreatedBy { get; set; }
+        public int subjectId { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public int sampleCollectionId { get; set; }
+        public string shipmentFrom { get; set; }
+        public string shipmentId { get; set; }
+        public int anmId { get; set; }
+        public int testingCHCId { get; set; }
+        public int riId { get; set; }
+        public int ilrId { get; set; }
+        public int avdId { get; set; }
+        public string contactNo { get; set; }
+        public string dateOfShipment { get; set; }
+        public string timeOfShipment { get; set; }
+        public int createdBy { get; set; }
     }
 }

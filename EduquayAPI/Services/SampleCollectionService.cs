@@ -21,35 +21,35 @@ namespace EduquayAPI.Services
         {
             try
             {               
-                if (ssData.SubjectID <= 0)
+                if (ssData.subjectId <= 0)
                 {
                     return "Invalid subject Id";
                 }
-                if (string.IsNullOrEmpty(ssData.UniqueSubjectID))
+                if (string.IsNullOrEmpty(ssData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectID";
                 }
-                if (string.IsNullOrEmpty(ssData.BarcodeNo))
+                if (string.IsNullOrEmpty(ssData.barcodeNo))
                 {
                     return "Invalid BarcodeNo";
                 }
-                if (string.IsNullOrEmpty(ssData.SampleCollectionDate))
+                if (string.IsNullOrEmpty(ssData.sampleCollectionDate))
                 {
                     return "Invalid SampleCollection Date";
                 }
-                if (string.IsNullOrEmpty(ssData.SampleCollectionTime))
+                if (string.IsNullOrEmpty(ssData.sampleCollectionTime))
                 {
                     return "Invalid SampleCollection Time";
                 }
-                if (ssData.Reason_Id <= 0)
+                if (ssData.reasonId <= 0)
                 {
                     return "Invalid Reason Id";
                 }
-                if (ssData.CollectionFrom <= 0)
+                if (ssData.collectionFrom <= 0)
                 {
                     return "Invalid Collection From data";
                 }
-                if (ssData.CollectedBy <= 0)
+                if (ssData.collectedBy <= 0)
                 {
                     return "Invalid Collection By";
                 }
@@ -67,6 +67,12 @@ namespace EduquayAPI.Services
         {
             var subjectSamples = _sampleCollectionData.Retrieve(ssData);
             return subjectSamples;
+        }
+
+        public List<SampleSubject> Retrieve(int code)
+        {
+            var sampleSubject = _sampleCollectionData.Retrieve(code);
+            return sampleSubject;
         }
     }
 }

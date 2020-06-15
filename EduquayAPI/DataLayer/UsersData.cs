@@ -32,7 +32,7 @@ namespace EduquayAPI.DataLayer
                 var stProc = FetchUserByUsername;
                 var pList = new List<SqlParameter>()
                 {
-                    new SqlParameter("@Username", user.Username)
+                    new SqlParameter("@Username", user.userName)
                 };
                 var userPassword = UtilityDL.FillData<UsersPassword>(stProc, pList);
                 return userPassword;
@@ -53,32 +53,32 @@ namespace EduquayAPI.DataLayer
                 var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
                 var pList = new List<SqlParameter>()
                 {
-                    new SqlParameter("@UserType_ID", addUser.UserType_ID),
-                    new SqlParameter("@UserRole_ID", addUser.UserRole_ID),
-                    new SqlParameter("@User_gov_code", addUser.User_gov_code),
-                    new SqlParameter("@Username", addUser.Username),
+                    new SqlParameter("@UserType_ID", addUser.userTypeId),
+                    new SqlParameter("@UserRole_ID", addUser.userRoleId),
+                    new SqlParameter("@User_gov_code", addUser.userGovCode),
+                    new SqlParameter("@Username", addUser.userName),
                     new SqlParameter("@Password", password),
-                    new SqlParameter("@StateID", addUser.StateID),
-                    new SqlParameter("@DistrictID", addUser.DistrictID),
-                    new SqlParameter("@BlockID", addUser.BlockID),
-                    new SqlParameter("@CHCID", addUser.CHCID),
-                    new SqlParameter("@PHCID", addUser.PHCID),
-                    new SqlParameter("@SCID", addUser.SCID),
-                    new SqlParameter("@RIID", addUser.RIID ?? string.Empty ),
-                    new SqlParameter("@FirstName", addUser.FirstName ?? addUser.FirstName),
-                    new SqlParameter("@MiddleName", addUser.MiddleName ?? string.Empty),
-                    new SqlParameter("@LastName", addUser.LastName ?? string.Empty),
-                    new SqlParameter("@ContactNo1", addUser.ContactNo1 ?? string.Empty),
-                    new SqlParameter("@ContactNo2", addUser.ContactNo2 ?? string.Empty),
-                    new SqlParameter("@Email", addUser.Email ?? addUser.Email),
-                    new SqlParameter("@GovIDType_ID", addUser.GovIDType_ID),
-                    new SqlParameter("@GovIDDetails", addUser.GovIDDetails ?? string.Empty),
-                    new SqlParameter("@Address", addUser.Address ?? string.Empty),
-                    new SqlParameter("@Pincode", addUser.Pincode ?? string.Empty),
-                    new SqlParameter("@CreatedBy", addUser.CreatedBy),
-                    new SqlParameter("@UpdatedBy", addUser.UpdatedBy),
-                    new SqlParameter("@Comments", addUser.Comments ?? string.Empty),
-                    new SqlParameter("@IsActive", addUser.IsActive ?? addUser.IsActive),
+                    new SqlParameter("@StateID", addUser.stateId),
+                    new SqlParameter("@DistrictID", addUser.districtId),
+                    new SqlParameter("@BlockID", addUser.blockId),
+                    new SqlParameter("@CHCID", addUser.chcId),
+                    new SqlParameter("@PHCID", addUser.phcId),
+                    new SqlParameter("@SCID", addUser.scId),
+                    new SqlParameter("@RIID", addUser.riId ?? string.Empty ),
+                    new SqlParameter("@FirstName", addUser.firstName ?? addUser.firstName),
+                    new SqlParameter("@MiddleName", addUser.middleName ?? string.Empty),
+                    new SqlParameter("@LastName", addUser.lastName ?? string.Empty),
+                    new SqlParameter("@ContactNo1", addUser.contactNo1 ?? string.Empty),
+                    new SqlParameter("@ContactNo2", addUser.contactNo2 ?? string.Empty),
+                    new SqlParameter("@Email", addUser.email ?? addUser.email),
+                    new SqlParameter("@GovIDType_ID", addUser.govIdTypeId),
+                    new SqlParameter("@GovIDDetails", addUser.govIdDetails ?? string.Empty),
+                    new SqlParameter("@Address", addUser.address ?? string.Empty),
+                    new SqlParameter("@Pincode", addUser.pincode ?? string.Empty),
+                    new SqlParameter("@CreatedBy", addUser.createdBy),
+                    new SqlParameter("@UpdatedBy", addUser.updatedBy),
+                    new SqlParameter("@Comments", addUser.comments ?? string.Empty),
+                    new SqlParameter("@IsActive", addUser.isActive ?? addUser.isActive),
                   //  new SqlParameter("@DigitalSignature", addUser.DigitalSignature ?? string.Empty),
                     retVal
                 };

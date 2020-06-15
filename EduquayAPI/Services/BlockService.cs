@@ -21,13 +21,13 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (bData.DistrictId <= 0)
+                if (bData.districtId <= 0)
                 {
                     return "Invalid District Id";
                 }
-                if (bData.IsActive.ToLower() != "true")
+                if (bData.isActive.ToLower() != "true")
                 {
-                    bData.IsActive = "false";
+                    bData.isActive = "false";
                 }
 
                 var result = _blockData.AddBlock(bData);

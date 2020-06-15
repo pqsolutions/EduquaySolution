@@ -8,14 +8,14 @@ namespace EduquayAPI.Contracts.V1.Request
     public class SubjectAddressDetailRequest
     {
       
-        public int Religion_Id { get; set; }
-        public int Caste_Id { get; set; }
-        public int Community_Id { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string Address3 { get; set; }
-        public string Pincode { get; set; }
-        public string StateName { get; set; }
-        public int UpdatedBy { get; set; }
+        public int religionId { get; set; }
+        public int casteId { get; set; }
+        public int communityId { get; set; }
+        public string address1 { get; set; }
+        public string address2 { get; set; }
+        public string address3 { get; set; }
+        public string pincode { get; set; }
+        public string stateName { get; set; }
+        public int updatedBy { get; set; }
     }
 }

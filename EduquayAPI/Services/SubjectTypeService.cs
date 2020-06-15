@@ -20,9 +20,9 @@ namespace EduquayAPI.Services
         {
             try
             {
-                if (stData.IsActive.ToLower() != "true")
+                if (stData.isActive.ToLower() != "true")
                 {
-                    stData.IsActive = "false";
+                    stData.isActive = "false";
                 }
                 var result = _subjectTypeData.Add(stData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add subject type data" : result;
