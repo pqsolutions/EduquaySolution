@@ -75,6 +75,62 @@ $('#linktobuttontimeout').on('click', function () {
     
     });
   })
+
+  $('#linktobuttonsamplecolre').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Sample Recollected Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonupdates').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonsamples').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonpositives').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonspouses').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonpndref').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
+  
+  $('#linktobuttonmtpref').on('click', function () {
+    swal({
+    title: '<p><i class="fa fa-check-circle"></i></p>Subject Notification Status Updated Successfully',
+    padding: '2em',
+    
+    });
+  })
   
   $('#linktobuttonancsamplecol').on('click', function () {
     swal({
@@ -126,6 +182,13 @@ $('#linktobuttonchcsamplecol').on('click', function () {
   
   });
 })
+$('#linktobuttonchcsamplecoltwo').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Sample Recollected Successfully',
+  padding: '2em',
+  
+  });
+})
 $('#linktobuttonprofile').on('click', function () {
   swal({
   title: '<p><i class="fa fa-check-circle"></i></p>Subject Profile Updated Successfully',
@@ -154,13 +217,7 @@ $('#linktobuttonconfirmdlvry').on('click', function () {
   
   });
 })
-$('#linktobuttonmanualdlvry').on('click', function () {
-  swal({
-  title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
-  padding: '2em',
-  
-  });
-})
+
 $('#linktobuttonchcpickpak2').on('click', function () {
   swal({
       title: '<p><i class="fa fa-check-circle"></i></p>Shipment ID is THSIK2020321',
@@ -175,11 +232,98 @@ $('#linktobuttonchcpickpak2').on('click', function () {
          
    });
 })
-
-// Detailed test result //
+//chc manual receipt //
+$('#linktobuttonmanualdlvry').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
+  padding: '2em',
+  
+  });
+})
+$('#linktobuttonmanualdlvrychc').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
+  padding: '2em',
+  
+  });
+})
+// Detailed pndt test result //
 $('#linktobuttontestresult').on('click', function () {
   swal({
-  title: '<p><i class="fa fa-check-circle"></i></p>PNDT Scheduled on 20/05/2020',
+  title: '<p><i class="fa fa-check-circle"></i></p>PND Testing scheduled successfully on 20/05/2020 at 13:00',
+  padding: '2em',
+  
+  });
+})
+
+// Detailed mtp test result //
+$('#linktobuttontestresultmtp').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p> Obstetrician appointment scheduled successfully on 20/05/2020 at 13:00',
+  padding: '2em',
+  
+  });
+})
+// pathologist // 
+$('#linktobuttonpathologist').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>HPLC Results Updated Successfully',
+  padding: '2em',
+  
+  });
+})
+
+//Infant profile //
+$('#linktobuttonprofileupdt').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Infant Profile Updated Successfully',
+  padding: '2em',
+  
+  });
+})
+// infant shipment //
+$('#linktobuttonshipment').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Shipment Received Successfully',
+      padding: '2em',
+      
+   });
+})
+// molecular update test results //
+
+$('#linktobuttonmtupdateresult').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Molecular Test Results Updated Successfully',
+      padding: '2em',
+      
+   });
+})
+
+// infant update test results //
+
+$('#linktobuttonupdateresult').on('click', function () {
+  swal({
+      title: '<p><i class="fa fa-check-circle"></i></p>Molecular Test Results Updated Successfully',
+      padding: '2em',
+      
+   });
+})
+
+// Infant Casesheet //
+
+$('#linktobuttonviewcasesht').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Molecular Test Results Updated Successfully',
+  padding: '2em',
+  
+  });
+})
+
+// Update SST results //
+
+$(document).on('click', '#linktobuttonsstresult', function () {
+  swal({
+  title: `<p><i class="fa fa-check-circle"></i></p>SST Results for the Barcode ${$(this).attr('value')} successfully updated`,
   padding: '2em',
   
   });
@@ -194,6 +338,7 @@ $('.widget-content .successpick').on('click', function () {
     })
 
 })
+
 
 $('.widget-content .html-jquery').on('click', function () {
   swal({
@@ -212,6 +357,41 @@ $('.widget-content .title-text').on('click', function () {
       padding: '2em'
   })
 
+})
+
+// Update CBC results //
+
+$('#linktobuttoncbcresult').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Successfully results uploaded',
+  padding: '2em',
+  
+  });
+})
+
+// Update HPLC results //
+
+$('#linktobuttonhplcresult').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Successfully results uploaded',
+  padding: '2em',
+  
+  });
+})
+
+$('#linktopositiveresults').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Positive Results Updated Successfully',
+  padding: '2em',
+  
+  });
+})
+$('#linktonegativeresults').on('click', function () {
+  swal({
+  title: '<p><i class="fa fa-check-circle"></i></p>Negative Results Updated Successfully',
+  padding: '2em',
+  
+  });
 })
 
 $('.widget-content .custom-width-padding-background').on('click', function () {
@@ -237,6 +417,82 @@ $('.widget-content .warning.confirm').on('click', function () {
         swal(
           'Deleted!',
           'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+})
+
+$('.widget-content .positive.confirm').on('click', function () {
+  swal({
+      title: 'Are you sure?',
+      text: "Submit the positive results",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      padding: '2em'
+    }).then(function(result) {
+      if (result.value) {
+        swal(
+          '',
+          'Positive results submitted successfully.',
+          'success'
+        )
+      }
+    })
+})
+
+$('.widget-content .negative.confirm').on('click', function () {
+  swal({
+      title: 'Are you sure?',
+      text: "Submit the negative results",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      padding: '2em'
+    }).then(function(result) {
+      if (result.value) {
+        swal(
+          '',
+          'Negative results submitted successfully.',
+          'success'
+        )
+      }
+    })
+})
+
+$('.widget-content .hplc.confirm').on('click', function () {
+  swal({
+      title: 'Are you sure?',
+      text: "Confirm Upload HPLC results",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      padding: '2em'
+    }).then(function(result) {
+      if (result.value) {
+        swal(
+          '',
+          'HPLC results uploaded successfully.',
+          'success'
+        )
+      }
+    })
+})
+
+$('.widget-content .cbc.confirm').on('click', function () {
+  swal({
+      title: 'Are you sure?',
+      text: "Confirm Upload CBC results",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      padding: '2em'
+    }).then(function(result) {
+      if (result.value) {
+        swal(
+          '',
+          'CBC results uploaded successfully.',
           'success'
         )
       }
@@ -398,7 +654,7 @@ $('.widget-content .footer').on('click', function () {
     footer: '<a href>Why do I have this issue?</a>',
     padding: '2em'
   })
-})
+}) 
 
 $('.widget-content .RTL').on('click', function () {
   swal({

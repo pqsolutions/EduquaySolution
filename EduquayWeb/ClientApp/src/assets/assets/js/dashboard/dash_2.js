@@ -225,6 +225,12 @@ try {
           toolbar: {
             show: false,
           },
+          events: {
+            dataPointSelection: function(event, chartContext, config) {
+              console.log(chartContext, config);
+              $('#modelapexchart').modal('show');
+            }
+          },
           dropShadow: {
               enabled: true,
               top: 1,
@@ -234,7 +240,7 @@ try {
               opacity: 0.7,
           }
       },
-      colors: ['#5c1ac3', '#ffbb44'],
+      colors: ['#ffbb44','#5c1ac3'],
       plotOptions: {
           bar: {
               horizontal: false,
@@ -264,14 +270,15 @@ try {
           colors: ['transparent']
       },
       series: [{
-          name: 'Direct',
-          data: [58, 44, 55, 57, 56, 61, 58, 63, 60, 66, 56, 63]
+          name: 'Target',
+          data: [91, 76, 85, 101]
       }, {
-          name: 'Organic',
-          data: [91, 76, 85, 101, 98, 87, 105, 91, 114, 94, 66, 70]
+          name: 'Sampled',
+          data: [58, 44, 55, 57]
+          
       }],
       xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          categories: ['Feb', 'Mar', 'Apr', 'May'],
       },
       fill: {
         type: 'gradient',

@@ -2,10 +2,11 @@
 
 
 
-var fd = flatpickr(document.getElementById('molerdDate'), {
-    dateFormat: "d/m/Y",
-    defaultDate: "today"
-});
+// var fd = flatpickr(document.getElementById('molerdDate'), {
+//     enableTime: true,
+//     dateFormat: "d/m/Y H:i",
+//     defaultDate: "today"
+// });
 
 
 // var td = flatpickr(document.getElementById('scToDate'), {
@@ -40,9 +41,8 @@ var fd = flatpickr(document.getElementById('molerdDate'), {
 //     defaultDate: "today"
 // });
 
-var f2 = flatpickr(document.getElementById('moleprocessingTime'), {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
+var mpd = flatpickr(document.getElementById('molereceivedtime'), {
+     enableTime: true,
+    dateFormat: "d/m/Y H:i",
     defaultDate: "today"
 });
