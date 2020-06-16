@@ -12,10 +12,11 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using EduquayAPI.Contracts.V1;
 
 namespace EduquayAPI.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class SubjectController : ControllerBase
     {
@@ -42,7 +43,7 @@ namespace EduquayAPI.Controllers
 
         [HttpGet]
         [Route("Retrieve/{uniqueSubjectId}")]
-        public SubjectRegistrationResponse GetSubject(string uniqueSubjectId)
+        public SubjectRegistrationResponse GetMaster(string uniqueSubjectId)
         {
             try
             {
@@ -62,5 +63,6 @@ namespace EduquayAPI.Controllers
             }
         }
 
+       
     }
 }

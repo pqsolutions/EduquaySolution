@@ -1,5 +1,4 @@
-﻿using EduquayAPI.Contracts.V1.Request;
-using EduquayAPI.Models;
+﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,49 +6,34 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.DataLayer
+namespace EduquayAPI.DataLayer.MobileSubject
 {
-    public class SubjectData : ISubjectData
+    public class MobileSubjectData : IMobileSubjectData
     {
-        private const string AddSubjectPrimaryDetail = "SPC_AddSubjectPrimaryDetail";
+
+        private const string AddPrimaryDetail = "SPC_AddPrimaryDetail";
         private const string AddSubjectAddressDetail = "SPC_AddSubjectAddressDetail";
         private const string AddSubjectPregnancyDetail = "SPC_AddSubjectPregnancyDetail";
         private const string AddSubjectParentDetail = "SPC_AddSubjectParentDetail";
-        private const string FetchSubjectDetail = "SPC_FetchSubjectDetail";
 
-        public SubjectData()
+        public MobileSubjectData()
         {
 
         }
-
-
-        public string AddSubject(SubjectRegistrationRequest subRegData)
+        public string AddSubject(AddSubjectRequest subRegData)
         {
             try
             {
-
-                SubjectPrimaryDetail subPrimary = subjectPrimary(subRegData.subjectPrimaryRequest);
-                if (subPrimary != null)
+                int count = 0;
+                foreach(var subject in subRegData.subjectsRequest)
                 {
-                    if (subPrimary.id > 0)
-                    {
-                        var subID = subPrimary.id;
-                        var uniqueSubId = subPrimary.uniqueSubjectId;
-                        SubjectAddress(subRegData.subjectAddressRequest, uniqueSubId);
-                        SubjectPregnancy(subRegData.subjectPregnancyRequest, uniqueSubId);
-                        SubjectParent(subRegData.subjectParentRequest, uniqueSubId);
-                        return "Unique SubjectID generated successfully. The Unique ID is: " + uniqueSubId;
-                    }
-                    else
-                    {
-                        return $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
-                    }
+                    subjectPrimary(subject.subjectPrimaryRequest);
+                    SubjectAddress(subject.subjectAddressRequest);
+                    SubjectPregnancy(subject.subjectPregnancyRequest);
+                    SubjectParent(subject.subjectParentRequest);
+                    count += 1;
                 }
-                else
-                {
-                    return $"Unable to Register subject for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
-                }
-
+                return ""+ count +" subjects registered successfully.";
             }
             catch (Exception e)
             {
@@ -57,12 +41,13 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public SubjectPrimaryDetail subjectPrimary(SubjectPrimaryDetailRequest sprData)
+
+        public void subjectPrimary(PrimaryDetailRequest sprData)
         {
 
             try
             {
-                string stProc = AddSubjectPrimaryDetail;
+                string stProc = AddPrimaryDetail;
 
                 var pList = new List<SqlParameter>
                 {
@@ -101,8 +86,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Updatedby", sprData.updatedBy),
                     new SqlParameter("@Source", sprData.source),
                 };
-                var subPrimary = UtilityDL.FillEntity<SubjectPrimaryDetail>(stProc, pList);
-                return subPrimary;
+                UtilityDL.ExecuteNonQuery(stProc, pList);
 
             }
             catch (Exception e)
@@ -111,37 +95,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-
-        public void SubjectAddress(SubjectAddressDetailRequest saData, string uniqueSubId)
-        {
-
-            try
-            {
-                var stProc = AddSubjectAddressDetail;
-                var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
-                var pList = new List<SqlParameter>()
-                {
-                    new SqlParameter("@UniqueSubjectID", uniqueSubId),
-                    new SqlParameter("@Religion_Id", saData.religionId),
-                    new SqlParameter("@Caste_Id", saData.casteId),
-                    new SqlParameter("@Community_Id", saData.communityId),
-                    new SqlParameter("@Address1", saData.address1 ?? saData.address1),
-                    new SqlParameter("@Address2", saData.address2 ?? saData.address2),
-                    new SqlParameter("@Address3", saData.address3 ?? saData.address3),
-                    new SqlParameter("@Pincode", saData.pincode ?? saData.pincode),
-                    new SqlParameter("@StateName", saData.stateName ?? saData.stateName),
-                    new SqlParameter("@UpdatedBy", saData.updatedBy),
-                    retVal
-                };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public void SubjectPregnancy(SubjectPregnancyDetailRequest spData, string uniqueSubID)
+        public void SubjectPregnancy(PregnancyDetailRequest spData)
         {
 
             try
@@ -150,7 +104,7 @@ namespace EduquayAPI.DataLayer
                 var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
                 var pList = new List<SqlParameter>()
                 {
-                    new SqlParameter("@UniqueSubjectID", uniqueSubID),
+                    new SqlParameter("@UniqueSubjectID", spData.uniqueSubjectId ?? spData.uniqueSubjectId),
                     new SqlParameter("@RCHID", spData.rchId ?? spData.rchId),
                     new SqlParameter("@ECNumber", spData.ecNumber ?? spData.ecNumber),
                     new SqlParameter("@LMP_Date", spData.lmpDate),
@@ -171,7 +125,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public void SubjectParent(SubjectParentDetailRequest spaData, string uniqueSubID)
+        public void SubjectParent(ParentDetailRequest spaData)
         {
 
             try
@@ -180,7 +134,7 @@ namespace EduquayAPI.DataLayer
                 var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
                 var pList = new List<SqlParameter>()
                 {
-                    new SqlParameter("@UniqueSubjectID", uniqueSubID),
+                     new SqlParameter("@UniqueSubjectID", spaData.uniqueSubjectId ?? spaData.uniqueSubjectId),
                     new SqlParameter("@Mother_FirstName", spaData.motherFirstName ?? spaData.motherFirstName),
                     new SqlParameter("@Mother_MiddleName", spaData.motherMiddleName ?? spaData.motherMiddleName),
                     new SqlParameter("@Mother_LastName", spaData.motherLastName ?? spaData.motherLastName),
@@ -221,36 +175,36 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(string uniqueSubjectId)
+        public void SubjectAddress(AddressDetailRequest saData)
         {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
-            var allData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
-            return allData;
+
+            try
+            {
+                var stProc = AddSubjectAddressDetail;
+                var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectID", saData.uniqueSubjectId ?? saData.uniqueSubjectId),
+                    new SqlParameter("@Religion_Id", saData.religionId),
+                    new SqlParameter("@Caste_Id", saData.casteId),
+                    new SqlParameter("@Community_Id", saData.communityId),
+                    new SqlParameter("@Address1", saData.address1 ?? saData.address1),
+                    new SqlParameter("@Address2", saData.address2 ?? saData.address2),
+                    new SqlParameter("@Address3", saData.address3 ?? saData.address3),
+                    new SqlParameter("@Pincode", saData.pincode ?? saData.pincode),
+                    new SqlParameter("@StateName", saData.stateName ?? saData.stateName),
+                    new SqlParameter("@UpdatedBy", saData.updatedBy),
+                    retVal
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public List<SubjectAddresDetail> RetrieveAddressDetail(string uniqueSubjectId)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
-            var allData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
-            return allData;
-        }
 
-        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(string uniqueSubjectId)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
-            var allData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
-            return allData;
-        }
 
-        public List<SubjectParentDetail> RetrieveParentDetail(string uniqueSubjectId)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
-            var allData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
-            return allData;
-        }
     }
 }

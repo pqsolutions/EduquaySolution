@@ -6,10 +6,14 @@ using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.ANMCHCPickandPack;
 using EduquayAPI.DataLayer.ANMCHCShipment;
 using EduquayAPI.DataLayer.ANMNotifications;
+using EduquayAPI.DataLayer.MobileMaster;
+using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
 using EduquayAPI.Services.ANMCHCShipment;
 using EduquayAPI.Services.ANMNotifications;
+using EduquayAPI.Services.MobileMaster;
+using EduquayAPI.Services.MobileSubject;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -104,6 +108,14 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IANMCHCShipmentDataFactory, ANMCHCShipmentDataFactory>();
             services.AddScoped<IANMCHCShipmentService, ANMCHCShipmentService>();
+
+            services.AddScoped<IMobileMasterDataFactory, MobileMasterDataFactory>();
+            services.AddScoped<IMobileMasterService, MobileMasterService>();
+
+            services.AddScoped<IMobileSubjectDataFactory, MobileSubjectDataFactory>();
+            services.AddScoped<IMobileSubjectService, MobileSubjectService>();
+
+
 
             services.AddSingleton<DbConnect>();
         }
