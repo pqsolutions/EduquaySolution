@@ -34,6 +34,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@CHC_gov_code", cData.chcGovCode),
                     new SqlParameter("@CHCname", cData.chcName  ?? cData.chcName),
                     new SqlParameter("@Istestingfacility", cData.isTestingFacility ?? cData.isTestingFacility),
+                    new SqlParameter("@AssociatedCHCID", cData.associatedCHCId),
                     new SqlParameter("@Pincode", cData.pincode ?? cData.pincode),
                     new SqlParameter("@Isactive", cData.isActive ?? cData.isActive),
                     new SqlParameter("@Latitude", cData.latitude ?? cData.latitude),
