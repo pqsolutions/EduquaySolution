@@ -10,6 +10,7 @@ namespace EduquayAPI.Models.LoadMasters
     {
         public int id { get; set; }
         public string riSite { get; set; }
+        public string riGovCode { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -19,7 +20,10 @@ namespace EduquayAPI.Models.LoadMasters
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIsite"))
                 this.riSite = Convert.ToString(reader["RIsite"]);
 
-         
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RI_gov_code"))
+                this.riGovCode  = Convert.ToString(reader["RI_gov_code"]);
+
+
         }
     }
 }

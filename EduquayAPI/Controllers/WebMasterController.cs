@@ -193,8 +193,29 @@ namespace EduquayAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in receiving fov id type data {e.StackTrace}");
+                _logger.LogError($"Error in receiving gov id type data {e.StackTrace}");
                 return new LoadGovIdTypeResponse { Status = "false", Message = e.Message, GovIdType = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveAssociatedANM/{code}")]
+        public LoadAssociatedANMResponse GetAssociatedANM(int code)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var associatedANM = _webMasterService.RetrieveAssociatedANM(code);
+
+                _logger.LogInformation($"Received Associated ANM master data {associatedANM}");
+                return associatedANM.Count == 0 ?
+                    new LoadAssociatedANMResponse { Status = "true", Message = "No record found", AssociatedANM = new List<LoadAssociatedANM>() }
+                    : new LoadAssociatedANMResponse { Status = "true", Message = string.Empty, AssociatedANM = associatedANM };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving associated ANM data {e.StackTrace}");
+                return new LoadAssociatedANMResponse { Status = "false", Message = e.Message, AssociatedANM = null };
             }
         }
     }

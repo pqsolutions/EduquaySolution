@@ -16,6 +16,13 @@ namespace EduquayAPI.Services.WebMaster
         {
             _webMasterData = new WebMasterDataFactory().Create();
         }
+
+        public List<LoadAssociatedANM> RetrieveAssociatedANM(int riId)
+        {
+            var allANM = _webMasterData.RetrieveAssociatedANM(riId);
+            return allANM;
+        }
+
         public List<LoadCaste> RetrieveCaste()
         {
             var allCastes = _webMasterData.RetrieveCaste();

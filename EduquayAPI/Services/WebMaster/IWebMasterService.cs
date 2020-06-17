@@ -16,5 +16,6 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadCommunity> RetrieveCommunity(int id);
         List<LoadCommunity> RetrieveCommunity();
         List<LoadGovIDType> RetrieveGovIDType();
+        List<LoadAssociatedANM > RetrieveAssociatedANM(int riId);
     }
 }
