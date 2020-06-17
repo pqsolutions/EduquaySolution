@@ -5,22 +5,22 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.DataLayer.MobileMaster
+namespace EduquayAPI.DataLayer.WebMaster
 {
-    public class MobileMasterData : IMobileMasterData
+    public class WebMasterData : IWebMasterData
     {
         private const string FetchDistrict = "SPC_FetchDistrictByUser";
         private const string FetchCHC = "SPC_FetchCHCByUser";
-        private const string FetchPHC = "SPC_FetchPHCByUser";
-        private const string FetchSC = "SPC_FetchSCByUser";
-        private const string FetchRI = "SPC_FetchRIByUser";
         private const string FetchAllReligion = "SPC_FetchAllReligion";
         private const string FetchAllCaste = "SPC_FetchAllCaste";
         private const string FetchAllCommunity = "SPC_FetchAllCommunity";
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
+        private const string FetchRI = "SPC_FetchRIByPincode";
 
-        public MobileMasterData()
+
+
+        public WebMasterData()
         {
 
         }
@@ -72,14 +72,6 @@ namespace EduquayAPI.DataLayer.MobileMaster
             return allData;
         }
 
-        public List<LoadPHCs> RetrievePHC(int userId)
-        {
-            string stProc = FetchPHC;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
-            var allData = UtilityDL.FillData<LoadPHCs>(stProc, pList);
-            return allData;
-        }
-
         public List<LoadReligion> RetrieveReligion()
         {
             string stProc = FetchAllReligion;
@@ -88,20 +80,14 @@ namespace EduquayAPI.DataLayer.MobileMaster
             return allData;
         }
 
-        public List<LoadRIs> RetrieveRI(int userId)
+        public List<LoadRIs> RetrieveRI(string pincode)
         {
             string stProc = FetchRI;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@Pincode", pincode) };
             var allData = UtilityDL.FillData<LoadRIs>(stProc, pList);
             return allData;
         }
 
-        public List<LoadSCs> RetrieveSC(int userId)
-        {
-            string stProc = FetchSC;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
-            var allData = UtilityDL.FillData<LoadSCs>(stProc, pList);
-            return allData;
-        }
+      
     }
 }

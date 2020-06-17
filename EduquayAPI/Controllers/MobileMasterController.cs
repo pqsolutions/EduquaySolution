@@ -36,6 +36,7 @@ namespace EduquayAPI.Controllers
         [Route("Retrieve/{userId}")]
         public MobileMasterResponse GetSubject(int userId)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
                 var district = _mobileMasterService.RetrieveDistrict(userId);
@@ -47,7 +48,7 @@ namespace EduquayAPI.Controllers
                 var caste = _mobileMasterService.RetrieveCaste();
                 var community = _mobileMasterService.RetrieveCommunity();
                 var govIdType = _mobileMasterService.RetrieveGovIDType();
-
+                _logger.LogInformation($"Received master data {district},{chc}, {phc},{sc},{ri},{religion},{caste},{community},{govIdType}");
                 return district.Count == 0 && chc.Count == 0 && phc.Count == 0 && sc.Count == 0 && ri.Count == 0 && religion.Count == 0 && caste.Count == 0 && community.Count == 0 && govIdType.Count == 0  ?
                     new MobileMasterResponse { Status = "true", Message = "No record found", Districts = new List<LoadDistricts>(), CHC = new List<LoadCHCs>(), PHC = new List<LoadPHCs>(), SC = new List<LoadSCs>(),
                         RI = new List<LoadRIs>(), Religion = new List<LoadReligion>(), Caste = new List<LoadCaste>(), Community = new List<LoadCommunity>(), GovIdType = new List<LoadGovIDType>()   }
@@ -55,6 +56,7 @@ namespace EduquayAPI.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in receiving master data {e.StackTrace}");
                 return new MobileMasterResponse { Status = "false", Message = e.Message, Districts = null, CHC = null, PHC = null, SC = null, RI = null, Religion = null, Caste = null, Community = null, GovIdType = null };
             }
         }
@@ -63,17 +65,19 @@ namespace EduquayAPI.Controllers
         [Route("RetrieveCommunity/{code}")]
         public CommunityMasterResponse GetCommunity(int code)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
                 var community = _mobileMasterService.RetrieveCommunity(code);
 
-
+                _logger.LogInformation($"Received community master data {community}");
                 return community.Count == 0 ?
                     new CommunityMasterResponse { Status = "true", Message = "No record found", Community = new List<LoadCommunity>()}
                     : new CommunityMasterResponse { Status = "true", Message = string.Empty, Community = community};
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in receiving community data {e.StackTrace}");
                 return new CommunityMasterResponse { Status = "false", Message = e.Message, Community = null };
             }
         }

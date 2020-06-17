@@ -18,6 +18,8 @@ namespace EduquayAPI.Models
         public string pincode { get; set; }
         public string chcGovCode { get; set; }
         public string chcName { get; set; }
+        public int associatedCHCId { get; set; }
+        public string associatedCHC { get; set; }
         public string isTestingFacility { get; set; }
         public string isActive { get; set; }
         public string comments { get; set; }
@@ -54,6 +56,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Istestingfacility"))
                 this.isTestingFacility = Convert.ToString(reader["Istestingfacility"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AssociatedCHCID"))
+                this.associatedCHCId = Convert.ToInt32(reader["AssociatedCHCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AccociatedCHC"))
+                this.associatedCHC = Convert.ToString(reader["AccociatedCHC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.pincode = Convert.ToString(reader["Pincode"]);
