@@ -10,6 +10,8 @@ namespace EduquayAPI.Contracts.V1.Response
     {
         public string Status { get; set; }
         public string Message { get; set; }
+        public string fromDate { get; set; }
+        public string toDate { get; set; }
         public List<SubjectSamples> SubjectList { get; set; }
     }
 }

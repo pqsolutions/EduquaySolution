@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1;
 using EduquayAPI.Contracts.V1.Response.WebMaster;
@@ -67,6 +68,27 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogError($"Error in receiving chc data {e.StackTrace}");
                 return new LoadCHCResponse { Status = "false", Message = e.Message, CHC = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveConstantValues/{userId}")]
+        public LoadConstantResponse GetConstantValues(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var constantValues = _webMasterService.RetrieveConstantValues(userId);
+
+                _logger.LogInformation($"Received constant values data {constantValues}");
+                return constantValues.Count == 0 ?
+                    new LoadConstantResponse { Status = "true", Message = "No record found", ConstantValues = new List<LoadConstantValues>() }
+                    : new LoadConstantResponse { Status = "true", Message = string.Empty, ConstantValues = constantValues };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadConstantResponse { Status = "false", Message = e.Message, ConstantValues = null };
             }
         }
 
@@ -218,5 +240,7 @@ namespace EduquayAPI.Controllers
                 return new LoadAssociatedANMResponse { Status = "false", Message = e.Message, AssociatedANM = null };
             }
         }
+
+
     }
 }

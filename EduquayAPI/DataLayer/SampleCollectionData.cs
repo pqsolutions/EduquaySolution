@@ -14,11 +14,24 @@ namespace EduquayAPI.DataLayer
         private const string FetchSubjectNotSampleCollected = "SPC_FetchSubjectNotSampleCollected";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchANMCHCSampleSubjectDetail = "SPC_FetchANMCHCSampleSubjectDetail";
+        private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
 
 
         public SampleCollectionData()
         {
 
+        }
+
+        public List<BarcodeSample> FetchBarcode(string barcodeNo)
+        {
+            string stProc = FetchBarcodeSample;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@BarcodeNo", barcodeNo),
+
+            };
+            var allData = UtilityDL.FillData<BarcodeSample>(stProc, pList);
+            return allData;
         }
 
         public string AddSample(AddSubjectSampleRequest ssData)
@@ -30,23 +43,21 @@ namespace EduquayAPI.DataLayer
                 retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@SubjectID", ssData.subjectId),
                     new SqlParameter("@UniqueSubjectID", ssData.uniqueSubjectId ?? ssData.uniqueSubjectId),
                     new SqlParameter("@BarcodeNo", ssData.barcodeNo  ?? ssData.barcodeNo),
                     new SqlParameter("@SampleCollectionDate", ssData.sampleCollectionDate ?? ssData.sampleCollectionDate),
                     new SqlParameter("@SampleCollectionTime", ssData.sampleCollectionTime ?? ssData.sampleCollectionTime),
-                    new SqlParameter("@Reason_Id", ssData.reasonId),
+                    new SqlParameter("@Reason", ssData.reason ?? ssData.reason),
                     new SqlParameter("@CollectionFrom", ssData.collectionFrom),
                     new SqlParameter("@CollectedBy", ssData.collectedBy),
-                    new SqlParameter("@Createdby", ssData.createdBy),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Subject samples added successfully";
+                return $"Sample collected successfully for this UniquesubjectID - {ssData.uniqueSubjectId}";
             }
             catch (Exception e)
             {
-                throw e;
+                return $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
             }
         }
 
@@ -59,18 +70,20 @@ namespace EduquayAPI.DataLayer
                 new SqlParameter("@FromDate", ssData.fromDate ?? ssData.fromDate ),
                 new SqlParameter("@ToDate", ssData.toDate  ?? ssData.toDate),
                 new SqlParameter("@SubjectType", ssData.subjectType),
-                new SqlParameter("@RegisteredFrom", ssData.registeredFrom ?? ssData.registeredFrom),
+                new SqlParameter("@RegisteredFrom", ssData.registeredFrom),
             };
             var allData = UtilityDL.FillData<SubjectSamples>(stProc, pList);
             return allData;
         }
 
-        public List<SampleSubject> Retrieve(int code)
+        public List<SampleSubject> Retrieve(SampleSubjectRequest ssData)
         {
             string stProc = FetchANMCHCSampleSubjectDetail;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@ID", code),
+                new SqlParameter("@UniqueSubjectId", ssData.uniqueSubjectId),
+                new SqlParameter("@SampleType", ssData.sampleType),
+
             };
             var allData = UtilityDL.FillData<SampleSubject>(stProc, pList);
             return allData;

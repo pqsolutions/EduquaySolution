@@ -21,6 +21,7 @@ namespace EduquayAPI.Models.LoadMasters
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "District_gov_code"))
                 this.districGovCode = Convert.ToString(reader["District_gov_code"]);
+           
         }
     }
 }

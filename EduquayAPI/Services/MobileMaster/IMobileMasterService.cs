@@ -18,6 +18,7 @@ namespace EduquayAPI.Services.MobileMaster
         List<LoadCommunity> RetrieveCommunity(int id);
         List<LoadCommunity> RetrieveCommunity();
         List<LoadGovIDType> RetrieveGovIDType();
+        List<LoadConstantValues> RetrieveConstantValues();
 
     }
 }

@@ -19,5 +19,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileMster
         public List<LoadCaste> Caste { get; set; }
         public List<LoadCommunity> Community { get; set; }
         public List<LoadGovIDType> GovIdType { get; set; }
+        public List<LoadConstantValues> ConstantValues { get; set; }
+
     }
 }

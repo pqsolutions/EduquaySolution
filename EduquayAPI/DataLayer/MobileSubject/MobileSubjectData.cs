@@ -1,4 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
+using EduquayAPI.Models.ANMSubjectRegistration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,20 +22,58 @@ namespace EduquayAPI.DataLayer.MobileSubject
         {
 
         }
-        public string AddSubject(AddSubjectRequest subRegData)
+
+        public async Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData)
         {
+
+            List<UniqueSubjectIdDetail> uniqSubjectIdDetail = new List<UniqueSubjectIdDetail>();
+            var slist = new UniqueSubjectIdDetail();
+            SubRegSuccessResponse subRegSuccess = new SubRegSuccessResponse();
+            var subId = "";
             try
             {
-                int count = 0;
-                foreach(var subject in subRegData.subjectsRequest)
+                foreach (var subject in subRegData.subjectsRequest)
+                {
+                    subId = subject.subjectPrimaryRequest.uniqueSubjectId;
+                    subjectPrimary(subject.subjectPrimaryRequest);
+                    SubjectAddress(subject.subjectAddressRequest);
+                    SubjectPregnancy(subject.subjectPregnancyRequest);
+                    SubjectParent(subject.subjectParentRequest);
+
+                    slist.uniqueSubjectId = subject.subjectParentRequest.uniqueSubjectId;
+                    uniqSubjectIdDetail.Add(slist);
+                }
+
+                subRegSuccess.Status = true;
+                subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects Registered Successfully";
+                subRegSuccess.UniqueSubjectId = uniqSubjectIdDetail;
+            }
+            catch (Exception e)
+            {
+                subRegSuccess.Status = false;
+                subRegSuccess.Message ="Partially "+ uniqSubjectIdDetail.Count + " subjects registered successfully,<br> From this ("+ subId +") onwards not registered. <br> "+e.Message;
+                subRegSuccess.UniqueSubjectId = uniqSubjectIdDetail;
+            }
+            return subRegSuccess;
+        }
+
+        public string AddSubject(AddSubjectRequest subRegData)
+        {
+            int count = 0;
+            string message = "";
+            try
+            {
+                foreach (var subject in subRegData.subjectsRequest)
                 {
                     subjectPrimary(subject.subjectPrimaryRequest);
                     SubjectAddress(subject.subjectAddressRequest);
                     SubjectPregnancy(subject.subjectPregnancyRequest);
                     SubjectParent(subject.subjectParentRequest);
                     count += 1;
+                    message += subject.subjectParentRequest.uniqueSubjectId + Environment.NewLine;
                 }
-                return ""+ count +" subjects registered successfully.";
+                message += Convert.ToString(count) + " subjects registered successfully.";
+                return message;
             }
             catch (Exception e)
             {
@@ -61,25 +101,25 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@RIID", sprData.riId),
                     new SqlParameter("@SubjectTitle", sprData.subjectTitle ?? sprData.subjectTitle),
                     new SqlParameter("@FirstName", sprData.firstName ?? sprData.firstName),
-                    new SqlParameter("@MiddleName", sprData.middleName ?? sprData.middleName),
+                    new SqlParameter("@MiddleName", sprData.middleName ??  sprData.middleName),
                     new SqlParameter("@LastName", sprData.lastName ?? sprData.lastName),
                     new SqlParameter("@DOB", sprData.dob ?? sprData.dob),
                     new SqlParameter("@Age", sprData.age),
                     new SqlParameter("@Gender", sprData.gender ?? sprData.gender),
-                    new SqlParameter("@MaritalStatus", sprData.maritalStatus ?? sprData.maritalStatus),
-                    new SqlParameter("@MobileNo", sprData.mobileNo ?? sprData.mobileNo),
+                    new SqlParameter("@MaritalStatus", sprData.maritalStatus ??  sprData.maritalStatus),
+                    new SqlParameter("@MobileNo", sprData.mobileNo ??  sprData.mobileNo),
                     new SqlParameter("@EmailId", sprData.emailId ?? sprData.emailId),
                     new SqlParameter("@GovIdType_ID", sprData.govIdTypeId),
-                    new SqlParameter("@GovIdDetail", sprData.govIdDetail ?? sprData.govIdDetail),
-                    new SqlParameter("@SpouseSubjectID", sprData.spouseSubjectId ?? sprData.spouseSubjectId),
-                    new SqlParameter("@Spouse_FirstName", sprData.spouseFirstName ?? sprData.spouseFirstName),
+                    new SqlParameter("@GovIdDetail", sprData.govIdDetail ??   sprData.govIdDetail),
+                    new SqlParameter("@SpouseSubjectID", sprData.spouseSubjectId ??   sprData.spouseSubjectId),
+                    new SqlParameter("@Spouse_FirstName", sprData.spouseFirstName ??  sprData.spouseFirstName),
                     new SqlParameter("@Spouse_MiddleName", sprData.spouseMiddleName ?? sprData.spouseMiddleName),
-                    new SqlParameter("@Spouse_LastName", sprData.spouseLastName ?? sprData.spouseLastName),
-                    new SqlParameter("@Spouse_ContactNo", sprData.spouseContactNo ?? sprData.spouseContactNo),
+                    new SqlParameter("@Spouse_LastName", sprData.spouseLastName ??  sprData.spouseLastName),
+                    new SqlParameter("@Spouse_ContactNo", sprData.spouseContactNo ??   sprData.spouseContactNo),
                     new SqlParameter("@Spouse_GovIdType_ID", sprData.spouseGovIdTypeId),
-                    new SqlParameter("@Spouse_GovIdDetail", sprData.spouseGovIdDetail ?? sprData.spouseGovIdDetail),
+                    new SqlParameter("@Spouse_GovIdDetail", sprData.spouseGovIdDetail ??  sprData.spouseGovIdDetail),
                     new SqlParameter("@AssignANM_ID", sprData.assignANMId),
-                    new SqlParameter("@DateofRegister", sprData.dateOfRegister),
+                    new SqlParameter("@DateofRegister", sprData.dateOfRegister ?? sprData.dateOfRegister),
                     new SqlParameter("@RegisteredFrom", sprData.registeredFrom),
                     new SqlParameter("@Isactive", sprData.isActive ?? sprData.isActive),
                     new SqlParameter("@Createdby", sprData.createdBy),
@@ -105,10 +145,10 @@ namespace EduquayAPI.DataLayer.MobileSubject
                 var pList = new List<SqlParameter>()
                 {
                     new SqlParameter("@UniqueSubjectID", spData.uniqueSubjectId ?? spData.uniqueSubjectId),
-                    new SqlParameter("@RCHID", spData.rchId ?? spData.rchId),
-                    new SqlParameter("@ECNumber", spData.ecNumber ?? spData.ecNumber),
-                    new SqlParameter("@LMP_Date", spData.lmpDate),
-                    new SqlParameter("@Gestational_period", spData.gestationalPeriod),
+                    new SqlParameter("@RCHID", spData.rchId ??  spData.rchId),
+                    new SqlParameter("@ECNumber", spData.ecNumber ??  spData.ecNumber),
+                    new SqlParameter("@LMP_Date", spData.lmpDate ?? spData.lmpDate),
+                  //  new SqlParameter("@Gestational_period", spData.gestationalPeriod),
                     new SqlParameter("@G", spData.g),
                     new SqlParameter("@P", spData.p),
                     new SqlParameter("@L", spData.l),
@@ -134,36 +174,36 @@ namespace EduquayAPI.DataLayer.MobileSubject
                 var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
                 var pList = new List<SqlParameter>()
                 {
-                     new SqlParameter("@UniqueSubjectID", spaData.uniqueSubjectId ?? spaData.uniqueSubjectId),
-                    new SqlParameter("@Mother_FirstName", spaData.motherFirstName ?? spaData.motherFirstName),
-                    new SqlParameter("@Mother_MiddleName", spaData.motherMiddleName ?? spaData.motherMiddleName),
-                    new SqlParameter("@Mother_LastName", spaData.motherLastName ?? spaData.motherLastName),
+                    new SqlParameter("@UniqueSubjectID", spaData.uniqueSubjectId ?? spaData.uniqueSubjectId),
+                    new SqlParameter("@Mother_FirstName", spaData.motherFirstName ??   spaData.motherFirstName),
+                    new SqlParameter("@Mother_MiddleName", spaData.motherMiddleName ??  spaData.motherMiddleName),
+                    new SqlParameter("@Mother_LastName", spaData.motherLastName ??  spaData.motherLastName),
                     new SqlParameter("@Mother_GovIdType_ID", spaData.motherGovIdTypeId ),
-                    new SqlParameter("@Mother_GovIdDetail", spaData.motherGovIdDetail ?? spaData.motherGovIdDetail),
-                    new SqlParameter("@Mother_ContactNo", spaData.motherContactNo ?? spaData.motherContactNo),
-                    new SqlParameter("@Father_FirstName", spaData.fatherFirstName ?? spaData.fatherFirstName),
-                    new SqlParameter("@Father_MiddleName", spaData.fatherMiddleName ?? spaData.fatherMiddleName),
-                    new SqlParameter("@Father_LastName", spaData.fatherLastName ?? spaData.fatherLastName),
+                    new SqlParameter("@Mother_GovIdDetail", spaData.motherGovIdDetail ??  spaData.motherGovIdDetail),
+                    new SqlParameter("@Mother_ContactNo", spaData.motherContactNo ??  spaData.motherContactNo),
+                    new SqlParameter("@Father_FirstName", spaData.fatherFirstName ??  spaData.fatherFirstName),
+                    new SqlParameter("@Father_MiddleName", spaData.fatherMiddleName ??  spaData.fatherMiddleName),
+                    new SqlParameter("@Father_LastName", spaData.fatherLastName ?? spaData.fatherMiddleName),
                     new SqlParameter("@Father_GovIdType_ID", spaData.fatherGovIdTypeId ),
-                    new SqlParameter("@Father_GovIdDetail", spaData.fatherGovIdDetail ?? spaData.fatherGovIdDetail),
+                    new SqlParameter("@Father_GovIdDetail", spaData.fatherGovIdDetail ??  spaData.fatherGovIdDetail),
                     new SqlParameter("@Father_ContactNo", spaData.fatherContactNo ?? spaData.fatherContactNo),
                     new SqlParameter("@Gaurdian_FirstName", spaData.gaurdianFirstName ?? spaData.gaurdianFirstName),
                     new SqlParameter("@Gaurdian_MiddleName", spaData.gaurdianMiddleName ?? spaData.gaurdianMiddleName),
-                    new SqlParameter("@Gaurdian_LastName", spaData.gaurdianLastName ?? spaData.gaurdianLastName),
-                    new SqlParameter("@Gaurdian_GovIdType_ID", spaData.gaurdianGovIdTypeId ),
-                    new SqlParameter("@Gaurdian_GovIdDetail", spaData.gaurdianGovIdDetail ?? spaData.gaurdianGovIdDetail),
-                    new SqlParameter("@Gaurdian_ContactNo", spaData.gaurdianContactNo ?? spaData.gaurdianContactNo),
+                    new SqlParameter("@Gaurdian_LastName", spaData.gaurdianLastName ??  spaData.gaurdianLastName),
+                    new SqlParameter("@Guardian_GovIdType_ID", spaData.gaurdianGovIdTypeId),
+                    new SqlParameter("@Guardian_GovIdDetail", spaData.gaurdianGovIdDetail ?? spaData.gaurdianGovIdDetail),
+                    new SqlParameter("@Gaurdian_ContactNo", spaData.gaurdianContactNo ??  spaData.gaurdianContactNo),
                     new SqlParameter("@RBSKId", spaData.rbskId ?? spaData.rbskId),
-                    new SqlParameter("@SchoolName", spaData.schoolName ?? spaData.schoolName),
-                    new SqlParameter("@SchoolAddress1", spaData.schoolAddress1 ?? spaData.schoolAddress1),
+                    new SqlParameter("@SchoolName", spaData.schoolName ??  spaData.schoolName),
+                    new SqlParameter("@SchoolAddress1", spaData.schoolAddress1 ??  spaData.schoolAddress1),
                     new SqlParameter("@SchoolAddress2", spaData.schoolAddress2 ?? spaData.schoolAddress2),
-                    new SqlParameter("@SchoolAddress3", spaData.schoolAddress3 ?? spaData.schoolAddress3),
-                    new SqlParameter("@SchoolPincode", spaData.schoolPincode ?? spaData.schoolPincode),
+                    new SqlParameter("@SchoolAddress3", spaData.schoolAddress3 ??  spaData.schoolAddress3),
+                    new SqlParameter("@SchoolPincode", spaData.schoolPincode ??  spaData.schoolPincode),
                     new SqlParameter("@SchoolCity", spaData.schoolCity ?? spaData.schoolCity),
-                    new SqlParameter("@SchoolState", spaData.schoolState ?? spaData.schoolState),
-                    new SqlParameter("@Standard", spaData.standard  ?? spaData.standard),
+                    new SqlParameter("@SchoolState", spaData.schoolState ??  spaData.schoolState),
+                    new SqlParameter("@Standard", spaData.standard  ??  spaData.standard),
                     new SqlParameter("@Section", spaData.section ?? spaData.section),
-                    new SqlParameter("@RollNo", spaData.rollNo ?? spaData.rollNo),
+                    new SqlParameter("@RollNo", spaData.rollNo ??  spaData.rollNo),
                     new SqlParameter("@UpdatedBy", spaData.updatedBy),
                     retVal
                 };
@@ -189,9 +229,9 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@Caste_Id", saData.casteId),
                     new SqlParameter("@Community_Id", saData.communityId),
                     new SqlParameter("@Address1", saData.address1 ?? saData.address1),
-                    new SqlParameter("@Address2", saData.address2 ?? saData.address2),
-                    new SqlParameter("@Address3", saData.address3 ?? saData.address3),
-                    new SqlParameter("@Pincode", saData.pincode ?? saData.pincode),
+                    new SqlParameter("@Address2", saData.address2 ??  saData.address2),
+                    new SqlParameter("@Address3", saData.address3 ??  saData.address3),
+                    new SqlParameter("@Pincode", saData.pincode ??  saData.pincode),
                     new SqlParameter("@StateName", saData.stateName ?? saData.stateName),
                     new SqlParameter("@UpdatedBy", saData.updatedBy),
                     retVal
@@ -203,7 +243,6 @@ namespace EduquayAPI.DataLayer.MobileSubject
                 throw ex;
             }
         }
-
 
 
     }

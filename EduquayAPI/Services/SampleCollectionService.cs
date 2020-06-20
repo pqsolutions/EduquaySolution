@@ -20,11 +20,7 @@ namespace EduquayAPI.Services
         public string AddSample(AddSubjectSampleRequest ssData)
         {
             try
-            {               
-                if (ssData.subjectId <= 0)
-                {
-                    return "Invalid subject Id";
-                }
+            {
                 if (string.IsNullOrEmpty(ssData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectID";
@@ -41,10 +37,6 @@ namespace EduquayAPI.Services
                 {
                     return "Invalid SampleCollection Time";
                 }
-                if (ssData.reasonId <= 0)
-                {
-                    return "Invalid Reason Id";
-                }
                 if (ssData.collectionFrom <= 0)
                 {
                     return "Invalid Collection From data";
@@ -54,13 +46,28 @@ namespace EduquayAPI.Services
                     return "Invalid Collection By";
                 }
 
-                var result = _sampleCollectionData.AddSample(ssData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add samples data" : result;
+                var barcode = _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
+                if (barcode.Count <= 0)
+                {
+                    var result = _sampleCollectionData.AddSample(ssData);
+                    return string.IsNullOrEmpty(result) ? $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId}" : result;
+                }
+                else
+                {
+                    return $"This Barcode No - {ssData.barcodeNo} already exist";
+
+                }
             }
             catch (Exception e)
             {
-                return $"Unable to add samples data - {e.Message}";
+                return $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
             }
+        }
+
+        public List<BarcodeSample> FetchBarcode(string barcodeNo)
+        {
+            var barcode = _sampleCollectionData.FetchBarcode(barcodeNo);
+            return barcode;
         }
 
         public List<SubjectSamples> Retrieve(SubjectSampleRequest ssData)
@@ -69,9 +76,9 @@ namespace EduquayAPI.Services
             return subjectSamples;
         }
 
-        public List<SampleSubject> Retrieve(int code)
+        public List<SampleSubject> Retrieve(SampleSubjectRequest ssData)
         {
-            var sampleSubject = _sampleCollectionData.Retrieve(code);
+            var sampleSubject = _sampleCollectionData.Retrieve(ssData);
             return sampleSubject;
         }
     }

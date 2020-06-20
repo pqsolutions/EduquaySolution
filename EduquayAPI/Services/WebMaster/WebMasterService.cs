@@ -47,6 +47,12 @@ namespace EduquayAPI.Services.WebMaster
             return allCommunity;
         }
 
+        public List<LoadConstantValues> RetrieveConstantValues(int userId)
+        {
+            var allConstant = _webMasterData.RetrieveConstantValues(userId);
+            return allConstant;
+        }
+
         public List<LoadDistricts> RetrieveDistrict(int userId)
         {
             var district = _webMasterData.RetrieveDistrict(userId);

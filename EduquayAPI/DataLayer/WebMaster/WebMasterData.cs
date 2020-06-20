@@ -18,6 +18,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
         private const string FetchRI = "SPC_FetchRIByPincode";
         private const string FetchAssociatedANM = "SPC_FetchAssociatedANMByRI";
+        private const string FetchConstantValues = "SPC_FetchWebConstantData";
 
 
 
@@ -63,6 +64,14 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchAllCommunity;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadCommunity>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadConstantValues> RetrieveConstantValues(int userId)
+        {
+            string stProc = FetchConstantValues;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allData = UtilityDL.FillData<LoadConstantValues>(stProc, pList);
             return allData;
         }
 

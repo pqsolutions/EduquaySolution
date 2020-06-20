@@ -19,6 +19,7 @@ namespace EduquayAPI.DataLayer.MobileMaster
         private const string FetchAllCommunity = "SPC_FetchAllCommunity";
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
+        private const string FetchConstantValues = "SPC_FetchMobileConstantData";
 
         public MobileMasterData()
         {
@@ -53,6 +54,14 @@ namespace EduquayAPI.DataLayer.MobileMaster
             string stProc = FetchAllCommunity;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadCommunity>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadConstantValues> RetrieveConstantValues()
+        {
+            string stProc = FetchConstantValues;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadConstantValues>(stProc, pList);
             return allData;
         }
 
