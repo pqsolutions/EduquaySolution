@@ -17,6 +17,7 @@ namespace EduquayAPI.Models
         public string userName { get; set; }
         //  public string Password { get; set; }
         public int stateId { get; set; }
+        public string stateShortName { get; set; }
         public string stateName { get; set; }
         public int districtId { get; set; }
         public string districtName { get; set; }
@@ -72,6 +73,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Statename"))
                 this.stateName = Convert.ToString(reader["Statename"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Shortname"))
+                this.stateShortName = Convert.ToString(reader["Shortname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DistrictID"))
                 this.districtId = Convert.ToInt32(reader["DistrictID"]);

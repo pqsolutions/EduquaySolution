@@ -11,6 +11,7 @@ namespace EduquayAPI.Models.LoadMasters
 
         public int id { get; set; }
         public string anmName { get; set; }
+        public string anmGovCode { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -19,6 +20,9 @@ namespace EduquayAPI.Models.LoadMasters
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
                 this.anmName = Convert.ToString(reader["ANMName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "User_gov_code"))
+                this.anmGovCode = Convert.ToString(reader["User_gov_code"]);
         }
     }
 }

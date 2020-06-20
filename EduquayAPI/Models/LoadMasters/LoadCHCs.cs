@@ -10,6 +10,7 @@ namespace EduquayAPI.Models.LoadMasters
     {
         public int id { get; set; }
         public string chcName { get; set; }
+        public string chcGovCode { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
@@ -17,6 +18,9 @@ namespace EduquayAPI.Models.LoadMasters
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
                 this.chcName = Convert.ToString(reader["CHCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHC_gov_code"))
+                this.chcGovCode = Convert.ToString(reader["CHC_gov_code"]);
         }
     }
 }
