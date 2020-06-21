@@ -48,16 +48,17 @@ namespace EduquayAPI.Controllers
                 var caste = _mobileMasterService.RetrieveCaste();
                 var community = _mobileMasterService.RetrieveCommunity();
                 var govIdType = _mobileMasterService.RetrieveGovIDType();
-                _logger.LogInformation($"Received master data {district},{chc}, {phc},{sc},{ri},{religion},{caste},{community},{govIdType}");
-                return district.Count == 0 && chc.Count == 0 && phc.Count == 0 && sc.Count == 0 && ri.Count == 0 && religion.Count == 0 && caste.Count == 0 && community.Count == 0 && govIdType.Count == 0  ?
+                var constantValues = _mobileMasterService.RetrieveConstantValues();
+                _logger.LogInformation($"Received master data {district},{chc}, {phc},{sc},{ri},{religion},{caste},{community},{govIdType},{constantValues}");
+                return district.Count == 0 && chc.Count == 0 && phc.Count == 0 && sc.Count == 0 && ri.Count == 0 && religion.Count == 0 && caste.Count == 0 && community.Count == 0 && govIdType.Count == 0 && constantValues.Count == 0 ?
                     new MobileMasterResponse { Status = "true", Message = "No record found", Districts = new List<LoadDistricts>(), CHC = new List<LoadCHCs>(), PHC = new List<LoadPHCs>(), SC = new List<LoadSCs>(),
-                        RI = new List<LoadRIs>(), Religion = new List<LoadReligion>(), Caste = new List<LoadCaste>(), Community = new List<LoadCommunity>(), GovIdType = new List<LoadGovIDType>()   }
-                    : new MobileMasterResponse { Status = "true", Message = string.Empty, Districts = district, CHC = chc, PHC = phc, SC = sc, RI = ri, Religion = religion, Caste = caste, Community = community, GovIdType = govIdType };
+                        RI = new List<LoadRIs>(), Religion = new List<LoadReligion>(), Caste = new List<LoadCaste>(), Community = new List<LoadCommunity>(), GovIdType = new List<LoadGovIDType>() , ConstantValues = new List<LoadConstantValues>()   }
+                    : new MobileMasterResponse { Status = "true", Message = string.Empty, Districts = district, CHC = chc, PHC = phc, SC = sc, RI = ri, Religion = religion, Caste = caste, Community = community, GovIdType = govIdType, ConstantValues = constantValues  };
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in receiving master data {e.StackTrace}");
-                return new MobileMasterResponse { Status = "false", Message = e.Message, Districts = null, CHC = null, PHC = null, SC = null, RI = null, Religion = null, Caste = null, Community = null, GovIdType = null };
+                return new MobileMasterResponse { Status = "false", Message = e.Message, Districts = null, CHC = null, PHC = null, SC = null, RI = null, Religion = null, Caste = null, Community = null, GovIdType = null,  ConstantValues = null };
             }
         }
 

@@ -25,7 +25,7 @@ namespace EduquayAPI.Contracts.V1
         {
             public const string Register = "Register";
             public const string Login = "Login";
-            public const string User = "oggedUser";
+            public const string User = "LoggedUser";
 
         }
      }

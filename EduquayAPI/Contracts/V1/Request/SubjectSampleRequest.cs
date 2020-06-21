@@ -11,6 +11,6 @@ namespace EduquayAPI.Contracts.V1.Request
         public string fromDate { get; set; }
         public string toDate { get; set; }
         public int subjectType { get; set; }
-        public string registeredFrom { get; set; }
+        public int registeredFrom { get; set; }
     }
 }

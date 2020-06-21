@@ -30,20 +30,16 @@ namespace EduquayAPI.Services
                 {
                     return "Invalid CHC Id";
                 }
-                if (subRegData.subjectPrimaryRequest.phcId <= 0)
-                {
-                    return "Invalid PHC Id";
-                }
-                if (subRegData.subjectPrimaryRequest.scId <= 0)
-                {
-                    return "Invalid SC Id";
-                }
                 if (subRegData.subjectPrimaryRequest.riId <= 0)
                 {
                     return "Invalid RI Id";
                 }
 
-                if (subRegData.subjectPrimaryRequest.isActive.ToLower() != "true")
+                if (subRegData.subjectPrimaryRequest.isActive.ToLower() == "" || subRegData.subjectPrimaryRequest.isActive.ToLower() == "true" || subRegData.subjectPrimaryRequest.isActive.ToLower() == "1")
+                {
+                    subRegData.subjectPrimaryRequest.isActive = "true";
+                }
+                if (subRegData.subjectPrimaryRequest.isActive.ToLower() == "false")
                 {
                     subRegData.subjectPrimaryRequest.isActive = "false";
                 }

@@ -17,6 +17,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCommunity> RetrieveCommunity();
         List<LoadGovIDType> RetrieveGovIDType();
         List<LoadAssociatedANM> RetrieveAssociatedANM(int riId);
+        List<LoadConstantValues> RetrieveConstantValues(int userId);
     }
     public interface IWebMasterDataFactory
     {

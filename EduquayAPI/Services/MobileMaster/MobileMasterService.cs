@@ -39,6 +39,12 @@ namespace EduquayAPI.Services.MobileMaster
             return allCommunity;
         }
 
+        public List<LoadConstantValues> RetrieveConstantValues()
+        {
+            var allConstant = _mobileMasterData.RetrieveConstantValues();
+            return allConstant;
+        }
+
         public List<LoadDistricts> RetrieveDistrict(int userId)
         {
             var district = _mobileMasterData.RetrieveDistrict(userId);

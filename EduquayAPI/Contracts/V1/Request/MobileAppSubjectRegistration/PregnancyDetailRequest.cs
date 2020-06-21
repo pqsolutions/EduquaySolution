@@ -11,7 +11,7 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration
         public string rchId { get; set; }
         public string ecNumber { get; set; }
         public string lmpDate { get; set; }
-        public decimal gestationalPeriod { get; set; }
+       // public decimal gestationalPeriod { get; set; }
         public int g { get; set; }
         public int p { get; set; }
         public int l { get; set; }

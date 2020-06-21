@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using EduquayAPI.Contracts.V1;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 
 namespace EduquayAPI.Controllers
 {
@@ -30,20 +31,42 @@ namespace EduquayAPI.Controllers
             _logger = logger;
         }
 
+        //[HttpPost]
+        //[Route("Add")]
+        //public ActionResult<string> AddSubjects(AddSubjectRequest subRegData)
+        //{
+        //    try
+        //    {
+        //        var subject = _mobileSubjectService.AddSubject(subRegData);
+        //        return string.IsNullOrEmpty(subject) ? $"Unable to generate the subject detail" : subject;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return $"Unable to generate the subject detail - {e.Message}";
+        //    }
+        //}
+
+
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddSubjects(AddSubjectRequest subRegData)
+        public async Task<IActionResult> AddMultipleSubjects(AddSubjectRequest subRegData)
         {
-            try
-            {
-                var subject = _mobileSubjectService.AddSubject(subRegData);
-                return string.IsNullOrEmpty(subject) ? $"Unable to generate the subject detail" : subject;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to generate the subject detail - {e.Message}";
-            }
-        }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(new AuthFailedResponse
+            //    {
+            //        Status = false,
+            //        Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
+            //    });
+            //}
+            var subRegResponse = await _mobileSubjectService.AddSubjectRegistration(subRegData);
 
+            return Ok(new SubRegSuccessResponse
+            {
+                Status = subRegResponse.Status,
+                Message = subRegResponse.Message,
+                UniqueSubjectId = subRegResponse.UniqueSubjectId,
+            }); ;
+        }
     }
 }

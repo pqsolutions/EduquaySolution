@@ -36,7 +36,7 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration
         public int spouseGovIdTypeId { get; set; }
         public string spouseGovIdDetail { get; set; }
         public int assignANMId { get; set; }
-        public DateTime dateOfRegister { get; set; }
+        public string dateOfRegister { get; set; }
         public int registeredFrom { get; set; }
         public string isActive { get; set; }
         public int createdBy { get; set; }
