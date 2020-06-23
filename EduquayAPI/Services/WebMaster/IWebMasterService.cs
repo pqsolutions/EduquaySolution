@@ -18,6 +18,10 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadGovIDType> RetrieveGovIDType();
         List<LoadAssociatedANM > RetrieveAssociatedANM(int riId);
         List<LoadConstantValues> RetrieveConstantValues(int userId);
+        List<LoadILR> RetrieveILR(int riId);
+        List<LoadCHCs> RetrieveTestingCHC(int riId);
+        List<LoadAVD> RetrieveAVD(int riId);
+
 
     }
 }

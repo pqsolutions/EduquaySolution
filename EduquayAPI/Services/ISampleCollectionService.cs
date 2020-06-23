@@ -12,8 +12,5 @@ namespace EduquayAPI.Services
         string AddSample(AddSubjectSampleRequest  ssData);
         List<SubjectSamples> Retrieve(SubjectSampleRequest ssData);
         List<SampleSubject> Retrieve(SampleSubjectRequest ssData);
-        List<BarcodeSample> FetchBarcode(string barcodeNo);
-
-
     }
 }

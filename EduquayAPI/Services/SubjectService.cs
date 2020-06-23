@@ -35,15 +35,6 @@ namespace EduquayAPI.Services
                     return "Invalid RI Id";
                 }
 
-                if (subRegData.subjectPrimaryRequest.isActive.ToLower() == "" || subRegData.subjectPrimaryRequest.isActive.ToLower() == "true" || subRegData.subjectPrimaryRequest.isActive.ToLower() == "1")
-                {
-                    subRegData.subjectPrimaryRequest.isActive = "true";
-                }
-                if (subRegData.subjectPrimaryRequest.isActive.ToLower() == "false")
-                {
-                    subRegData.subjectPrimaryRequest.isActive = "false";
-                }
-
                 var result = _subjectData.AddSubject(subRegData);
                 return string.IsNullOrEmpty(result) ? $"Unable to generate subject detail" : result;
             }

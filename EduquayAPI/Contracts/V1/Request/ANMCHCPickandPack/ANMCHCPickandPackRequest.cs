@@ -8,6 +8,6 @@ namespace EduquayAPI.Contracts.V1.Request.ANMCHCPickandPack
     public class ANMCHCPickandPackRequest
     {
         public int userId { get; set; }
-        public string registeredFrom { get; set; }
+        public int collectionFrom { get; set; }
     }
 }

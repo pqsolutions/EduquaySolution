@@ -85,6 +85,7 @@ namespace EduquayAPI.DataLayer
                 }
 
                 reader.Close();
+                command.Parameters.Clear();
             }
             catch (SqlException ex)
             {
@@ -93,6 +94,10 @@ namespace EduquayAPI.DataLayer
             catch (InvalidOperationException ioex)
             {
                 throw new ApplicationException(ioex.Message);
+            }
+            catch(ArgumentException arEx)
+            {
+                throw new ApplicationException(arEx.Message);
             }
             finally
             {

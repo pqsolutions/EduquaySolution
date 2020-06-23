@@ -27,7 +27,7 @@ namespace EduquayAPI.DataLayer
             string stProc = FetchBarcodeSample;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@BarcodeNo", barcodeNo),
+                new SqlParameter("@Barcode", barcodeNo),
 
             };
             var allData = UtilityDL.FillData<BarcodeSample>(stProc, pList);

@@ -136,7 +136,19 @@ namespace EduquayAPI.Models
         }
         #endregion convert string to Title Case
 
-        
+        #region convert null to empty string
+
+        /// <summary>
+        /// convert null to empty string
+        /// </summary>
+        public static string ToCheckNull(this string str)
+        {
+            if (!string.IsNullOrEmpty(str)) return str;
+            return string.Empty;
+        }
+        #endregion  convert null to empty string
+
+
         /// <summary>
         /// conver array to string
         /// </summary>

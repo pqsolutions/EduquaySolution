@@ -1,7 +1,10 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
+using EduquayAPI.Contracts.V1.Response.MobileSubject;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.Models.ANMSubjectRegistration;
+using EduquayAPI.Models.MobileSubject;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -18,42 +21,80 @@ namespace EduquayAPI.Services.MobileSubject
         {
             _mobileSubjectData = new MobileSubjectDataFactory().Create();
         }
-        public string AddSubject(AddSubjectRequest subRegData)
-        {
-            try
-            {
-                var result = _mobileSubjectData.AddSubject(subRegData);
-                return string.IsNullOrEmpty(result) ? $"Unable to generate subject detail" : result;
-            }
-
-            catch (Exception e)
-            {
-                return $"Unable to generate subject detail - {e.Message}";
-            }
-        }
 
         public async Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData)
         {
-            var result = await _mobileSubjectData.AddSubjectRegistration(subRegData);
+
+            List<UniqueSubjectIdDetail> uniqSubjectIdDetail = new List<UniqueSubjectIdDetail>();
+           
+            SubRegSuccessResponse subRegSuccess = new SubRegSuccessResponse();
+            var subId = "";
             try
             {
-
-                return new SubRegSuccessResponse
+                foreach (var subject in subRegData.subjectsRequest)
                 {
-                    Status = result.Status,
-                    Message = result.Message,
-                    UniqueSubjectId = result.UniqueSubjectId,
-                };
+                    var slist = new UniqueSubjectIdDetail();
+                    subId = subject.subjectPrimaryRequest.uniqueSubjectId;
+                    _mobileSubjectData.subjectPrimary(subject.subjectPrimaryRequest);
+                    _mobileSubjectData.SubjectAddress(subject.subjectAddressRequest);
+                    _mobileSubjectData.SubjectPregnancy(subject.subjectPregnancyRequest);
+                    _mobileSubjectData.SubjectParent(subject.subjectParentRequest);
+
+                    slist.uniqueSubjectId = subject.subjectParentRequest.uniqueSubjectId;
+                    uniqSubjectIdDetail.Add(slist);
+                }
+
+                subRegSuccess.Status = true;
+                subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects Registered Successfully";
+                subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
             catch (Exception e)
             {
-                return new SubRegSuccessResponse
-                {
-                    Status = result.Status,
-                    Message = result.Message,
-                    UniqueSubjectId = result.UniqueSubjectId,
-                };
+                subRegSuccess.Status = false;
+                subRegSuccess.Message = "Partially " + uniqSubjectIdDetail.Count + " subjects registered successfully, From this (" + subId + ") onwards not registered. " + e.Message;
+                subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
+            return subRegSuccess;
+        }
+
+        public async Task<SubjectResigrationListResponse> RetrieveSubjectRegistration(int userId)
+        {
+
+            var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(userId);
+            var subjectRegistrationResponse = new SubjectResigrationListResponse();
+            var subjectRegistrations = new List<SubjectResigration>();
+            try
+            {
+
+                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                {
+                    var subjectRegistration = new SubjectResigration();
+                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+
+                    subjectRegistration.SubjectPrimary = primarySubject;
+                    subjectRegistration.SubjectAddress = address;
+                    subjectRegistration.SubjectPregnancy = pregnancy;
+                    subjectRegistration.SubjectParent = parent;
+
+                    subjectRegistrations.Add(subjectRegistration);
+                    
+
+                }
+                subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
+                subjectRegistrationResponse.Status = "true";
+                subjectRegistrationResponse.Message = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                subjectRegistrationResponse.Status = "false";
+                subjectRegistrationResponse.Message = ex.Message;
+
+            }
+
+            return subjectRegistrationResponse;
         }
     }
 }

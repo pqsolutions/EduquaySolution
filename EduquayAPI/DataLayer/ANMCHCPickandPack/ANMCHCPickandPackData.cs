@@ -22,7 +22,7 @@ namespace EduquayAPI.DataLayer.ANMCHCPickandPack
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserID", acppData.userId),
-                new SqlParameter("@RegisteredFrom", acppData.registeredFrom ?? acppData.registeredFrom),
+                new SqlParameter("@CollectionFrom", acppData.collectionFrom),
             };
             var allData = UtilityDL.FillData<ANMCHCPickandPackSamples>(stProc, pList);
             return allData;

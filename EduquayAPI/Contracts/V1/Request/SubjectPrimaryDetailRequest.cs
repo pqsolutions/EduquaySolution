@@ -37,9 +37,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public int assignANMId { get; set; }
         public string dateOfRegister { get; set; }
         public int registeredFrom { get; set; }
-        public string isActive { get; set; }
         public int createdBy { get; set; }
-        public int updatedBy { get; set; }
         public string source { get; set; }
     }
 }

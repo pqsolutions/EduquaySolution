@@ -1,6 +1,7 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models.ANMSubjectRegistration;
+using EduquayAPI.Models.MobileSubject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,12 @@ namespace EduquayAPI.DataLayer.MobileSubject
 {
     public interface IMobileSubjectData
     {
-        string AddSubject(AddSubjectRequest subRegData);
-        Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData);
+        void subjectPrimary(PrimaryDetailRequest sprData);
+        void SubjectAddress(AddressDetailRequest saData);
+        void SubjectPregnancy(PregnancyDetailRequest spData);
+        void SubjectParent(ParentDetailRequest spaData);
+
+        SubjectRegDetail MobileSubjectRegDetail(int userId);
     }
 
     public interface IMobileSubjectDataFactory

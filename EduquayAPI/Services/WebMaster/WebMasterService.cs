@@ -65,6 +65,18 @@ namespace EduquayAPI.Services.WebMaster
             return allGovIDType;
         }
 
+        public List<LoadILR> RetrieveILR(int riId)
+        {
+            var allILR = _webMasterData.RetrieveILR(riId);
+            return allILR;
+        }
+
+        public List<LoadCHCs> RetrieveTestingCHC(int riId)
+        {
+            var allTestingCHC = _webMasterData.RetrieveTestingCHC(riId);
+            return allTestingCHC;
+        }
+
         public List<LoadReligion> RetrieveReligion()
         {
             var allReligion = _webMasterData.RetrieveReligion();
@@ -75,6 +87,12 @@ namespace EduquayAPI.Services.WebMaster
         {
             var ri = _webMasterData.RetrieveRI(pincode);
             return ri;
+        }
+
+        public List<LoadAVD> RetrieveAVD(int riId)
+        {
+            var allAVD = _webMasterData.RetrieveAVD(riId);
+            return allAVD;
         }
     }
 }
