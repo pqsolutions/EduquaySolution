@@ -10,6 +10,6 @@ namespace EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration
     {
         public bool Status { get; set; }
         public string Message { get; set; }
-        public List<UniqueSubjectIdDetail> UniqueSubjectId { get; set; }
+        public List<UniqueSubjectIdDetail> SuccessIds { get; set; }
     }
 }

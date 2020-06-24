@@ -17,7 +17,7 @@ namespace EduquayAPI.Services
             _sampleCollectionData = new SampleCollectionDataFactory().Create();
         }
 
-        public string AddSample(AddSubjectSampleRequest ssData)
+        public  string AddSample(AddSubjectSampleRequest ssData)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace EduquayAPI.Services
                     return "Invalid Collection By";
                 }
 
-                var barcode = _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
+                var barcode =  _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
                 if (barcode.Count <= 0)
                 {
                     var result = _sampleCollectionData.AddSample(ssData);
@@ -55,19 +55,12 @@ namespace EduquayAPI.Services
                 else
                 {
                     return $"This Barcode No - {ssData.barcodeNo} already exist";
-
                 }
             }
             catch (Exception e)
             {
                 return $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
             }
-        }
-
-        public List<BarcodeSample> FetchBarcode(string barcodeNo)
-        {
-            var barcode = _sampleCollectionData.FetchBarcode(barcodeNo);
-            return barcode;
         }
 
         public List<SubjectSamples> Retrieve(SubjectSampleRequest ssData)

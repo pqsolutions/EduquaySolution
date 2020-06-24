@@ -71,6 +71,28 @@ namespace EduquayAPI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("RetrieveTestingCHC/{riId}")]
+        public LoadTestingCHCResponse GetTestingCHC(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _webMasterService.RetrieveTestingCHC(riId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new LoadTestingCHCResponse { Status = "true", Message = "No record found", TestingCHC = new List<LoadCHCs>() }
+                    : new LoadTestingCHCResponse { Status = "true", Message = string.Empty, TestingCHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
+            }
+        }
+
         [HttpGet]
         [Route("RetrieveConstantValues/{userId}")]
         public LoadConstantResponse GetConstantValues(int userId)
@@ -221,13 +243,13 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveAssociatedANM/{code}")]
-        public LoadAssociatedANMResponse GetAssociatedANM(int code)
+        [Route("RetrieveAssociatedANM/{riId}")]
+        public LoadAssociatedANMResponse GetAssociatedANM(int riId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                var associatedANM = _webMasterService.RetrieveAssociatedANM(code);
+                var associatedANM = _webMasterService.RetrieveAssociatedANM(riId);
 
                 _logger.LogInformation($"Received Associated ANM master data {associatedANM}");
                 return associatedANM.Count == 0 ?
@@ -241,6 +263,48 @@ namespace EduquayAPI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("RetrieveILR/{riId}")]
+        public LoadILRResponse GetILRByRI(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var ilr = _webMasterService.RetrieveILR(riId);
+
+                _logger.LogInformation($"Received ILR master data {ilr}");
+                return ilr.Count == 0 ?
+                    new LoadILRResponse { Status = "true", Message = "No record found", ILR = new List<LoadILR>() }
+                    : new LoadILRResponse { Status = "true", Message = string.Empty, ILR = ilr };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving ILR data {e.StackTrace}");
+                return new LoadILRResponse { Status = "false", Message = e.Message, ILR = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveAVD/{riId}")]
+        public LoadAVDResponse GetAVDByRI(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var avd = _webMasterService.RetrieveAVD(riId);
+
+                _logger.LogInformation($"Received AVD master data {avd}");
+                return avd.Count == 0 ?
+                    new LoadAVDResponse { Status = "true", Message = "No record found", AVD = new List<LoadAVD>() }
+                    : new LoadAVDResponse { Status = "true", Message = string.Empty, AVD = avd };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving AVD data {e.StackTrace}");
+                return new LoadAVDResponse { Status = "false", Message = e.Message, AVD = null };
+            }
+        }
 
     }
 }

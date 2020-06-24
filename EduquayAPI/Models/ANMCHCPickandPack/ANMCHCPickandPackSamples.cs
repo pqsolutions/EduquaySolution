@@ -8,7 +8,6 @@ namespace EduquayAPI.Models.ANMCHCPickandPack
 {
     public class ANMCHCPickandPackSamples : IFill
     {
-        public int subjectId { get; set; }
         public string uniqueSubjectId { get; set; }
         public int sampleCollectionId { get; set; }
         public string subjectName { get; set; }
@@ -17,8 +16,6 @@ namespace EduquayAPI.Models.ANMCHCPickandPack
         public string sampleDateTime { get; set; }
         public void Fill(SqlDataReader reader)
         {
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);

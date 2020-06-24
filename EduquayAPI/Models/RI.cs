@@ -8,6 +8,8 @@ namespace EduquayAPI.Models
 {
     public class RI : IFill
     {
+        public int testingCHCId { get; set; }
+        public string testingCHCName { get; set; }
         public int id { get; set; }      
         public int phcId { get; set; }
         public string phcName { get; set; }       
@@ -28,7 +30,13 @@ namespace EduquayAPI.Models
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.id = Convert.ToInt32(reader["ID"]);           
+                this.id = Convert.ToInt32(reader["ID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHCID"))
+                this.testingCHCId = Convert.ToInt32(reader["TestingCHCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
+                this.testingCHCName = Convert.ToString(reader["CHCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCID"))
                 this.phcId = Convert.ToInt32(reader["PHCID"]);

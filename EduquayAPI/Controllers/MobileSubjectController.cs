@@ -9,6 +9,7 @@ using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http.Extensions;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,7 @@ using EduquayAPI.Contracts.V1;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
+using EduquayAPI.Contracts.V1.Response.MobileSubject;
 
 namespace EduquayAPI.Controllers
 {
@@ -31,42 +33,36 @@ namespace EduquayAPI.Controllers
             _logger = logger;
         }
 
-        //[HttpPost]
-        //[Route("Add")]
-        //public ActionResult<string> AddSubjects(AddSubjectRequest subRegData)
-        //{
-        //    try
-        //    {
-        //        var subject = _mobileSubjectService.AddSubject(subRegData);
-        //        return string.IsNullOrEmpty(subject) ? $"Unable to generate the subject detail" : subject;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return $"Unable to generate the subject detail - {e.Message}";
-        //    }
-        //}
-
-
         [HttpPost]
         [Route("Add")]
         public async Task<IActionResult> AddMultipleSubjects(AddSubjectRequest subRegData)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(new AuthFailedResponse
-            //    {
-            //        Status = false,
-            //        Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
-            //    });
-            //}
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Register multiple subjects in Mobile App- {JsonConvert.SerializeObject(subRegData)}");
             var subRegResponse = await _mobileSubjectService.AddSubjectRegistration(subRegData);
 
             return Ok(new SubRegSuccessResponse
             {
                 Status = subRegResponse.Status,
                 Message = subRegResponse.Message,
-                UniqueSubjectId = subRegResponse.UniqueSubjectId,
-            }); ;
+                SuccessIds = subRegResponse.SuccessIds,
+            });
+
+        }
+
+        [HttpGet]
+        [Route("RetrieveSubjectList/{userId}")]
+        public async Task<IActionResult> RetrieveSubjectList(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _mobileSubjectService.RetrieveSubjectRegistration(userId);
+
+            return Ok(new SubjectResigrationListResponse
+            {
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectResigrations = subRegListResponse.SubjectResigrations,
+            });
         }
     }
 }
