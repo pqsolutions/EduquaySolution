@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.MobileSubject;
@@ -20,6 +21,34 @@ namespace EduquayAPI.Services.MobileSubject
         public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory)
         {
             _mobileSubjectData = new MobileSubjectDataFactory().Create();
+        }
+
+        public async Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData)
+        {
+            List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
+            SampleCollectionListResponse slResponse = new SampleCollectionListResponse();
+            var barcodeNo = "";
+            try
+            {
+                foreach (var sample in ssData.SampleCollectionsRequest)
+                {
+                    var slist = new BarcodeSampleDetail();
+                    barcodeNo = sample.samples.barcodeNo;
+                    _mobileSubjectData.SampleColection(sample.samples);
+                    slist.barcodeNo = sample.samples.barcodeNo;
+                    barcodes.Add(slist);
+                }
+                slResponse.Status = true;
+                slResponse.Message = barcodes.Count +" Samples collected successfully";
+                slResponse.Barcodes = barcodes;
+            }
+            catch(Exception e)
+            {
+                slResponse.Status = false;
+                slResponse.Message = "Partially " + barcodes.Count + " samples collected successfully, From this (" + barcodeNo + ") onwards not collected. " + e.Message;
+                slResponse.Barcodes = barcodes;
+            }
+            return slResponse;
         }
 
         public async Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData)
@@ -57,12 +86,15 @@ namespace EduquayAPI.Services.MobileSubject
             return subRegSuccess;
         }
 
-        public async Task<SubjectResigrationListResponse> RetrieveSubjectRegistration(int userId)
+        public async Task<SubjectResigrationListResponse> RetrieveDetail(int userId)
         {
 
             var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(userId);
+            var sampleDetails = _mobileSubjectData.MobileSampleDetail(userId);
+
             var subjectRegistrationResponse = new SubjectResigrationListResponse();
             var subjectRegistrations = new List<SubjectResigration>();
+            var sampleLists = new List<SamplesList>();
             try
             {
 
@@ -73,17 +105,20 @@ namespace EduquayAPI.Services.MobileSubject
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
-
                     subjectRegistration.SubjectPrimary = primarySubject;
                     subjectRegistration.SubjectAddress = address;
                     subjectRegistration.SubjectPregnancy = pregnancy;
                     subjectRegistration.SubjectParent = parent;
-
                     subjectRegistrations.Add(subjectRegistration);
-                    
-
+                }
+                foreach(var sample in sampleDetails.sampleCollectionList)
+                {
+                    var sampleList = new SamplesList();
+                    sampleList.Samples = sample;
+                    sampleLists.Add(sampleList);
                 }
                 subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
+                subjectRegistrationResponse.SampleCollections = sampleLists;
                 subjectRegistrationResponse.Status = "true";
                 subjectRegistrationResponse.Message = string.Empty;
             }

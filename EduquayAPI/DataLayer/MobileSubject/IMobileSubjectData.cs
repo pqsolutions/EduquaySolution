@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
@@ -15,8 +16,11 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void SubjectAddress(AddressDetailRequest saData);
         void SubjectPregnancy(PregnancyDetailRequest spData);
         void SubjectParent(ParentDetailRequest spaData);
-
         SubjectRegDetail MobileSubjectRegDetail(int userId);
+        void SampleColection(SampleCollectionsRequest ssData);
+        SampleCollectionsList MobileSampleDetail(int userId);
+
+
     }
 
     public interface IMobileSubjectDataFactory

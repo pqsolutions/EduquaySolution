@@ -9,7 +9,7 @@ namespace EduquayAPI.Models.LoadMasters
     public class LoadConstantValues : IFill
     {
         public int registeredFrom { get; set; }
-        public string shipmentFrom { get; set; }
+        public int shipmentFrom { get; set; }
         public int sampleCollectionFrom { get; set; }
 
         public void Fill(SqlDataReader reader)
@@ -19,7 +19,7 @@ namespace EduquayAPI.Models.LoadMasters
                 this.registeredFrom = Convert.ToInt32(reader["RegisteredFrom"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentFrom"))
-                this.shipmentFrom = Convert.ToString(reader["ShipmentFrom"]);
+                this.shipmentFrom = Convert.ToInt32(reader["ShipmentFrom"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionFrom"))
                 this.sampleCollectionFrom = Convert.ToInt32(reader["SampleCollectionFrom"]);

@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMCHCShipment;
+using EduquayAPI.Contracts.V1.Response.ANMCHCShipment;
 using EduquayAPI.Models.ANMCHCShipment;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace EduquayAPI.Services.ANMCHCShipment
 {
     public interface IANMCHCShipmentService
     {
-        List<ANMCHCShipmentID> ANMCHCGenerateShipmentId(ShipmentIdGenerateRequest sgData);
-        string AddANMCHCShipment(AddANMCHCShipmentRequest asData);
-        List<ANMCHCShipmentLogs> RetrieveShipmentLog(ANMCHCShipmentLogRequest asData);
-        List<ANMCHCShipmentDetail> RetrieveShipmentDetail(ANMCHCShipmentDetailRequest asData);
+       // List<ANMCHCShipmentID> AddANMCHCShipment(AddShipmentANMCHCRequest asData);
+
+        Task<AddShipmentResponse> AddANMCHCShipment(AddShipmentANMCHCRequest asData);
+
+        Task<ANMCHCShipmentLogsResponse> RetrieveShipmentLogs(ANMCHCShipmentLogRequest asData);
     }
 }

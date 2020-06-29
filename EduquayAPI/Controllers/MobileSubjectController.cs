@@ -18,6 +18,7 @@ using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.MobileSubject;
+using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 
 namespace EduquayAPI.Controllers
 {
@@ -32,6 +33,24 @@ namespace EduquayAPI.Controllers
             _mobileSubjectService = mobileSubjectService;
             _logger = logger;
         }
+
+
+        [HttpGet]
+        [Route("RetrieveSubjectList/{userId}")]
+        public async Task<IActionResult> RetrieveSubjectList(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _mobileSubjectService.RetrieveDetail(userId);
+
+            return Ok(new SubjectResigrationListResponse
+            {
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectResigrations = subRegListResponse.SubjectResigrations,
+                SampleCollections = subRegListResponse.SampleCollections,
+            });
+        }
+
 
         [HttpPost]
         [Route("Add")]
@@ -50,19 +69,21 @@ namespace EduquayAPI.Controllers
 
         }
 
-        [HttpGet]
-        [Route("RetrieveSubjectList/{userId}")]
-        public async Task<IActionResult> RetrieveSubjectList(int userId)
+        [HttpPost]
+        [Route("AddSampleCollection")]
+        public async Task<IActionResult> AddMultipleSamples(SampleCollectRequest ssData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            var subRegListResponse = await _mobileSubjectService.RetrieveSubjectRegistration(userId);
+            _logger.LogDebug($"collect multiple samples in Mobile App- {JsonConvert.SerializeObject(ssData)}");
+            var sclResponse = await _mobileSubjectService.AddSampleCollection(ssData);
 
-            return Ok(new SubjectResigrationListResponse
+            return Ok(new SampleCollectionListResponse
             {
-                Status = subRegListResponse.Status,
-                Message = subRegListResponse.Message,
-                SubjectResigrations = subRegListResponse.SubjectResigrations,
+                Status = sclResponse.Status,
+                Message = sclResponse.Message,
+                Barcodes = sclResponse.Barcodes,
             });
+
         }
     }
 }

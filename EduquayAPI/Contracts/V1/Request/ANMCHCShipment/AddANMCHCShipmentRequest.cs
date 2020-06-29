@@ -10,7 +10,7 @@ namespace EduquayAPI.Contracts.V1.Request.ANMCHCShipment
         public int subjectId { get; set; }
         public string uniqueSubjectId { get; set; }
         public int sampleCollectionId { get; set; }
-        public string shipmentFrom { get; set; }
+        public int shipmentFrom { get; set; }
         public string shipmentId { get; set; }
         public int anmId { get; set; }
         public int testingCHCId { get; set; }

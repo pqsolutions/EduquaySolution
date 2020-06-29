@@ -83,9 +83,9 @@ namespace EduquayAPI.Services.WebMaster
             return allReligion;
         }
 
-        public List<LoadRIs> RetrieveRI(string pincode)
+        public List<LoadRIs> RetrieveRI(int userId)
         {
-            var ri = _webMasterData.RetrieveRI(pincode);
+            var ri = _webMasterData.RetrieveRI(userId);
             return ri;
         }
 
