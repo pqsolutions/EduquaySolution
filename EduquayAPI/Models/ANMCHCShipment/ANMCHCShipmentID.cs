@@ -9,11 +9,16 @@ namespace EduquayAPI.Models.ANMCHCShipment
     public class ANMCHCShipmentID : IFill
     {
         public string shipmentId { get; set; }
+        public string errorMessage { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentID"))
                 this.shipmentId = Convert.ToString(reader["ShipmentID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ErrorMessage"))
+                this.errorMessage = Convert.ToString(reader["ErrorMessage"]);
+
         }
     }
 }

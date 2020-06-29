@@ -115,13 +115,13 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveRI/{pincode}")]
-        public LoadRIResponse GetRI(string pincode)
+        [Route("RetrieveRI/{userId}")]
+        public LoadRIResponse GetRI(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                var ri = _webMasterService.RetrieveRI(pincode);
+                var ri = _webMasterService.RetrieveRI(userId);
 
                 _logger.LogInformation($"Received ri master data {ri}");
                 return ri.Count == 0 ?

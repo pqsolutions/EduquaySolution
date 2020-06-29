@@ -7,8 +7,8 @@ namespace EduquayAPI.Contracts.V1.Request.ANMCHCShipment
 {
     public class ShipmentIdGenerateRequest
     {
-        public int senderId { get; set; }
+        public int sendingFromId { get; set; }
         public string source { get; set; }
-        public string shipmentFrom { get; set; }
+        public int shipmentFrom { get; set; }
     }
 }

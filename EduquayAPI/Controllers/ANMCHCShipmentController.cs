@@ -34,96 +34,38 @@ namespace EduquayAPI.Controllers
 
 
         /// <summary>
-        /// Used for add samples to shipment for ANM user / CHC 
+        /// Used for add samples to shipment for ANM user 
         /// </summary>
         [HttpPost]
-        [Route("Add")]
-        public ActionResult<ServiceResponse> AddShipment(AddANMCHCShipmentRequest asData)
-        {
-            try
-            {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Adding sample shipment data - {JsonConvert.SerializeObject(asData)}");
-                var sampleShipment = _anmchcShipmentService.AddANMCHCShipment(asData);
-                if (sampleShipment == null)
-                {
-                    return NotFound();
-                }
-                _logger.LogInformation($"Sample shipment data added successfully - {asData}");
-                return new ServiceResponse { Status = "true", Message = string.Empty, Result = sampleShipment };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to add sample shipment data - {ex.StackTrace}");
-                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to add sample shipment data" };
-            }
-        }
-
-
-
-        /// <summary>
-        /// Used for generate shipmentId to ANM / CHC shipment
-        /// </summary>
-        [HttpPost]
-        [Route("GenerateANMCHCShipmentId")]
-        public GenerateANMCHCShipmentIdResponse GetANMCHCShipmentID(ShipmentIdGenerateRequest sgData)
+        [Route("AddANMShipment")]
+        public async Task<IActionResult> AddShipment(AddShipmentANMCHCRequest asData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            try
+            _logger.LogDebug($"Adding ANM shipment data - {JsonConvert.SerializeObject(asData)}");
+            var sampleShipment = await _anmchcShipmentService.AddANMCHCShipment(asData);
+            return Ok(new AddShipmentResponse
             {
-                var shipmentID = _anmchcShipmentService.ANMCHCGenerateShipmentId(sgData);
-                _logger.LogInformation($"Generated ShipmentId {shipmentID}");
-                return shipmentID.Count == 0 ? new GenerateANMCHCShipmentIdResponse { Status = "true", Message = "No Shipment Id found", ShipmentID = new List<ANMCHCShipmentID>() } : new GenerateANMCHCShipmentIdResponse { Status = "true", Message = string.Empty, ShipmentID = shipmentID };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in generating ShipmentId {e.StackTrace}");
-                return new GenerateANMCHCShipmentIdResponse { Status = "false", Message = e.Message, ShipmentID = null };
-            }
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
         }
 
         /// <summary>
-        /// Used for get shipment list of particular ANM user / CHC
-        /// </summary>
+        /// Used for get shipment list of particular ANM user 
         [HttpPost]
-        [Route("RetrieveANMCHCShipmentLog")]
-        public ANMCHCShipmentLogResponse GetShipmentList(ANMCHCShipmentLogRequest asData)
+        [Route("RetrieveANMShipmentLog")]
+        public async Task<IActionResult> GetShipmentList(ANMCHCShipmentLogRequest asData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            try
+            var shipmentLogResponse = await _anmchcShipmentService.RetrieveShipmentLogs(asData);
+
+            return Ok(new ANMCHCShipmentLogsResponse
             {
-                var shipmentList = _anmchcShipmentService.RetrieveShipmentLog(asData);
-                _logger.LogInformation($"Received shipment log data {shipmentList}");
-                return shipmentList.Count == 0 ? new ANMCHCShipmentLogResponse { Status = "true", Message = "No shipment found", ShipmentList = new List<ANMCHCShipmentLogs>() } : new ANMCHCShipmentLogResponse { Status = "true", Message = string.Empty, ShipmentList = shipmentList };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in receiving shipment log data {e.StackTrace}");
-                return new ANMCHCShipmentLogResponse { Status = "false", Message = e.Message, ShipmentList = null };
-            }
+                Status = shipmentLogResponse.Status,
+                Message = shipmentLogResponse.Message,
+                ShipmentLogs = shipmentLogResponse.ShipmentLogs,
+            });
         }
-
-        /// <summary>
-        /// Used for view the particular shipmentId and their Samples of Particular ANM user / CHC
-        /// </summary>
-        [HttpPost]
-        [Route("RetrieveANMCHCShipmentDetail")]
-        public ANMCHCShipmentDetialResponse GetShipmentDetail(ANMCHCShipmentDetailRequest asData)
-        {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            try
-            {
-                var shipmentDetail = _anmchcShipmentService.RetrieveShipmentDetail(asData);
-                _logger.LogInformation($"Received shipment detail data {shipmentDetail}");
-                return shipmentDetail.Count == 0 ? new ANMCHCShipmentDetialResponse { Status = "true", Message = "No shipment found", ShipmentDetail = new List<ANMCHCShipmentDetail>() } : new ANMCHCShipmentDetialResponse { Status = "true", Message = string.Empty, ShipmentDetail = shipmentDetail };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in receiving shipment detail data {e.StackTrace}");
-                return new ANMCHCShipmentDetialResponse { Status = "false", Message = e.Message, ShipmentDetail = null };
-            }
-        }
-
-
     }
 }

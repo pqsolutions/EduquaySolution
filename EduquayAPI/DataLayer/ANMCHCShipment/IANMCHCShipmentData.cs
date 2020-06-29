@@ -9,10 +9,8 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
 {
     public interface IANMCHCShipmentData
     {
-        List<ANMCHCShipmentID> ANMCHCGenerateShipmentId(ShipmentIdGenerateRequest sgData);
-        string AddANMCHCShipment(AddANMCHCShipmentRequest asData);
-        List<ANMCHCShipmentLogs> RetrieveShipmentLog(ANMCHCShipmentLogRequest asData);
-        List<ANMCHCShipmentDetail> RetrieveShipmentDetail(ANMCHCShipmentDetailRequest asData);
+        List<ANMCHCShipmentID> AddANMCHCShipment(AddShipmentANMCHCRequest asData);
+        ANMCHCShipments RetrieveShipmentLog(ANMCHCShipmentLogRequest asData);
     }
     public interface IANMCHCShipmentDataFactory
     {

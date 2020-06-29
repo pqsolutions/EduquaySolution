@@ -16,7 +16,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchAllCommunity = "SPC_FetchAllCommunity";
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
-        private const string FetchRI = "SPC_FetchRIByPincode";
+        private const string FetchRI = "SPC_FetchRIByUser";
         private const string FetchAssociatedANM = "SPC_FetchAssociatedANMByRI";
         private const string FetchConstantValues = "SPC_FetchWebConstantData";
         private const string FetchILR = "SPC_FetchILRByRI";
@@ -118,10 +118,10 @@ namespace EduquayAPI.DataLayer.WebMaster
             return allData;
         }
 
-        public List<LoadRIs> RetrieveRI(string pincode)
+        public List<LoadRIs> RetrieveRI(int userId)
         {
             string stProc = FetchRI;
-            var pList = new List<SqlParameter>() { new SqlParameter("@Pincode", pincode) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allData = UtilityDL.FillData<LoadRIs>(stProc, pList);
             return allData;
         }

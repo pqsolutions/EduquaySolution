@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
+﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models;
 using EduquayAPI.Models.ANMSubjectRegistration;
@@ -19,8 +20,9 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string AddSubjectAddressDetail = "SPC_AddSubjectAddressDetail";
         private const string AddSubjectPregnancyDetail = "SPC_AddSubjectPregnancyDetail";
         private const string AddSubjectParentDetail = "SPC_AddSubjectParentDetail";
-
         private const string FetchMobileSubjectsDetail = "SPC_FetchMobileSubjectDetail";
+        private const string AddSampleCollection = "SPC_AddSampleCollection";
+        private const string FetchMobileSampleDetailList = "SPC_FetchMobileSampleDetailList";
 
         public MobileSubjectData()
         {
@@ -189,10 +191,37 @@ namespace EduquayAPI.DataLayer.MobileSubject
             }
         }
 
+
+
+        public void SampleColection(SampleCollectionsRequest ssData)
+        {
+            try
+            {
+                var stProc = AddSampleCollection;
+                var retVal = new SqlParameter("@SCOPE_OUTPUT", 1) { Direction = ParameterDirection.Output };
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectID", ssData.uniqueSubjectId ?? ssData.uniqueSubjectId),
+                    new SqlParameter("@BarcodeNo", ssData.barcodeNo  ?? ssData.barcodeNo),
+                    new SqlParameter("@SampleCollectionDate", ssData.sampleCollectionDate ?? ssData.sampleCollectionDate),
+                    new SqlParameter("@SampleCollectionTime", ssData.sampleCollectionTime ?? ssData.sampleCollectionTime),
+                    new SqlParameter("@Reason", ssData.reason ?? ssData.reason),
+                    new SqlParameter("@CollectionFrom", ssData.collectionFrom),
+                    new SqlParameter("@CollectedBy", ssData.collectedBy),
+                    retVal
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public SubjectRegDetail MobileSubjectRegDetail(int userId)
         {
             string stProc = FetchMobileSubjectsDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) }; ;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allPrimaryData = UtilityDL.FillData<SubjectPrimary>(stProc, pList);
             var allAddressData = UtilityDL.FillData<SubjectAddress>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancy>(stProc, pList);
@@ -203,6 +232,16 @@ namespace EduquayAPI.DataLayer.MobileSubject
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
             return subDetail;
+        }
+
+        public SampleCollectionsList MobileSampleDetail(int userId)
+        {
+            string stProc = FetchMobileSampleDetailList;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<SampleCollection>(stProc, pList);
+            var sampleDetail = new SampleCollectionsList();
+            sampleDetail.sampleCollectionList = allSampleData;
+            return sampleDetail;
         }
     }
 }

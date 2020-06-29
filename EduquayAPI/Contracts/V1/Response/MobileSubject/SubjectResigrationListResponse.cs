@@ -11,6 +11,8 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public string Status { get; set; }
         public string Message { get; set; }
         public List<SubjectResigration> SubjectResigrations { get; set; }
+        public List<SamplesList> SampleCollections { get; set; }
+
     }
 
     public class SubjectResigration
@@ -20,6 +22,11 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public SubjectPregnancy SubjectPregnancy { get; set; }
         public SubjectParent SubjectParent { get; set; }
 
+    }
+
+    public class SamplesList
+    {
+        public SampleCollection Samples { get; set; }
     }
 
 }

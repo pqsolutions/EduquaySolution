@@ -8,6 +8,6 @@ namespace EduquayAPI.Contracts.V1.Request.ANMCHCShipment
     public class ANMCHCShipmentLogRequest
     {
         public int userId { get; set; }
-        public string shipmentFrom { get; set; }
+        public int shipmentFrom { get; set; }
     }
 }
