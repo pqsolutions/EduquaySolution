@@ -45,27 +45,27 @@ namespace EduquayAPI.Services
 
         }
 
-        public List<SubjectAddresDetail> RetrieveAddressDetail(string uniqueSubjectId)
+        public List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData)
         {
-            var subjectAddress = _subjectData.RetrieveAddressDetail(uniqueSubjectId);
+            var subjectAddress = _subjectData.RetrieveAddressDetail(sData);
             return subjectAddress;
         }
 
-        public List<SubjectParentDetail> RetrieveParentDetail(string uniqueSubjectId)
+        public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
         {
-            var subjectParent = _subjectData.RetrieveParentDetail(uniqueSubjectId);
+            var subjectParent = _subjectData.RetrieveParentDetail(sData);
             return subjectParent;
         }
 
-        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(string uniqueSubjectId)
+        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData)
         {
-            var subjectPregnancy = _subjectData.RetrievePregnancyDetail(uniqueSubjectId);
+            var subjectPregnancy = _subjectData.RetrievePregnancyDetail(sData);
             return subjectPregnancy;
         }
 
-        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(string uniqueSubjectId)
+        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData)
         {
-            var subjectPrimary = _subjectData.RetrievePrimaryDetail(uniqueSubjectId);
+            var subjectPrimary = _subjectData.RetrievePrimaryDetail(sData);
             return subjectPrimary;
         }
     }

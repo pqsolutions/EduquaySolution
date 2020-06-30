@@ -94,7 +94,6 @@ namespace EduquayAPI.Services.MobileSubject
 
             var subjectRegistrationResponse = new SubjectResigrationListResponse();
             var subjectRegistrations = new List<SubjectResigration>();
-            var sampleLists = new List<SamplesList>();
             try
             {
 
@@ -111,14 +110,9 @@ namespace EduquayAPI.Services.MobileSubject
                     subjectRegistration.SubjectParent = parent;
                     subjectRegistrations.Add(subjectRegistration);
                 }
-                foreach(var sample in sampleDetails.sampleCollectionList)
-                {
-                    var sampleList = new SamplesList();
-                    sampleList.Samples = sample;
-                    sampleLists.Add(sampleList);
-                }
+              
                 subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
-                subjectRegistrationResponse.SampleCollections = sampleLists;
+                subjectRegistrationResponse.SampleCollections = sampleDetails;
                 subjectRegistrationResponse.Status = "true";
                 subjectRegistrationResponse.Message = string.Empty;
             }

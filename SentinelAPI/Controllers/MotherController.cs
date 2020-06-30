@@ -41,7 +41,7 @@ namespace SentinelAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to register  motherdetail  - {e.StackTrace}");
+                _logger.LogError($"Failed to register  mother detail  - {e.StackTrace}");
                 return $"Unable to add mother detail - {e.Message}";
             }
         }

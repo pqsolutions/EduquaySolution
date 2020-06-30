@@ -1,5 +1,6 @@
 ﻿using SentinelAPI.Contracts.V1.Request.Mother;
 using SentinelAPI.Models;
+using SentinelAPI.Models.Mother;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,15 +21,28 @@ namespace SentinelAPI.DataLayer.Mother
 
         public string AddMotherDetail(AddMotherRequest mrData)
         {
+            MotherRegistration motherRegDetails = MotherDetail(mrData);
+            if (motherRegDetails != null)
+            {
+                return $"{motherRegDetails.responseMsg} successfully. The Unique ID is: {motherRegDetails.subjectId}";
+
+            }
+            else
+            {
+                return $"Unable to register mother details for {mrData.motherFirstName}";
+
+            }
+        }
+        public MotherRegistration MotherDetail(AddMotherRequest mrData)
+        {
             try
             {
                 string stProc = AddMothersDetail;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@DistrictID", mrData.districtId),
                     new SqlParameter("@HospitalId", mrData.hospitalId),
+                    new SqlParameter("@MotherSubjectId", mrData.motherSubjectId.ToCheckNull()),
                     new SqlParameter("@HospitalFileId", mrData.hospitalFileId),
                     new SqlParameter("@DateofRegistration", mrData.dateofRegistration),
                     new SqlParameter("@Mother_FirstName", mrData.motherFirstName),
@@ -61,15 +75,17 @@ namespace SentinelAPI.DataLayer.Mother
                     new SqlParameter("@Pincode", mrData.pincode.ToCheckNull()),
                     new SqlParameter("@CreatedBy", mrData.createdBy),
                     new SqlParameter("@Comments", mrData.comments.ToCheckNull()),
-                    retVal
+
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Mother details successfully";
+                var motherDet = UtilityDL.FillEntity<MotherRegistration>(stProc, pList);
+                return motherDet;
+
             }
             catch (Exception e)
             {
                 throw e;
             }
+
         }
     }
 }

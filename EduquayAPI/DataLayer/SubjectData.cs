@@ -220,34 +220,34 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(string uniqueSubjectId)
+        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData)
         {
             string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
             var allData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
             return allData;
         }
 
-        public List<SubjectAddresDetail> RetrieveAddressDetail(string uniqueSubjectId)
+        public List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData)
         {
             string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
             var allData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
             return allData;
         }
 
-        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(string uniqueSubjectId)
+        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData)
         {
             string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
             var allData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
             return allData;
         }
 
-        public List<SubjectParentDetail> RetrieveParentDetail(string uniqueSubjectId)
+        public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
         {
             string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", uniqueSubjectId) };
+            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
             var allData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
             return allData;
         }

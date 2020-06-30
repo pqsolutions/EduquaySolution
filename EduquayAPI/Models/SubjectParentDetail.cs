@@ -30,8 +30,7 @@ namespace EduquayAPI.Models
         public string schoolAddress3 { get; set; }
         public string schoolPincode { get; set; }
         public string schoolCity { get; set; }
-        public int schoolState { get; set; }
-        public string stateName { get; set; }
+        public string schoolState { get; set; }
         public string standard { get; set; }
         public string section { get; set; }
         public string rollNo { get; set; }
@@ -102,10 +101,7 @@ namespace EduquayAPI.Models
                 this.schoolCity = Convert.ToString(reader["SchoolCity"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SchoolState"))
-                this.schoolState = Convert.ToInt32(reader["SchoolState"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Statename"))
-                this.stateName = Convert.ToString(reader["Statename"]);
+                this.schoolState = Convert.ToString(reader["SchoolState"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SchoolPincode"))
                 this.schoolPincode = Convert.ToString(reader["SchoolPincode"]);
