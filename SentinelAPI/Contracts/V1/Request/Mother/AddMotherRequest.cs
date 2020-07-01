@@ -9,6 +9,7 @@ namespace SentinelAPI.Contracts.V1.Request.Mother
     {
         public int districtId { get; set; }
         public int hospitalId { get; set; }
+        public string motherSubjectId { get; set; }
         public string hospitalFileId { get; set; }
         public string dateofRegistration { get; set; }
         public string motherFirstName { get; set; }
@@ -26,7 +27,7 @@ namespace SentinelAPI.Contracts.V1.Request.Mother
         public string gaurdianFirstName { get; set; }
         public string gaurdianMiddleName { get; set; }
         public string gaurdianLastName { get; set; }
-        public int? gaurdianGovIdTypeId { get; set; }
+        public int gaurdianGovIdTypeId { get; set; }
         public string gaurdianGovIdDetail { get; set; }
         public string gaurdianContactNo { get; set; }
         public int religionId { get; set; }

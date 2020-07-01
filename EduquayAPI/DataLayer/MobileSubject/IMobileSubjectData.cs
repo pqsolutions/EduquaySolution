@@ -18,9 +18,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void SubjectParent(ParentDetailRequest spaData);
         SubjectRegDetail MobileSubjectRegDetail(int userId);
         void SampleColection(SampleCollectionsRequest ssData);
-        SampleCollectionsList MobileSampleDetail(int userId);
-
-
+       List<SampleCollection> MobileSampleDetail(int userId);
     }
 
     public interface IMobileSubjectDataFactory

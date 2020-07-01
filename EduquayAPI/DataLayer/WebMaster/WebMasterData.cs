@@ -17,6 +17,8 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
         private const string FetchRI = "SPC_FetchRIByUser";
+        private const string FetchPHC = "SPC_FetchPHCByUser";
+        private const string FetchSC = "SPC_FetchSCByUser";
         private const string FetchAssociatedANM = "SPC_FetchAssociatedANMByRI";
         private const string FetchConstantValues = "SPC_FetchWebConstantData";
         private const string FetchILR = "SPC_FetchILRByRI";
@@ -131,6 +133,22 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchAVD;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", riId) };
             var allData = UtilityDL.FillData<LoadAVD>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadPHCs> RetrievePHC(int userId)
+        {
+            string stProc = FetchPHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allData = UtilityDL.FillData<LoadPHCs>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadSCs> RetrieveSC(int userId)
+        {
+            string stProc = FetchSC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allData = UtilityDL.FillData<LoadSCs>(stProc, pList);
             return allData;
         }
     }

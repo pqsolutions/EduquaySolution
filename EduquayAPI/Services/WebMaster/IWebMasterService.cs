@@ -10,6 +10,8 @@ namespace EduquayAPI.Services.WebMaster
     {
         List<LoadDistricts> RetrieveDistrict(int userId);
         List<LoadCHCs> RetrieveCHC(int userId);
+        List<LoadPHCs> RetrievePHC(int userId);
+        List<LoadSCs> RetrieveSC(int userId);
         List<LoadRIs> RetrieveRI(int userId);
         List<LoadReligion> RetrieveReligion();
         List<LoadCaste> RetrieveCaste();

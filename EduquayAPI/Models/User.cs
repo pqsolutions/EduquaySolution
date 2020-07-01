@@ -21,6 +21,7 @@ namespace EduquayAPI.Models
         public int phcId { get; set; }
         public int scId { get; set; }
         public string riId { get; set; }
+        public string name { get; set; }
         public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }
@@ -67,6 +68,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
                 this.riId  = Convert.ToString(reader["RIID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Name"))
+                this.name = Convert.ToString(reader["Name"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstName"))
                 this.firstName = Convert.ToString(reader["FirstName"]);

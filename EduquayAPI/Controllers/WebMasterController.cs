@@ -7,6 +7,7 @@ using EduquayAPI.Contracts.V1;
 using EduquayAPI.Contracts.V1.Response.WebMaster;
 using EduquayAPI.Models.LoadMasters;
 using EduquayAPI.Services.WebMaster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EduquayAPI.Controllers
 {
+
     [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class WebMasterController : ControllerBase
@@ -71,49 +73,47 @@ namespace EduquayAPI.Controllers
             }
         }
 
-
         [HttpGet]
-        [Route("RetrieveTestingCHC/{riId}")]
-        public LoadTestingCHCResponse GetTestingCHC(int riId)
+        [Route("RetrievePHC/{userId}")]
+        public LoadPHCResponse GetPHC(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                var chc = _webMasterService.RetrieveTestingCHC(riId);
+                var phc = _webMasterService.RetrievePHC(userId);
 
-                _logger.LogInformation($"Received chc master data {chc}");
-                return chc.Count == 0 ?
-                    new LoadTestingCHCResponse { Status = "true", Message = "No record found", TestingCHC = new List<LoadCHCs>() }
-                    : new LoadTestingCHCResponse { Status = "true", Message = string.Empty, TestingCHC = chc };
+                _logger.LogInformation($"Received phc master data {phc}");
+                return phc.Count == 0 ?
+                    new LoadPHCResponse { Status = "true", Message = "No record found", PHC = new List<LoadPHCs>() }
+                    : new LoadPHCResponse { Status = "true", Message = string.Empty, PHC = phc };
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
-                return new LoadTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
+                _logger.LogError($"Error in receiving phc data {e.StackTrace}");
+                return new LoadPHCResponse { Status = "false", Message = e.Message, PHC = null };
             }
         }
 
         [HttpGet]
-        [Route("RetrieveConstantValues/{userId}")]
-        public LoadConstantResponse GetConstantValues(int userId)
+        [Route("RetrieveSC/{userId}")]
+        public LoadSCResponse GetSC(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                var constantValues = _webMasterService.RetrieveConstantValues(userId);
+                var sc = _webMasterService.RetrieveSC(userId);
 
-                _logger.LogInformation($"Received constant values data {constantValues}");
-                return constantValues.Count == 0 ?
-                    new LoadConstantResponse { Status = "true", Message = "No record found", ConstantValues = new List<LoadConstantValues>() }
-                    : new LoadConstantResponse { Status = "true", Message = string.Empty, ConstantValues = constantValues };
+                _logger.LogInformation($"Received sc master data {sc}");
+                return sc.Count == 0 ?
+                    new LoadSCResponse { Status = "true", Message = "No record found", SC = new List<LoadSCs>() }
+                    : new LoadSCResponse { Status = "true", Message = string.Empty, SC = sc };
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
-                return new LoadConstantResponse { Status = "false", Message = e.Message, ConstantValues = null };
+                _logger.LogError($"Error in receiving sc data {e.StackTrace}");
+                return new LoadSCResponse { Status = "false", Message = e.Message, SC = null };
             }
         }
-
         [HttpGet]
         [Route("RetrieveRI/{userId}")]
         public LoadRIResponse GetRI(int userId)
@@ -242,6 +242,32 @@ namespace EduquayAPI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("RetrieveTestingCHC/{riId}")]
+        public LoadTestingCHCResponse GetTestingCHC(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _webMasterService.RetrieveTestingCHC(riId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new LoadTestingCHCResponse { Status = "true", Message = "No record found", TestingCHC = new List<LoadCHCs>() }
+                    : new LoadTestingCHCResponse { Status = "true", Message = string.Empty, TestingCHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
+            }
+        }
+
+       
+
+
+
         [HttpGet]
         [Route("RetrieveAssociatedANM/{riId}")]
         public LoadAssociatedANMResponse GetAssociatedANM(int riId)
@@ -303,6 +329,27 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogError($"Error in receiving AVD data {e.StackTrace}");
                 return new LoadAVDResponse { Status = "false", Message = e.Message, AVD = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveConstantValues/{userId}")]
+        public LoadConstantResponse GetConstantValues(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var constantValues = _webMasterService.RetrieveConstantValues(userId);
+
+                _logger.LogInformation($"Received constant values data {constantValues}");
+                return constantValues.Count == 0 ?
+                    new LoadConstantResponse { Status = "true", Message = "No record found", ConstantValues = new List<LoadConstantValues>() }
+                    : new LoadConstantResponse { Status = "true", Message = string.Empty, ConstantValues = constantValues };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadConstantResponse { Status = "false", Message = e.Message, ConstantValues = null };
             }
         }
 

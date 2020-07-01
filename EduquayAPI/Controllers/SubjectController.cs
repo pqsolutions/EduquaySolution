@@ -16,6 +16,7 @@ using EduquayAPI.Contracts.V1;
 
 namespace EduquayAPI.Controllers
 {
+
     [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class SubjectController : ControllerBase
@@ -41,16 +42,16 @@ namespace EduquayAPI.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("Retrieve/{uniqueSubjectId}")]
-        public SubjectRegistrationResponse GetMaster(string uniqueSubjectId)
+        [HttpPost]
+        [Route("Retrieve")]
+        public SubjectRegistrationResponse GetSubject(SubjectRequest sData)
         {
             try
             {
-                var subjecPrimary = _subjectService.RetrievePrimaryDetail(uniqueSubjectId);
-                var subjectAddress = _subjectService.RetrieveAddressDetail(uniqueSubjectId);
-                var subjectPregnancy = _subjectService.RetrievePregnancyDetail(uniqueSubjectId);
-                var subjectParent = _subjectService.RetrieveParentDetail(uniqueSubjectId);
+                var subjecPrimary = _subjectService.RetrievePrimaryDetail(sData);
+                var subjectAddress = _subjectService.RetrieveAddressDetail(sData);
+                var subjectPregnancy = _subjectService.RetrievePregnancyDetail(sData);
+                var subjectParent = _subjectService.RetrieveParentDetail(sData);
 
 
                 return subjecPrimary.Count == 0 && subjectAddress.Count == 0 && subjectPregnancy.Count == 0 && subjectParent.Count == 0 ?

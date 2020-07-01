@@ -31,7 +31,7 @@ namespace EduquayAPI.Models
         public string dob { get; set; }
         public int age { get; set; }
         public string gender { get; set; }
-        public string maritalStatus { get; set; }
+        public Boolean? maritalStatus { get; set; }
         public string mobileNo { get; set; }
         public string emailId { get; set; }
         public string dateOfRegister { get; set; }
@@ -45,7 +45,7 @@ namespace EduquayAPI.Models
         public string govIdDetail { get; set; }
         public int assignANMId { get; set; }
         public string anmName { get; set; }
-        public string isActive { get; set; }
+        public Boolean isActive { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -128,7 +128,7 @@ namespace EduquayAPI.Models
                 this.dateOfRegister = Convert.ToString(reader["DateofRegister"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MaritalStatus"))
-                this.maritalStatus   = Convert.ToString(reader["MaritalStatus"]);
+                this.maritalStatus   = Convert.ToBoolean(reader["MaritalStatus"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_FirstName"))
                 this.spouseFirstName = Convert.ToString(reader["Spouse_FirstName"]);
@@ -161,7 +161,7 @@ namespace EduquayAPI.Models
                 this.anmName = Convert.ToString(reader["ANMName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
-                this.isActive  = Convert.ToString(reader["IsActive"]);
+                this.isActive  = Convert.ToBoolean(reader["IsActive"]);
 
         }
     }

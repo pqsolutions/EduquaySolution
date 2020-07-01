@@ -53,7 +53,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@DOB", sprData.dob.ToCheckNull()),
                     new SqlParameter("@Age", sprData.age),
                     new SqlParameter("@Gender", sprData.gender.ToCheckNull()),
-                    new SqlParameter("@MaritalStatus", sprData.maritalStatus ??  sprData.maritalStatus),
+                    new SqlParameter("@MaritalStatus", sprData.maritalStatus ?? sprData.maritalStatus),
                     new SqlParameter("@MobileNo", sprData.mobileNo.ToCheckNull()),
                     new SqlParameter("@EmailId", sprData.emailId.ToCheckNull()),
                     new SqlParameter("@GovIdType_ID", sprData.govIdTypeId),
@@ -68,7 +68,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@AssignANM_ID", sprData.assignANMId),
                     new SqlParameter("@DateofRegister", sprData.dateOfRegister.ToCheckNull()),
                     new SqlParameter("@RegisteredFrom", sprData.registeredFrom),
-                    new SqlParameter("@Isactive", sprData.isActive ?? sprData.isActive),
+                    new SqlParameter("@Isactive", sprData.isActive),
                     new SqlParameter("@Createdby", sprData.createdBy),
                     new SqlParameter("@Updatedby", sprData.updatedBy),
                     new SqlParameter("@Source", sprData.source),
@@ -234,14 +234,12 @@ namespace EduquayAPI.DataLayer.MobileSubject
             return subDetail;
         }
 
-        public SampleCollectionsList MobileSampleDetail(int userId)
+        public List<SampleCollection> MobileSampleDetail(int userId)
         {
             string stProc = FetchMobileSampleDetailList;
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allSampleData = UtilityDL.FillData<SampleCollection>(stProc, pList);
-            var sampleDetail = new SampleCollectionsList();
-            sampleDetail.sampleCollectionList = allSampleData;
-            return sampleDetail;
+            return allSampleData;
         }
     }
 }

@@ -94,5 +94,17 @@ namespace EduquayAPI.Services.WebMaster
             var allAVD = _webMasterData.RetrieveAVD(riId);
             return allAVD;
         }
+
+        public List<LoadPHCs> RetrievePHC(int userId)
+        {
+            var allPHC = _webMasterData.RetrievePHC(userId);
+            return allPHC;
+        }
+
+        public List<LoadSCs> RetrieveSC(int userId)
+        {
+            var allSC = _webMasterData.RetrieveSC(userId);
+            return allSC;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration
         public string dob { get; set; }
         public int age { get; set; }
         public string gender { get; set; }
-        public string maritalStatus { get; set; }
+        public Boolean? maritalStatus { get; set; }
         public string mobileNo { get; set; }
         public string emailId { get; set; }
         public int govIdTypeId { get; set; }
@@ -38,7 +38,7 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration
         public int assignANMId { get; set; }
         public string dateOfRegister { get; set; }
         public int registeredFrom { get; set; }
-        public string isActive { get; set; }
+        public Boolean isActive { get; set; }
         public int createdBy { get; set; }
         public int updatedBy { get; set; }
         public string source { get; set; }
