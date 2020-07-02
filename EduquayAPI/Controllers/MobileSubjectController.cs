@@ -19,6 +19,7 @@ using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.MobileSubject;
 using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 
 namespace EduquayAPI.Controllers
 {
@@ -83,7 +84,22 @@ namespace EduquayAPI.Controllers
                 Message = sclResponse.Message,
                 Barcodes = sclResponse.Barcodes,
             });
+        }
 
+        [HttpPost]
+        [Route("AddShipment")]
+        public async Task<IActionResult> AddMultipleShipments(MobileShipmentsRequest msData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Multiple shipments in Mobile App- {JsonConvert.SerializeObject(msData)}");
+            var sclResponse = await _mobileSubjectService.AddANMShipment(msData);
+
+            return Ok(new ShipmentListResponse
+            {
+                Status = sclResponse.Status,
+                Message = sclResponse.Message,
+                ShipmentIds = sclResponse.ShipmentIds,
+            });
         }
     }
 }

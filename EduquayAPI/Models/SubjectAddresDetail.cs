@@ -8,7 +8,6 @@ namespace EduquayAPI.Models
 {
     public class SubjectAddresDetail:IFill
     {
-        public int id { get; set; }
         public int subjectId { get; set; }       
         public string uniqueSubjectId { get; set; }
         public int religionId { get; set; }
@@ -21,14 +20,14 @@ namespace EduquayAPI.Models
         public string address2 { get; set; }
         public string address3 { get; set; }
         public string pincode { get; set; }
+        public string stateName { get; set; }
+
 
         public void Fill(SqlDataReader reader)
         {
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.id = Convert.ToInt32(reader["ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.subjectId = Convert.ToInt32(reader["SubjectID"]);           
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SADSubjectID"))
+                this.subjectId = Convert.ToInt32(reader["SADSubjectID"]);           
            
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
@@ -62,6 +61,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.pincode = Convert.ToString(reader["Pincode"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "StateName"))
+                this.stateName = Convert.ToString(reader["StateName"]);
         }
 
     }

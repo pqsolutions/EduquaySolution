@@ -8,7 +8,6 @@ namespace EduquayAPI.Models
 {
     public class SubjectParentDetail : IFill
     {
-        public int id { get; set; }
         public int subjectId { get; set; }
         public string uniqueSubjectId { get; set; }
         public string motherFirstName { get; set; }
@@ -36,11 +35,9 @@ namespace EduquayAPI.Models
         public string rollNo { get; set; }
         public void Fill(SqlDataReader reader)
         {
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.id = Convert.ToInt32(reader["ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SPADSubjectID"))
+                this.subjectId = Convert.ToInt32(reader["SPADSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);

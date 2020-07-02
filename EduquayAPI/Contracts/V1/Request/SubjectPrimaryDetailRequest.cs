@@ -22,7 +22,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string dob { get; set; }
         public int age { get; set; }
         public string gender { get; set; }
-        public string maritalStatus { get; set; }
+        public Boolean? maritalStatus { get; set; }
         public string mobileNo { get; set; }
         public string emailId { get; set; }
         public int govIdTypeId { get; set; }

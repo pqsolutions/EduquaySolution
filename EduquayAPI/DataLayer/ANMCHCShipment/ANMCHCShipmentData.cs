@@ -37,7 +37,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
                     new SqlParameter("@DateofShipment", asData.dateOfShipment ?? asData.dateOfShipment),
                     new SqlParameter("@TimeofShipment", asData.timeOfShipment ?? asData.timeOfShipment),
                     new SqlParameter("@Createdby", asData.createdBy),
-                    new SqlParameter("Source",asData.source ?? asData.source),
+                    new SqlParameter("@Source",asData.source ?? asData.source),
                 };
                 var allData = UtilityDL.FillData<ANMCHCShipmentID>(stProc, pList);
                 return allData;

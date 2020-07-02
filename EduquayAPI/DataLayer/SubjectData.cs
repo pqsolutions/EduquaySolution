@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using System;
@@ -24,11 +25,11 @@ namespace EduquayAPI.DataLayer
         }
 
 
-        public string AddSubject(SubjectRegistrationRequest subRegData)
+        public UniqueIdDetail AddSubject(SubjectRegistrationRequest subRegData)
         {
+            var uniqueSubjectId = new UniqueIdDetail();
             try
             {
-
                 SubjectPrimaryDetail subPrimary = subjectPrimary(subRegData.subjectPrimaryRequest);
                 if (subPrimary != null)
                 {
@@ -39,23 +40,33 @@ namespace EduquayAPI.DataLayer
                         SubjectAddress(subRegData.subjectAddressRequest, uniqueSubId);
                         SubjectPregnancy(subRegData.subjectPregnancyRequest, uniqueSubId);
                         SubjectParent(subRegData.subjectParentRequest, uniqueSubId);
-                        return "Unique SubjectID generated successfully. The Unique ID is: " + uniqueSubId;
+                        uniqueSubjectId.uniqueSubjectId = uniqueSubId;
+                        uniqueSubjectId.message = "Unique Id Successfully generated";
+                        uniqueSubjectId.status = true;
                     }
                     else
                     {
-                        return $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
+                        uniqueSubjectId.uniqueSubjectId = "";
+                        uniqueSubjectId.status = false;
+                        uniqueSubjectId.message = $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
                     }
                 }
                 else
                 {
-                    return $"Unable to Register subject for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
+                    uniqueSubjectId.uniqueSubjectId = "";
+                    uniqueSubjectId.status = false;
+                    uniqueSubjectId.message = $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
                 }
 
             }
             catch (Exception e)
             {
-                throw e;
+                uniqueSubjectId.uniqueSubjectId = "";
+                uniqueSubjectId.status = false;
+                uniqueSubjectId.message = $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
             }
+            return uniqueSubjectId;
+
         }
 
         public SubjectPrimaryDetail subjectPrimary(SubjectPrimaryDetailRequest sprData)

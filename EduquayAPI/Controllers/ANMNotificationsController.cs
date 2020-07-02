@@ -49,7 +49,7 @@ namespace EduquayAPI.Controllers
                 {
                     return NotFound();
                 }
-                _logger.LogInformation($"Sample recollection data added successfully - {srData}");
+                _logger.LogInformation($"Sample recollection data added successfully - {srData.uniqueSubjectId}");
                 return new ServiceResponse { Status = "true", Message = string.Empty, Result = sampleRecollection };
             }
             catch (Exception ex)
@@ -106,29 +106,5 @@ namespace EduquayAPI.Controllers
                 return new NotificationSamplesResponse { Status = "false", Message = e.Message, SampleList = null };
             }
         }
-
-        /// <summary>
-        /// Used for get subject sample  detail of particular ANM
-        /// </summary>
-        [HttpGet]
-        [Route("RetrieveSubjectSample/{id}/{notification}")]
-        public NotificationSubjectSampleResponse  GetANMSubjectSamples(int id, int notification)
-        {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            try
-            {
-                var subject = _anmNotificationsService.GetANMSubjectSamples(id, notification);
-                _logger.LogInformation($"Received Subject Data {subject}");
-                return subject.Count == 0 ? new NotificationSubjectSampleResponse { Status = "true", Message = "No subject found", Subject = new List<ANMSubjectSample>() } : new NotificationSubjectSampleResponse { Status = "true", Message = string.Empty, Subject = subject };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in receiving subject data {e.StackTrace}");
-                return new NotificationSubjectSampleResponse { Status = "false", Message = e.Message, Subject = null };
-            }
-        }
-
-
-
     }
 }

@@ -242,7 +242,6 @@ namespace EduquayAPI.Controllers
             }
         }
 
-
         [HttpGet]
         [Route("RetrieveTestingCHC/{riId}")]
         public LoadTestingCHCResponse GetTestingCHC(int riId)
@@ -263,10 +262,6 @@ namespace EduquayAPI.Controllers
                 return new LoadTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
             }
         }
-
-       
-
-
 
         [HttpGet]
         [Route("RetrieveAssociatedANM/{riId}")]

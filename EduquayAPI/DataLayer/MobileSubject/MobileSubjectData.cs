@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models;
@@ -23,10 +24,39 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchMobileSubjectsDetail = "SPC_FetchMobileSubjectDetail";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchMobileSampleDetailList = "SPC_FetchMobileSampleDetailList";
-
+        private const string addShipment = "SPC_AddANMMobileShipments";
         public MobileSubjectData()
         {
 
+        }
+
+        public void AddShipment(MobileShipmentRequest msData)
+        {
+            try
+            {
+                string stProc = addShipment;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@GeneratedShipmentId", msData.shipmentId ?? msData.shipmentId),
+                    new SqlParameter("@BarcodeNo", msData.barcodeNo ?? msData.barcodeNo),
+                    new SqlParameter("@ShipmentFrom", msData.shipmentFrom),
+                    new SqlParameter("@ANM_ID", msData.anmId),
+                    new SqlParameter("@RIID", msData.riId),
+                    new SqlParameter("@ILR_ID", msData.ilrId),
+                    new SqlParameter("@AVDID", msData.avdId),
+                    new SqlParameter("AVDContactNo", msData.avdContactNo.ToCheckNull()),
+                    new SqlParameter("@TestingCHCID", msData.testingCHCId),
+                    new SqlParameter("@DateofShipment", msData.dateOfShipment ?? msData.dateOfShipment),
+                    new SqlParameter("@TimeofShipment", msData.timeOfShipment ?? msData.timeOfShipment),
+                    new SqlParameter("@Createdby", msData.createdBy),
+                    new SqlParameter("@Source",msData.source ?? msData.source),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public void subjectPrimary(PrimaryDetailRequest sprData)

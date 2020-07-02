@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
@@ -21,6 +22,35 @@ namespace EduquayAPI.Services.MobileSubject
         public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory)
         {
             _mobileSubjectData = new MobileSubjectDataFactory().Create();
+        }
+
+        public async Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData)
+        {
+            List<ShipmentIdDetail> shipmentIds = new List<ShipmentIdDetail>();
+            ShipmentListResponse slResponse = new ShipmentListResponse();
+            var shipmentId = "";
+            try
+            {
+                foreach(var shipments in msData.ShipmentsRequest)
+                {
+                    var slist = new ShipmentIdDetail();
+                    shipmentId = shipments.shipment.shipmentId;
+                    _mobileSubjectData.AddShipment(shipments.shipment);
+                    slist.ShipmentId = shipments.shipment.shipmentId;
+                    shipmentIds.Add(slist);
+                }
+                slResponse.Status = true;
+                slResponse.Message = shipmentIds.Count + " Shipment generated successfully";
+                slResponse.ShipmentIds = shipmentIds;
+            }
+            catch (Exception e)
+            {
+                slResponse.Status = false;
+                slResponse.Message = "Partially " + shipmentIds.Count + " shipment generated successfully, From this (" + shipmentIds + ") onwards not shipment generated. " + e.Message;
+                slResponse.ShipmentIds  = shipmentIds;
+            }
+            return slResponse;
+
         }
 
         public async Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData)

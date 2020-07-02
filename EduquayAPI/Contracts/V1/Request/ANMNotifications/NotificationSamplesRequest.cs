@@ -9,6 +9,5 @@ namespace EduquayAPI.Contracts.V1.Request.ANMNotifications
     {
         public int anmId { get; set; }
         public int notification { get; set; }
-        public string searchValue { get; set; }
     }
 }
