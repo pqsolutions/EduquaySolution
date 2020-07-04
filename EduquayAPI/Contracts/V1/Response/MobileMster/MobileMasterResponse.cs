@@ -14,7 +14,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileMster
         public List<LoadCHCs> CHC { get; set; }
         public List<LoadPHCs> PHC { get; set; }
         public List<LoadSCs> SC { get; set; }
-        public List<LoadRIs> RI { get; set; }
+        public List<LoadMobileRI> RI { get; set; }
         public List<LoadReligion> Religion { get; set; }
         public List<LoadCaste> Caste { get; set; }
         public List<LoadCommunity> Community { get; set; }

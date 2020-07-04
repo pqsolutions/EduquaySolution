@@ -12,6 +12,8 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public string Message { get; set; }
         public List<SubjectResigration> SubjectResigrations { get; set; }
         public List<SampleCollection> SampleCollections { get; set; }
+        public List<ShipmentLogs> ShipmentLogDetail { get; set; }
+
 
     }
 
@@ -23,4 +25,30 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public SubjectParent SubjectParent { get; set; }
 
     }
+
+
+    public class ShipmentLogs
+    {
+        public string shipmentId { get; set; }
+        public int anmId { get; set; }
+        public string anmName { get; set; }
+        public int testingCHCId { get; set; }
+        public string testingCHC { get; set; }
+        public int avdId { get; set; }
+        public string avdName { get; set; }
+        public string avdContactNo { get; set; }
+        public int ilrId { get; set; }
+        public string ilrPoint { get; set; }
+        public int riId { get; set; }
+        public string riPoint { get; set; }
+        public string shipmentDate { get; set; }
+        public string shipmentTime { get; set; }
+        public int createdBy { get; set; }
+        public string source { get; set; }
+
+        public List<MobileShipmentSample> SamplesDetail { get; set; }
+
+    }
+
 }
+

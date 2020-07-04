@@ -70,6 +70,21 @@ namespace EduquayAPI.Controllers
             }
         }
 
-       
+        [HttpPost]
+        [Route("RetrieveANWSubjects")]
+        public ANWSubjectResponse GetANWSubject(ANWSubjectRequest asData)
+        {
+            try
+            {
+                var anwSubjects = _subjectService.RetrieveANWDetail(asData);
+                return anwSubjects.Count == 0 ?
+                    new ANWSubjectResponse { Status = false, Message = "No Subject found", ANWSubjects = new List<ANWSubjectDetail>() }
+                    : new ANWSubjectResponse { Status = true, Message = string.Empty, ANWSubjects = anwSubjects };
+            }
+            catch (Exception e)
+            {
+                return new ANWSubjectResponse { Status = false, Message = e.Message, ANWSubjects = null };
+            }
+        }
     }
 }

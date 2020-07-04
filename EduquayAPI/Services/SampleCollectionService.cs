@@ -68,11 +68,5 @@ namespace EduquayAPI.Services
             var subjectSamples = _sampleCollectionData.Retrieve(ssData);
             return subjectSamples;
         }
-
-        public List<SampleSubject> Retrieve(SampleSubjectRequest ssData)
-        {
-            var sampleSubject = _sampleCollectionData.Retrieve(ssData);
-            return sampleSubject;
-        }
     }
 }

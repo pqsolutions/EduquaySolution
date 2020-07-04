@@ -24,7 +24,9 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchMobileSubjectsDetail = "SPC_FetchMobileSubjectDetail";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchMobileSampleDetailList = "SPC_FetchMobileSampleDetailList";
-        private const string addShipment = "SPC_AddANMMobileShipments";
+        private const string AddShipments = "SPC_AddANMMobileShipments";
+        private const string FetchShipmentLog = "SPC_FetchMobileANMShipmentLog";
+
         public MobileSubjectData()
         {
 
@@ -34,7 +36,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         {
             try
             {
-                string stProc = addShipment;
+                string stProc = AddShipments;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@GeneratedShipmentId", msData.shipmentId ?? msData.shipmentId),
@@ -270,6 +272,18 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allSampleData = UtilityDL.FillData<SampleCollection>(stProc, pList);
             return allSampleData;
+        }
+
+        public ANMMobileShipment MobileANMShipmentDetail(int userId)
+        {
+            string stProc = FetchShipmentLog;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserID", userId) };
+            var shipmentLog= UtilityDL.FillData<MobileShipment>(stProc, pList);
+            var shipmentSample = UtilityDL.FillData<MobileShipmentSample>(stProc, pList);
+            var shipdetail = new ANMMobileShipment();
+            shipdetail.ShipmentLog = shipmentLog;
+            shipdetail.ShipmentSubjectDetail = shipmentSample;
+            return shipdetail;
         }
     }
 }

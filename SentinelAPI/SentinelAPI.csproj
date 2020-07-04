@@ -6,9 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Contracts\V1\Request\Master\" />
-    <Folder Include="Contracts\V1\Request\Infant\" />
-    <Folder Include="DataLayer\Infant\" />
-    <Folder Include="Services\Infant\" />
   </ItemGroup>
 
   <ItemGroup>

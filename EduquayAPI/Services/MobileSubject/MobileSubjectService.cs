@@ -121,9 +121,11 @@ namespace EduquayAPI.Services.MobileSubject
 
             var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(userId);
             var sampleDetails = _mobileSubjectData.MobileSampleDetail(userId);
+            var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(userId);
 
             var subjectRegistrationResponse = new SubjectResigrationListResponse();
             var subjectRegistrations = new List<SubjectResigration>();
+            var shipmentLogs = new List<ShipmentLogs>();
             try
             {
 
@@ -140,9 +142,38 @@ namespace EduquayAPI.Services.MobileSubject
                     subjectRegistration.SubjectParent = parent;
                     subjectRegistrations.Add(subjectRegistration);
                 }
-              
+                var shipmentId = "";
+                foreach (var shipment in shipmentDetails.ShipmentLog)
+                {
+                    var shipmentLog = new ShipmentLogs();
+                    if (shipmentId != shipment.shipmentId)
+                    {
+                        var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId  == shipment.shipmentId).ToList();
+                        shipmentLog.shipmentId = shipment.shipmentId;
+                        shipmentLog.anmId = shipment.anmId;
+                        shipmentLog.anmName = shipment.anmName;
+                        shipmentLog.testingCHCId = shipment.testingCHCId;
+                        shipmentLog.testingCHC = shipment.testingCHC;
+                        shipmentLog.avdId = shipment.avdId;
+                        shipmentLog.avdName = shipment.avdName;
+                        shipmentLog.avdContactNo = shipment.avdContactNo;
+                        shipmentLog.ilrId = shipment.ilrId;
+                        shipmentLog.ilrPoint = shipment.ilrPoint;
+                        shipmentLog.riId = shipment.riId;
+                        shipmentLog.riPoint = shipment.riPoint;
+                        shipmentLog.shipmentDate = shipment.shipmentDate;
+                        shipmentLog.shipmentTime = shipment.shipmentTime;
+                        shipmentLog.createdBy = shipment.createdBy;
+                        shipmentLog.source = shipment.source;
+                        shipmentLog.SamplesDetail = shipmentDetail;
+                        shipmentId = shipment.shipmentId;
+                        shipmentLogs.Add(shipmentLog);
+                    }
+                }
+
                 subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
                 subjectRegistrationResponse.SampleCollections = sampleDetails;
+                subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
                 subjectRegistrationResponse.Status = "true";
                 subjectRegistrationResponse.Message = string.Empty;
             }

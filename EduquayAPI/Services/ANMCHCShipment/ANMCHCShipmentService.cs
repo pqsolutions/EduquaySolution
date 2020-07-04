@@ -61,7 +61,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
                         shipmentLog.ilrPoint = shipment.ilrPoint;
                         shipmentLog.riPoint = shipment.riPoint;
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
-                        shipmentLog.SamplesDetail = shipmentDetail;
+                        shipmentLog.SamplesDetail = shipment.SamplesDetail;
                         shipmentId = shipment.shipmentId;
                         shipmentLogs.Add(shipmentLog);
                     }

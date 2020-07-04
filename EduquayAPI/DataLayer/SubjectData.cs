@@ -18,6 +18,8 @@ namespace EduquayAPI.DataLayer
         private const string AddSubjectPregnancyDetail = "SPC_AddSubjectPregnancyDetail";
         private const string AddSubjectParentDetail = "SPC_AddSubjectParentDetail";
         private const string FetchSubjectDetail = "SPC_FetchSubjectDetail";
+        private const string FetchANWSubjectDetail = "SPC_FetchANMANWSubjectDetail";
+
 
         public SubjectData()
         {
@@ -260,6 +262,19 @@ namespace EduquayAPI.DataLayer
             string stProc = FetchSubjectDetail;
             var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
             var allData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData)
+        {
+            string stProc = FetchANWSubjectDetail;
+            var pList = new List<SqlParameter>()
+            { 
+                new SqlParameter("@ANMID", asData.anmId),
+                new SqlParameter("@FromDate", asData.fromDate ?? asData.fromDate),
+                new SqlParameter("@ToDate", asData.toDate ?? asData.toDate),
+            };
+            var allData = UtilityDL.FillData<ANWSubjectDetail>(stProc, pList);
             return allData;
         }
     }

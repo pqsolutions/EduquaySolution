@@ -25,12 +25,10 @@ namespace SentinelAPI.DataLayer.Mother
             if (motherRegDetails != null)
             {
                 return $"{motherRegDetails.responseMsg} successfully. The Unique ID is: {motherRegDetails.subjectId}";
-
             }
             else
             {
                 return $"Unable to register mother details for {mrData.motherFirstName}";
-
             }
         }
         public MotherRegistration MotherDetail(AddMotherRequest mrData)
@@ -57,12 +55,12 @@ namespace SentinelAPI.DataLayer.Mother
                     new SqlParameter("@Father_GovIdTypeId", mrData.fatherGovIdTypeId),
                     new SqlParameter("@Father_GovIdDetail", mrData.fatherGovIdDetail.ToCheckNull()),
                     new SqlParameter("@Father_ContactNo", mrData.fatherContactNo.ToCheckNull()),
-                    new SqlParameter("@Gaurdian_FirstName", mrData.gaurdianFirstName.ToCheckNull()),
-                    new SqlParameter("@Gaurdian_MiddleName", mrData.gaurdianMiddleName.ToCheckNull()),
-                    new SqlParameter("@Gaurdian_LastName", mrData.gaurdianLastName.ToCheckNull()),
-                    new SqlParameter("@Gaurdian_GovIdTypeId", mrData.gaurdianGovIdTypeId),
-                    new SqlParameter("@Gaurdian_GovIdDetail", mrData.gaurdianGovIdDetail.ToCheckNull()),
-                    new SqlParameter("@Gaurdian_ContactNo", mrData.gaurdianContactNo.ToCheckNull()),
+                    new SqlParameter("@Guardian_FirstName", mrData.guardianFirstName.ToCheckNull()),
+                    new SqlParameter("@Guardian_MiddleName", mrData.guardianMiddleName.ToCheckNull()),
+                    new SqlParameter("@Guardian_LastName", mrData.guardianLastName.ToCheckNull()),
+                    new SqlParameter("@Guardian_GovIdTypeId", mrData.guardianGovIdTypeId),
+                    new SqlParameter("@Guardian_GovIdDetail", mrData.guardianGovIdDetail.ToCheckNull()),
+                    new SqlParameter("@Guardian_ContactNo", mrData.guardianContactNo.ToCheckNull()),
                     new SqlParameter("@ReligionId", mrData.religionId),
                     new SqlParameter("@CasteId", mrData.casteId),
                     new SqlParameter("@CommunityId", mrData.communityId),

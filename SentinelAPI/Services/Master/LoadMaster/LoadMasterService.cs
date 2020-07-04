@@ -15,6 +15,13 @@ namespace SentinelAPI.Services.Master.LoadMaster
         {
             _loadMasterData = new LoadMasterDataFactory().Create();
         }
+
+        public List<LoadBirthStatus> RetrieveBirthStatus()
+        {
+            var allBirthStatus = _loadMasterData.RetrieveBirthStatus();
+            return allBirthStatus;
+        }
+
         public List<LoadCaste> RetrieveCaste()
         {
             var allCastes = _loadMasterData.RetrieveCaste();

@@ -44,6 +44,12 @@ namespace EduquayAPI.Services
             return subjectAddress;
         }
 
+        public List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData)
+        {
+            var anwSubjects = _subjectData.RetrieveANWDetail(asData);
+            return anwSubjects;
+        }
+
         public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
         {
             var subjectParent = _subjectData.RetrieveParentDetail(sData);
