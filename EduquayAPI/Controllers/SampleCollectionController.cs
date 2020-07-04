@@ -72,29 +72,6 @@ namespace EduquayAPI.Controllers
             }
         }
 
-
-        ///// <summary>
-        ///// Used for fetch detail of particular subject for collect the sample in ANM / CHC
-        ///// </summary>
-        //[HttpPost]
-        //[Route("RetrieveSubjects")]
-        //public SampleSubjectResponse GetSubject(SampleSubjectRequest ssData)
-        //{
-        //    _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-        //    try
-        //    {
-        //        var subjectDetail = _sampleCollectionService.Retrieve(ssData);
-        //        _logger.LogInformation($"Received Subject Data {subjectDetail}");
-        //        return subjectDetail.Count == 0 ? new SampleSubjectResponse { Status = "true", Message = "No subject found", SubjectDetail = new List<SampleSubject>() } : new SampleSubjectResponse { Status = "true", Message = string.Empty, SubjectDetail = subjectDetail };
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _logger.LogError($"Error in receiving subject data {e.StackTrace}");
-        //        return new SampleSubjectResponse { Status = "false", Message = e.Message, SubjectDetail = null };
-        //    }
-        //}
-
-
         /// <summary>
         /// Used for collect the samples of particular subject
         /// </summary>

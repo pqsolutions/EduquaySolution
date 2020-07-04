@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -18,31 +19,23 @@ namespace EduquayAPI.Services
         {
             _subjectData = new SubjectDataFactory().Create();
         }
-        public string AddSubject(SubjectRegistrationRequest subRegData)
+        public async Task<UniqueIdDetail> AddSubject(SubjectRegistrationRequest subRegData)
         {
+            UniqueIdDetail subRegSuccess = new UniqueIdDetail();
             try
             {
-                if (subRegData.subjectPrimaryRequest.districtId <= 0)
-                {
-                    return "Invalid District Id";
-                }
-                if (subRegData.subjectPrimaryRequest.chcId <= 0)
-                {
-                    return "Invalid CHC Id";
-                }
-                if (subRegData.subjectPrimaryRequest.riId <= 0)
-                {
-                    return "Invalid RI Id";
-                }
-
                 var result = _subjectData.AddSubject(subRegData);
-                return string.IsNullOrEmpty(result) ? $"Unable to generate subject detail" : result;
+                subRegSuccess.status = true;
+                subRegSuccess.message = result.message;
+                subRegSuccess.uniqueSubjectId = result.uniqueSubjectId;
             }
             catch (Exception e)
             {
-                return $"Unable to generate subject detail - {e.Message}";
+                subRegSuccess.uniqueSubjectId = "";
+                subRegSuccess.status = false;
+                subRegSuccess.message = $"Failed to add subject registration for {subRegData.subjectPrimaryRequest.firstName + " " + subRegData.subjectPrimaryRequest.lastName}";
             }
-
+            return subRegSuccess;
         }
 
         public List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData)

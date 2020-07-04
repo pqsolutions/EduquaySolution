@@ -83,7 +83,69 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveAVD/{riId}")]
+        public MobileAVDMasterResponse GetAVDByRI(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var avd = _mobileMasterService.RetrieveAVD(riId);
+
+                _logger.LogInformation($"Received AVD master data {avd}");
+                return avd.Count == 0 ?
+                    new MobileAVDMasterResponse { Status = "true", Message = "No record found", AVD = new List<LoadAVD>() }
+                    : new MobileAVDMasterResponse { Status = "true", Message = string.Empty, AVD = avd };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving AVD data {e.StackTrace}");
+                return new MobileAVDMasterResponse { Status = "false", Message = e.Message, AVD = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveTestingCHC/{riId}")]
+        public MobileTestingCHCResponse GetTestingCHC(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _mobileMasterService.RetrieveTestingCHC(riId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new MobileTestingCHCResponse { Status = "true", Message = "No record found", TestingCHC = new List<LoadCHCs>() }
+                    : new MobileTestingCHCResponse { Status = "true", Message = string.Empty, TestingCHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new MobileTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveILR/{riId}")]
+        public MobileILRMasterResponse GetILRByRI(int riId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var ilr = _mobileMasterService.RetrieveILR(riId);
+
+                _logger.LogInformation($"Received ILR master data {ilr}");
+                return ilr.Count == 0 ?
+                    new MobileILRMasterResponse { Status = "true", Message = "No record found", ILR = new List<LoadILR>() }
+                    : new MobileILRMasterResponse { Status = "true", Message = string.Empty, ILR = ilr };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving ILR data {e.StackTrace}");
+                return new MobileILRMasterResponse { Status = "false", Message = e.Message, ILR = null };
+            }
+        }
+
+
     }
-
-
 }

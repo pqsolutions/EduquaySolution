@@ -8,7 +8,6 @@ namespace EduquayAPI.Models
 {
     public class SubjectPregnancyDetail : IFill
     {
-        public int id { get; set; }
         public int subjectId { get; set; }
         public string uniqueSubjectId { get; set; }
         public string rchId { get; set; }
@@ -22,11 +21,9 @@ namespace EduquayAPI.Models
 
         public void Fill(SqlDataReader reader)
         {
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
-                this.id = Convert.ToInt32(reader["ID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectID"))
-                this.subjectId = Convert.ToInt32(reader["SubjectID"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SPDSubjectId"))
+                this.subjectId = Convert.ToInt32(reader["SPDSubjectId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);

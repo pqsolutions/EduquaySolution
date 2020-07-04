@@ -20,10 +20,37 @@ namespace EduquayAPI.DataLayer.MobileMaster
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
         private const string FetchConstantValues = "SPC_FetchMobileConstantData";
+        private const string FetchILR = "SPC_FetchILRByRI";
+        private const string FetchTestingCHC = "SPC_FetchTestingCHCByRI";
+        private const string FetchAVD = "SPC_FetchAVDByRI";
+
 
         public MobileMasterData()
         {
 
+        }
+
+        public List<LoadILR> RetrieveILR(int riId)
+        {
+            string stProc = FetchILR;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", riId) };
+            var allData = UtilityDL.FillData<LoadILR>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCHCs> RetrieveTestingCHC(int riId)
+        {
+            string stProc = FetchTestingCHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", riId) };
+            var allData = UtilityDL.FillData<LoadCHCs>(stProc, pList);
+            return allData;
+        }
+        public List<LoadAVD> RetrieveAVD(int riId)
+        {
+            string stProc = FetchAVD;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", riId) };
+            var allData = UtilityDL.FillData<LoadAVD>(stProc, pList);
+            return allData;
         }
         public List<LoadCaste> RetrieveCaste()
         {

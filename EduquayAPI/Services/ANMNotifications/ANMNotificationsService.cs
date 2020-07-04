@@ -21,14 +21,7 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-                if (srData.sampleCollectionId <= 0)
-                {
-                    return "Invalid Sample ID";
-                }
-                if (srData.subjectId <= 0)
-                {
-                    return "Invalid subject Id";
-                }
+               
                 if (string.IsNullOrEmpty(srData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectID";
@@ -45,9 +38,9 @@ namespace EduquayAPI.Services.ANMNotifications
                 {
                     return "Invalid SampleCollection Time";
                 }
-                if (srData.reasonId <= 0)
+                if (string.IsNullOrEmpty(srData.reason))
                 {
-                    return "Invalid Reason Id";
+                    return "Invalid Reason";
                 }
                 if (srData.collectionFrom <= 0)
                 {
@@ -57,12 +50,21 @@ namespace EduquayAPI.Services.ANMNotifications
                 {
                     return "Invalid Collection By";
                 }
-                var result = _anmNotificationsData.AddSampleRecollection(srData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add subject sample recollection data" : result;
+                var barcode = _anmNotificationsData.FetchBarcode(srData.barcodeNo);
+                if (barcode.Count <= 0)
+                {
+                    var result = _anmNotificationsData.AddSampleRecollection(srData);
+                    return string.IsNullOrEmpty(result) ? $"Unable to re collect sampele for this uniquesubjectid - {srData.uniqueSubjectId}" : result;
+                }
+                else
+                {
+                    return $"This Barcode No - {srData.barcodeNo} already exist";
+                }
             }
             catch (Exception e)
             {
-                return $"Unable to add subject sample recollection data - {e.Message}";
+                return $"Unable to collect sampele for this uniquesubjectid - {srData.uniqueSubjectId} - {e.Message}";
+
             }
         }
 
@@ -71,10 +73,7 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-                if (usData.id <= 0)
-                {
-                    return "Invalid SampleId";
-                }
+               
                 if (usData.anmId <= 0)
                 {
                     return "Invalid ANM Id";
@@ -93,12 +92,6 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             var notificationSamples = _anmNotificationsData.GetANMNotificationSamples(nsData);
             return notificationSamples;
-        }
-
-        public List<ANMSubjectSample> GetANMSubjectSamples(int id, int notification)
-        {
-            var subjectSamples = _anmNotificationsData.GetANMSubjectSamples(id, notification);
-            return subjectSamples;
         }
     }
 }

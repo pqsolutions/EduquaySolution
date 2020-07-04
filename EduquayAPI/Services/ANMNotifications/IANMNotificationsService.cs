@@ -10,7 +10,6 @@ namespace EduquayAPI.Services.ANMNotifications
     public interface IANMNotificationsService
     {
         List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData);
-        List<ANMSubjectSample> GetANMSubjectSamples(int id, int notification);
         string UpdateSampleStatus(NotificationUpdateStatusRequest usData);
         string AddSampleRecollection(SampleRecollectionRequest srData);
 

@@ -10,10 +10,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
 {
     public interface IANMCHCShipmentService
     {
-       // List<ANMCHCShipmentID> AddANMCHCShipment(AddShipmentANMCHCRequest asData);
-
         Task<AddShipmentResponse> AddANMCHCShipment(AddShipmentANMCHCRequest asData);
-
         Task<ANMCHCShipmentLogsResponse> RetrieveShipmentLogs(ANMCHCShipmentLogRequest asData);
     }
 }

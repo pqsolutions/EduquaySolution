@@ -11,6 +11,8 @@ using SentinelAPI.Services.Login;
 using SentinelAPI.Services.Master.User;
 using SentinelAPI.Services.Mother;
 using SentinelAPI.DataLayer.Mother;
+using SentinelAPI.DataLayer.LoadMaster;
+using SentinelAPI.Services.Master.LoadMaster;
 
 namespace SentinelAPI.Installers
 {
@@ -26,6 +28,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IMotherDataFactory, MotherDataFactory>();
             services.AddScoped<IMotherService, MotherService>();
+
+            services.AddScoped<ILoadMasterDataFactory, LoadMasterDataFactory>();
+            services.AddScoped<ILoadMasterService, LoadMasterService>();
 
         }
     }

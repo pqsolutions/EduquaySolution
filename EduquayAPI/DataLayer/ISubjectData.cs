@@ -4,13 +4,15 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 
 namespace EduquayAPI.DataLayer
 {
     public interface ISubjectData
     {
-        string AddSubject(SubjectRegistrationRequest subRegData);
+        UniqueIdDetail AddSubject(SubjectRegistrationRequest subRegData);
+
         List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData);
         List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData);
         List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData);
