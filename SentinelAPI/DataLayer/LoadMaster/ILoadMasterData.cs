@@ -17,6 +17,7 @@ namespace SentinelAPI.DataLayer.LoadMaster
         List<LoadCaste> RetrieveCaste();
         List<LoadCommunity> RetrieveCommunity();
         List<LoadCommunity> RetrieveCommunity(int casteId);
+        List<LoadBirthStatus> RetrieveBirthStatus();
     }
 
     public interface ILoadMasterDataFactory

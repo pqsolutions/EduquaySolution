@@ -123,12 +123,11 @@ namespace EduquayAPI.DataLayer.MobileMaster
             var allData = UtilityDL.FillData<LoadReligion>(stProc, pList);
             return allData;
         }
-
-        public List<LoadRIs> RetrieveRI(int userId)
+        public List<LoadMobileRI> RetrieveRI(int userId)
         {
             string stProc = FetchRI;
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
-            var allData = UtilityDL.FillData<LoadRIs>(stProc, pList);
+            var allData = UtilityDL.FillData<LoadMobileRI>(stProc, pList);
             return allData;
         }
 

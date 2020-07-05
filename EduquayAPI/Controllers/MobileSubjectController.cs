@@ -49,6 +49,7 @@ namespace EduquayAPI.Controllers
                 Message = subRegListResponse.Message,
                 SubjectResigrations = subRegListResponse.SubjectResigrations,
                 SampleCollections = subRegListResponse.SampleCollections,
+                ShipmentLogDetail = subRegListResponse.ShipmentLogDetail,
             });
         }
 

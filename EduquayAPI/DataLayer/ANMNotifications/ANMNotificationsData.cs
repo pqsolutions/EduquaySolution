@@ -53,14 +53,10 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             try
             {
                 string stProc = UpdateStatusANMNotificationSamples;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@SampleCollectionId", usData.sampleCollectionId),
-                    new SqlParameter("@Status", usData.status),
+                    new SqlParameter("@BarcodeNo", usData.barcodeNo ?? usData.barcodeNo),
                     new SqlParameter("@ANMID", usData.anmId),                   
-                    retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
                 return "Sample Status updated successfully";

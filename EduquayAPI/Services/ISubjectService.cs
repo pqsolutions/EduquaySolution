@@ -12,11 +12,12 @@ namespace EduquayAPI.Services
     {
 
         Task<UniqueIdDetail> AddSubject(SubjectRegistrationRequest subRegData);
-       // string AddSubject(SubjectRegistrationRequest subRegData);
         List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData);
         List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData);
         List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData);
         List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData);
+        List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData);
+
 
     }
 }

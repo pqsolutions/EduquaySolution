@@ -75,18 +75,5 @@ namespace EduquayAPI.DataLayer
             var allData = UtilityDL.FillData<SubjectSamples>(stProc, pList);
             return allData;
         }
-
-        public List<SampleSubject> Retrieve(SampleSubjectRequest ssData)
-        {
-            string stProc = FetchANMCHCSampleSubjectDetail;
-            var pList = new List<SqlParameter>()
-            {
-                new SqlParameter("@UniqueSubjectId", ssData.uniqueSubjectId),
-                new SqlParameter("@SampleType", ssData.sampleType),
-
-            };
-            var allData = UtilityDL.FillData<SampleSubject>(stProc, pList);
-            return allData;
-        }
     }
 }

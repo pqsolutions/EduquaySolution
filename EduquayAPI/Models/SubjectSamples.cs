@@ -8,7 +8,6 @@ namespace EduquayAPI.Models
 {
     public class SubjectSamples : IFill
     {
-
         public int id { get; set; }
         public string uniqueSubjectId { get; set; }
         public string subjectName { get; set; }

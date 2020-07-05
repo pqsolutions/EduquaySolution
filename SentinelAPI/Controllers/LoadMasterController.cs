@@ -29,6 +29,27 @@ namespace SentinelAPI.Controllers
         }
 
         [HttpGet]
+        [Route("RetrieveBirthStatus")]
+        public LoadBirthStatusResponse GetBirthSatus()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var birthStatus = _loadMasterService.RetrieveBirthStatus();
+
+                _logger.LogInformation($"Received birth status  master data {birthStatus}");
+                return birthStatus.Count == 0 ?
+                    new LoadBirthStatusResponse { Status = "true", Message = "No record found", BirthStatus = new List<LoadBirthStatus>() }
+                    : new LoadBirthStatusResponse { Status = "true", Message = string.Empty, BirthStatus = birthStatus };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving birth status data {e.StackTrace}");
+                return new LoadBirthStatusResponse { Status = "false", Message = e.Message, BirthStatus = null };
+            }
+        }
+
+        [HttpGet]
         [Route("RetrieveDistrict/{userId}")]
         public LoadDistrictResponse GetDistrict(int userId)
         {

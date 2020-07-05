@@ -21,24 +21,6 @@ namespace EduquayAPI.Services.MobileMaster
             return allCastes;
         }
 
-        public List<LoadILR> RetrieveILR(int riId)
-        {
-            var allILR = _mobileMasterData.RetrieveILR(riId);
-            return allILR;
-        }
-
-        public List<LoadCHCs> RetrieveTestingCHC(int riId)
-        {
-            var allTestingCHC = _mobileMasterData.RetrieveTestingCHC(riId);
-            return allTestingCHC;
-        }
-
-        public List<LoadAVD> RetrieveAVD(int riId)
-        {
-            var allAVD = _mobileMasterData.RetrieveAVD(riId);
-            return allAVD;
-        }
-
         public List<LoadCHCs> RetrieveCHC(int userId)
         {
             var chc = _mobileMasterData.RetrieveCHC(userId);
@@ -87,7 +69,7 @@ namespace EduquayAPI.Services.MobileMaster
             return allReligion;
         }
 
-        public List<LoadRIs> RetrieveRI(int userId)
+        public List<LoadMobileRI> RetrieveRI(int userId)
         {
             var ri = _mobileMasterData.RetrieveRI(userId);
             return ri;

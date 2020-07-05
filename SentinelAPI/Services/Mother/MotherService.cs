@@ -28,9 +28,9 @@ namespace SentinelAPI.Services.Mother
                 {
                     return "Invalid Mother name";
                 }
-                if (mrData.rchId == "")
+                if (mrData.motherLastName == "")
                 {
-                    return "Invalid RCH ID";
+                    return "Invalid Last name";
                 }
                 var result = _motherData.AddMotherDetail(mrData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add mother detail" : result;

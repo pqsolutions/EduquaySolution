@@ -13,6 +13,8 @@ using SentinelAPI.Services.Mother;
 using SentinelAPI.DataLayer.Mother;
 using SentinelAPI.DataLayer.LoadMaster;
 using SentinelAPI.Services.Master.LoadMaster;
+using SentinelAPI.DataLayer.Infant;
+using SentinelAPI.Services.Infant;
 
 namespace SentinelAPI.Installers
 {
@@ -28,6 +30,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IMotherDataFactory, MotherDataFactory>();
             services.AddScoped<IMotherService, MotherService>();
+
+            services.AddScoped<IInfantDataFactory, InfantDataFactory>();
+            services.AddScoped<IInfantService, InfantService>();
 
             services.AddScoped<ILoadMasterDataFactory, LoadMasterDataFactory>();
             services.AddScoped<ILoadMasterService, LoadMasterService>();

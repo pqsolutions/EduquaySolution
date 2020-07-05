@@ -45,7 +45,5 @@ namespace SentinelAPI.Controllers
                 return $"Unable to add mother detail - {e.Message}";
             }
         }
-
-
     }
 }

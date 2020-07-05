@@ -24,12 +24,12 @@ namespace SentinelAPI.Contracts.V1.Request.Mother
         public int fatherGovIdTypeId { get; set; }
         public string fatherGovIdDetail { get; set; }
         public string fatherContactNo { get; set; }
-        public string gaurdianFirstName { get; set; }
-        public string gaurdianMiddleName { get; set; }
-        public string gaurdianLastName { get; set; }
-        public int gaurdianGovIdTypeId { get; set; }
-        public string gaurdianGovIdDetail { get; set; }
-        public string gaurdianContactNo { get; set; }
+        public string guardianFirstName { get; set; }
+        public string guardianMiddleName { get; set; }
+        public string guardianLastName { get; set; }
+        public int guardianGovIdTypeId { get; set; }
+        public string guardianGovIdDetail { get; set; }
+        public string guardianContactNo { get; set; }
         public int religionId { get; set; }
         public int casteId { get; set; }
         public int communityId { get; set; }
