@@ -1,4 +1,5 @@
 ﻿using SentinelAPI.Contracts.V1.Request.Mother;
+using SentinelAPI.Models.Mother;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace SentinelAPI.DataLayer.Mother
 {
     public interface IMotherData
     {
-        string AddMotherDetail(AddMotherRequest mrData);
+        List<MotherRegistration> AddMotherDetail(AddMotherRequest mrData);
     }
 
     public interface IMotherDataFactory

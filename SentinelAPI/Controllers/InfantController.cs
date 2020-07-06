@@ -31,21 +31,17 @@ namespace SentinelAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddInfantDetail(AddInfantRequest irData)
+        public async Task<IActionResult> AddInfantDetail(AddInfantRequest irData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Register Infant Detail - {JsonConvert.SerializeObject(irData)}");
-            try
+            _logger.LogDebug($"Adding infant detail - {JsonConvert.SerializeObject(irData)}");
+            var infantResponse = await _infantService.AddInfantDetail(irData);
+            return Ok(new AddInfantResponse
             {
-                _logger.LogInformation($"Infant detail registered Successfully - {irData}");
-                var infant = _infantService.AddInfantDetail(irData);
-                return string.IsNullOrEmpty(infant) ? $"Unable to add infant detail " : infant;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Failed to register infant detail  - {e.StackTrace}");
-                return $"Unable to add infant detail - {e.Message}";
-            }
+                Status = infantResponse.Status,
+                Message = infantResponse.Message,
+                InfantSubjectId = infantResponse.InfantSubjectId,
+            });
         }
 
         [HttpPost]

@@ -18,20 +18,8 @@ namespace SentinelAPI.DataLayer.Infant
         {
 
         }
-        public string AddInfantDetail(AddInfantRequest irData)
-        {
-            InfantRegistration infantRegDetails = InfantDetail(irData);
-            if (infantRegDetails != null)
-            {
-                return $"{infantRegDetails.responseMsg} successfully. The Unique ID is: {infantRegDetails.infantSubjectId}";
-            }
-            else
-            {
-                return $"Unable to register infant details for {irData.firstName}";
-            }
-        }
 
-        public InfantRegistration InfantDetail(AddInfantRequest irData)
+        public List<InfantRegistration> AddInfantDetail(AddInfantRequest irData)
         {
             try
             {
@@ -57,7 +45,7 @@ namespace SentinelAPI.DataLayer.Infant
                     new SqlParameter("@Comments", irData.comments.ToCheckNull()),
 
                 };
-                var motherDet = UtilityDL.FillEntity<InfantRegistration>(stProc, pList);
+                var motherDet = UtilityDL.FillData<InfantRegistration>(stProc, pList);
                 return motherDet;
 
             }

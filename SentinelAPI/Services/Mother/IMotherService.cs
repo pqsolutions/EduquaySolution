@@ -1,4 +1,5 @@
 ﻿using SentinelAPI.Contracts.V1.Request.Mother;
+using SentinelAPI.Contracts.V1.Response.Mother;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace SentinelAPI.Services.Mother
 {
     public interface IMotherService
     {
-        string AddMotherDetail(AddMotherRequest mrData);
+        Task<AddMotherResponse> AddMotherDetail(AddMotherRequest mrData);
     }
 }

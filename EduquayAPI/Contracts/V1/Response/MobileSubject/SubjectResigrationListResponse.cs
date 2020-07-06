@@ -41,8 +41,8 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public string ilrPoint { get; set; }
         public int riId { get; set; }
         public string riPoint { get; set; }
-        public string shipmentDate { get; set; }
-        public string shipmentTime { get; set; }
+        public string dateOfShipment { get; set; }
+        public string timeOfShipment { get; set; }
         public int createdBy { get; set; }
         public string source { get; set; }
 

@@ -20,8 +20,8 @@ namespace EduquayAPI.Models.MobileSubject
         public string ilrPoint { get; set; }
         public int riId { get; set; }
         public string riPoint { get; set; }
-        public string shipmentDate { get; set; }
-        public string shipmentTime { get; set; }
+        public string dateOfShipment { get; set; }
+        public string timeOfShipment { get; set; }
         public int createdBy { get; set; }
         public string source { get; set; }
 
@@ -69,10 +69,10 @@ namespace EduquayAPI.Models.MobileSubject
                 this.riPoint = Convert.ToString(reader["RIPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentDate"))
-                this.shipmentDate = Convert.ToString(reader["ShipmentDate"]);
+                this.dateOfShipment = Convert.ToString(reader["ShipmentDate"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentTime"))
-                this.shipmentTime = Convert.ToString(reader["ShipmentTime"]);
+                this.timeOfShipment = Convert.ToString(reader["ShipmentTime"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CreatedBy"))
                 this.createdBy = Convert.ToInt32(reader["CreatedBy"]);

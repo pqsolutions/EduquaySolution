@@ -19,19 +19,7 @@ namespace SentinelAPI.DataLayer.Mother
 
         }
 
-        public string AddMotherDetail(AddMotherRequest mrData)
-        {
-            MotherRegistration motherRegDetails = MotherDetail(mrData);
-            if (motherRegDetails != null)
-            {
-                return $"{motherRegDetails.responseMsg} successfully. The Unique ID is: {motherRegDetails.subjectId}";
-            }
-            else
-            {
-                return $"Unable to register mother details for {mrData.motherFirstName}";
-            }
-        }
-        public MotherRegistration MotherDetail(AddMotherRequest mrData)
+        public List<MotherRegistration> AddMotherDetail(AddMotherRequest mrData)
         {
             try
             {
@@ -75,7 +63,7 @@ namespace SentinelAPI.DataLayer.Mother
                     new SqlParameter("@Comments", mrData.comments.ToCheckNull()),
 
                 };
-                var motherDet = UtilityDL.FillEntity<MotherRegistration>(stProc, pList);
+                var motherDet = UtilityDL.FillData<MotherRegistration>(stProc, pList);
                 return motherDet;
 
             }
