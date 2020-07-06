@@ -161,8 +161,8 @@ namespace EduquayAPI.Services.MobileSubject
                         shipmentLog.ilrPoint = shipment.ilrPoint;
                         shipmentLog.riId = shipment.riId;
                         shipmentLog.riPoint = shipment.riPoint;
-                        shipmentLog.shipmentDate = shipment.shipmentDate;
-                        shipmentLog.shipmentTime = shipment.shipmentTime;
+                        shipmentLog.dateOfShipment = shipment.dateOfShipment;
+                        shipmentLog.timeOfShipment = shipment.timeOfShipment;
                         shipmentLog.createdBy = shipment.createdBy;
                         shipmentLog.source = shipment.source;
                         shipmentLog.SamplesDetail = shipmentDetail;

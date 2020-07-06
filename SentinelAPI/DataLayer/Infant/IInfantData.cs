@@ -9,7 +9,7 @@ namespace SentinelAPI.DataLayer.Infant
 {
     public interface IInfantData
     {
-        string AddInfantDetail(AddInfantRequest irData);
+        List<InfantRegistration> AddInfantDetail(AddInfantRequest irData);
         GetMotherDetails RetrieveMother(GetMotherRequest mData);
     }
 

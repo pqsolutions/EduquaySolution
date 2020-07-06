@@ -9,7 +9,7 @@ namespace SentinelAPI.Services.Infant
 {
     public interface IInfantService
     {
-        string AddInfantDetail(AddInfantRequest irData);
+        Task<AddInfantResponse> AddInfantDetail(AddInfantRequest irData);
         Task<InfantMotherResponse> RetrieveMother(GetMotherRequest mData);
     }
 }

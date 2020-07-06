@@ -5,6 +5,7 @@ using SentinelAPI.DataLayer.Infant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 
 namespace SentinelAPI.Services.Infant
@@ -18,64 +19,58 @@ namespace SentinelAPI.Services.Infant
         {
             _infantData = new InfantDataFactory().Create();
         }
-        public string AddInfantDetail(AddInfantRequest irData)
+
+        public string CheckErrorMessage(AddInfantRequest irData)
         {
-            try
+            var message = "";
+            if (irData.mothersId <= 0)
             {
-                if (irData.mothersId <= 0)
-                {
-                    return "Invalid mother Id";
-                }
-                if (irData.districtId <= 0)
-                {
-                    return "Invalid District Id";
-                }
-                if (irData.hospitalId <= 0)
-                {
-                    return "Invalid Hospital Id";
-                }
-                if (irData.subTitle == "")
-                {
-                    return "Invalid subject Title ";
-                }
-                if (irData.firstName == "")
-                {
-                    return "Invalid First name";
-                }
-                if (irData.lastName == "")
-                {
-                    return "Invalid Last name";
-                }
-                if (irData.gender == "")
-                {
-                    return "Invalid Gender ";
-                }
-                if (irData.dateOfRegister == "")
-                {
-                    return "Invalid register date ";
-                }
-                if (irData.dateOfDelivery == "")
-                {
-                    return "Invalid date of delivery ";
-                }
-                if (irData.timeOfDelivery == "")
-                {
-                    return "Invalid time of delivery ";
-                }
-                if (irData.statusOfBirth <= 0)
-                {
-                    return "Invalid Status of Birth";
-                }
+                message= "Invalid mother Id";
+            }
+            else if (irData.districtId <= 0)
+            {
+                message = "Invalid District Id";
+            }
+            else if (irData.hospitalId <= 0)
+            {
+                message = "Invalid Hospital Id";
+            }
+            else if (irData.subTitle == "")
+            {
+                message = "Invalid subject Title ";
+            }
+            else if (irData.firstName == "")
+            {
+                message = "Invalid First name";
+            }
+            else if (irData.lastName == "")
+            {
+                message = "Invalid Last name";
+            }
+            else if (irData.gender == "")
+            {
+                message = "Invalid Gender ";
+            }
+            else if (irData.dateOfRegister == "")
+            {
+                message = "Invalid register date ";
+            }
+            else if (irData.dateOfDelivery == "")
+            {
+                message = "Invalid date of delivery ";
+            }
+            else if (irData.timeOfDelivery == "")
+            {
+                message = "Invalid time of delivery ";
+            }
+            else if (irData.statusOfBirth <= 0)
+            {
+                message = "Invalid Status of Birth";
+            }
+            return message;
 
-                var result = _infantData.AddInfantDetail(irData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add infant detail" : result;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add infant detail - {e.Message}";
-            }
         }
-
+       
         public async Task<InfantMotherResponse> RetrieveMother(GetMotherRequest mData)
         {
             var motherdet = _infantData.RetrieveMother(mData);
@@ -111,6 +106,36 @@ namespace SentinelAPI.Services.Infant
                 motherResponse.Message = e.Message;
             }
             return motherResponse;
+        }
+
+        public async Task<AddInfantResponse> AddInfantDetail(AddInfantRequest irData)
+        {
+            var infantResponse = new AddInfantResponse();
+            try
+            {
+                var msg = CheckErrorMessage(irData);
+                if (msg == "")
+                {
+                    var infantDetail = _infantData.AddInfantDetail(irData);
+                    foreach (var infant in infantDetail)
+                    {
+                        infantResponse.Status = "true";
+                        infantResponse.Message = infant.responseMsg;
+                        infantResponse.InfantSubjectId = infant.infantSubjectId;
+                    }
+                }
+                else
+                {
+                    infantResponse.Status = "false";
+                    infantResponse.Message = msg;
+                }
+            }
+            catch (Exception e)
+            {
+                infantResponse.Status = "false";
+                infantResponse.Message = e.Message;
+            }
+            return infantResponse;
         }
     }
 }

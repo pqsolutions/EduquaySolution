@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SentinelAPI.Contracts.V1.Request.Mother;
+using SentinelAPI.Contracts.V1.Response.Mother;
 using SentinelAPI.Services.Mother;
 
 namespace SentinelAPI.Controllers
@@ -29,21 +30,17 @@ namespace SentinelAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddMotherDetail(AddMotherRequest mrData)
+        public async Task<IActionResult> AddMotherDetail(AddMotherRequest mrData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Register Mother Detail - {JsonConvert.SerializeObject(mrData)}");
-            try
+            _logger.LogDebug($"Adding Mother Detail - {JsonConvert.SerializeObject(mrData)}");
+            var motherResponse = await _motherService.AddMotherDetail(mrData);
+            return Ok(new AddMotherResponse
             {
-                _logger.LogInformation($"Mother detail registered Successfully - {mrData}");
-                var mother = _motherService.AddMotherDetail(mrData);
-                return string.IsNullOrEmpty(mother) ? $"Unable to add mother detail " : mother;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Failed to register  mother detail  - {e.StackTrace}");
-                return $"Unable to add mother detail - {e.Message}";
-            }
+                Status = motherResponse.Status,
+                Message = motherResponse.Message,
+                MotherSubjectId = motherResponse.MotherSubjectId,
+            });
         }
     }
 }
