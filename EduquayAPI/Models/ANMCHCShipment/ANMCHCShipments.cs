@@ -7,7 +7,6 @@ namespace EduquayAPI.Models.ANMCHCShipment
 {
     public class ANMCHCShipments
     {
-
         public List<ANMCHCShipmentLogs> ShipmentLog { get; set; }
         public List<ANMCHCShipmentLogsDetail> ShipmentSubjectDetail { get; set; }
     }

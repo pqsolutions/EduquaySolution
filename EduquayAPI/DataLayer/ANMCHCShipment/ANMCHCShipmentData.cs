@@ -14,6 +14,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
     {
         private const string addShipment = "SPC_AddANMCHCShipments";
         private const string fetchANMCHCShipmentLog = "SPC_FetchANMCHCShipmentLog";
+        private const string addCHCShipment = "SPC_AddCHCCHCShipments";
         public ANMCHCShipmentData()
         {
 
@@ -32,7 +33,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
                     new SqlParameter("@RIID", asData.riId),
                     new SqlParameter("@ILR_ID", asData.ilrId),
                     new SqlParameter("@AVDID", asData.avdId),
-                    new SqlParameter("AVDContactNo", asData.avdContactNo.ToCheckNull()),
+                    new SqlParameter("@AVDContactNo", asData.avdContactNo ?? asData.avdContactNo),
                     new SqlParameter("@TestingCHCID", asData.testingCHCId),
                     new SqlParameter("@DateofShipment", asData.dateOfShipment ?? asData.dateOfShipment),
                     new SqlParameter("@TimeofShipment", asData.timeOfShipment ?? asData.timeOfShipment),
@@ -46,6 +47,51 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
             {
                 throw e;
             }
+        }
+
+        public List<ANMCHCShipmentID> AddCHCCHCShipment(AddShipmentCHCCHCRequest csData)
+        {
+            try
+            {
+                string stProc = addCHCShipment;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@BarcodeNo", csData.barcodeNo ?? csData.barcodeNo),
+                    new SqlParameter("@ShipmentFrom", csData.shipmentFrom),
+                    new SqlParameter("@CHCUserID", csData.chcUserId),
+                    new SqlParameter("@CollectionCHCID", csData.collectionCHCId),
+                    new SqlParameter("@LogicsProviderID", csData.logisticsProviderId),
+                    new SqlParameter("@DeliveryExecutiveName", csData.deliveryExecutiveName ?? csData.deliveryExecutiveName),
+                    new SqlParameter("@ExecutiveContactNo", csData.executiveContactNo ?? csData.executiveContactNo),
+                    new SqlParameter("@TestingCHCID", csData.testingCHCId),
+                    new SqlParameter("@DateofShipment", csData.dateOfShipment ?? csData.dateOfShipment),
+                    new SqlParameter("@TimeofShipment", csData.timeOfShipment ?? csData.timeOfShipment),
+                    new SqlParameter("@Createdby", csData.createdBy),
+                    new SqlParameter("@Source",csData.source ?? csData.source),
+                };
+                var allData = UtilityDL.FillData<ANMCHCShipmentID>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public CHCCHCShipments RetrieveCHCShipmentLog(ANMCHCShipmentLogRequest asData)
+        {
+            string stProc = fetchANMCHCShipmentLog;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserID", asData.userId),
+                new SqlParameter("@ShipmentFrom", asData.shipmentFrom),
+            };
+            var allCHCCHCShipmentLogs = UtilityDL.FillData<CHCCHCShipmentLogs>(stProc, pList);
+            var allCHCCHCShipmentSubjects = UtilityDL.FillData<CHCCHCShipmentLogsDetail>(stProc, pList);
+            var shiplogDetail = new CHCCHCShipments();
+            shiplogDetail.ShipmentLog = allCHCCHCShipmentLogs;
+            shiplogDetail.ShipmentSubjectDetail = allCHCCHCShipmentSubjects;
+            return shiplogDetail;
         }
 
         public ANMCHCShipments RetrieveShipmentLog(ANMCHCShipmentLogRequest asData)
