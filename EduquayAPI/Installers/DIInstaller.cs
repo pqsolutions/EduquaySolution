@@ -99,9 +99,6 @@ namespace EduquayAPI.Installers
             services.AddScoped<ISampleCollectionDataFactory, SampleCollectionDataFactory>();
             services.AddScoped<ISampleCollectionService, SampleCollectionService>();
 
-            services.AddScoped<IANMShipmentDataFactory, ANMShipmentDataFactory>();
-            services.AddScoped<IANMShipmentService , ANMShipmentService>();
-
             services.AddScoped<IANMNotificationsDataFactory, ANMNotificationsDataFactory>();
             services.AddScoped<IANMNotificationsService, ANMNotificationsService>();
 
@@ -119,8 +116,7 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IWebMasterDataFactory, WebMasterDataFactory>();
             services.AddScoped<IWebMasterService, WebMasterService>();
-
-
+            
             services.AddSingleton<DbConnect>();
         }
     }

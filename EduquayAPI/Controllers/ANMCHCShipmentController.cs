@@ -67,5 +67,41 @@ namespace EduquayAPI.Controllers
                 ShipmentLogs = shipmentLogResponse.ShipmentLogs,
             });
         }
+
+        /// <summary>
+        /// Used for add samples to shipment for CHC  
+        /// </summary>
+        [HttpPost]
+        [Route("AddCHCShipment")]
+        public async Task<IActionResult> AddCHCShipment(AddShipmentCHCCHCRequest csData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
+            var sampleShipment = await _anmchcShipmentService.AddCHCCHCShipment(csData);
+            return Ok(new AddShipmentResponse
+            {
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
+        }
+
+        /// <summary>
+        /// Used for get shipment list of particular ANM user 
+        [HttpPost]
+        [Route("RetrieveCHCShipmentLog")]
+        public async Task<IActionResult> GetCHCShipmentList(ANMCHCShipmentLogRequest asData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var shipmentLogResponse = await _anmchcShipmentService.RetrieveCHCShipmentLogs(asData);
+
+            return Ok(new CHCCHCShipmentLogsResponse
+            {
+                Status = shipmentLogResponse.Status,
+                Message = shipmentLogResponse.Message,
+                ShipmentLogs = shipmentLogResponse.ShipmentLogs,
+            });
+        }
+
     }
 }
