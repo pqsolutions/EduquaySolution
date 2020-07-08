@@ -16,6 +16,7 @@ namespace EduquayAPI.Models
         public string hninId { get; set; }
         public string scGovCode { get; set; }
         public string scName { get; set; }
+        public string scAddress { get; set; }
         public string pincode { get; set; }
         public string isActive { get; set; }
         public string comments { get; set; }
@@ -49,6 +50,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCname"))
                 this.scName = Convert.ToString(reader["SCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCAddress"))
+                this.scAddress = Convert.ToString(reader["SCAddress"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.pincode = Convert.ToString(reader["Pincode"]);

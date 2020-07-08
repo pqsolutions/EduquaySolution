@@ -33,6 +33,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@HNIN_ID", sData.hninId ?? sData.hninId),
                     new SqlParameter("@SC_gov_code", sData.scGovCode),
                     new SqlParameter("@SCname", sData.scName  ?? sData.scName),
+                    new SqlParameter("@SCAddress", sData.scAddress.ToCharArray()),
                     new SqlParameter("@Pincode", sData.pincode  ?? sData.pincode),
                     new SqlParameter("@Isactive", sData.isActive ?? sData.isActive),
                     new SqlParameter("@Latitude", sData.latitude ?? sData.latitude),

@@ -264,8 +264,8 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveAssociatedANM/{riId}")]
-        public LoadAssociatedANMResponse GetAssociatedANM(int riId)
+        [Route("RetrieveANM/{riId}")]
+        public LoadAssociatedANMResponse GetANM(int riId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
@@ -284,6 +284,26 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveAssociatedANM/{chcId}")]
+        public SCRIANMResponse GetAssociatedANM(int chcId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var associatedANM = _webMasterService.RetrieveAssociatedANMByCHC(chcId);
+
+                _logger.LogInformation($"Received Associated ANM master data {associatedANM}");
+                return associatedANM.Count == 0 ?
+                    new SCRIANMResponse { Status = "true", Message = "No record found", AssociatedANMDetail = new List<AssociatedSCRIANM>() }
+                    : new SCRIANMResponse { Status = "true", Message = string.Empty, AssociatedANMDetail = associatedANM };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving associated ANM data {e.StackTrace}");
+                return new SCRIANMResponse { Status = "false", Message = e.Message, AssociatedANMDetail = null };
+            }
+        }
 
         [HttpGet]
         [Route("RetrieveILR/{riId}")]

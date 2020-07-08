@@ -170,7 +170,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
                         shipmentLog.ilrPoint = shipment.ilrPoint;
                         shipmentLog.riPoint = shipment.riPoint;
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
-                        shipmentLog.SamplesDetail = shipment.SamplesDetail;
+                        shipmentLog.SamplesDetail = shipmentDetail;
                         shipmentId = shipment.shipmentId;
                         shipmentLogs.Add(shipmentLog);
                     }
@@ -210,7 +210,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
                         shipmentLog.deliveryExecutiveName = shipment.deliveryExecutiveName;
                         shipmentLog.chcLabTechnicianName = shipment.chcLabTechnicianName;
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
-                        shipmentLog.SamplesDetail = shipment.SamplesDetail;
+                        shipmentLog.SamplesDetail = shipmentDetail;
                         shipmentId = shipment.shipmentId;
                         shipmentLogs.Add(shipmentLog);
                     }
