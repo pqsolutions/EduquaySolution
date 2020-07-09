@@ -24,8 +24,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchILR = "SPC_FetchILRByRI";
         private const string FetchTestingCHC = "SPC_FetchTestingCHCByRI";
         private const string FetchAVD = "SPC_FetchAVDByRI";
-
-
+        private const string FetchANM = "SPC_FetchAllAssociatedANMByCHC";
 
         public WebMasterData()
         {
@@ -127,7 +126,6 @@ namespace EduquayAPI.DataLayer.WebMaster
             var allData = UtilityDL.FillData<LoadRIs>(stProc, pList);
             return allData;
         }
-
         public List<LoadAVD> RetrieveAVD(int riId)
         {
             string stProc = FetchAVD;
@@ -135,7 +133,6 @@ namespace EduquayAPI.DataLayer.WebMaster
             var allData = UtilityDL.FillData<LoadAVD>(stProc, pList);
             return allData;
         }
-
         public List<LoadPHCs> RetrievePHC(int userId)
         {
             string stProc = FetchPHC;
@@ -143,12 +140,19 @@ namespace EduquayAPI.DataLayer.WebMaster
             var allData = UtilityDL.FillData<LoadPHCs>(stProc, pList);
             return allData;
         }
-
         public List<LoadSCs> RetrieveSC(int userId)
         {
             string stProc = FetchSC;
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allData = UtilityDL.FillData<LoadSCs>(stProc, pList);
+            return allData;
+        }
+
+        public List<AssociatedSCRIANM> RetrieveAssociatedANMByCHC(int chcId)
+        {
+            string stProc = FetchANM;
+            var pList = new List<SqlParameter>() { new SqlParameter("@CHCId", chcId) };
+            var allData = UtilityDL.FillData<AssociatedSCRIANM>(stProc, pList);
             return allData;
         }
     }

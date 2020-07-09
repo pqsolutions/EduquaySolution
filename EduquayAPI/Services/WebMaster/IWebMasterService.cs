@@ -23,7 +23,6 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadILR> RetrieveILR(int riId);
         List<LoadCHCs> RetrieveTestingCHC(int riId);
         List<LoadAVD> RetrieveAVD(int riId);
-
-
+        List<AssociatedSCRIANM> RetrieveAssociatedANMByCHC(int chcId);
     }
 }
