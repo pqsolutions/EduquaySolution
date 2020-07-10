@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Response.ANMNotifications;
 using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
 using System;
@@ -21,7 +22,7 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-               
+
                 if (string.IsNullOrEmpty(srData.uniqueSubjectId))
                 {
                     return "Invalid UniqueSubjectID";
@@ -73,7 +74,7 @@ namespace EduquayAPI.Services.ANMNotifications
         {
             try
             {
-               
+
                 if (usData.anmId <= 0)
                 {
                     return "Invalid ANM Id";
@@ -88,10 +89,84 @@ namespace EduquayAPI.Services.ANMNotifications
             }
         }
 
+        public ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData)
+        {
+            ANMTimeoutResponse response = new ANMTimeoutResponse();
+            try
+            {
+                if (usData.anmId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid anmId";
+                }
+                var result = _anmNotificationsData.AddTimeoutExpiry(usData);
+
+                if(string.IsNullOrEmpty(result))
+                {
+                    response.Status = "false";
+                    response.Message = "Unable to move timeout expiry samples";
+                }
+                else
+                {
+                    response.Status = "true";
+                    response.Message = result;
+                }
+                //return string.IsNullOrEmpty(result) ? $"Unable to update sample status data" : result;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
         public List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData)
         {
             var notificationSamples = _anmNotificationsData.GetANMNotificationSamples(nsData);
             return notificationSamples;
         }
+
+        public async Task<ANMUnsentSamplesResponse> RetrieveUnsentSamples(int userId)
+        {
+            var anmUnsentresponse = new ANMUnsentSamplesResponse();
+            try
+            {
+                var unsentSampleDetail = _anmNotificationsData.GetANMUnsentSamples(userId);
+               
+                var anmUnsent = new List<ANMUnsentSample>();
+
+                foreach (var unsent in unsentSampleDetail)
+                {
+                    var unsentsample = new ANMUnsentSample();
+                    unsentsample.barcodeNo = unsent.barcodeNo;
+                    unsentsample.contactNo = unsent.contactNo;
+                    unsentsample.gestationalAge = unsent.gestationalAge;
+                    unsentsample.rchId = unsent.rchId;
+                    unsentsample.sampleCollectionId = unsent.sampleCollectionId;
+                    unsentsample.subjectName = unsent.subjectName;
+                    unsentsample.uniqueSubjectId = unsent.uniqueSubjectId;
+                    unsentsample.sampleDateTime = unsent.sampleDateTime;
+                    DateTime myDate1 = DateTime.Now;
+                    DateTime myDate2 = Convert.ToDateTime(unsentsample.sampleDateTime);
+                    TimeSpan difference = myDate1.Subtract(myDate2);
+                    double totalHours = Math.Round(difference.TotalHours);
+                    unsentsample.sampleAging = Convert.ToString(totalHours); //+ " Hrs";
+                    anmUnsent.Add(unsentsample);
+                }
+                anmUnsentresponse.UnsentSamplesDetail = anmUnsent;
+                anmUnsentresponse.Status = "true";
+                anmUnsentresponse.Message = string.Empty;
+            }
+            catch (Exception e)
+            {
+                anmUnsentresponse.Status = "false";
+                anmUnsentresponse.Message = e.Message;
+            }
+            return anmUnsentresponse;
+
+        }
+
+       
     }
 }

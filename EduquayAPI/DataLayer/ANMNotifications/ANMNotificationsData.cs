@@ -16,6 +16,9 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         private const string UpdateStatusANMNotificationSamples = "SPC_UpdateStatusANMNotificationSamples";
         private const string AddANMSampleRecollection = "SPC_AddANMSampleRecollection";
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
+        private const string FetchUnsentSamples = "SPC_FetchUnsentSamples";
+        private const string MoveTimeoutExpiry = "SPC_AddTimeoutExpiryInUnsentSamples";
+
         public ANMNotificationsData()
         {
 
@@ -88,6 +91,37 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             };
             var allData = UtilityDL.FillData<BarcodeSample>(stProc, pList);
             return allData;
+        }
+
+        public List<ANMUnsentSamples> GetANMUnsentSamples(int userId)
+        {
+            string stProc = FetchUnsentSamples;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@ANMID", userId),
+            };
+            var allData = UtilityDL.FillData<ANMUnsentSamples>(stProc, pList);
+            return allData;
+        }
+
+        public string AddTimeoutExpiry(NotificationUpdateStatusRequest usData)
+        {
+            try
+            {
+                string stProc = MoveTimeoutExpiry;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@BarcodeNo", usData.barcodeNo ?? usData.barcodeNo),
+                    new SqlParameter("@ANMID", usData.anmId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+
+                return "Samples successfully moved to Timeout Expiry  ";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
