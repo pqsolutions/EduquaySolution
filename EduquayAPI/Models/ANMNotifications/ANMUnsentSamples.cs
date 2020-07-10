@@ -4,9 +4,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Models.ANMCHCPickandPack
+namespace EduquayAPI.Models.ANMNotifications
 {
-    public class ANMCHCPickandPackSamples : IFill
+    public class ANMUnsentSamples : IFill
     {
         public string uniqueSubjectId { get; set; }
         public int sampleCollectionId { get; set; }
@@ -15,6 +15,7 @@ namespace EduquayAPI.Models.ANMCHCPickandPack
         public string barcodeNo { get; set; }
         public string sampleDateTime { get; set; }
         public string gestationalAge { get; set; }
+        public string contactNo { get; set; }
         public void Fill(SqlDataReader reader)
         {
 
@@ -38,6 +39,9 @@ namespace EduquayAPI.Models.ANMCHCPickandPack
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GestationalAge"))
                 this.gestationalAge = Convert.ToString(reader["GestationalAge"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
+                this.contactNo = Convert.ToString(reader["ContactNo"]);
         }
     }
 }

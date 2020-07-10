@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Response.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace EduquayAPI.Services.ANMNotifications
         List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData);
         string UpdateSampleStatus(NotificationUpdateStatusRequest usData);
         string AddSampleRecollection(SampleRecollectionRequest srData);
-
+        Task<ANMUnsentSamplesResponse> RetrieveUnsentSamples(int userId);
+        ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData);
     }
 }

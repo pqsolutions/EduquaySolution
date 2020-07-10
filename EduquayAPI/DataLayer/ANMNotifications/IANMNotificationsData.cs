@@ -11,7 +11,10 @@ namespace EduquayAPI.DataLayer.ANMNotifications
     public interface IANMNotificationsData
     {
         List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData);
+        List<ANMUnsentSamples> GetANMUnsentSamples(int userId);
         string UpdateSampleStatus(NotificationUpdateStatusRequest usData);
+        string AddTimeoutExpiry(NotificationUpdateStatusRequest usData);
+
         string AddSampleRecollection(SampleRecollectionRequest srData);
         List<BarcodeSample> FetchBarcode(string barcodeNo);
 

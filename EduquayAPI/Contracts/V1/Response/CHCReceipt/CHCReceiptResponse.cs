@@ -20,6 +20,12 @@ namespace EduquayAPI.Contracts.V1.Response.CHCReceipt
         public string senderName { get; set; }
         public string sendingLocation { get; set; }
         public string shipmentDateTime { get; set; }
+        public string riPoint { get; set; }
+        public string ilrPoint { get; set; }
+        public int shipmentFromId { get; set; }
+        public string shipmentFrom { get; set; }
+        public string collectionCHC { get; set; }
+        public string testingCHC { get; set; }
         public List<CHCReceiptDetail> ReceiptDetail { get; set; }
     }
 }

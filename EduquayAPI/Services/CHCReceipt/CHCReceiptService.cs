@@ -95,6 +95,12 @@ namespace EduquayAPI.Services.CHCReceipt
                         rLog.senderName = receipt.senderName;
                         rLog.sendingLocation = receipt.sendingLocation;
                         rLog.shipmentDateTime = receipt.shipmentDateTime;
+                        rLog.collectionCHC = receipt.collectionCHC;
+                        rLog.ilrPoint = receipt.ilrPoint;
+                        rLog.riPoint = receipt.riPoint;
+                        rLog.shipmentFromId = receipt.shipmentFromId;
+                        rLog.shipmentFrom = receipt.shipmentFrom;
+                        rLog.testingCHC = receipt.testingCHC;
                         rLog.ReceiptDetail = receiptDetail;
                         shipmentId = receipt.shipmentId;
                         chcReceiptLog.Add(rLog);

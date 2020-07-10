@@ -81,7 +81,29 @@ namespace EduquayAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Failed to update sample status data - {ex.StackTrace}");
-                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to update sample status data" };
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = "Failed to update sample status data" };
+            }
+        }
+
+        /// <summary>
+        /// Used for move  sample timout expiry for unsent samples
+        /// </summary>
+        [HttpPost]
+        [Route("MoveTimoutExpiry")]
+        public ActionResult<ANMTimeoutResponse> MoveTimeoutExpiry(NotificationUpdateStatusRequest usData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"moving samples to timeout expiry - {JsonConvert.SerializeObject(usData)}");
+                var sampleStatus = _anmNotificationsService.MoveTimeout(usData);
+                _logger.LogInformation($"Sample successfully moved to sample timout expiry - {usData}");
+                return new ANMTimeoutResponse { Status = sampleStatus.Status, Message = sampleStatus.Message  };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to move sample data into timout expiry - {ex.StackTrace}");
+                return new ANMTimeoutResponse { Status = "false", Message = ex.Message };
             }
         }
 
@@ -105,6 +127,25 @@ namespace EduquayAPI.Controllers
                 _logger.LogError($"Error in  receiving samples data {e.StackTrace}");
                 return new NotificationSamplesResponse { Status = "false", Message = e.Message, SampleList = null };
             }
+        }
+
+        /// <summary>
+        /// Used for fetch unsent samples list 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveANMUnsentSamples/{userId}")]
+        public async Task<IActionResult> GetANMUnsentSamples(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var unsentSamples = await _anmNotificationsService.RetrieveUnsentSamples(userId);
+            _logger.LogInformation($"Received unsent sample data {unsentSamples}");
+            return Ok(new ANMUnsentSamplesResponse
+            {
+                Status = unsentSamples.Status,
+                Message = unsentSamples.Message,
+                UnsentSamplesDetail = unsentSamples.UnsentSamplesDetail,
+            });
         }
     }
 }
