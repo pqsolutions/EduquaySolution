@@ -18,6 +18,7 @@ namespace EduquayAPI.Models
         public int p { get; set; }
         public int l { get; set; }
         public int a { get; set; }
+        public string barcodes { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -51,6 +52,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "A"))
                 this.a = Convert.ToInt32(reader["A"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Barcodes"))
+                this.barcodes = Convert.ToString(reader["Barcodes"]);
 
         }
 

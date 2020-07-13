@@ -2,6 +2,7 @@
 using EduquayAPI.Contracts.V1.Response.CHCReceipt;
 using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.Models.ANMSubjectRegistration;
+using EduquayAPI.Models.CHCReceipt;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace EduquayAPI.Services.CHCReceipt
                         slist.barcodeNo = sample.barcodeNo;
                         barcodes.Add(slist);
                     }
-                    rsResponse.Status = true;
+                    rsResponse.Status = "true";
                     rsResponse.Message = barcodes.Count + " Samples received successfully in Shipment ID: " + shipmentId;
                     rsResponse.Barcodes = barcodes;
                 //}
@@ -50,7 +51,7 @@ namespace EduquayAPI.Services.CHCReceipt
             }
             catch (Exception e)
             {
-                rsResponse.Status = false;
+                rsResponse.Status = "false";
                 rsResponse.Message = "Partially " + barcodes.Count + " samples received successfully, From this (" + barcodeNo + ") onwards not received. " + e.Message;
                 rsResponse.Barcodes = barcodes;
             }
@@ -76,17 +77,30 @@ namespace EduquayAPI.Services.CHCReceipt
             }
             return message;
         }
+
+        public List<CBCSSTest> RetrieveCBC(int testingCHCId)
+        {
+            var cbc = _chcReceiptData.RetrieveCBC(testingCHCId);
+            return cbc;
+        }
+
+        public List<CBCSSTest> RetrieveSST(int testingCHCId)
+        {
+            var sst = _chcReceiptData.RetrieveSST(testingCHCId);
+            return sst;
+        }
+
         public async Task<CHCReceiptResponse> RetrieveCHCReceipts(int testingCHCId)
         {
             var chcReceiptDetails = _chcReceiptData.RetrieveCHCReceipts(testingCHCId);
             var chcReceiptsResponse = new CHCReceiptResponse();
-            var chcReceiptLog = new List<CHCReceiptLog>();
+            var chcReceiptLog = new List<Contracts.V1.Response.CHCReceipt.CHCReceiptLog>();
             try
             {
                 var shipmentId = "";
                 foreach (var receipt in chcReceiptDetails.ReceiptLog)
                 {
-                    var rLog = new CHCReceiptLog();
+                    var rLog = new Contracts.V1.Response.CHCReceipt.CHCReceiptLog();
                     if (shipmentId != receipt.shipmentId)
                     {
                         var receiptDetail = chcReceiptDetails.ReceiptDetail.Where(sd => sd.shipmentId == receipt.id).ToList();
@@ -116,6 +130,64 @@ namespace EduquayAPI.Services.CHCReceipt
                 chcReceiptsResponse.Message = e.Message;
             }
             return chcReceiptsResponse;
+        }
+
+        public async Task<CBCSSTAddResponse> AddCBCTest(CBCTestAddRequest cbcRequest)
+        {
+            CBCSSTAddResponse rsResponse = new CBCSSTAddResponse();
+            List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            try
+            {
+                foreach (var sample in cbcRequest.CBCTestRequest)
+                {
+                    var slist = new BarcodeSampleDetail();
+                    barcodeNo = sample.barcodeNo;
+                    _chcReceiptData.AddCBCTest(sample);
+                    slist.barcodeNo = sample.barcodeNo;
+                    barcodes.Add(slist);
+                }
+                rsResponse.Status = "true";
+                rsResponse.Message = barcodes.Count + " samples tested successfully";
+                rsResponse.Barcodes = barcodes;
+               
+            }
+            catch (Exception e)
+            {
+                rsResponse.Status = "false";
+                rsResponse.Message = "Partially " + barcodes.Count + " samples tested successfully, From this (" + barcodeNo + ") onwards not tested. " + e.Message;
+                rsResponse.Barcodes = barcodes;
+            }
+            return rsResponse;
+        }
+
+        public async Task<CBCSSTAddResponse> AddSSTest(SSTestAddRequest ssRequest)
+        {
+            CBCSSTAddResponse rsResponse = new CBCSSTAddResponse();
+            List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            try
+            {
+                foreach (var sample in ssRequest.SSTestRequest)
+                {
+                    var slist = new BarcodeSampleDetail();
+                    barcodeNo = sample.barcodeNo;
+                    _chcReceiptData.AddSSTest(sample);
+                    slist.barcodeNo = sample.barcodeNo;
+                    barcodes.Add(slist);
+                }
+                rsResponse.Status = "true";
+                rsResponse.Message = barcodes.Count + " samples tested successfully";
+                rsResponse.Barcodes = barcodes;
+
+            }
+            catch (Exception e)
+            {
+                rsResponse.Status = "false";
+                rsResponse.Message = "Partially " + barcodes.Count + " samples tested successfully, From this (" + barcodeNo + ") onwards not tested. " + e.Message;
+                rsResponse.Barcodes = barcodes;
+            }
+            return rsResponse;
         }
     }
 }

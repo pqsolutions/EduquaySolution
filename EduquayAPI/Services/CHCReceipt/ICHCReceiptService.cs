@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request.CHCReceiptProcessing;
 using EduquayAPI.Contracts.V1.Response.CHCReceipt;
+using EduquayAPI.Models.CHCReceipt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,9 @@ namespace EduquayAPI.Services.CHCReceipt
     {
         Task<CHCReceiptResponse> RetrieveCHCReceipts(int testingCHCId);
         Task<CHCReceivedShipmentResponse> AddReceivedShipment(AddCHCShipmentReceiptRequest chcSRRequest);
-
-
+        Task<CBCSSTAddResponse> AddCBCTest(CBCTestAddRequest cbcRequest);
+        Task<CBCSSTAddResponse> AddSSTest(SSTestAddRequest ssRequest);
+        List<CBCSSTest> RetrieveCBC(int testingCHCId);
+        List<CBCSSTest> RetrieveSST(int testingCHCId);
     }
 }

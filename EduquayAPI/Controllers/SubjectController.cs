@@ -78,12 +78,12 @@ namespace EduquayAPI.Controllers
             {
                 var anwSubjects = _subjectService.RetrieveANWDetail(asData);
                 return anwSubjects.Count == 0 ?
-                    new ANWSubjectResponse { Status = false, Message = "No Subject found", ANWSubjects = new List<ANWSubjectDetail>() }
-                    : new ANWSubjectResponse { Status = true, Message = string.Empty, ANWSubjects = anwSubjects };
+                    new ANWSubjectResponse { Status = "false", Message = "No Subject found", ANWSubjects = new List<ANWSubjectDetail>() }
+                    : new ANWSubjectResponse { Status = "true", Message = string.Empty, ANWSubjects = anwSubjects };
             }
             catch (Exception e)
             {
-                return new ANWSubjectResponse { Status = false, Message = e.Message, ANWSubjects = null };
+                return new ANWSubjectResponse { Status = "false", Message = e.Message, ANWSubjects = null };
             }
         }
     }

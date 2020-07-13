@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration
+namespace EduquayAPI.Contracts.V1.Response.CHCReceipt
 {
-    public class SubRegSuccessResponse
+    public class CBCSSTAddResponse
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<UniqueSubjectIdDetail> SuccessIds { get; set; }
+        public List<BarcodeSampleDetail> Barcodes { get; set; }
     }
 }

@@ -10,8 +10,12 @@ namespace EduquayAPI.DataLayer.CHCReceipt
     public interface ICHCReceiptData
     {
         CHCReceipts RetrieveCHCReceipts(int testingCHCId);
-
         void AddReceivedShipment(AddReceivedShipmentRequest rsData);
+        List<CBCSSTest> RetrieveCBC(int testingCHCId);
+        List<CBCSSTest> RetrieveSST(int testingCHCId);
+        void AddCBCTest(AddCBCTestRequest cbcData);
+        void AddSSTest(AddSSTestRequest ssData);
+
     }
     public interface ICHCReceiptDataFactory
     {

@@ -166,7 +166,6 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@RCHID", spData.rchId.ToCheckNull()),
                     new SqlParameter("@ECNumber", spData.ecNumber.ToCheckNull()),
                     new SqlParameter("@LMP_Date", spData.lmpDate.ToCheckNull()),
-                  //  new SqlParameter("@Gestational_period", spData.gestationalPeriod),
                     new SqlParameter("@G", spData.g),
                     new SqlParameter("@P", spData.p),
                     new SqlParameter("@L", spData.l),
