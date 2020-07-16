@@ -170,21 +170,21 @@ namespace EduquayAPI.Services.ANMNotifications
 
                 foreach (var unsent in unsentSampleDetail)
                 {
-                    var unsentsample = new ANMUnsentSample();
-                    unsentsample.barcodeNo = unsent.barcodeNo;
-                    unsentsample.contactNo = unsent.contactNo;
-                    unsentsample.gestationalAge = unsent.gestationalAge;
-                    unsentsample.rchId = unsent.rchId;
-                    unsentsample.sampleCollectionId = unsent.sampleCollectionId;
-                    unsentsample.subjectName = unsent.subjectName;
-                    unsentsample.uniqueSubjectId = unsent.uniqueSubjectId;
-                    unsentsample.sampleDateTime = unsent.sampleDateTime;
+                    var unsentSample = new ANMUnsentSample();
+                    unsentSample.barcodeNo = unsent.barcodeNo;
+                    unsentSample.contactNo = unsent.contactNo;
+                    unsentSample.gestationalAge = unsent.gestationalAge;
+                    unsentSample.rchId = unsent.rchId;
+                    unsentSample.sampleCollectionId = unsent.sampleCollectionId;
+                    unsentSample.subjectName = unsent.subjectName;
+                    unsentSample.uniqueSubjectId = unsent.uniqueSubjectId;
+                    unsentSample.sampleDateTime = unsent.sampleDateTime;
                     DateTime myDate1 = DateTime.Now;
-                    DateTime myDate2 = Convert.ToDateTime(unsentsample.sampleDateTime);
+                    DateTime myDate2 = Convert.ToDateTime(unsent.sampleDateTime);
                     TimeSpan difference = myDate1.Subtract(myDate2);
                     double totalHours = Math.Round(difference.TotalHours);
-                    unsentsample.sampleAging = Convert.ToString(totalHours); //+ " Hrs";
-                    anmUnsent.Add(unsentsample);
+                    unsentSample.sampleAging = Convert.ToString(totalHours); //+ " Hrs";
+                    anmUnsent.Add(unsentSample);
                 }
                 anmUnsentresponse.UnsentSamplesDetail = anmUnsent;
                 anmUnsentresponse.Status = "true";

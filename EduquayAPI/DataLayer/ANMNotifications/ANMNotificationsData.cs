@@ -89,7 +89,6 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@Barcode", barcodeNo),
-
             };
             var allData = UtilityDL.FillData<BarcodeSample>(stProc, pList);
             return allData;
