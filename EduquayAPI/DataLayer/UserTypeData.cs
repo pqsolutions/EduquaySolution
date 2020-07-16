@@ -37,7 +37,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "User Type added successfully";
+                return "User type added successfully";
             }
             catch (Exception e)
             {

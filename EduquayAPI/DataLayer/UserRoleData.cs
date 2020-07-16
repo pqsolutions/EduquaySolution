@@ -38,7 +38,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "User Role added successfully";
+                return "User role added successfully";
             }
             catch (Exception e)
             {

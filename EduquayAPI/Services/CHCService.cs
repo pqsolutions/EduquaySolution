@@ -23,11 +23,11 @@ namespace EduquayAPI.Services
             {
                 if (cData.districtId <= 0)
                 {
-                    return "Invalid District Id";
+                    return "Invalid district id";
                 }
                 if (cData.blockId <= 0)
                 {
-                    return "Invalid Block Id";
+                    return "Invalid block id";
                 }              
                 if (cData.isActive.ToLower() != "true")
                 {

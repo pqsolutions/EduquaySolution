@@ -44,7 +44,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var subjectTypes = _subjectTypeService.Retrieve();
-                return subjectTypes.Count == 0 ? new SubjectTypeResponse { Status = "true", Message = "No facilty type found", SubjectTypes = new List<SubjectType>() } : new SubjectTypeResponse { Status = "true", Message = string.Empty, SubjectTypes = subjectTypes };
+                return subjectTypes.Count == 0 ? new SubjectTypeResponse { Status = "true", Message = "No subject type found", SubjectTypes = new List<SubjectType>() } : new SubjectTypeResponse { Status = "true", Message = string.Empty, SubjectTypes = subjectTypes };
             }
             catch (Exception e)
             {
@@ -59,7 +59,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var subjectTypes = _subjectTypeService.Retrieve(code);
-                return subjectTypes.Count == 0 ? new SubjectTypeResponse { Status = "true", Message = "No facilty type found", SubjectTypes = new List<SubjectType>() } : new SubjectTypeResponse { Status = "true", Message = string.Empty, SubjectTypes = subjectTypes };
+                return subjectTypes.Count == 0 ? new SubjectTypeResponse { Status = "true", Message = "No subject type found", SubjectTypes = new List<SubjectType>() } : new SubjectTypeResponse { Status = "true", Message = string.Empty, SubjectTypes = subjectTypes };
             }
             catch (Exception e)
             {

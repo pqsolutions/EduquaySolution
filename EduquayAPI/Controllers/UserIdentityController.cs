@@ -36,7 +36,7 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
@@ -46,13 +46,13 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = authResponse.Errors
                 });
             }
             return Ok(new AuthSuccessResponse
             {
-                Status = true,
+                Status = "true",
                 userDetail = await _usersService.FindByUsernameAsync(request.userName),
                 Token = authResponse.Token,
                 Created = new JavaScriptSerializer().Serialize(authResponse.Created),
@@ -68,7 +68,7 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
@@ -79,14 +79,14 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = authResponse.Errors
                 });
             }
 
             return Ok(new AuthSuccessResponse
             {
-                Status = true,                
+                Status = "true",                
                 userDetail = await _usersService.FindByUsernameAsync(request.userName),
                 Token = authResponse.Token,
                 Created = new JavaScriptSerializer().Serialize(authResponse.Created),
@@ -104,7 +104,7 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
@@ -115,14 +115,14 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = authResponse.Errors
                 });
             }
 
             return Ok(new AuthSuccessResponse
             {
-                Status = true,
+                Status = "true",
                 userDetail = await _usersService.FindByUsernameAsync(request.userName),
                 Token = authResponse.Token,
                 Created = new JavaScriptSerializer().Serialize(authResponse.Created),
@@ -139,7 +139,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.Retrieve();
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.Retrieve(code);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
@@ -169,7 +169,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.FindByUserRole(roleId);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
@@ -184,7 +184,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.FindByUserType(typeId);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.RetrieveByEmail(email);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.RetrieveByUsername(username);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No Users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {

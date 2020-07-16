@@ -26,7 +26,7 @@ namespace EduquayAPI.Services
                 }
                 if (pData.chcId <= 0)
                 {
-                    return "Invalid CHC Id";
+                    return "Invalid CHC id";
                 }
                
                 var result = _phcData.Add(pData);

@@ -8,6 +8,7 @@ namespace EduquayAPI.Services.WebMaster
 {
     public interface IWebMasterService
     {
+        List<LoadState> RetrieveState();
         List<LoadDistricts> RetrieveDistrict(int userId);
         List<LoadCHCs> RetrieveCHC(int userId);
         List<LoadPHCs> RetrievePHC(int userId);

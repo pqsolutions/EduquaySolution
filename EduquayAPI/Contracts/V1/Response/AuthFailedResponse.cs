@@ -7,7 +7,7 @@ namespace EduquayAPI.Contracts.V1.Response
 {
     public class AuthFailedResponse
     {
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public IEnumerable<string> Errors { get; set; }
 
     }

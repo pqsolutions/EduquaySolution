@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,49 +18,77 @@ namespace EduquayAPI.Services
             _sampleCollectionData = new SampleCollectionDataFactory().Create();
         }
 
-        public  string AddSample(AddSubjectSampleRequest ssData)
+        public async  Task<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
         {
+            ServiceResponse sResponse = new ServiceResponse();
             try
             {
                 if (string.IsNullOrEmpty(ssData.uniqueSubjectId))
                 {
-                    return "Invalid UniqueSubjectID";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Uniquesubjectid is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(ssData.barcodeNo))
                 {
-                    return "Invalid BarcodeNo";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Barcode is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(ssData.sampleCollectionDate))
                 {
-                    return "Invalid SampleCollection Date";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Sample collection date is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(ssData.sampleCollectionTime))
                 {
-                    return "Invalid SampleCollection Time";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Sample collection time is missing";
+                    return sResponse;
                 }
                 if (ssData.collectionFrom <= 0)
                 {
-                    return "Invalid Collection From data";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid collection from data";
+                    return sResponse;
                 }
                 if (ssData.collectedBy <= 0)
                 {
-                    return "Invalid Collection By";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid collection by data";
+                    return sResponse;
                 }
 
                 var barcode =  _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
                 if (barcode.Count <= 0)
                 {
                     var result = _sampleCollectionData.AddSample(ssData);
-                    return string.IsNullOrEmpty(result) ? $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId}" : result;
+                    if(string.IsNullOrEmpty(result))
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId}";
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result;
+                        return sResponse;
+                    }
                 }
                 else
                 {
-                    return $"This Barcode No - {ssData.barcodeNo} already exist";
+                    sResponse.Status = "false";
+                    sResponse.Message = $"This Barcode No - {ssData.barcodeNo} already exist";
+                    return sResponse;
                 }
             }
             catch (Exception e)
             {
-                return $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
+                return sResponse;
             }
         }
 

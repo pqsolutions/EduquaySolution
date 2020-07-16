@@ -41,7 +41,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var sampleList = _anmchcPickandPackService.Retrieve(acppData);
-                _logger.LogInformation($"Received Sample Data {sampleList}");
+                _logger.LogInformation($"Received sample Data {sampleList}");
                 return sampleList.Count == 0 ? new ANMCHCPickandPackResponse { Status = "true", Message = "No samples found", SampleList = new List<ANMCHCPickandPackSamples>() } : new ANMCHCPickandPackResponse { Status = "true", Message = string.Empty, SampleList = sampleList };
             }
             catch (Exception e)

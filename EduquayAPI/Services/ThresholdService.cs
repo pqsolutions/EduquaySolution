@@ -27,7 +27,7 @@ namespace EduquayAPI.Services
                 }
                 if (tData.testTypeID <= 0)
                 {
-                    return "Invalid Test Type Id";
+                    return "Invalid test type id";
                 }
 
                 var result = _thresholdData.Add(tData);

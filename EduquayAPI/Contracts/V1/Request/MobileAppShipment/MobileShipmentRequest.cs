@@ -15,6 +15,8 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppShipment
         public int ilrId { get; set; }
         public int avdId { get; set; }
         public string avdContactNo { get; set; }
+        public string alternateAVD { get; set; }
+        public string alternateAVDContactNo { get; set; }
         public int testingCHCId { get; set; }
         public string dateOfShipment { get; set; }
         public string timeOfShipment { get; set; }

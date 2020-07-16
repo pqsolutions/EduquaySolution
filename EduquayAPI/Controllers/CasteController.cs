@@ -29,11 +29,11 @@ namespace EduquayAPI.Controllers
             try
             {
                 var Caste = _casteService.Add(cData);
-                return string.IsNullOrEmpty(Caste) ? $"Unable to add Caste data" : Caste;
+                return string.IsNullOrEmpty(Caste) ? $"Unable to add caste data" : Caste;
             }
             catch (Exception e)
             {
-                return $"Unable to add Caste  data - {e.Message}";
+                return $"Unable to add caste  data - {e.Message}";
             }
         }
 

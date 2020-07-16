@@ -37,7 +37,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Gov ID Type added successfully";
+                return "Gov id type added successfully";
             }
             catch (Exception e)
             {

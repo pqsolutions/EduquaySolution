@@ -53,11 +53,11 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return $"Sample collected successfully for this UniquesubjectID - {ssData.uniqueSubjectId}";
+                return $"Sample collected successfully";
             }
             catch (Exception e)
             {
-                return $"Unable to collect sampele for this uniquesubjectid - {ssData.uniqueSubjectId} - {e.Message}";
+                throw e;
             }
         }
 

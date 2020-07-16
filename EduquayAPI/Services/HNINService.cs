@@ -26,19 +26,19 @@ namespace EduquayAPI.Services
                 }
                 if (hData.facilityTypeId <= 0)
                 {
-                    return "Invalid Facility Type Id";
+                    return "Invalid facility type id";
                 }
                 if (hData.stateId <= 0)
                 {
-                    return "Invalid State Id";
+                    return "Invalid state id";
                 }
                 if (hData.districtId <= 0)
                 {
-                    return "Invalid District Id";
+                    return "Invalid district id";
                 }
                 if (hData.blockId <= 0)
                 {
-                    return "Invalid Block Id";
+                    return "Invalid block id";
                 }
 
                 var result = _hninData.Add(hData);

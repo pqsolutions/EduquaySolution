@@ -19,6 +19,7 @@ namespace EduquayAPI.DataLayer.MobileMaster
         List<LoadCommunity> RetrieveCommunity();
         List<LoadGovIDType> RetrieveGovIDType();
         List<LoadConstantValues> RetrieveConstantValues();
+        List<LoadState> RetrieveState();
     }
 
     public interface IMobileMasterDataFactory

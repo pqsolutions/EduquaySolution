@@ -21,7 +21,7 @@ namespace EduquayAPI.Services
             {
                 if (dData.stateId <= 0)
                 {
-                    return "Invalid State Id";
+                    return "Invalid state id";
                 }
                 if (dData.isActive.ToLower() != "true")
                 {

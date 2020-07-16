@@ -22,7 +22,10 @@ namespace EduquayAPI.DataLayer.MobileSubject
         List<SampleCollection> MobileSampleDetail(int userId);
         void AddShipment(MobileShipmentRequest msData);
         ANMMobileShipment MobileANMShipmentDetail(int userId);
-        
+        List<MobileNotificationSamples> DamagedSamples(int userId);
+        List<MobileNotificationSamples> SampleTimeout(int userId);
+
+
     }
 
     public interface IMobileSubjectDataFactory

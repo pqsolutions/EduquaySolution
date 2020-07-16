@@ -19,7 +19,8 @@ namespace EduquayAPI.Models
         public string contactNo { get; set; }
         public string gestationalAge { get; set; }
         public string sampleType { get; set; }
-        public string Reason { get; set; }
+        public string reason { get; set; }
+        public string oldSampleCollectionDate { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
@@ -56,7 +57,10 @@ namespace EduquayAPI.Models
                 this.sampleType = Convert.ToString(reader["SampleType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Reason"))
-                this.Reason = Convert.ToString(reader["Reason"]);
+                this.reason = Convert.ToString(reader["Reason"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDate"))
+                this.oldSampleCollectionDate = Convert.ToString(reader["SampleCollectionDate"]);
 
         }
     }

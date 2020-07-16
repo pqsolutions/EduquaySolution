@@ -46,7 +46,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var userTypes = _userTypeService.Retrieve();
-                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
+                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type data found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var userTypes = _userTypeService.Retrieve(code);
-                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
+                return userTypes.Count == 0 ? new UserTypeResponse { Status = "true", Message = "No user type data found", UserTypes = new List<UserType>() } : new UserTypeResponse { Status = "true", Message = string.Empty, UserTypes = userTypes };
             }
             catch (Exception e)
             {

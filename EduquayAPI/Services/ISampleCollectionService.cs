@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ namespace EduquayAPI.Services
 {
     public interface ISampleCollectionService
     {
-        string AddSample(AddSubjectSampleRequest  ssData);
+        Task<ServiceResponse> AddSample(AddSubjectSampleRequest ssData);
+        // string AddSample(AddSubjectSampleRequest  ssData);
         List<SubjectSamples> Retrieve(SubjectSampleRequest ssData);
     }
 }

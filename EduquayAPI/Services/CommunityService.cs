@@ -28,7 +28,7 @@ namespace EduquayAPI.Services
                 }
                 if (cData.casteId <= 0)
                 {
-                    return "Invalid caste Id";
+                    return "Invalid caste id";
                 }
                 var result = _communityData.Add(cData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add community data" : result;
