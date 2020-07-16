@@ -8,7 +8,7 @@ namespace EduquayAPI.Contracts.V1.Response.CHCReceipt
 {
     public class CHCReceivedShipmentResponse
     {
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public string Message { get; set; }
         public List<BarcodeSampleDetail> Barcodes { get; set; }
     }

@@ -8,7 +8,7 @@ namespace EduquayAPI.Contracts.V1.Response
 {
     public class ANWSubjectResponse
     {
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public string Message { get; set; }
         public List<ANWSubjectDetail> ANWSubjects { get; set; }
     }

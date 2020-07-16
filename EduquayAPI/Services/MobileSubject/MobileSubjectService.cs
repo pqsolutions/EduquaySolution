@@ -39,13 +39,13 @@ namespace EduquayAPI.Services.MobileSubject
                     slist.ShipmentId = shipments.shipment.shipmentId;
                     shipmentIds.Add(slist);
                 }
-                slResponse.Status = true;
+                slResponse.Status = "true";
                 slResponse.Message = shipmentIds.Count + " Shipment generated successfully";
                 slResponse.ShipmentIds = shipmentIds;
             }
             catch (Exception e)
             {
-                slResponse.Status = false;
+                slResponse.Status = "false";
                 slResponse.Message = "Partially " + shipmentIds.Count + " shipment generated successfully, From this (" + shipmentIds + ") onwards not shipment generated. " + e.Message;
                 slResponse.ShipmentIds  = shipmentIds;
             }
@@ -68,13 +68,13 @@ namespace EduquayAPI.Services.MobileSubject
                     slist.barcodeNo = sample.samples.barcodeNo;
                     barcodes.Add(slist);
                 }
-                slResponse.Status = true;
+                slResponse.Status = "true";
                 slResponse.Message = barcodes.Count +" Samples collected successfully";
                 slResponse.Barcodes = barcodes;
             }
             catch(Exception e)
             {
-                slResponse.Status = false;
+                slResponse.Status = "false";
                 slResponse.Message = "Partially " + barcodes.Count + " samples collected successfully, From this (" + barcodeNo + ") onwards not collected. " + e.Message;
                 slResponse.Barcodes = barcodes;
             }
@@ -103,13 +103,13 @@ namespace EduquayAPI.Services.MobileSubject
                     uniqSubjectIdDetail.Add(slist);
                 }
 
-                subRegSuccess.Status = true;
+                subRegSuccess.Status = "true";
                 subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects Registered Successfully";
                 subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
             catch (Exception e)
             {
-                subRegSuccess.Status = false;
+                subRegSuccess.Status = "false";
                 subRegSuccess.Message = "Partially " + uniqSubjectIdDetail.Count + " subjects registered successfully, From this (" + subId + ") onwards not registered. " + e.Message;
                 subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
