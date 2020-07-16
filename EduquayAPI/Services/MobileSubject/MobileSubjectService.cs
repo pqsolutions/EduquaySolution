@@ -46,7 +46,7 @@ namespace EduquayAPI.Services.MobileSubject
             catch (Exception e)
             {
                 slResponse.Status = "false";
-                slResponse.Message = "Partially " + shipmentIds.Count + " shipment generated successfully, From this (" + shipmentIds + ") onwards not shipment generated. " + e.Message;
+                slResponse.Message = "Partially " + shipmentIds.Count + " shipment generated successfully, From this (" + shipmentIds + ") onwards shipment not generated. " + e.Message;
                 slResponse.ShipmentIds  = shipmentIds;
             }
             return slResponse;
@@ -104,7 +104,7 @@ namespace EduquayAPI.Services.MobileSubject
                 }
 
                 subRegSuccess.Status = "true";
-                subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects Registered Successfully";
+                subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects registered successfully";
                 subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
             catch (Exception e)
@@ -136,10 +136,10 @@ namespace EduquayAPI.Services.MobileSubject
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
-                    subjectRegistration.SubjectPrimary = primarySubject;
-                    subjectRegistration.SubjectAddress = address;
-                    subjectRegistration.SubjectPregnancy = pregnancy;
-                    subjectRegistration.SubjectParent = parent;
+                    subjectRegistration.PrimaryDetail = primarySubject;
+                    subjectRegistration.AddressDetail = address;
+                    subjectRegistration.PregnancyDetail = pregnancy;
+                    subjectRegistration.ParentDetail = parent;
                     subjectRegistrations.Add(subjectRegistration);
                 }
                 var shipmentId = "";
@@ -157,6 +157,8 @@ namespace EduquayAPI.Services.MobileSubject
                         shipmentLog.avdId = shipment.avdId;
                         shipmentLog.avdName = shipment.avdName;
                         shipmentLog.avdContactNo = shipment.avdContactNo;
+                        shipmentLog.alternateAVD = shipment.alternateAVD;
+                        shipmentLog.alternateAVDContactNo = shipment.alternateAVDContactNo;
                         shipmentLog.ilrId = shipment.ilrId;
                         shipmentLog.ilrPoint = shipment.ilrPoint;
                         shipmentLog.riId = shipment.riId;
@@ -181,10 +183,31 @@ namespace EduquayAPI.Services.MobileSubject
             {
                 subjectRegistrationResponse.Status = "false";
                 subjectRegistrationResponse.Message = ex.Message;
-
             }
 
             return subjectRegistrationResponse;
+        }
+
+        public async Task<NotificationListResponse> RetrieveNotifications(int userId)
+        {
+            var nlResponse = new NotificationListResponse();
+
+            try
+            {
+                var damagedSamples = _mobileSubjectData.DamagedSamples(userId);
+                var timeoutSamples = _mobileSubjectData.SampleTimeout(userId);
+                nlResponse.Status = "true";
+                nlResponse.Message = string.Empty;
+                nlResponse.DamagedSamples = damagedSamples;
+                nlResponse.TimeoutExpirySamples = timeoutSamples;
+            }
+            catch (Exception ex)
+            {
+                nlResponse.Status = "false";
+                nlResponse.Message = ex.Message;
+
+            }
+            return nlResponse;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Test Type added successfully";
+                return "Test type added successfully";
             }
             catch (Exception e)
             {

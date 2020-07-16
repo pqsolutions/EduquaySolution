@@ -23,7 +23,7 @@ namespace EduquayAPI.DataLayer.MobileMaster
         private const string FetchILR = "SPC_FetchILRByRI";
         private const string FetchTestingCHC = "SPC_FetchTestingCHCByRI";
         private const string FetchAVD = "SPC_FetchAVDByRI";
-
+        private const string FetchStates = "SPC_FetchAllStates";
 
         public MobileMasterData()
         {
@@ -136,6 +136,14 @@ namespace EduquayAPI.DataLayer.MobileMaster
             string stProc = FetchSC;
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allData = UtilityDL.FillData<LoadSCs>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadState> RetrieveState()
+        {
+            string stProc = FetchStates;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadState>(stProc, pList);
             return allData;
         }
     }

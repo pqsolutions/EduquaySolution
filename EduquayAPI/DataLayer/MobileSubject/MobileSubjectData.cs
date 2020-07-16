@@ -26,6 +26,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchMobileSampleDetailList = "SPC_FetchMobileSampleDetailList";
         private const string AddShipments = "SPC_AddANMMobileShipments";
         private const string FetchShipmentLog = "SPC_FetchMobileANMShipmentLog";
+        private const string FetchDamagedSamples = "SPC_FetchMobileNotificationDamaged";
+        private const string FetchTimooutExpiry = "SPC_FetchMobileNotificationTimeout";
 
         public MobileSubjectData()
         {
@@ -46,7 +48,9 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@RIID", msData.riId),
                     new SqlParameter("@ILR_ID", msData.ilrId),
                     new SqlParameter("@AVDID", msData.avdId),
-                    new SqlParameter("AVDContactNo", msData.avdContactNo.ToCheckNull()),
+                    new SqlParameter("@AVDContactNo", msData.avdContactNo.ToCheckNull()),
+                    new SqlParameter("@AlternateAVD", msData.alternateAVD.ToCheckNull()),
+                    new SqlParameter("@AlternateAVDContactNo", msData.alternateAVDContactNo.ToCheckNull()),
                     new SqlParameter("@TestingCHCID", msData.testingCHCId),
                     new SqlParameter("@DateofShipment", msData.dateOfShipment ?? msData.dateOfShipment),
                     new SqlParameter("@TimeofShipment", msData.timeOfShipment ?? msData.timeOfShipment),
@@ -283,6 +287,22 @@ namespace EduquayAPI.DataLayer.MobileSubject
             shipdetail.ShipmentLog = shipmentLog;
             shipdetail.ShipmentSubjectDetail = shipmentSample;
             return shipdetail;
+        }
+
+        public List<MobileNotificationSamples> DamagedSamples(int userId)
+        {
+            string stProc = FetchDamagedSamples;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ANMID", userId) };
+            var allSampleData = UtilityDL.FillData<MobileNotificationSamples>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobileNotificationSamples> SampleTimeout(int userId)
+        {
+            string stProc = FetchTimooutExpiry;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ANMID", userId) };
+            var allSampleData = UtilityDL.FillData<MobileNotificationSamples>(stProc, pList);
+            return allSampleData;
         }
     }
 }

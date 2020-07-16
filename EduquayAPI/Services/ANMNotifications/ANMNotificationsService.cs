@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMNotifications;
 using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
@@ -18,54 +19,83 @@ namespace EduquayAPI.Services.ANMNotifications
             _anmNotificationsData = new ANMNotificationsDataFactory().Create();
         }
 
-        public string AddSampleRecollection(SampleRecollectionRequest srData)
+        public async Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData)
         {
+            ServiceResponse sResponse = new ServiceResponse();
+
             try
             {
-
                 if (string.IsNullOrEmpty(srData.uniqueSubjectId))
                 {
-                    return "Invalid UniqueSubjectID";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Uniquesubjectid is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(srData.barcodeNo))
                 {
-                    return "Invalid BarcodeNo";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Barcode is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(srData.sampleCollectionDate))
                 {
-                    return "Invalid SampleCollection Date";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Sample collection date is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(srData.sampleCollectionTime))
                 {
-                    return "Invalid SampleCollection Time";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Sample collection time is missing";
+                    return sResponse;
                 }
                 if (string.IsNullOrEmpty(srData.reason))
                 {
-                    return "Invalid Reason";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid Reason";
+                    return sResponse;
                 }
                 if (srData.collectionFrom <= 0)
                 {
-                    return "Invalid Collection From data";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid collection from data";
+                    return sResponse;
                 }
                 if (srData.collectedBy <= 0)
                 {
-                    return "Invalid Collection By";
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid collection by data";
+                    return sResponse;
                 }
                 var barcode = _anmNotificationsData.FetchBarcode(srData.barcodeNo);
                 if (barcode.Count <= 0)
                 {
                     var result = _anmNotificationsData.AddSampleRecollection(srData);
-                    return string.IsNullOrEmpty(result) ? $"Unable to re collect sampele for this uniquesubjectid - {srData.uniqueSubjectId}" : result;
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {srData.uniqueSubjectId}";
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result;
+                        return sResponse;
+                    }
                 }
                 else
                 {
-                    return $"This Barcode No - {srData.barcodeNo} already exist";
+                    sResponse.Status = "false";
+                    sResponse.Message = $"This Barcode No - {srData.barcodeNo} already exist";
+                    return sResponse;
                 }
             }
             catch (Exception e)
             {
-                return $"Unable to collect sampele for this uniquesubjectid - {srData.uniqueSubjectId} - {e.Message}";
-
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {srData.uniqueSubjectId} - {e.Message}";
+                return sResponse;
             }
         }
 
@@ -77,7 +107,7 @@ namespace EduquayAPI.Services.ANMNotifications
 
                 if (usData.anmId <= 0)
                 {
-                    return "Invalid ANM Id";
+                    return "Invalid ANM id";
                 }
 
                 var result = _anmNotificationsData.UpdateSampleStatus(usData);
@@ -97,21 +127,23 @@ namespace EduquayAPI.Services.ANMNotifications
                 if (usData.anmId <= 0)
                 {
                     response.Status = "false";
-                    response.Message = "Invalid anmId";
-                }
-                var result = _anmNotificationsData.AddTimeoutExpiry(usData);
-
-                if(string.IsNullOrEmpty(result))
-                {
-                    response.Status = "false";
-                    response.Message = "Unable to move timeout expiry samples";
+                    response.Message = "Invalid ANM id";
                 }
                 else
                 {
-                    response.Status = "true";
-                    response.Message = result;
+                    var result = _anmNotificationsData.AddTimeoutExpiry(usData);
+
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to move timeout expiry samples";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
                 }
-                //return string.IsNullOrEmpty(result) ? $"Unable to update sample status data" : result;
             }
             catch (Exception e)
             {
@@ -164,9 +196,31 @@ namespace EduquayAPI.Services.ANMNotifications
                 anmUnsentresponse.Message = e.Message;
             }
             return anmUnsentresponse;
-
         }
 
-       
+        public List<ANMHPLCPositiveSamples> GetPositiveDetails(int userId)
+        {
+            var positiveSubjects = _anmNotificationsData.GetPositiveDetails(userId);
+            return positiveSubjects;
+        }
+
+        public string UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData)
+        {
+            try
+            {
+
+                if (usData.anmId <= 0)
+                {
+                    return "Invalid ANM id";
+                }
+
+                var result = _anmNotificationsData.UpdatePositiveSubjectStatus(usData);
+                return string.IsNullOrEmpty(result) ? $"Unable to update positive subject status data" : result;
+            }
+            catch (Exception e)
+            {
+                return $"Unable to update positive subject status - {e.Message}";
+            }
+        }
     }
 }

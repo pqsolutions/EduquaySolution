@@ -14,6 +14,8 @@ namespace EduquayAPI.Models.ANMCHCShipment
         public string testingCHC { get; set; }
         public string avdName { get; set; }
         public string contactNo { get; set; }
+        public string alternateAVD { get; set; }
+        public string alternateAVDContactNo { get; set; }
         public string ilrPoint { get; set; }
         public string riPoint { get; set; }
         public string shipmentDateTime { get; set; }
@@ -40,6 +42,12 @@ namespace EduquayAPI.Models.ANMCHCShipment
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
                 this.contactNo = Convert.ToString(reader["ContactNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AlternateAVD"))
+                this.alternateAVD = Convert.ToString(reader["AlternateAVD"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AlternateAVDContactNo"))
+                this.alternateAVDContactNo = Convert.ToString(reader["AlternateAVDContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILRPoint"))
                 this.ilrPoint = Convert.ToString(reader["ILRPoint"]);

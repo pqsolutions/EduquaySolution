@@ -28,15 +28,15 @@ namespace EduquayAPI.Services
                 }
                 if (rData.phcId <= 0)
                 {
-                    return "Invalid PHC Id";
+                    return "Invalid PHC id";
                 }
                 if (rData.scId <= 0)
                 {
-                    return "Invalid SC Id";
+                    return "Invalid SC id";
                 }
                 if (rData.ilrId <= 0)
                 {
-                    return "Invalid ILR Id";
+                    return "Invalid ILR id";
                 }
                 var result = _riData.Add(rData);
                 return string.IsNullOrEmpty(result) ? $"Unable to add RI data" : result;

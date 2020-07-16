@@ -19,10 +19,10 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
 
     public class SubjectResigration
     {
-        public SubjectPrimary SubjectPrimary { get; set; }
-        public SubjectAddress SubjectAddress { get; set; }
-        public SubjectPregnancy SubjectPregnancy { get; set; }
-        public SubjectParent SubjectParent { get; set; }
+        public SubjectPrimary PrimaryDetail { get; set; }
+        public SubjectAddress AddressDetail { get; set; }
+        public SubjectPregnancy PregnancyDetail { get; set; }
+        public SubjectParent ParentDetail { get; set; }
 
     }
 
@@ -37,6 +37,8 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public int avdId { get; set; }
         public string avdName { get; set; }
         public string avdContactNo { get; set; }
+        public string alternateAVD { get; set; }
+        public string alternateAVDContactNo { get; set; }
         public int ilrId { get; set; }
         public string ilrPoint { get; set; }
         public int riId { get; set; }

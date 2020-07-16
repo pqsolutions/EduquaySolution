@@ -18,6 +18,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
         private const string FetchUnsentSamples = "SPC_FetchUnsentSamples";
         private const string MoveTimeoutExpiry = "SPC_AddTimeoutExpiryInUnsentSamples";
+        private const string FetchPositiveSubjects = "SPC_FetchANMPositiveSubjectDetail";
+        private const string UpdatePositiveStatus = "SPC_UpdateStatusANMPositiveSubjects";
 
         public ANMNotificationsData()
         {
@@ -43,11 +45,11 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return $"Sample recollected successfully for this UniquesubjectID - {srData.uniqueSubjectId}";
+                return $"Sample recollected successfully";
             }
             catch (Exception e)
             {
-                return $"Unable to collect sampele for this uniquesubjectid - {srData.uniqueSubjectId} - {e.Message}";
+                throw e;
 
             }
         }
@@ -62,7 +64,7 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                     new SqlParameter("@ANMID", usData.anmId),                   
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Sample Status updated successfully";
+                return "Sample status updated successfully";
             }
             catch (Exception e)
             {
@@ -116,7 +118,37 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
 
-                return "Samples successfully moved to Timeout Expiry  ";
+                return "Samples successfully moved to timeout expiry";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<ANMHPLCPositiveSamples> GetPositiveDetails(int userId)
+        {
+            string stProc = FetchPositiveSubjects;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@ANMID", userId),
+            };
+            var allData = UtilityDL.FillData<ANMHPLCPositiveSamples>(stProc, pList);
+            return allData;
+        }
+
+        public string UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData)
+        {
+            try
+            {
+                string stProc = UpdatePositiveStatus;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@BarcodeNo", usData.barcodeNo ?? usData.barcodeNo),
+                    new SqlParameter("@ANMID", usData.anmId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "Positive subject status updated successfully";
             }
             catch (Exception e)
             {

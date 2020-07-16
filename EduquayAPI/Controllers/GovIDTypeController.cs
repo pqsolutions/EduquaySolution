@@ -29,11 +29,11 @@ namespace EduquayAPI.Controllers
             try 
             { 
                 var govidType = _govidTypeService.Add(gtData);
-                return string.IsNullOrEmpty(govidType) ? $"Unable to add Gov Id type data" : govidType;
+                return string.IsNullOrEmpty(govidType) ? $"Unable to add gov id type data" : govidType;
             }
             catch (Exception e)
             {
-                return $"Unable to add Gov Id type data - {e.Message}";
+                return $"Unable to add gov id type data - {e.Message}";
             }
         }
 
@@ -44,7 +44,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var govidTypes = _govidTypeService.Retrieve();
-                return govidTypes.Count == 0 ? new GovIDTypeResponse { Status = "true", Message = "No facilty type found", GovIDTypes = new List<GovIDType>() } : new GovIDTypeResponse { Status = "true", Message = string.Empty, GovIDTypes = govidTypes };
+                return govidTypes.Count == 0 ? new GovIDTypeResponse { Status = "true", Message = "No gov id type found", GovIDTypes = new List<GovIDType>() } : new GovIDTypeResponse { Status = "true", Message = string.Empty, GovIDTypes = govidTypes };
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var govidTypes = _govidTypeService.Retrieve(code);
-                return govidTypes.Count == 0 ? new GovIDTypeResponse { Status = "true", Message = "No facilty type found", GovIDTypes = new List<GovIDType>() } : new GovIDTypeResponse { Status = "true", Message = string.Empty, GovIDTypes = govidTypes };
+                return govidTypes.Count == 0 ? new GovIDTypeResponse { Status = "true", Message = "No gov id type found", GovIDTypes = new List<GovIDType>() } : new GovIDTypeResponse { Status = "true", Message = string.Empty, GovIDTypes = govidTypes };
             }
             catch (Exception e)
             {

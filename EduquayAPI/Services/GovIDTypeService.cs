@@ -25,11 +25,11 @@ namespace EduquayAPI.Services
                     gtData.isActive = "false";
                 }
                 var result = _govidTypeData.Add(gtData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add GovID Type data" : result;
+                return string.IsNullOrEmpty(result) ? $"Unable to add gov id type data" : result;
             }
             catch (Exception e)
             {
-                return $"Unable to add GovID Type data - {e.Message}";
+                return $"Unable to add gov id type data - {e.Message}";
             }
         }
 

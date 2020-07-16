@@ -16,6 +16,8 @@ namespace EduquayAPI.Models.MobileSubject
         public int avdId { get; set; }
         public string avdName { get; set; }
         public string avdContactNo { get; set; }
+        public string alternateAVD { get; set; }
+        public string alternateAVDContactNo { get; set; }
         public int ilrId { get; set; }
         public string ilrPoint { get; set; }
         public int riId { get; set; }
@@ -55,6 +57,12 @@ namespace EduquayAPI.Models.MobileSubject
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AVDContactNo"))
                 this.avdContactNo = Convert.ToString(reader["AVDContactNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AlternateAVD"))
+                this.alternateAVD = Convert.ToString(reader["AlternateAVD"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AlternateAVDContactNo"))
+                this.alternateAVDContactNo = Convert.ToString(reader["AlternateAVDContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ILR_ID"))
                 this.ilrId = Convert.ToInt32(reader["ILR_ID"]);

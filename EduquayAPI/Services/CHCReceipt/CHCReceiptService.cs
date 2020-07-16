@@ -41,7 +41,7 @@ namespace EduquayAPI.Services.CHCReceipt
                         barcodes.Add(slist);
                     }
                     rsResponse.Status = "true";
-                    rsResponse.Message = barcodes.Count + " Samples received successfully in Shipment ID: " + shipmentId;
+                    rsResponse.Message = barcodes.Count + " Samples received successfully in shipment id: " + shipmentId;
                     rsResponse.Barcodes = barcodes;
                 //}
                 //else
@@ -67,12 +67,12 @@ namespace EduquayAPI.Services.CHCReceipt
                 count += 1;
                 if (sample.receivedDate == "")
                 {
-                    message = "No: " + count + " sample Received Date Should not Empty";
+                    message = "No: " + count + " sample received date is missing";
                 }
 
                 if (sample.proceesingDateTime == "")
                 {
-                    message = "No: " + count + " sample Processing Date and Time Should not Empty";
+                    message = "No: " + count + " sample processing date and time is missing";
                 }
             }
             return message;

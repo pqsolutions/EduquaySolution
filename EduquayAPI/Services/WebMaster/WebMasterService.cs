@@ -112,5 +112,11 @@ namespace EduquayAPI.Services.WebMaster
             var allANM = _webMasterData.RetrieveAssociatedANMByCHC(chcId);
             return allANM;
         }
+
+        public List<LoadState> RetrieveState()
+        {
+            var allStates = _webMasterData.RetrieveState();
+            return allStates;
+        }
     }
 }

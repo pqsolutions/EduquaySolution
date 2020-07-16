@@ -60,9 +60,9 @@ namespace EduquayAPI.Controllers
             try
             {
                 var subjectList = _sampleCollectionService.Retrieve(ssData);
-                _logger.LogInformation($"Received Subject Data {subjectList}");
-                return subjectList.Count == 0 ? 
-                    new SubjectSampleResponse { Status = "true", Message = "No subjects found", fromDate = fromDate , toDate = toDate, SubjectList = new List<SubjectSamples>() } 
+                _logger.LogInformation($"Received subject Data {subjectList}");
+                return subjectList.Count == 0 ?
+                    new SubjectSampleResponse { Status = "true", Message = "No subjects found", fromDate = fromDate, toDate = toDate, SubjectList = new List<SubjectSamples>() }
                     : new SubjectSampleResponse { Status = "true", Message = string.Empty, fromDate = fromDate, toDate = toDate, SubjectList = subjectList };
             }
             catch (Exception e)
@@ -77,25 +77,17 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("Add")]
-        public ActionResult<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
+        public async Task<IActionResult> AddSample(AddSubjectSampleRequest ssData)
         {
-            try
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Collecting sample of subject - {JsonConvert.SerializeObject(ssData)}");
+            var subjectSample = await _sampleCollectionService.AddSample(ssData);
+            return Ok(new ServiceResponse
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Collecting sample of subject - {JsonConvert.SerializeObject(ssData)}");
-                var subjectSample = _sampleCollectionService.AddSample(ssData);
-                if (subjectSample == null)
-                {
-                    return NotFound();
-                }
-                _logger.LogInformation($"Sample collected Successfully - {ssData.uniqueSubjectId}");
-                return new ServiceResponse { Status = "true", Message = string.Empty, Result = subjectSample };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to collect sample  - {ex.StackTrace}");
-                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to collect sample" };
-            }
+                Status = subjectSample.Status,
+                Message = subjectSample.Message,
+            });
         }
     }
 }

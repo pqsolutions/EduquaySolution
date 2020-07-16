@@ -25,6 +25,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchTestingCHC = "SPC_FetchTestingCHCByRI";
         private const string FetchAVD = "SPC_FetchAVDByRI";
         private const string FetchANM = "SPC_FetchAllAssociatedANMByCHC";
+        private const string FetchStates = "SPC_FetchAllStates";
 
         public WebMasterData()
         {
@@ -153,6 +154,14 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchANM;
             var pList = new List<SqlParameter>() { new SqlParameter("@CHCId", chcId) };
             var allData = UtilityDL.FillData<AssociatedSCRIANM>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadState> RetrieveState()
+        {
+            string stProc = FetchStates;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadState>(stProc, pList);
             return allData;
         }
     }

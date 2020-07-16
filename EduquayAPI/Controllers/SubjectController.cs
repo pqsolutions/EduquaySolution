@@ -36,7 +36,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddSubjects(SubjectRegistrationRequest subRegData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Register multiple subjects in Mobile App- {JsonConvert.SerializeObject(subRegData)}");
+            _logger.LogDebug($"Registered subjects - {JsonConvert.SerializeObject(subRegData)}");
            
             var subject = await _subjectService.AddSubject(subRegData);
 
@@ -61,7 +61,7 @@ namespace EduquayAPI.Controllers
 
 
                 return subjecPrimary.Count == 0 && subjectAddress.Count == 0 && subjectPregnancy.Count == 0 && subjectParent.Count == 0 ?
-                    new SubjectRegistrationResponse { Status = "true", Message = "No Subject found", primaryDetail = new List<SubjectPrimaryDetail>(), addressDetail = new List<SubjectAddresDetail>(), pregnancyDetail = new List<SubjectPregnancyDetail>() , parentDetail = new List<SubjectParentDetail>() } 
+                    new SubjectRegistrationResponse { Status = "true", Message = "No subject found", primaryDetail = new List<SubjectPrimaryDetail>(), addressDetail = new List<SubjectAddresDetail>(), pregnancyDetail = new List<SubjectPregnancyDetail>() , parentDetail = new List<SubjectParentDetail>() } 
                     : new SubjectRegistrationResponse { Status = "true", Message = string.Empty, primaryDetail = subjecPrimary , addressDetail = subjectAddress , pregnancyDetail = subjectPregnancy , parentDetail = subjectParent };
             }
             catch (Exception e)
@@ -78,7 +78,7 @@ namespace EduquayAPI.Controllers
             {
                 var anwSubjects = _subjectService.RetrieveANWDetail(asData);
                 return anwSubjects.Count == 0 ?
-                    new ANWSubjectResponse { Status = "false", Message = "No Subject found", ANWSubjects = new List<ANWSubjectDetail>() }
+                    new ANWSubjectResponse { Status = "false", Message = "No subject found", ANWSubjects = new List<ANWSubjectDetail>() }
                     : new ANWSubjectResponse { Status = "true", Message = string.Empty, ANWSubjects = anwSubjects };
             }
             catch (Exception e)

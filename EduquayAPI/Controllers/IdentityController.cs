@@ -35,7 +35,7 @@ namespace EduquayAPI.Controllers
                 {
                     return BadRequest(new AuthFailedResponse
                     {
-                        Status = false,
+                        Status = "false",
                         Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                     });
                 }
@@ -45,13 +45,13 @@ namespace EduquayAPI.Controllers
                 {
                     return Ok(new AuthFailedResponse
                     {
-                        Status = false,
+                        Status ="false",
                         Errors = authResponse.Errors
                     });
                 }
                 return Ok(new AuthSuccessResponse
                 {
-                    Status = true,
+                    Status = "true",
                     Token = authResponse.Token,
                     Username = authResponse.Username,
                     Created = new JavaScriptSerializer().Serialize(authResponse.Created),
@@ -63,7 +63,7 @@ namespace EduquayAPI.Controllers
 
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = true,
+                    Status = "true",
                     Errors = CommonUtility.CreateEnumerable(ex.Message)
                 });
             }
@@ -76,7 +76,7 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
                 });
             }
@@ -87,14 +87,14 @@ namespace EduquayAPI.Controllers
             {
                 return BadRequest(new AuthFailedResponse
                 {
-                    Status = false,
+                    Status = "false",
                     Errors = authResponse.Errors
                 });
             }
 
             return Ok(new AuthSuccessResponse
             {
-                Status = true,
+                Status = "true",
                 Token = authResponse.Token,
                 Username = authResponse.Username,
                 Created = new JavaScriptSerializer().Serialize(authResponse.Created),

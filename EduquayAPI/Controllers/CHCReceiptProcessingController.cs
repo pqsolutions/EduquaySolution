@@ -52,7 +52,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddMultipleSamples(AddCHCShipmentReceiptRequest chcSRRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Received shipments to add samples forverification  - {JsonConvert.SerializeObject(chcSRRequest)}");
+            _logger.LogDebug($"Received shipments to add samples for verification  - {JsonConvert.SerializeObject(chcSRRequest)}");
             var rsResponse = await _chcReceiptService.AddReceivedShipment(chcSRRequest);
 
             return Ok(new CHCReceivedShipmentResponse

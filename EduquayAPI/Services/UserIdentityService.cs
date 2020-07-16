@@ -34,7 +34,7 @@ namespace EduquayAPI.Services
             {
                 return new AuthenticationResult
                 {
-                    Errors = new[] { "User with this Username already exist" }
+                    Errors = new[] { "User with this username already exist" }
                 };
             }
 
@@ -43,7 +43,7 @@ namespace EduquayAPI.Services
             {
                 return new AuthenticationResult
                 {
-                    Errors = new[] { "User with this Email already exist" }
+                    Errors = new[] { "User with this email already exist" }
                 };
             }
                        
@@ -145,7 +145,7 @@ namespace EduquayAPI.Services
                 {
                     return new AuthenticationResult
                     {
-                        Errors = new[] { $"Incorrect Password!" }
+                        Errors = new[] { $"Incorrect password!" }
                     };
                 }
 
@@ -172,7 +172,7 @@ namespace EduquayAPI.Services
                 {
                     return new AuthenticationResult
                     {
-                        Errors = new[] { "User with this Username does not exist" }
+                        Errors = new[] { "User with this username does not exist" }
                     };
                 }
 
@@ -181,7 +181,7 @@ namespace EduquayAPI.Services
                 {
                     return new AuthenticationResult
                     {
-                        Errors = new[] { $"Incorrect Password!" }
+                        Errors = new[] { $"Incorrect password!" }
                     };
                 }
 

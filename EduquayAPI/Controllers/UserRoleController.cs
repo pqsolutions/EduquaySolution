@@ -46,7 +46,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var userRoles = _userRoleService.Retrieve();
-                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
+                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user role data found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var userRoles = _userRoleService.Retrieve(code);
-                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user type found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
+                return userRoles.Count == 0 ? new UserRoleResponse { Status = "true", Message = "No user role data found", UserRoles = new List<UserRole>() } : new UserRoleResponse { Status = "true", Message = string.Empty, UserRoles = userRoles };
             }
             catch (Exception e)
             {

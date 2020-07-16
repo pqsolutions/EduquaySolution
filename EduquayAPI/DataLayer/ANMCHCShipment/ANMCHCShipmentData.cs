@@ -34,6 +34,8 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
                     new SqlParameter("@ILR_ID", asData.ilrId),
                     new SqlParameter("@AVDID", asData.avdId),
                     new SqlParameter("@AVDContactNo", asData.avdContactNo ?? asData.avdContactNo),
+                    new SqlParameter("@AlternateAVD", asData.alternateAVD.ToCheckNull()),
+                    new SqlParameter("@AlternateAVDContactNo", asData.alternateAVDContactNo.ToCheckNull()),
                     new SqlParameter("@TestingCHCID", asData.testingCHCId),
                     new SqlParameter("@DateofShipment", asData.dateOfShipment ?? asData.dateOfShipment),
                     new SqlParameter("@TimeofShipment", asData.timeOfShipment ?? asData.timeOfShipment),

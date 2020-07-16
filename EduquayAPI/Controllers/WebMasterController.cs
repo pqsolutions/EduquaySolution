@@ -30,6 +30,27 @@ namespace EduquayAPI.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("RetrieveStates")]
+        public LoadStateResponse  GetState()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var states = _webMasterService.RetrieveState();
+
+                _logger.LogInformation($"Received state master data {states}");
+                return states.Count == 0 ?
+                    new LoadStateResponse  { Status = "true", Message = "No record found", State = new List<LoadState>() }
+                    : new LoadStateResponse   { Status = "true", Message = string.Empty, State = states };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving state data {e.StackTrace}");
+                return new LoadStateResponse  { Status = "false", Message = e.Message, State = null };
+            }
+        }
+
 
         [HttpGet]
         [Route("RetrieveDistrict/{userId}")]
@@ -272,14 +293,14 @@ namespace EduquayAPI.Controllers
             {
                 var associatedANM = _webMasterService.RetrieveAssociatedANM(riId);
 
-                _logger.LogInformation($"Received Associated ANM master data {associatedANM}");
+                _logger.LogInformation($"Received associated ANM master data by ri {associatedANM}");
                 return associatedANM.Count == 0 ?
                     new LoadAssociatedANMResponse { Status = "true", Message = "No record found", AssociatedANM = new List<LoadAssociatedANM>() }
                     : new LoadAssociatedANMResponse { Status = "true", Message = string.Empty, AssociatedANM = associatedANM };
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in receiving associated ANM data {e.StackTrace}");
+                _logger.LogError($"Error in receiving associated ANM data by ri {e.StackTrace}");
                 return new LoadAssociatedANMResponse { Status = "false", Message = e.Message, AssociatedANM = null };
             }
         }
@@ -293,14 +314,14 @@ namespace EduquayAPI.Controllers
             {
                 var associatedANM = _webMasterService.RetrieveAssociatedANMByCHC(chcId);
 
-                _logger.LogInformation($"Received Associated ANM master data {associatedANM}");
+                _logger.LogInformation($"Received associated ANM master data by chc {associatedANM}");
                 return associatedANM.Count == 0 ?
                     new SCRIANMResponse { Status = "true", Message = "No record found", AssociatedANMDetail = new List<AssociatedSCRIANM>() }
                     : new SCRIANMResponse { Status = "true", Message = string.Empty, AssociatedANMDetail = associatedANM };
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in receiving associated ANM data {e.StackTrace}");
+                _logger.LogError($"Error in receiving associated ANM data by chc {e.StackTrace}");
                 return new SCRIANMResponse { Status = "false", Message = e.Message, AssociatedANMDetail = null };
             }
         }

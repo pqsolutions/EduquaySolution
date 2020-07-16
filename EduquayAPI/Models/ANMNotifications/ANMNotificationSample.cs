@@ -12,14 +12,16 @@ namespace EduquayAPI.Models.ANMNotifications
         public int sampleCollectionId { get; set; }
         public string uniqueSubjectId { get; set; }
         public string subjectName { get; set; }
-        public string rchID { get; set; }
+        public string rchId { get; set; }
         public string barcodeNo { get; set; }
         public string contactNo { get; set; }
         public string gestationalAge { get; set; }
         public string notifiedStatus { get; set; }
         public string sampleType { get; set; }
-        public string Reason { get; set; }
-
+        public string reason { get; set; }
+        public string sampleCollectionDateTime { get; set; }
+        public string sampleCollectionDate { get; set; }
+        public string sampleCollectionTime { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -33,7 +35,7 @@ namespace EduquayAPI.Models.ANMNotifications
                 this.subjectName = Convert.ToString(reader["SubjectName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
-                this.rchID = Convert.ToString(reader["RCHID"]);
+                this.rchId = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
@@ -51,7 +53,17 @@ namespace EduquayAPI.Models.ANMNotifications
                 this.sampleType = Convert.ToString(reader["SampleType"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Reason"))
-                this.Reason = Convert.ToString(reader["Reason"]);
+                this.reason = Convert.ToString(reader["Reason"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleDateTime"))
+                this.sampleCollectionDateTime = Convert.ToString(reader["SampleDateTime"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDate"))
+                this.sampleCollectionDate = Convert.ToString(reader["SampleCollectionDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionTime"))
+                this.sampleCollectionTime = Convert.ToString(reader["SampleCollectionTime"]);
+
         }
     }
 }

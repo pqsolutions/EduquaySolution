@@ -38,25 +38,18 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("AddSampleRecollection")]
-        public ActionResult<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData)
+        public async Task<IActionResult> AddSampleRecollection(SampleRecollectionRequest srData)
         {
-            try
+
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
+            var sampleRecollection = await _anmNotificationsService.AddSampleRecollection(srData);
+            return Ok(new ServiceResponse
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
-                var sampleRecollection = _anmNotificationsService.AddSampleRecollection(srData);
-                if (sampleRecollection == null)
-                {
-                    return NotFound();
-                }
-                _logger.LogInformation($"Sample recollection data added successfully - {srData.uniqueSubjectId}");
-                return new ServiceResponse { Status = "true", Message = string.Empty, Result = sampleRecollection };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to add sample recollection data - {ex.StackTrace}");
-                return new ServiceResponse { Status = "true", Message = ex.Message, Result = "Failed to add sample recollection data" };
-            }
+                Status = sampleRecollection.Status,
+                Message = sampleRecollection.Message,
+            });
         }
 
         /// <summary>
@@ -98,7 +91,7 @@ namespace EduquayAPI.Controllers
                 _logger.LogDebug($"moving samples to timeout expiry - {JsonConvert.SerializeObject(usData)}");
                 var sampleStatus = _anmNotificationsService.MoveTimeout(usData);
                 _logger.LogInformation($"Sample successfully moved to sample timout expiry - {usData}");
-                return new ANMTimeoutResponse { Status = sampleStatus.Status, Message = sampleStatus.Message  };
+                return new ANMTimeoutResponse { Status = sampleStatus.Status, Message = sampleStatus.Message };
             }
             catch (Exception ex)
             {
@@ -147,5 +140,55 @@ namespace EduquayAPI.Controllers
                 UnsentSamplesDetail = unsentSamples.UnsentSamplesDetail,
             });
         }
+
+        /// <summary>
+        /// Used for fetch HPLC positive subjects
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveHPLCPositiveSubjects/{userId}")]
+        public PositiveSubjectsResponse GetHPLCPositiveSubjects(int userId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var positiveSubjects = _anmNotificationsService.GetPositiveDetails(userId);
+                _logger.LogInformation($"Received hplc positive subject data {positiveSubjects}");
+                return positiveSubjects.Count == 0 ? new PositiveSubjectsResponse { Status = "true", Message = "No positive subjects data found", positiveSubjects = new List<ANMHPLCPositiveSamples>() }
+                : new PositiveSubjectsResponse { Status = "true", Message = string.Empty, positiveSubjects = positiveSubjects };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  receiving hplc positive subjects data {e.StackTrace}");
+                return new PositiveSubjectsResponse { Status = "false", Message = e.Message, positiveSubjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for update the Status in ANM notification Positive Subjects
+        /// </summary>
+        [HttpPost]
+        [Route("UpdatePositiveSubjectStatus")]
+        public ActionResult<ServiceResponse> UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Updating positive subject status data - {JsonConvert.SerializeObject(usData)}");
+                var positiveStatus = _anmNotificationsService.UpdatePositiveSubjectStatus(usData);
+                if (positiveStatus == null)
+                {
+                    return NotFound();
+                }
+                _logger.LogInformation($"Positive subject status data updated successfully - {usData}");
+                return new ServiceResponse { Status = "true", Message = string.Empty, Result = positiveStatus };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update positive subject status data - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = "Failed to update positive subject status data" };
+            }
+        }
+
+
     }
 }

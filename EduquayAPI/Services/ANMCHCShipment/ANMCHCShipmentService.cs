@@ -53,31 +53,31 @@ namespace EduquayAPI.Services.ANMCHCShipment
             var message = "";
             if (asData.barcodeNo == "")
             {
-                message = "Barcodes Should not Empty";
+                message = "Barcode is missing";
             }
             else if (asData.anmId <= 0)
             {
-                message = "Invalid ANM Id";
+                message = "Invalid ANM id";
             }
             else if (asData.testingCHCId <= 0)
             {
-                message = "Invalid Testing CHC Id";
+                message = "Invalid testing CHC id";
             }
             else if (asData.riId <= 0)
             {
-                message = "Invalid RI Id";
+                message = "Invalid RI id";
             }
             else if (asData.ilrId <= 0)
             {
-                message = "Invalid ILR Id";
+                message = "Invalid ILR id";
             }
             else if (asData.avdId <= 0)
             {
-                message = "Invalid AVD Id";
+                message = "Invalid AVD id";
             }
             if (asData.avdContactNo == "")
             {
-                message = "AVD ContactNo Should not Empty";
+                message = "AVD contactno is missing";
             }
             return message;
         }
@@ -87,31 +87,31 @@ namespace EduquayAPI.Services.ANMCHCShipment
             var message = "";
             if (csData.barcodeNo == "")
             {
-                message = "Barcodes Should not Empty";
+                message = "Barcode is missing";
             }
             else if (csData.chcUserId <= 0)
             {
-                message = "Invalid chc user Id";
+                message = "Invalid chc user id";
             }
             else if (csData.testingCHCId <= 0)
             {
-                message = "Invalid Testing CHC Id";
+                message = "Invalid testing CHC id";
             }
             else if (csData.collectionCHCId <= 0)
             {
-                message = "Invalid Collection CHC Id";
+                message = "Invalid collection CHC id";
             }
             else if (csData.logisticsProviderId <= 0)
             {
-                message = "Invalid Logistics Provider Id";
+                message = "Invalid logistics provider id";
             }
             else if (csData.deliveryExecutiveName =="")
             {
-                message = "Delivery Executive Name Should not Empty";
+                message = "Delivery executive name is missing";
             }
             if (csData.executiveContactNo == "")
             {
-                message = "Executive ContactNo Should not Empty";
+                message = "Executive contactno is missing";
             }
             return message;
         }
@@ -167,6 +167,8 @@ namespace EduquayAPI.Services.ANMCHCShipment
                         shipmentLog.testingCHC = shipment.testingCHC;
                         shipmentLog.avdName = shipment.avdName;
                         shipmentLog.contactNo = shipment.contactNo;
+                        shipmentLog.alternateAVD = shipment.alternateAVD;
+                        shipmentLog.alternateAVDContactNo = shipment.alternateAVDContactNo;
                         shipmentLog.ilrPoint = shipment.ilrPoint;
                         shipmentLog.riPoint = shipment.riPoint;
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;

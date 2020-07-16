@@ -80,5 +80,11 @@ namespace EduquayAPI.Services.MobileMaster
             var sc = _mobileMasterData.RetrieveSC(userId);
             return sc;
         }
+
+        public List<LoadState> RetrieveState()
+        {
+            var allStates = _mobileMasterData.RetrieveState();
+            return allStates;
+        }
     }
 }

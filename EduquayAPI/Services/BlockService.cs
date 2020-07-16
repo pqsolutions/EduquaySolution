@@ -23,7 +23,7 @@ namespace EduquayAPI.Services
             {
                 if (bData.districtId <= 0)
                 {
-                    return "Invalid District Id";
+                    return "Invalid district id";
                 }
                 if (bData.isActive.ToLower() != "true")
                 {

@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
 using System;
@@ -12,7 +13,9 @@ namespace EduquayAPI.Services.ANMNotifications
     {
         List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData);
         string UpdateSampleStatus(NotificationUpdateStatusRequest usData);
-        string AddSampleRecollection(SampleRecollectionRequest srData);
+        string UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData);
+        Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData);
+        List<ANMHPLCPositiveSamples> GetPositiveDetails(int userId);
         Task<ANMUnsentSamplesResponse> RetrieveUnsentSamples(int userId);
         ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData);
     }

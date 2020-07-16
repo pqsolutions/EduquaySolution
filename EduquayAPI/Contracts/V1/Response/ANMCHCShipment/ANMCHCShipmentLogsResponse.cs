@@ -22,6 +22,8 @@ namespace EduquayAPI.Contracts.V1.Response.ANMCHCShipment
         public string testingCHC { get; set; }
         public string avdName { get; set; }
         public string contactNo { get; set; }
+        public string alternateAVD { get; set; }
+        public string alternateAVDContactNo { get; set; }
         public string ilrPoint { get; set; }
         public string riPoint { get; set; }
         public string shipmentDateTime { get; set; }

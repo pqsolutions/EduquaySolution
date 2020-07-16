@@ -73,7 +73,7 @@ namespace EduquayAPI.Services
                 {
                     return new AuthenticationResult
                     {
-                        Errors = new[] {$"Incorrect Password!"}
+                        Errors = new[] {$"Incorrect password!"}
                     };
                 }
 

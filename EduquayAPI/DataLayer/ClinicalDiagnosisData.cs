@@ -41,7 +41,7 @@ namespace EduquayAPI.DataLayer
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Clinical Diagnosis data added successfully";
+                return "Clinical diagnosis data added successfully";
             }
             catch (Exception e)
             {
