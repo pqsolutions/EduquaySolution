@@ -6,6 +6,7 @@ using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.ANMCHCPickandPack;
 using EduquayAPI.DataLayer.ANMCHCShipment;
 using EduquayAPI.DataLayer.ANMNotifications;
+using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
@@ -14,6 +15,7 @@ using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
 using EduquayAPI.Services.ANMCHCShipment;
 using EduquayAPI.Services.ANMNotifications;
+using EduquayAPI.Services.CHCNotifications;
 using EduquayAPI.Services.CHCReceipt;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
@@ -121,7 +123,10 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IWebMasterDataFactory, WebMasterDataFactory>();
             services.AddScoped<IWebMasterService, WebMasterService>();
-            
+
+            services.AddScoped<ICHCNotificationsDataFactory, CHCNotificationsDataFactory>();
+            services.AddScoped<ICHCNotificationsService, CHCNotificationsService>();
+
             services.AddSingleton<DbConnect>();
         }
     }
