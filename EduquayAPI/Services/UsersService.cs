@@ -137,6 +137,18 @@ namespace EduquayAPI.Services
             var users = _usersData.RetrieveByUsername(username);
             return users;
         }
+
+        public async Task<MobileLogin> CheckMobileLogin(int userId, string userName, string deviceId)
+        {
+            var checkStatus = await _usersData.CheckMobileLogin(userId,userName,deviceId);
+            return checkStatus;
+        }
+
+        public async Task<MobileLogin> ResetLogin(string userName)
+        {
+            var reset = await _usersData.ResetLogin(userName);
+            return reset;
+        }
     }
 }
 

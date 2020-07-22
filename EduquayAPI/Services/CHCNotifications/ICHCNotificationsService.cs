@@ -1,4 +1,6 @@
-﻿using EduquayAPI.Contracts.V1.Request.CHCNotifications;
+﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Request.CHCNotifications;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.CHCNotifications;
 using EduquayAPI.Models.CHCNotifications;
 using System;
@@ -12,6 +14,8 @@ namespace EduquayAPI.Services.CHCNotifications
     {
         List<CHCNotificationSample> GetCHCNotificationSamples(CHCNotificationSamplesRequest cnData);
         Task<CHCUnsentSamplesResponse> RetrieveUnsentSamples(CHCNotificationSamplesRequest cnData);
+        CHCTimeoutResponse MoveTimeout(CHCNotificationTimeoutRequest cnData);
+        Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData);
 
     }
 }

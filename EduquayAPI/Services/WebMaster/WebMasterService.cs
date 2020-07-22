@@ -118,5 +118,11 @@ namespace EduquayAPI.Services.WebMaster
             var allStates = _webMasterData.RetrieveState();
             return allStates;
         }
+
+        public List<LoadLogisticsProvider> RetrieveLogisticsProvider()
+        {
+            var allProvider = _webMasterData.RetrieveLogisticsProvider ();
+            return allProvider;
+        }
     }
 }

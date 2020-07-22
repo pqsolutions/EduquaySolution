@@ -3,6 +3,7 @@ using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMNotifications;
 using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace EduquayAPI.Services.ANMNotifications
 
         public async Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData)
         {
-            ServiceResponse sResponse = new ServiceResponse();
+            var sResponse = new ServiceResponse();
 
             try
             {
@@ -100,34 +101,60 @@ namespace EduquayAPI.Services.ANMNotifications
         }
 
 
-        public string UpdateSampleStatus(NotificationUpdateStatusRequest usData)
+        public ServiceResponse UpdateSampleStatus(NotificationUpdateStatusRequest usData)
         {
+            var response = new ServiceResponse();
             try
             {
 
                 if (usData.anmId <= 0)
                 {
-                    return "Invalid ANM id";
+                    response.Status = "false";
+                    response.Message = "Invalid ANM id";
+                }
+                else if (string.IsNullOrEmpty(usData.barcodeNo))
+                {
+                    response.Status = "false";
+                    response.Message = "Barcode is missing";
+                }
+                else
+                {
+                    var result = _anmNotificationsData.UpdateSampleStatus(usData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update sample status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
                 }
 
-                var result = _anmNotificationsData.UpdateSampleStatus(usData);
-                return string.IsNullOrEmpty(result) ? $"Unable to update sample status data" : result;
             }
             catch (Exception e)
             {
-                return $"Unable to update  sample status - {e.Message}";
+                response.Status = "false";
+                response.Message = e.Message;
             }
+            return response;
         }
 
         public ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData)
         {
-            ANMTimeoutResponse response = new ANMTimeoutResponse();
+            var response = new ANMTimeoutResponse();
             try
             {
                 if (usData.anmId <= 0)
                 {
                     response.Status = "false";
                     response.Message = "Invalid ANM id";
+                }
+                else if (string.IsNullOrEmpty(usData.barcodeNo))
+                {
+                    response.Status = "false";
+                    response.Message = "Barcode is missing";
                 }
                 else
                 {
@@ -165,7 +192,7 @@ namespace EduquayAPI.Services.ANMNotifications
             try
             {
                 var unsentSampleDetail = _anmNotificationsData.GetANMUnsentSamples(userId);
-               
+
                 var anmUnsent = new List<ANMUnsentSample>();
 
                 foreach (var unsent in unsentSampleDetail)
@@ -204,23 +231,40 @@ namespace EduquayAPI.Services.ANMNotifications
             return positiveSubjects;
         }
 
-        public string UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData)
+        public ServiceResponse UpdatePositiveSubjectStatus(NotificationUpdateStatusRequest usData)
         {
+            var response = new ServiceResponse();
             try
             {
-
                 if (usData.anmId <= 0)
                 {
-                    return "Invalid ANM id";
+                    response.Status = "false";
+                    response.Message = "Invalid ANM id";
                 }
-
-                var result = _anmNotificationsData.UpdatePositiveSubjectStatus(usData);
-                return string.IsNullOrEmpty(result) ? $"Unable to update positive subject status data" : result;
+                else if (string.IsNullOrEmpty(usData.barcodeNo))
+                {
+                    response.Status = "false";
+                    response.Message = "Barcodeno is missing";
+                }
+                else { var result = _anmNotificationsData.UpdatePositiveSubjectStatus(usData); 
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update positive subject status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
+                }
             }
             catch (Exception e)
             {
-                return $"Unable to update positive subject status - {e.Message}";
+                response.Status = "false";
+                response.Message =e.Message;
             }
+            return response;
         }
     }
 }

@@ -389,5 +389,25 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveLogisticsProvider")]
+        public LoadProviderResponse GetLogisticsProvider()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var provider = _webMasterService.RetrieveLogisticsProvider();
+
+                _logger.LogInformation($"Received Logistics Provider master data {provider}");
+                return provider.Count == 0 ?
+                    new LoadProviderResponse { Status = "true", Message = "No record found", LogisticsProvider = new List<LoadLogisticsProvider >() }
+                    : new LoadProviderResponse { Status = "true", Message = string.Empty, LogisticsProvider = provider };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving state data {e.StackTrace}");
+                return new LoadProviderResponse { Status = "false", Message = e.Message, LogisticsProvider = null };
+            }
+        }
     }
 }

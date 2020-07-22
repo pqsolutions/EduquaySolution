@@ -8,9 +8,12 @@ namespace EduquayAPI.Models
 {
     public class RI : IFill
     {
+        public int id { get; set; }
+
         public int testingCHCId { get; set; }
         public string testingCHCName { get; set; }
-        public int id { get; set; }      
+        public int chcId { get; set; }
+        public string chcName { get; set; }
         public int phcId { get; set; }
         public string phcName { get; set; }       
         public int scId { get; set; }
@@ -35,8 +38,14 @@ namespace EduquayAPI.Models
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHCID"))
                 this.testingCHCId = Convert.ToInt32(reader["TestingCHCID"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
-                this.testingCHCName = Convert.ToString(reader["CHCname"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHC"))
+                this.testingCHCName = Convert.ToString(reader["TestingCHC"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCID"))
+                this.chcId = Convert.ToInt32(reader["CHCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCName"))
+                this.chcName = Convert.ToString(reader["CHCName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCID"))
                 this.phcId = Convert.ToInt32(reader["PHCID"]);

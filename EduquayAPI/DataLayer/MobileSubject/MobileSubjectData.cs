@@ -28,6 +28,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchShipmentLog = "SPC_FetchMobileANMShipmentLog";
         private const string FetchDamagedSamples = "SPC_FetchMobileNotificationDamaged";
         private const string FetchTimooutExpiry = "SPC_FetchMobileNotificationTimeout";
+        private const string FetchLastId = "SPC_FetchLastIds";
 
         public MobileSubjectData()
         {
@@ -303,6 +304,14 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var pList = new List<SqlParameter>() { new SqlParameter("@ANMID", userId) };
             var allSampleData = UtilityDL.FillData<MobileNotificationSamples>(stProc, pList);
             return allSampleData;
+        }
+
+        public LastIds FindLastId(int userId)
+        {
+            string stProc = FetchLastId;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ANMId", userId) };
+            var allData = UtilityDL.FillEntity<LastIds>(stProc, pList);
+            return allData;
         }
     }
 }

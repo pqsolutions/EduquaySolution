@@ -11,6 +11,7 @@ using EduquayAPI.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using BCrypt.Net;
+using EduquayAPI.Contracts.V1.Response;
 
 namespace EduquayAPI.Services
 {
@@ -162,7 +163,7 @@ namespace EduquayAPI.Services
             }
         }
 
-        public async Task<AuthenticationResult> MobileLoginAsync(string userName, string password)
+        public async Task<AuthenticationResult> MobileLoginAsync(string userName, string password, string deviceId)
         {
             try
             {
@@ -184,6 +185,28 @@ namespace EduquayAPI.Services
                         Errors = new[] { $"Incorrect password!" }
                     };
                 }
+                var anmId = user.id;
+                var userType = user.userType;
+                if(userType.ToUpper() != "ANM")
+                {
+                    return new AuthenticationResult
+                    {
+                        Errors = new[] { $"This user not an ANM user!" }
+                    };
+                }
+                else
+                {
+                    var checkmobile = await _usersService.CheckMobileLogin(anmId, userName, deviceId);
+                    var allow = checkmobile.allow;
+                    var msg = checkmobile.msg;
+                    if(allow == false)
+                    {
+                        return new AuthenticationResult
+                        {
+                            Errors = new[] { msg }
+                        };
+                    }
+                }
 
                 return GenerateMobileAuthenticationResult(user);
             }
@@ -193,6 +216,59 @@ namespace EduquayAPI.Services
                 {
                     Success = false,
                     Token = null,
+                    Errors = new[] { e.Message }
+                };
+            }
+        }
+
+        public async Task<LoginResetResponse> ResetLogin(string userName, string password)
+        {
+            try
+            {
+
+                var user = await _usersService.FindByUsernameAsync(userName);
+                if (user == null)
+                {
+                    return new LoginResetResponse 
+                    {
+                        Errors = new[] { "User with this username does not exist" }
+                    };
+                }
+
+                var validPassword = await _usersService.CheckPasswordAsync(user, password);
+                if (!validPassword)
+                {
+                    return new LoginResetResponse
+                    {
+                        Errors = new[] { $"Incorrect password!" }
+                    };
+                }
+                var reset = await _usersService.ResetLogin(userName);
+                var allow = reset.allow;
+                var msg = reset.msg;
+                if (allow == true)
+                {
+                    return new LoginResetResponse
+                    {
+                        Success = true,
+                        Message = msg,
+                    };
+                }
+                else
+                {
+                    return new LoginResetResponse
+                    {
+                        Success = false,
+                        Message = msg,
+                    };
+                }
+            }
+
+            catch (Exception e)
+            {
+                return new LoginResetResponse 
+                {
+                    Success = false,
                     Errors = new[] { e.Message }
                 };
             }

@@ -35,21 +35,18 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("Retrieve")]
-        public ANMCHCPickandPackResponse GetSampleList(ANMCHCPickandPackRequest acppData)
+        public async Task<IActionResult> GetSampleList(ANMCHCPickandPackRequest acppData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            try
+
+            var sampleList = await _anmchcPickandPackService.Retrieve(acppData);
+            _logger.LogInformation($"Received sample Data {sampleList}");
+            return Ok(new ANMCHCPickandPackResponse
             {
-                var sampleList = _anmchcPickandPackService.Retrieve(acppData);
-                _logger.LogInformation($"Received sample Data {sampleList}");
-                return sampleList.Count == 0 ? new ANMCHCPickandPackResponse { Status = "true", Message = "No samples found", SampleList = new List<ANMCHCPickandPackSamples>() } : new ANMCHCPickandPackResponse { Status = "true", Message = string.Empty, SampleList = sampleList };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in receiving samples data {e.StackTrace}");
-                return new ANMCHCPickandPackResponse { Status = "false", Message = e.Message, SampleList = null };
-            }
+                Status = sampleList.Status,
+                Message = sampleList.Message,
+                SampleList = sampleList.SampleList,
+            });
         }
     }
-
 }

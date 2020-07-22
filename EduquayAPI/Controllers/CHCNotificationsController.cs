@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EduquayAPI.Contracts.V1.Request.ANMNotifications;
 using EduquayAPI.Contracts.V1.Request.CHCNotifications;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.CHCNotifications;
 using EduquayAPI.Models.CHCNotifications;
 using EduquayAPI.Services.CHCNotifications;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace EduquayAPI.Controllers
 {
@@ -24,6 +27,27 @@ namespace EduquayAPI.Controllers
             _chcNotificationsService = chcNotificationsService;
             _logger = logger;
         }
+
+
+        /// <summary>
+        /// Used for  Add the new sample recollection of subject which are damaged sample or timout expiry sample
+        /// </summary>
+        [HttpPost]
+        [Route("AddSampleRecollection")]
+        public async Task<IActionResult> AddSampleRecollection(SampleRecollectionRequest srData)
+        {
+
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
+            var sampleRecollection = await _chcNotificationsService.AddSampleRecollection(srData);
+            return Ok(new ServiceResponse
+            {
+                Status = sampleRecollection.Status,
+                Message = sampleRecollection.Message,
+            });
+        }
+
 
         /// <summary>
         /// Used for fetch samples list which damaged and timeout expired in chc notifications
@@ -65,5 +89,28 @@ namespace EduquayAPI.Controllers
                 UnsentSamplesDetail = unsentSamples.UnsentSamplesDetail,
             });
         }
+
+        /// <summary>
+        /// Used for move  sample timout expiry for unsent samples
+        /// </summary>
+        [HttpPost]
+        [Route("MoveTimeoutExpiry")]
+        public ActionResult<CHCTimeoutResponse> MoveTimeoutExpiry(CHCNotificationTimeoutRequest cnData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"moving samples to timeout expiry - {JsonConvert.SerializeObject(cnData)}");
+                var sampleStatus = _chcNotificationsService.MoveTimeout(cnData);
+                _logger.LogInformation($"Sample successfully moved to sample timout expiry - {cnData}");
+                return new CHCTimeoutResponse { Status = sampleStatus.Status, Message = sampleStatus.Message };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to move sample data into timout expiry - {ex.StackTrace}");
+                return new CHCTimeoutResponse { Status = "false", Message = ex.Message };
+            }
+        }
+
     }
 }

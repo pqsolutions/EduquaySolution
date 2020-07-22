@@ -12,7 +12,9 @@ namespace EduquayAPI.DataLayer
         Task<List<User>> FindByUsernameAsync(string userName);
         Task<int> AddNewUserAsync(AddUserRequest addUser,string password);
         Task<List<UsersPassword>> CheckPasswordAsync(User user);
-        List<User> Retrieve(int code);
+        Task<MobileLogin>CheckMobileLogin(int userId, string userName, string deviceId);
+        Task<MobileLogin> ResetLogin(string userName);
+       List<User> Retrieve(int code);
         List<User> Retrieve();
         List<User> RetrieveByUserType(int userTypeId);
         List<User> RetrieveByUserRole(int userRoleId);

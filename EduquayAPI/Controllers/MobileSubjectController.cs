@@ -23,6 +23,7 @@ using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 
 namespace EduquayAPI.Controllers
 {
+    [Authorize]
     [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class MobileSubjectController : ControllerBase
@@ -47,9 +48,12 @@ namespace EduquayAPI.Controllers
             {
                 Status = subRegListResponse.Status,
                 Message = subRegListResponse.Message,
+                LastUniqueSubjectId = subRegListResponse.LastUniqueSubjectId,
+                LastShipmentId = subRegListResponse.LastShipmentId,
                 SubjectResigrations = subRegListResponse.SubjectResigrations,
                 SampleCollections = subRegListResponse.SampleCollections,
                 ShipmentLogDetail = subRegListResponse.ShipmentLogDetail,
+
             });
         }
 

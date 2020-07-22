@@ -61,20 +61,17 @@ namespace EduquayAPI.Controllers
         {
             try
             {
+
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Updating sample status data - {JsonConvert.SerializeObject(usData)}");
                 var sampleStatus = _anmNotificationsService.UpdateSampleStatus(usData);
-                if (sampleStatus == null)
-                {
-                    return NotFound();
-                }
-                _logger.LogInformation($"Sample status data updated successfully - {usData}");
-                return new ServiceResponse { Status = "true", Message = string.Empty, Result = sampleStatus };
+                _logger.LogInformation($"Sample status updated successfully - {usData}");
+                return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to update sample status data - {ex.StackTrace}");
-                return new ServiceResponse { Status = "false", Message = ex.Message, Result = "Failed to update sample status data" };
+                _logger.LogError($"Failed to update the sample status  - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
             }
         }
 
@@ -82,7 +79,7 @@ namespace EduquayAPI.Controllers
         /// Used for move  sample timout expiry for unsent samples
         /// </summary>
         [HttpPost]
-        [Route("MoveTimoutExpiry")]
+        [Route("MoveTimeoutExpiry")]
         public ActionResult<ANMTimeoutResponse> MoveTimeoutExpiry(NotificationUpdateStatusRequest usData)
         {
             try
@@ -175,17 +172,14 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Updating positive subject status data - {JsonConvert.SerializeObject(usData)}");
                 var positiveStatus = _anmNotificationsService.UpdatePositiveSubjectStatus(usData);
-                if (positiveStatus == null)
-                {
-                    return NotFound();
-                }
+              
                 _logger.LogInformation($"Positive subject status data updated successfully - {usData}");
-                return new ServiceResponse { Status = "true", Message = string.Empty, Result = positiveStatus };
+                return new ServiceResponse { Status = positiveStatus.Status, Message = positiveStatus.Message , Result = null };
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Failed to update positive subject status data - {ex.StackTrace}");
-                return new ServiceResponse { Status = "false", Message = ex.Message, Result = "Failed to update positive subject status data" };
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
             }
         }
 

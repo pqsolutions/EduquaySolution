@@ -19,10 +19,50 @@ namespace EduquayAPI.DataLayer
         private const string FetchUserByUserRole = "SPC_FetchUserByRole";
         private const string FetchUserByUserType = "SPC_FetchUserByType";
         private const string CheckUserPassword = "SPC_CheckUserPassword";
+        private const string FetchMobileLoginStatus = "SPC_FetchMobileLoginStatus";
+        private const string ResetANMLogin = "SPC_ResetANMLogin";
 
         public UsersData()
         {
 
+        }
+
+        public async Task<MobileLogin> ResetLogin(string userName)
+        {
+            try
+            {
+                var stProc = ResetANMLogin;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UserName", userName),
+                };
+                var allData = UtilityDL.FillEntity<MobileLogin>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<MobileLogin> CheckMobileLogin(int userId, string userName, string deviceId)
+        {
+            try
+            {
+                var stProc = FetchMobileLoginStatus;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANMId", userId),
+                    new SqlParameter("@UserName", userName),
+                    new SqlParameter("@DeviceId", deviceId),
+                };
+                var allData = UtilityDL.FillEntity<MobileLogin>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task<List<UsersPassword>> CheckPasswordAsync(User user)
@@ -154,5 +194,7 @@ namespace EduquayAPI.DataLayer
             var allData = UtilityDL.FillData<User>(stProc, pList);
             return allData;
         }
+
+       
     }
 }
