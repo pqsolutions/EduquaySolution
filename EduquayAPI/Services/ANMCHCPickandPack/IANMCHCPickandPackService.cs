@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMCHCPickandPack;
+using EduquayAPI.Contracts.V1.Response.ANMCHCPickandPack;
 using EduquayAPI.Models.ANMCHCPickandPack;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,6 @@ namespace EduquayAPI.Services.ANMCHCPickandPack
 {
     public interface IANMCHCPickandPackService
     {
-        List<ANMCHCPickandPackSamples> Retrieve(ANMCHCPickandPackRequest acppData);
+        Task<ANMCHCPickandPackResponse> Retrieve(ANMCHCPickandPackRequest acppData);
     }
 }

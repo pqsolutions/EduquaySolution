@@ -25,6 +25,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCHCs> RetrieveTestingCHC(int riId);
        List<LoadAVD> RetrieveAVD(int riId);
         List<LoadAssociatedANM> RetrieveAssociatedANM(int riId);
+        List<LoadLogisticsProvider> RetrieveLogisticsProvider();
 
     }
     public interface IWebMasterDataFactory

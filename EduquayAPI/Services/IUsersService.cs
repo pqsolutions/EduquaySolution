@@ -12,6 +12,8 @@ namespace EduquayAPI.Services
         Task<User> FindByEmailAsync(string email);
         Task<User> FindByUsernameAsync(string userName);
         Task<UserIdentityResult> AddNewUserAsync(AddUserRequest addUser, string password);
+        Task<MobileLogin> CheckMobileLogin(int userId, string userName, string deviceId);
+        Task<MobileLogin> ResetLogin(string userName);
         Task<bool> CheckPasswordAsync(User user, string password);
         List<User> Retrieve(int code);
         List<User> Retrieve();

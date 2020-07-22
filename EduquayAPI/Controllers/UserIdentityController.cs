@@ -98,7 +98,7 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("MobileLogin")]
-        public async Task<IActionResult> MobileLogin(LoginRequest request)
+        public async Task<IActionResult> MobileLogin(MobileLoginRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace EduquayAPI.Controllers
                 });
             }
 
-            var authResponse = await _userIdentityService.MobileLoginAsync(request.userName, request.password);
+            var authResponse = await _userIdentityService.MobileLoginAsync(request.userName, request.password, request.deviceId);
 
             if (!authResponse.Success)
             {
@@ -129,6 +129,39 @@ namespace EduquayAPI.Controllers
                 Expiry = null,
             });
         }
+
+        [HttpPost]
+        [Route("ResetLogin")]
+        public async Task<IActionResult> ResetLogin(LoginRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Status = "false",
+                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
+                });
+            }
+
+            var reset = await _userIdentityService.ResetLogin(request.userName, request.password);
+
+            if (!reset.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Status = "false",
+                    Errors = reset.Errors
+                });
+            }
+
+            return Ok(new LoginResetResponse 
+            {
+               Success = reset.Success,
+               Message = reset.Message
+
+            });
+        }
+
 
 
 

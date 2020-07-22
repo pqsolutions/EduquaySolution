@@ -13,6 +13,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
 {
     public interface IMobileSubjectData
     {
+        LastIds FindLastId(int userId);
         void subjectPrimary(PrimaryDetailRequest sprData);
         void SubjectAddress(AddressDetailRequest saData);
         void SubjectPregnancy(PregnancyDetailRequest spData);

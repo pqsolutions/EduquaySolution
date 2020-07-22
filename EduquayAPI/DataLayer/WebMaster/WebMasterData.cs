@@ -26,6 +26,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchAVD = "SPC_FetchAVDByRI";
         private const string FetchANM = "SPC_FetchAllAssociatedANMByCHC";
         private const string FetchStates = "SPC_FetchAllStates";
+        private const string FetchLogisticsProvider = "SPC_FetchLogisticsProvider";
 
         public WebMasterData()
         {
@@ -162,6 +163,14 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchStates;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadState>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadLogisticsProvider> RetrieveLogisticsProvider()
+        {
+            string stProc = FetchLogisticsProvider ;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadLogisticsProvider>(stProc, pList);
             return allData;
         }
     }

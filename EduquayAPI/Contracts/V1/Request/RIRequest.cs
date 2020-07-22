@@ -8,6 +8,7 @@ namespace EduquayAPI.Contracts.V1.Request
     public class RIRequest
     {
         public int testingCHCId { get; set; }
+        public int chcId { get; set; }
         public int phcId { get; set; }
         public int scId { get; set; }
         public string riGovCode { get; set; }

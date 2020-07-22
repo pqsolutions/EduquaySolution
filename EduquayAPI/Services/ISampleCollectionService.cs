@@ -11,7 +11,6 @@ namespace EduquayAPI.Services
     public interface ISampleCollectionService
     {
         Task<ServiceResponse> AddSample(AddSubjectSampleRequest ssData);
-        // string AddSample(AddSubjectSampleRequest  ssData);
         List<SubjectSamples> Retrieve(SubjectSampleRequest ssData);
     }
 }

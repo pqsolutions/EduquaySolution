@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.CHCNotifications;
+﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
+using EduquayAPI.Contracts.V1.Request.CHCNotifications;
 using EduquayAPI.Models;
 using EduquayAPI.Models.CHCNotifications;
 using System;
@@ -13,6 +14,8 @@ namespace EduquayAPI.DataLayer.CHCNotifications
         List<CHCNotificationSample> GetCHCNotificationSamples(CHCNotificationSamplesRequest cnData);
         List<CHCUnsentSamples> GetANMUnsentSamples(CHCNotificationSamplesRequest cnData);
         List<BarcodeSample> FetchBarcode(string barcodeNo);
+        string AddTimeoutExpiry(CHCNotificationTimeoutRequest cnData);
+        string AddSampleRecollection(SampleRecollectionRequest srData);
 
     }
     public interface ICHCNotificationsDataFactory

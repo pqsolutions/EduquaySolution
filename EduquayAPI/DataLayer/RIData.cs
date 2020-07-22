@@ -29,6 +29,7 @@ namespace EduquayAPI.DataLayer
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@TestingCHCID", rData.testingCHCId),
+                    new SqlParameter("@CHCID", rData.chcId),
                     new SqlParameter("@PHCID", rData.phcId),
                     new SqlParameter("@SCID", rData.scId),                    
                     new SqlParameter("@RI_gov_code", rData.riGovCode),

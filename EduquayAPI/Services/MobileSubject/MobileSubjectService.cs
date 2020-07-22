@@ -118,16 +118,18 @@ namespace EduquayAPI.Services.MobileSubject
 
         public async Task<SubjectResigrationListResponse> RetrieveDetail(int userId)
         {
-
+            var LastIds = _mobileSubjectData.FindLastId(userId);
             var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(userId);
             var sampleDetails = _mobileSubjectData.MobileSampleDetail(userId);
             var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(userId);
-
+           
             var subjectRegistrationResponse = new SubjectResigrationListResponse();
             var subjectRegistrations = new List<SubjectResigration>();
             var shipmentLogs = new List<ShipmentLogs>();
             try
             {
+                 subjectRegistrationResponse.LastUniqueSubjectId = LastIds.LastUniqueSubjectId;
+                subjectRegistrationResponse.LastShipmentId = LastIds.LastShipmentId;
 
                 foreach (var primarySubject in subjectDetails.PrimarySubjectList)
                 {
@@ -178,6 +180,8 @@ namespace EduquayAPI.Services.MobileSubject
                 subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
                 subjectRegistrationResponse.Status = "true";
                 subjectRegistrationResponse.Message = string.Empty;
+               
+
             }
             catch (Exception ex)
             {
