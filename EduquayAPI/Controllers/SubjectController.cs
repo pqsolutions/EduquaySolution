@@ -86,5 +86,23 @@ namespace EduquayAPI.Controllers
                 return new ANWSubjectResponse { Status = "false", Message = e.Message, ANWSubjects = null };
             }
         }
+
+
+        [HttpPost]
+        [Route("RetrieveCHCANWPositiveSubjects")]
+        public CHCANWSubjectResponse GetCHCANWSubject(CHCANWSubjectRequest casData)
+        {
+            try
+            {
+                var anwSubjects = _subjectService.RetrieveCHCANWDetail(casData);
+                return anwSubjects.Count == 0 ?
+                    new CHCANWSubjectResponse { Status = "false", Message = "No subject found", ANWPositiveSubjects = new List<CHCANWSubjectDetail>() }
+                    : new CHCANWSubjectResponse { Status = "true", Message = string.Empty, ANWPositiveSubjects = anwSubjects };
+            }
+            catch (Exception e)
+            {
+                return new CHCANWSubjectResponse { Status = "false", Message = e.Message, ANWPositiveSubjects = null };
+            }
+        }
     }
 }

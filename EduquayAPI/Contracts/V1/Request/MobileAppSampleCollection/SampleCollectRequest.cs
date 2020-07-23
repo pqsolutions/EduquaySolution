@@ -7,11 +7,17 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection
 {
     public class SampleCollectRequest
     {
-        public List<sampleRequest> SampleCollectionsRequest { get; set; }
+        public string deviceId { get; set; }
+        public AddSampleCollectionRequest data { get; set; }
     }
 
     public class sampleRequest
     {
         public SampleCollectionsRequest samples { get; set; }
+    }
+
+    public class AddSampleCollectionRequest
+    {
+        public List<sampleRequest> SampleCollectionsRequest { get; set; }
     }
 }

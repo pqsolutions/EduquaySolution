@@ -17,7 +17,6 @@ namespace EduquayAPI.Services
         List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData);
         List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData);
         List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData);
-
-
+        List<CHCANWSubjectDetail> RetrieveCHCANWDetail(CHCANWSubjectRequest casData);
     }
 }

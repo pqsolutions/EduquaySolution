@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
@@ -14,11 +15,10 @@ namespace EduquayAPI.Services.MobileSubject
     public interface IMobileSubjectService
     {
         Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData);
-        Task<SubjectResigrationListResponse> RetrieveDetail(int userId);
+        Task<SubjectResigrationListResponse> RetrieveDetail(MobileRetrieveRequest mrData);
         Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData);
         Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData);
-
-        Task<NotificationListResponse> RetrieveNotifications(int userId);
+        Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response;
@@ -31,23 +32,35 @@ namespace EduquayAPI.Services.MobileSubject
             var shipmentId = "";
             try
             {
-                foreach(var shipments in msData.ShipmentsRequest)
+                var checkdevice = _mobileSubjectData.CheckDevice(msData.data.ShipmentsRequest[0].shipment.anmId, msData.deviceId);
+                if (checkdevice.valid == false)
                 {
-                    var slist = new ShipmentIdDetail();
-                    shipmentId = shipments.shipment.shipmentId;
-                    _mobileSubjectData.AddShipment(shipments.shipment);
-                    slist.ShipmentId = shipments.shipment.shipmentId;
-                    shipmentIds.Add(slist);
+                    slResponse.Valid = false;
+                    slResponse.Status = "false";
+                    slResponse.Message = checkdevice.msg;
                 }
-                slResponse.Status = "true";
-                slResponse.Message = shipmentIds.Count + " Shipment generated successfully";
-                slResponse.ShipmentIds = shipmentIds;
+                else
+                {
+                    foreach (var shipments in msData.data.ShipmentsRequest)
+                    {
+                        var slist = new ShipmentIdDetail();
+                        shipmentId = shipments.shipment.shipmentId;
+                        _mobileSubjectData.AddShipment(shipments.shipment);
+                        slist.ShipmentId = shipments.shipment.shipmentId;
+                        shipmentIds.Add(slist);
+                    }
+                    slResponse.Valid = true;
+                    slResponse.Status = "true";
+                    slResponse.Message = shipmentIds.Count + " Shipment generated successfully";
+                    slResponse.ShipmentIds = shipmentIds;
+                }
             }
             catch (Exception e)
             {
+                slResponse.Valid = true;
                 slResponse.Status = "false";
                 slResponse.Message = "Partially " + shipmentIds.Count + " shipment generated successfully, From this (" + shipmentIds + ") onwards shipment not generated. " + e.Message;
-                slResponse.ShipmentIds  = shipmentIds;
+                slResponse.ShipmentIds = shipmentIds;
             }
             return slResponse;
 
@@ -60,20 +73,32 @@ namespace EduquayAPI.Services.MobileSubject
             var barcodeNo = "";
             try
             {
-                foreach (var sample in ssData.SampleCollectionsRequest)
+                var checkdevice = _mobileSubjectData.CheckDevice(ssData.data.SampleCollectionsRequest[0].samples.collectedBy, ssData.deviceId);
+                if (checkdevice.valid == false)
                 {
-                    var slist = new BarcodeSampleDetail();
-                    barcodeNo = sample.samples.barcodeNo;
-                    _mobileSubjectData.SampleColection(sample.samples);
-                    slist.barcodeNo = sample.samples.barcodeNo;
-                    barcodes.Add(slist);
+                    slResponse.Valid = false;
+                    slResponse.Status = "false";
+                    slResponse.Message = checkdevice.msg;
                 }
-                slResponse.Status = "true";
-                slResponse.Message = barcodes.Count +" Samples collected successfully";
-                slResponse.Barcodes = barcodes;
+                else
+                {
+                    foreach (var sample in ssData.data.SampleCollectionsRequest)
+                    {
+                        var slist = new BarcodeSampleDetail();
+                        barcodeNo = sample.samples.barcodeNo;
+                        _mobileSubjectData.SampleColection(sample.samples);
+                        slist.barcodeNo = sample.samples.barcodeNo;
+                        barcodes.Add(slist);
+                    }
+                    slResponse.Status = "true";
+                    slResponse.Valid = true;
+                    slResponse.Message = barcodes.Count + " Samples collected successfully";
+                    slResponse.Barcodes = barcodes;
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
+                slResponse.Valid = true;
                 slResponse.Status = "false";
                 slResponse.Message = "Partially " + barcodes.Count + " samples collected successfully, From this (" + barcodeNo + ") onwards not collected. " + e.Message;
                 slResponse.Barcodes = barcodes;
@@ -83,108 +108,128 @@ namespace EduquayAPI.Services.MobileSubject
 
         public async Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData)
         {
-
             List<UniqueSubjectIdDetail> uniqSubjectIdDetail = new List<UniqueSubjectIdDetail>();
-           
             SubRegSuccessResponse subRegSuccess = new SubRegSuccessResponse();
             var subId = "";
             try
             {
-                foreach (var subject in subRegData.subjectsRequest)
+                var checkdevice = _mobileSubjectData.CheckDevice(subRegData.data.subjectsRequest[0].subjectPrimaryRequest.assignANMId, subRegData.deviceId);
+                if (checkdevice.valid == false)
                 {
-                    var slist = new UniqueSubjectIdDetail();
-                    subId = subject.subjectPrimaryRequest.uniqueSubjectId;
-                    _mobileSubjectData.subjectPrimary(subject.subjectPrimaryRequest);
-                    _mobileSubjectData.SubjectAddress(subject.subjectAddressRequest);
-                    _mobileSubjectData.SubjectPregnancy(subject.subjectPregnancyRequest);
-                    _mobileSubjectData.SubjectParent(subject.subjectParentRequest);
-
-                    slist.uniqueSubjectId = subject.subjectParentRequest.uniqueSubjectId;
-                    uniqSubjectIdDetail.Add(slist);
+                    subRegSuccess.Valid = false;
+                    subRegSuccess.Status = "false";
+                    subRegSuccess.Message = checkdevice.msg;
                 }
+                else
+                {
+                    foreach (var subject in subRegData.data.subjectsRequest)
+                    {
+                        var slist = new UniqueSubjectIdDetail();
+                        subId = subject.subjectPrimaryRequest.uniqueSubjectId;
+                        _mobileSubjectData.subjectPrimary(subject.subjectPrimaryRequest);
+                        _mobileSubjectData.SubjectAddress(subject.subjectAddressRequest);
+                        _mobileSubjectData.SubjectPregnancy(subject.subjectPregnancyRequest);
+                        _mobileSubjectData.SubjectParent(subject.subjectParentRequest);
 
-                subRegSuccess.Status = "true";
-                subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects registered successfully";
-                subRegSuccess.SuccessIds = uniqSubjectIdDetail;
+                        slist.uniqueSubjectId = subject.subjectParentRequest.uniqueSubjectId;
+                        uniqSubjectIdDetail.Add(slist);
+                    }
+
+                    subRegSuccess.Status = "true";
+                    subRegSuccess.Valid = true;
+                    subRegSuccess.Message = uniqSubjectIdDetail.Count + " Subjects registered successfully";
+                    subRegSuccess.SuccessIds = uniqSubjectIdDetail;
+                }
             }
             catch (Exception e)
             {
                 subRegSuccess.Status = "false";
+                subRegSuccess.Valid = true;
                 subRegSuccess.Message = "Partially " + uniqSubjectIdDetail.Count + " subjects registered successfully, From this (" + subId + ") onwards not registered. " + e.Message;
                 subRegSuccess.SuccessIds = uniqSubjectIdDetail;
             }
             return subRegSuccess;
         }
 
-        public async Task<SubjectResigrationListResponse> RetrieveDetail(int userId)
+        public async Task<SubjectResigrationListResponse> RetrieveDetail(MobileRetrieveRequest mrData)
         {
-            var LastIds = _mobileSubjectData.FindLastId(userId);
-            var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(userId);
-            var sampleDetails = _mobileSubjectData.MobileSampleDetail(userId);
-            var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(userId);
-           
+            var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
             var subjectRegistrationResponse = new SubjectResigrationListResponse();
             var subjectRegistrations = new List<SubjectResigration>();
             var shipmentLogs = new List<ShipmentLogs>();
             try
             {
-                 subjectRegistrationResponse.LastUniqueSubjectId = LastIds.LastUniqueSubjectId;
-                subjectRegistrationResponse.LastShipmentId = LastIds.LastShipmentId;
-
-                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                if (checkdevice.valid == false)
                 {
-                    var subjectRegistration = new SubjectResigration();
-                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
-                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
-                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
-
-                    subjectRegistration.PrimaryDetail = primarySubject;
-                    subjectRegistration.AddressDetail = address;
-                    subjectRegistration.PregnancyDetail = pregnancy;
-                    subjectRegistration.ParentDetail = parent;
-                    subjectRegistrations.Add(subjectRegistration);
+                    subjectRegistrationResponse.Valid = false;
+                    subjectRegistrationResponse.Status = "false";
+                    subjectRegistrationResponse.Message = checkdevice.msg;
                 }
-                var shipmentId = "";
-                foreach (var shipment in shipmentDetails.ShipmentLog)
+                else
                 {
-                    var shipmentLog = new ShipmentLogs();
-                    if (shipmentId != shipment.shipmentId)
+                    var LastIds = _mobileSubjectData.FindLastId(mrData.userId);
+                    var subjectDetails = _mobileSubjectData.MobileSubjectRegDetail(mrData.userId);
+                    var sampleDetails = _mobileSubjectData.MobileSampleDetail(mrData.userId);
+                    var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(mrData.userId);
+
+                    subjectRegistrationResponse.Valid = true;
+                    subjectRegistrationResponse.LastUniqueSubjectId = LastIds.LastUniqueSubjectId;
+                    subjectRegistrationResponse.LastShipmentId = LastIds.LastShipmentId;
+
+                    foreach (var primarySubject in subjectDetails.PrimarySubjectList)
                     {
-                        var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId  == shipment.shipmentId).ToList();
-                        shipmentLog.shipmentId = shipment.shipmentId;
-                        shipmentLog.anmId = shipment.anmId;
-                        shipmentLog.anmName = shipment.anmName;
-                        shipmentLog.testingCHCId = shipment.testingCHCId;
-                        shipmentLog.testingCHC = shipment.testingCHC;
-                        shipmentLog.avdId = shipment.avdId;
-                        shipmentLog.avdName = shipment.avdName;
-                        shipmentLog.avdContactNo = shipment.avdContactNo;
-                        shipmentLog.alternateAVD = shipment.alternateAVD;
-                        shipmentLog.alternateAVDContactNo = shipment.alternateAVDContactNo;
-                        shipmentLog.ilrId = shipment.ilrId;
-                        shipmentLog.ilrPoint = shipment.ilrPoint;
-                        shipmentLog.riId = shipment.riId;
-                        shipmentLog.riPoint = shipment.riPoint;
-                        shipmentLog.dateOfShipment = shipment.dateOfShipment;
-                        shipmentLog.timeOfShipment = shipment.timeOfShipment;
-                        shipmentLog.createdBy = shipment.createdBy;
-                        shipmentLog.source = shipment.source;
-                        shipmentLog.SamplesDetail = shipmentDetail;
-                        shipmentId = shipment.shipmentId;
-                        shipmentLogs.Add(shipmentLog);
+                        var subjectRegistration = new SubjectResigration();
+                        var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                        subjectRegistration.PrimaryDetail = primarySubject;
+                        subjectRegistration.AddressDetail = address;
+                        subjectRegistration.PregnancyDetail = pregnancy;
+                        subjectRegistration.ParentDetail = parent;
+                        subjectRegistrations.Add(subjectRegistration);
                     }
+                    var shipmentId = "";
+                    foreach (var shipment in shipmentDetails.ShipmentLog)
+                    {
+                        var shipmentLog = new ShipmentLogs();
+                        if (shipmentId != shipment.shipmentId)
+                        {
+                            var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId == shipment.shipmentId).ToList();
+                            shipmentLog.shipmentId = shipment.shipmentId;
+                            shipmentLog.anmId = shipment.anmId;
+                            shipmentLog.anmName = shipment.anmName;
+                            shipmentLog.testingCHCId = shipment.testingCHCId;
+                            shipmentLog.testingCHC = shipment.testingCHC;
+                            shipmentLog.avdId = shipment.avdId;
+                            shipmentLog.avdName = shipment.avdName;
+                            shipmentLog.avdContactNo = shipment.avdContactNo;
+                            shipmentLog.alternateAVD = shipment.alternateAVD;
+                            shipmentLog.alternateAVDContactNo = shipment.alternateAVDContactNo;
+                            shipmentLog.ilrId = shipment.ilrId;
+                            shipmentLog.ilrPoint = shipment.ilrPoint;
+                            shipmentLog.riId = shipment.riId;
+                            shipmentLog.riPoint = shipment.riPoint;
+                            shipmentLog.dateOfShipment = shipment.dateOfShipment;
+                            shipmentLog.timeOfShipment = shipment.timeOfShipment;
+                            shipmentLog.createdBy = shipment.createdBy;
+                            shipmentLog.source = shipment.source;
+                            shipmentLog.SamplesDetail = shipmentDetail;
+                            shipmentId = shipment.shipmentId;
+                            shipmentLogs.Add(shipmentLog);
+                        }
+                    }
+
+                    subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
+                    subjectRegistrationResponse.SampleCollections = sampleDetails;
+                    subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
+                    subjectRegistrationResponse.Status = "true";
+                    subjectRegistrationResponse.Message = string.Empty;
                 }
-
-                subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
-                subjectRegistrationResponse.SampleCollections = sampleDetails;
-                subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
-                subjectRegistrationResponse.Status = "true";
-                subjectRegistrationResponse.Message = string.Empty;
-               
-
             }
             catch (Exception ex)
             {
+                subjectRegistrationResponse.Valid = true;
                 subjectRegistrationResponse.Status = "false";
                 subjectRegistrationResponse.Message = ex.Message;
             }
@@ -192,21 +237,33 @@ namespace EduquayAPI.Services.MobileSubject
             return subjectRegistrationResponse;
         }
 
-        public async Task<NotificationListResponse> RetrieveNotifications(int userId)
+        public async Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData)
         {
             var nlResponse = new NotificationListResponse();
 
             try
             {
-                var damagedSamples = _mobileSubjectData.DamagedSamples(userId);
-                var timeoutSamples = _mobileSubjectData.SampleTimeout(userId);
-                nlResponse.Status = "true";
-                nlResponse.Message = string.Empty;
-                nlResponse.DamagedSamples = damagedSamples;
-                nlResponse.TimeoutExpirySamples = timeoutSamples;
+                var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    nlResponse.Valid = false;
+                    nlResponse.Status = "false";
+                    nlResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    var damagedSamples = _mobileSubjectData.DamagedSamples(mrData.userId);
+                    var timeoutSamples = _mobileSubjectData.SampleTimeout(mrData.userId);
+                    nlResponse.Status = "true";
+                    nlResponse.Valid = true;
+                    nlResponse.Message = string.Empty;
+                    nlResponse.DamagedSamples = damagedSamples;
+                    nlResponse.TimeoutExpirySamples = timeoutSamples;
+                }
             }
             catch (Exception ex)
             {
+                nlResponse.Valid = true;
                 nlResponse.Status = "false";
                 nlResponse.Message = ex.Message;
 

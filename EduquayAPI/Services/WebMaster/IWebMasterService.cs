@@ -23,6 +23,7 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadConstantValues> RetrieveConstantValues(int userId);
         List<LoadILR> RetrieveILR(int riId);
         List<LoadCHCs> RetrieveTestingCHC(int riId);
+        List<LoadCHCs> RetrieveTestingCHCbyCHC(int chcId);
         List<LoadAVD> RetrieveAVD(int riId);
         List<AssociatedSCRIANM> RetrieveAssociatedANMByCHC(int chcId);
         List<LoadLogisticsProvider> RetrieveLogisticsProvider();

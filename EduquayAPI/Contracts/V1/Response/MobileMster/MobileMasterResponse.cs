@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Models.LoadMasters;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileMster
     {
         public string Status { get; set; }
         public string Message { get; set; }
+        public bool Valid { get; set; } 
         public List<LoadState> States { get; set; }
         public List<LoadDistricts> Districts { get; set; }
         public List<LoadCHCs> CHC { get; set; }
@@ -21,6 +23,6 @@ namespace EduquayAPI.Contracts.V1.Response.MobileMster
         public List<LoadCommunity> Community { get; set; }
         public List<LoadGovIDType> GovIdType { get; set; }
         public List<LoadConstantValues> ConstantValues { get; set; }
-
     }
+
 }

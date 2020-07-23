@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Models.LoadMasters;
+using EduquayAPI.Models.MobileSubject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace EduquayAPI.DataLayer.MobileMaster
         List<LoadGovIDType> RetrieveGovIDType();
         List<LoadConstantValues> RetrieveConstantValues();
         List<LoadState> RetrieveState();
+        Device CheckDevice(int userId, string deviceId);
+
     }
 
     public interface IMobileMasterDataFactory

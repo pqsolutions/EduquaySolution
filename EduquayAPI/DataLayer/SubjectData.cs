@@ -19,7 +19,7 @@ namespace EduquayAPI.DataLayer
         private const string AddSubjectParentDetail = "SPC_AddSubjectParentDetail";
         private const string FetchSubjectDetail = "SPC_FetchSubjectDetail";
         private const string FetchANWSubjectDetail = "SPC_FetchANMANWSubjectDetail";
-
+        private const string FetchCHCANWSubjectDetail = "SPC_FetchCHCANWPositiveSubjectDetail";
 
         public SubjectData()
         {
@@ -274,6 +274,19 @@ namespace EduquayAPI.DataLayer
                 new SqlParameter("@ToDate", asData.toDate ?? asData.toDate),
             };
             var allData = UtilityDL.FillData<ANWSubjectDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCANWSubjectDetail> RetrieveCHCANWDetail(CHCANWSubjectRequest casData)
+        {
+            string stProc = FetchCHCANWSubjectDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CHCId", casData.chcId),
+                new SqlParameter("@FromDate", casData.fromDate ?? casData.fromDate),
+                new SqlParameter("@ToDate", casData.toDate ?? casData.toDate),
+            };
+            var allData = UtilityDL.FillData<CHCANWSubjectDetail>(stProc, pList);
             return allData;
         }
     }

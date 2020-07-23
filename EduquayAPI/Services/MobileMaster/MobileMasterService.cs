@@ -1,4 +1,6 @@
-﻿using EduquayAPI.DataLayer.MobileMaster;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Response.MobileMster;
+using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.Models.LoadMasters;
 using System;
 using System.Collections.Generic;
@@ -10,81 +12,64 @@ namespace EduquayAPI.Services.MobileMaster
     public class MobileMasterService : IMobileMasterService
     {
         private readonly IMobileMasterData _mobileMasterData;
-
         public MobileMasterService(IMobileMasterDataFactory mobileMasterDataFactory)
         {
             _mobileMasterData = new MobileMasterDataFactory().Create();
         }
-        public List<LoadCaste> RetrieveCaste()
+        public async Task<MobileMasterResponse> RetrieveMasters(MobileRetrieveRequest mrData)
         {
-            var allCastes = _mobileMasterData.RetrieveCaste();
-            return allCastes;
+            MobileMasterResponse mmResponse = new MobileMasterResponse();
+            try
+            {
+                var checkdevice = _mobileMasterData.CheckDevice(mrData.userId, mrData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    mmResponse.Valid = false;
+                    mmResponse.Status = "false";
+                    mmResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    var allStates = _mobileMasterData.RetrieveState();
+                    var district = _mobileMasterData.RetrieveDistrict(mrData.userId);
+                    var chc = _mobileMasterData.RetrieveCHC(mrData.userId);
+                    var phc = _mobileMasterData.RetrievePHC(mrData.userId);
+                    var sc = _mobileMasterData.RetrieveSC(mrData.userId);
+                    var ri = _mobileMasterData.RetrieveRI(mrData.userId);
+                    var allGovIDType = _mobileMasterData.RetrieveGovIDType();
+                    var allReligion = _mobileMasterData.RetrieveReligion();
+                    var allCastes = _mobileMasterData.RetrieveCaste();
+                    var allCommunity = _mobileMasterData.RetrieveCommunity();
+                    var allConstant = _mobileMasterData.RetrieveConstantValues();
+                    mmResponse.Valid = true;
+                    mmResponse.Status = "true";
+                    mmResponse.Message = string.Empty;
+                    mmResponse.States = allStates;
+                    mmResponse.Districts = district;
+                    mmResponse.CHC = chc;
+                    mmResponse.PHC = phc;
+                    mmResponse.SC = sc;
+                    mmResponse.RI = ri;
+                    mmResponse.GovIdType = allGovIDType;
+                    mmResponse.Religion = allReligion;
+                    mmResponse.Caste = allCastes;
+                    mmResponse.Community = allCommunity;
+                    mmResponse.ConstantValues = allConstant;
+                }
+            }
+            catch (Exception e)
+            {
+                mmResponse.Valid = true;
+                mmResponse.Status = "false";
+                mmResponse.Message = e.Message;
+            }
+            return mmResponse;
         }
-
-        public List<LoadCHCs> RetrieveCHC(int userId)
-        {
-            var chc = _mobileMasterData.RetrieveCHC(userId);
-            return chc;
-        }
-
+       
         public List<LoadCommunity> RetrieveCommunity(int id)
         {
             var community = _mobileMasterData.RetrieveCommunity(id);
             return community;
-        }
-
-        public List<LoadCommunity> RetrieveCommunity()
-        {
-            var allCommunity = _mobileMasterData.RetrieveCommunity();
-            return allCommunity;
-        }
-
-        public List<LoadConstantValues> RetrieveConstantValues()
-        {
-            var allConstant = _mobileMasterData.RetrieveConstantValues();
-            return allConstant;
-        }
-
-        public List<LoadDistricts> RetrieveDistrict(int userId)
-        {
-            var district = _mobileMasterData.RetrieveDistrict(userId);
-            return district;
-        }
-
-        public List<LoadGovIDType> RetrieveGovIDType()
-        {
-            var allGovIDType = _mobileMasterData.RetrieveGovIDType();
-            return allGovIDType;
-        }
-
-        public List<LoadPHCs> RetrievePHC(int userId)
-        {
-            var phc = _mobileMasterData.RetrievePHC(userId);
-            return phc;
-        }
-
-        public List<LoadReligion> RetrieveReligion()
-        {
-            var allReligion = _mobileMasterData.RetrieveReligion();
-            return allReligion;
-        }
-
-        public List<LoadMobileRI> RetrieveRI(int userId)
-        {
-            var ri = _mobileMasterData.RetrieveRI(userId);
-            return ri;
-        }
-
-        public List<LoadSCs> RetrieveSC(int userId)
-        {
-            var sc = _mobileMasterData.RetrieveSC(userId);
-            return sc;
-        }
-
-        public List<LoadState> RetrieveState()
-        {
-            var allStates = _mobileMasterData.RetrieveState();
-            return allStates;
         }
     }
 }

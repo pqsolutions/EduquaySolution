@@ -11,11 +11,14 @@ namespace EduquayAPI.Models.LoadMasters
         public int scId { get; set; }
         public string scName { get; set; }
         public string scAddress { get; set; }
+        public string scPincode { get; set; }
         public int riId { get; set; }
         public string riPoint { get; set; }
         public int associatedANMId { get; set; }
         public string anmName { get; set; }
         public string anmContactNo { get; set; }
+        public int testingCHCId { get; set; }
+        public string testingCHC { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCID"))
@@ -26,6 +29,9 @@ namespace EduquayAPI.Models.LoadMasters
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCAddress"))
                 this.scAddress = Convert.ToString(reader["SCAddress"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
+                this.scPincode = Convert.ToString(reader["Pincode"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
                 this.riId = Convert.ToInt32(reader["RIID"]);
@@ -41,6 +47,12 @@ namespace EduquayAPI.Models.LoadMasters
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
                 this.anmContactNo = Convert.ToString(reader["ContactNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHCID"))
+                this.testingCHCId = Convert.ToInt32(reader["TestingCHCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHC"))
+                this.testingCHC = Convert.ToString(reader["TestingCHC"]);
         }
     }
 }

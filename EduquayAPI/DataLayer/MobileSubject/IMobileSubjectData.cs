@@ -25,6 +25,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         ANMMobileShipment MobileANMShipmentDetail(int userId);
         List<MobileNotificationSamples> DamagedSamples(int userId);
         List<MobileNotificationSamples> SampleTimeout(int userId);
+        Device  CheckDevice(int userId, string deviceId);
+
 
 
     }

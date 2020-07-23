@@ -14,7 +14,7 @@ using SentinelAPI.Services.Master.LoadMaster;
 
 namespace SentinelAPI.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoadMasterController : ControllerBase
