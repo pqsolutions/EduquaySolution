@@ -124,5 +124,11 @@ namespace EduquayAPI.Services.WebMaster
             var allProvider = _webMasterData.RetrieveLogisticsProvider ();
             return allProvider;
         }
+
+        public List<LoadCHCs> RetrieveTestingCHCbyCHC(int chcId)
+        {
+            var allTestingCHC = _webMasterData.RetrieveTestingCHCbyCHC(chcId);
+            return allTestingCHC;
+        }
     }
 }

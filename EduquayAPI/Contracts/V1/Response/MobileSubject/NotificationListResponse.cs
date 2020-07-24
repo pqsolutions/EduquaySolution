@@ -9,6 +9,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
     public class NotificationListResponse
     {
         public string Status { get; set; }
+        public bool Valid { get; set; }
         public string Message { get; set; }
         public List<MobileNotificationSamples> DamagedSamples { get; set; }
         public List<MobileNotificationSamples> TimeoutExpirySamples { get; set; }

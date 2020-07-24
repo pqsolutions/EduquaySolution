@@ -14,7 +14,7 @@ using SentinelAPI.Services.Mother;
 
 namespace SentinelAPI.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MotherController : ControllerBase

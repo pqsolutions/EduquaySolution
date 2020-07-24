@@ -1,4 +1,6 @@
-﻿using EduquayAPI.Models.LoadMasters;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Response.MobileMster;
+using EduquayAPI.Models.LoadMasters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +10,7 @@ namespace EduquayAPI.Services.MobileMaster
 {
     public interface IMobileMasterService
     {
-        List<LoadDistricts> RetrieveDistrict(int userId);
-        List<LoadCHCs> RetrieveCHC(int userId);
-        List<LoadPHCs> RetrievePHC(int userId);
-        List<LoadSCs> RetrieveSC(int userId);
-        List<LoadMobileRI> RetrieveRI(int userId);
-        List<LoadReligion> RetrieveReligion();
-        List<LoadCaste> RetrieveCaste();
         List<LoadCommunity> RetrieveCommunity(int id);
-        List<LoadCommunity> RetrieveCommunity();
-        List<LoadGovIDType> RetrieveGovIDType();
-        List<LoadConstantValues> RetrieveConstantValues();
-        List<LoadState> RetrieveState();
+        Task<MobileMasterResponse> RetrieveMasters(MobileRetrieveRequest mrData);
     }
 }

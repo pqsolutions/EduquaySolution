@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 using Exception = System.Exception;
@@ -18,7 +19,7 @@ namespace EduquayAPI.Services
         {
             _usersData = usersData;
         }
-        public async Task<UserIdentityResult> AddNewUserAsync(AddUserRequest addUser,string password)
+        public async Task<UserIdentityResult> AddNewUserAsync(AddUserRequest addUser, string password)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace EduquayAPI.Services
                 {
                     addUser.isActive = "false";
                 }
-                var userId = await _usersData.AddNewUserAsync(addUser,password);
+                var userId = await _usersData.AddNewUserAsync(addUser, password);
 
                 return new UserIdentityResult
                 {
@@ -140,7 +141,7 @@ namespace EduquayAPI.Services
 
         public async Task<MobileLogin> CheckMobileLogin(int userId, string userName, string deviceId)
         {
-            var checkStatus = await _usersData.CheckMobileLogin(userId,userName,deviceId);
+            var checkStatus = await _usersData.CheckMobileLogin(userId, userName, deviceId);
             return checkStatus;
         }
 
@@ -149,10 +150,50 @@ namespace EduquayAPI.Services
             var reset = await _usersData.ResetLogin(userName);
             return reset;
         }
+
+        public async Task<LogoutResponse> Logout(int anmId)
+        {
+            try
+            {
+                var logout = await _usersData.Logout(anmId);
+                var allow = logout.allow;
+                var msg = logout.msg;
+                if (allow == true)
+                {
+                    return new LogoutResponse
+                    {
+                        Success = "true",
+                        Message = msg,
+                    };
+                }
+                else
+                {
+                    return new LogoutResponse
+                    {
+                        Success = "false",
+                     Errors = new[] { msg }
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return new LogoutResponse
+                {
+                    Success = "false",
+                     Errors = new[] { e.Message }
+                };
+            }
+        }
+
+        public async Task<WebLogin> CheckWebLogin(int userId, string userName)
+        {
+            var checkStatus = await _usersData.CheckWebLogin(userId, userName);
+            return checkStatus;
+        }
     }
 }
 
-      
 
-       
-  
+
+
+

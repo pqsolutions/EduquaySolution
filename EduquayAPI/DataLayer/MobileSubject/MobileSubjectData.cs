@@ -29,6 +29,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchDamagedSamples = "SPC_FetchMobileNotificationDamaged";
         private const string FetchTimooutExpiry = "SPC_FetchMobileNotificationTimeout";
         private const string FetchLastId = "SPC_FetchLastIds";
+        private const string CheckValidDevice = "SPC_CheckValidDevice";
 
         public MobileSubjectData()
         {
@@ -311,6 +312,19 @@ namespace EduquayAPI.DataLayer.MobileSubject
             string stProc = FetchLastId;
             var pList = new List<SqlParameter>() { new SqlParameter("@ANMId", userId) };
             var allData = UtilityDL.FillEntity<LastIds>(stProc, pList);
+            return allData;
+        }
+
+        public Device CheckDevice(int userId, string deviceId)
+        {
+            string stProc = CheckValidDevice;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@ANMId", userId ),
+                new SqlParameter("@DeviceId", deviceId ),
+
+            };
+            var allData = UtilityDL.FillEntity<Device>(stProc, pList);
             return allData;
         }
     }

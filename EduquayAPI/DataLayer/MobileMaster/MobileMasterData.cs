@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Models.LoadMasters;
+using EduquayAPI.Models.MobileSubject;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -24,11 +25,13 @@ namespace EduquayAPI.DataLayer.MobileMaster
         private const string FetchTestingCHC = "SPC_FetchTestingCHCByRI";
         private const string FetchAVD = "SPC_FetchAVDByRI";
         private const string FetchStates = "SPC_FetchAllStates";
+        private const string CheckValidDevice = "SPC_CheckValidDevice";
 
         public MobileMasterData()
         {
 
         }
+       
 
         public List<LoadILR> RetrieveILR(int riId)
         {
@@ -144,6 +147,19 @@ namespace EduquayAPI.DataLayer.MobileMaster
             string stProc = FetchStates;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadState>(stProc, pList);
+            return allData;
+        }
+
+        public Device CheckDevice(int userId, string deviceId)
+        {
+            string stProc = CheckValidDevice;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@ANMId", userId ),
+                new SqlParameter("@DeviceId", deviceId ),
+
+            };
+            var allData = UtilityDL.FillEntity<Device>(stProc, pList);
             return allData;
         }
     }

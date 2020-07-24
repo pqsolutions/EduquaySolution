@@ -20,10 +20,11 @@ using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.MobileSubject;
 using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
+using EduquayAPI.Contracts.V1.Request.Mobile;
 
 namespace EduquayAPI.Controllers
 {
-    [Authorize]
+   [Authorize]
     [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class MobileSubjectController : ControllerBase
@@ -37,16 +38,26 @@ namespace EduquayAPI.Controllers
         }
 
 
-        [HttpGet]
-        [Route("RetrieveSubjectList/{userId}")]
-        public async Task<IActionResult> RetrieveSubjectList(int userId)
+        [HttpPost]
+        [Route("RetrieveSubjectList")]
+        public async Task<IActionResult> RetrieveSubjectList(MobileRetrieveRequest mrData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            var subRegListResponse = await _mobileSubjectService.RetrieveDetail(userId);
+            var subRegListResponse = await _mobileSubjectService.RetrieveDetail(mrData);
+
+            if (!subRegListResponse.Valid)
+            {
+                return Unauthorized(new SubjectResigrationListResponse
+                {
+                    Status = "false",
+                    Message = subRegListResponse.Message
+                });
+            }
 
             return Ok(new SubjectResigrationListResponse
             {
                 Status = subRegListResponse.Status,
+                Valid = subRegListResponse.Valid,
                 Message = subRegListResponse.Message,
                 LastUniqueSubjectId = subRegListResponse.LastUniqueSubjectId,
                 LastShipmentId = subRegListResponse.LastShipmentId,
@@ -57,12 +68,21 @@ namespace EduquayAPI.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("RetrieveNotificationList/{userId}")]
-        public async Task<IActionResult> RetrieveNotificationList(int userId)
+        [HttpPost]
+        [Route("RetrieveNotificationList")]
+        public async Task<IActionResult> RetrieveNotificationList(MobileRetrieveRequest mrData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            var nlResponse = await _mobileSubjectService.RetrieveNotifications(userId);
+            var nlResponse = await _mobileSubjectService.RetrieveNotifications(mrData);
+
+            if (!nlResponse.Valid)
+            {
+                return Unauthorized(new NotificationListResponse
+                {
+                    Status = "false",
+                    Message = nlResponse.Message
+                });
+            }
 
             return Ok(new NotificationListResponse
             {
@@ -82,6 +102,15 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Register multiple subjects in mobile app- {JsonConvert.SerializeObject(subRegData)}");
             var subRegResponse = await _mobileSubjectService.AddSubjectRegistration(subRegData);
 
+            if (!subRegResponse.Valid)
+            {
+                return Unauthorized(new SubRegSuccessResponse
+                {
+                    Status = "false",
+                    Message = subRegResponse.Message
+                });
+            }
+
             return Ok(new SubRegSuccessResponse
             {
                 Status = subRegResponse.Status,
@@ -99,6 +128,14 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Collect multiple samples in mobile app- {JsonConvert.SerializeObject(ssData)}");
             var sclResponse = await _mobileSubjectService.AddSampleCollection(ssData);
 
+            if (!sclResponse.Valid)
+            {
+                return Unauthorized(new SampleCollectionListResponse
+                {
+                    Status = "false",
+                    Message = sclResponse.Message
+                });
+            }
             return Ok(new SampleCollectionListResponse
             {
                 Status = sclResponse.Status,
@@ -114,7 +151,14 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Multiple shipments in mobile app- {JsonConvert.SerializeObject(msData)}");
             var sclResponse = await _mobileSubjectService.AddANMShipment(msData);
-
+            if (!sclResponse.Valid)
+            {
+                return Unauthorized(new ShipmentListResponse
+                {
+                    Status = "false",
+                    Message = sclResponse.Message
+                });
+            }
             return Ok(new ShipmentListResponse
             {
                 Status = sclResponse.Status,

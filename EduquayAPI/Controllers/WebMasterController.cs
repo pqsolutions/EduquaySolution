@@ -285,6 +285,27 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
+        [Route("RetrieveTestingCHCByCollectionCHC/{chcId}")]
+        public LoadTestingCHCResponse GetTestingCHCbyCHC(int chcId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _webMasterService.RetrieveTestingCHCbyCHC(chcId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new LoadTestingCHCResponse { Status = "true", Message = "No record found", TestingCHC = new List<LoadCHCs>() }
+                    : new LoadTestingCHCResponse { Status = "true", Message = string.Empty, TestingCHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadTestingCHCResponse { Status = "false", Message = e.Message, TestingCHC = null };
+            }
+        }
+
+        [HttpGet]
         [Route("RetrieveANM/{riId}")]
         public LoadAssociatedANMResponse GetANM(int riId)
         {

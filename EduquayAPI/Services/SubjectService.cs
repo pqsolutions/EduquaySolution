@@ -50,6 +50,12 @@ namespace EduquayAPI.Services
             return anwSubjects;
         }
 
+        public List<CHCANWSubjectDetail> RetrieveCHCANWDetail(CHCANWSubjectRequest casData)
+        {
+            var anwSubjects = _subjectData.RetrieveCHCANWDetail(casData);
+            return anwSubjects;
+        }
+
         public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
         {
             var subjectParent = _subjectData.RetrieveParentDetail(sData);

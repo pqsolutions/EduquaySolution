@@ -18,10 +18,15 @@ namespace EduquayAPI.Models
         public string userName { get; set; }
         public int stateId { get; set; }
         public int districtId { get; set; }
+        public string districtName { get; set; }
         public int blockId { get; set; }
+        public string blockName { get; set; }
         public int chcId { get; set; }
+        public string chcName { get; set; }
         public int phcId { get; set; }
+        public string phcName { get; set; }
         public int scId { get; set; }
+        public string scName { get; set; }
         public string riId { get; set; }
         public string name { get; set; }
         public string firstName { get; set; }
@@ -62,17 +67,32 @@ namespace EduquayAPI.Models
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DistrictID"))
                 this.districtId = Convert.ToInt32(reader["DistrictID"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Districtname"))
+                this.districtName  = Convert.ToString(reader["Districtname"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BlockID"))
                 this.blockId = Convert.ToInt32(reader["BlockID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Blockname"))
+                this.blockName  = Convert.ToString(reader["Blockname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCID"))
                 this.chcId = Convert.ToInt32(reader["CHCID"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
+                this.chcName = Convert.ToString(reader["CHCname"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCID"))
                 this.phcId = Convert.ToInt32(reader["PHCID"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCname"))
+                this.phcName = Convert.ToString(reader["PHCname"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCID"))
                 this.scId = Convert.ToInt32(reader["SCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCname"))
+                this.scName = Convert.ToString(reader["SCname"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIID"))
                 this.riId  = Convert.ToString(reader["RIID"]);

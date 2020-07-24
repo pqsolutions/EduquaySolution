@@ -9,6 +9,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
     public class SubjectResigrationListResponse
     {
         public string Status { get; set; }
+        public bool Valid { get; set; }
         public string Message { get; set; }
         public string LastUniqueSubjectId { get; set; }
         public string LastShipmentId { get; set; }

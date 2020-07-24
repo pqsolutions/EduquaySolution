@@ -149,6 +149,21 @@ namespace EduquayAPI.Services
                         Errors = new[] { $"Incorrect password!" }
                     };
                 }
+                var anmId = user.id;
+                var userType = user.userType;
+                if (userType.ToUpper() == "ANM")
+                {
+                    var checkmobile = await _usersService.CheckWebLogin(anmId, userName);
+                    var allow = checkmobile.allow;
+                    var msg = checkmobile.msg;
+                    if (allow == false)
+                    {
+                        return new AuthenticationResult
+                        {
+                            Errors = new[] { msg }
+                        };
+                    }
+                }
 
                 return GenerateAuthenticationResult(user);
             }

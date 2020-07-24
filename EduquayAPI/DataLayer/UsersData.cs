@@ -20,11 +20,31 @@ namespace EduquayAPI.DataLayer
         private const string FetchUserByUserType = "SPC_FetchUserByType";
         private const string CheckUserPassword = "SPC_CheckUserPassword";
         private const string FetchMobileLoginStatus = "SPC_FetchMobileLoginStatus";
+        private const string FetchWebLoginStatus = "SPC_FetchWebLoginStatus";
         private const string ResetANMLogin = "SPC_ResetANMLogin";
+        private const string LogoutUser = "SPC_Logout";
 
         public UsersData()
         {
 
+        }
+
+        public async Task<MobileLogin> Logout(int anmId)
+        {
+            try
+            {
+                var stProc = LogoutUser;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANMId", anmId),
+                };
+                var allData = UtilityDL.FillEntity<MobileLogin>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task<MobileLogin> ResetLogin(string userName)
@@ -37,6 +57,25 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@UserName", userName),
                 };
                 var allData = UtilityDL.FillEntity<MobileLogin>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<WebLogin> CheckWebLogin(int userId, string userName)
+        {
+            try
+            {
+                var stProc = FetchWebLoginStatus;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANMId", userId),
+                    new SqlParameter("@UserName", userName),
+                };
+                var allData = UtilityDL.FillEntity<WebLogin>(stProc, pList);
                 return allData;
             }
             catch (Exception e)
@@ -195,6 +234,6 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-       
+      
     }
 }
