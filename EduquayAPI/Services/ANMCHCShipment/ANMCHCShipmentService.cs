@@ -29,9 +29,18 @@ namespace EduquayAPI.Services.ANMCHCShipment
                     var shipmentDetails = _anmchcShipmentData.AddANMCHCShipment(asData);
                     foreach (var shipment in shipmentDetails)
                     {
-                        shipmentResponse.Status = "true";
-                        shipmentResponse.Message = "";
                         shipmentResponse.Shipment = shipment;
+
+                        if (!string.IsNullOrEmpty(shipmentResponse.Shipment.shipmentId))
+                        {
+                            shipmentResponse.Status = "true";
+                            shipmentResponse.Message = "";
+                        }
+                        else
+                        {
+                            shipmentResponse.Status = "false";
+                            shipmentResponse.Message = shipmentResponse.Shipment.errorMessage;
+                        }
                     }
                 }
                 else
@@ -40,7 +49,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
                     shipmentResponse.Message = msg;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 shipmentResponse.Status = "false";
                 shipmentResponse.Message = e.Message;
@@ -105,7 +114,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
             {
                 message = "Invalid logistics provider id";
             }
-            else if (csData.deliveryExecutiveName =="")
+            else if (csData.deliveryExecutiveName == "")
             {
                 message = "Delivery executive name is missing";
             }
@@ -128,9 +137,19 @@ namespace EduquayAPI.Services.ANMCHCShipment
                     var shipmentDetails = _anmchcShipmentData.AddCHCCHCShipment(csData);
                     foreach (var shipment in shipmentDetails)
                     {
-                        shipmentResponse.Status = "true";
-                        shipmentResponse.Message = "";
                         shipmentResponse.Shipment = shipment;
+
+                        if (!string.IsNullOrEmpty(shipmentResponse.Shipment.shipmentId))
+                        {
+                            shipmentResponse.Status = "true";
+                            shipmentResponse.Message = "";
+                        }
+                        else
+                        {
+                            shipmentResponse.Status = "false";
+                            shipmentResponse.Message = shipmentResponse.Shipment.errorMessage;
+                        }
+
                     }
                 }
                 else
@@ -154,7 +173,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
             var shipmentLogs = new List<ShipmentLogs>();
             try
             {
-               var shipmentId = "";
+                var shipmentId = "";
                 foreach (var shipment in shipmentDetails.ShipmentLog)
                 {
                     var shipmentLog = new ShipmentLogs();

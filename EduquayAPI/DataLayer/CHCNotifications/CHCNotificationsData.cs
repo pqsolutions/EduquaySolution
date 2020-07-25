@@ -17,6 +17,8 @@ namespace EduquayAPI.DataLayer.CHCNotifications
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
         private const string MoveTimeoutExpiry = "SPC_AddCHCTimeoutExpiryInUnsentSamples";
         private const string AddANMSampleRecollection = "SPC_AddANMSampleRecollection";
+        private const string FetchPositiveSubjects = "SPC_FetchCHCPositiveSubjectDetail";
+
 
         public CHCNotificationsData()
         {
@@ -105,6 +107,18 @@ namespace EduquayAPI.DataLayer.CHCNotifications
                 new SqlParameter("@Notification",cnData.notification),
             };
             var allData = UtilityDL.FillData<CHCNotificationSample>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCHPLCPositiveSamples> GetPositiveDetails(CHCPositiveSamplesRequest cpData)
+        {
+            string stProc = FetchPositiveSubjects;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CHCId", cpData.chcId),
+                new SqlParameter("@RegisteredFrom", cpData.registeredFrom),
+            };
+            var allData = UtilityDL.FillData<CHCHPLCPositiveSamples>(stProc, pList);
             return allData;
         }
     }

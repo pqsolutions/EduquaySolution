@@ -16,8 +16,9 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         private const string FetchDetailforCBCTest = "SPC_FetchDetailforCBCTest";
         private const string AddCBCTests = "SPC_AddCBCTest";
         private const string AddSSTests = "SPC_AddSSTest";
-
-
+        private const string FetchSamplesCHCCentralPickPack = "SPC_FetchSamplesCHCCentralPickPack";
+        private const string AddCHCShipments = "SPC_AddCHCCentralShipments";
+        private const string FetchCHCCentralShipmentLog = "SPC_FetchCHCCentralShipmentLog";
         public CHCReceiptData()
         {
 
@@ -129,6 +130,61 @@ namespace EduquayAPI.DataLayer.CHCReceipt
             {
                 throw ex;
             }
+        }
+
+        public List<CHCCentralPickandPackSample> RetrievePickandPack(int testingCHCId)
+        {
+            string stProc = FetchSamplesCHCCentralPickPack;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CHCID", testingCHCId),
+            };
+            var allData = UtilityDL.FillData<CHCCentralPickandPackSample>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCShipmentID> AddCHCShipment(AddCHCShipmentRequest csData)
+        {
+            try
+            {
+                string stProc = AddCHCShipments;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@BarcodeNo", csData.barcodeNo ?? csData.barcodeNo),
+                    new SqlParameter("@LabTechnicianName", csData.labTechnicianName ?? csData.labTechnicianName),
+                    new SqlParameter("@CHCUserID", csData.chcUserId),
+                    new SqlParameter("@TestingCHCID", csData.testingCHCId),
+                    new SqlParameter("@ReceivingCentralLabId", csData.receivingCentralLabId),
+                    new SqlParameter("@LogicsProviderID", csData.logisticsProviderId),
+                    new SqlParameter("@DeliveryExecutiveName", csData.deliveryExecutiveName ?? csData.deliveryExecutiveName),
+                    new SqlParameter("@ExecutiveContactNo", csData.executiveContactNo ?? csData.executiveContactNo),
+                    new SqlParameter("@DateofShipment", csData.dateOfShipment ?? csData.dateOfShipment),
+                    new SqlParameter("@TimeofShipment", csData.timeOfShipment ?? csData.timeOfShipment),
+                    new SqlParameter("@Createdby", csData.createdBy),
+                    new SqlParameter("@Source",csData.source ?? csData.source),
+                };
+                var allData = UtilityDL.FillData<CHCShipmentID>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public CHCShipments RetrieveCHCShipmentLog(int testingCHCId)
+        {
+            string stProc = FetchCHCCentralShipmentLog;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@TestingCHCID", testingCHCId ),
+            };
+            var allCHCShipmentLogs = UtilityDL.FillData<CHCShipmentLogs>(stProc, pList);
+            var allCHCShipmentSubjects = UtilityDL.FillData<CHCShipmentLogsDetail>(stProc, pList);
+            var shiplogDetail = new CHCShipments();
+            shiplogDetail.ShipmentLog = allCHCShipmentLogs;
+            shiplogDetail.ShipmentSubjectDetail = allCHCShipmentSubjects;
+            return shiplogDetail;
         }
     }
 }

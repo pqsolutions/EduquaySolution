@@ -140,5 +140,61 @@ namespace EduquayAPI.Controllers
                 return new SSTResponse { Status = "false", Message = e.Message, SSTDetail = null };
             }
         }
+
+        /// <summary>
+        /// Used to fetch sample  for  CBC Test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePickandPack/{testingCHCId}")]
+        public CHCCentralPickandPackResponse GetPickandPack(int testingCHCId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received positive samples for pick and apack- {JsonConvert.SerializeObject(testingCHCId)}");
+                var pickpack = _chcReceiptService.RetrievePickandPack(testingCHCId);
+                return pickpack.Count == 0 ? new CHCCentralPickandPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CHCCentralPickandPackSample>() } : new CHCCentralPickandPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
+            }
+            catch (Exception e)
+            {
+                return new CHCCentralPickandPackResponse { Status = "false", Message = e.Message, PickandPack = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add samples to shipment for CHC  
+        /// </summary>
+        [HttpPost]
+        [Route("AddShipment")]
+        public async Task<IActionResult> AddCHCShipment(AddCHCShipmentRequest csData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
+            var sampleShipment = await _chcReceiptService.AddCHCShipment (csData);
+            return Ok(new CHCShipmentResponse
+            {
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
+        }
+
+        /// <summary>
+        /// Used for get shipment list of particular Testing CHC 
+        [HttpGet]
+        [Route("RetrieveShipmentLog/{testingCHCId}")]
+        public async Task<IActionResult> GetCHCShipmentList(int testingCHCId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var shipmentLogResponse = await _chcReceiptService.RetrieveCHCShipmentLogs(testingCHCId);
+
+            return Ok(new CHCShipmentLogsResponse
+            {
+                Status = shipmentLogResponse.Status,
+                Message = shipmentLogResponse.Message,
+                ShipmentLogs = shipmentLogResponse.ShipmentLogs,
+            });
+        }
+
     }
 }

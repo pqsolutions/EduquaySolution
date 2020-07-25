@@ -106,6 +106,12 @@ namespace EduquayAPI.Services.CHCNotifications
             return notificationSamples;
         }
 
+        public List<CHCHPLCPositiveSamples> GetPositiveDetails(CHCPositiveSamplesRequest cpData)
+        {
+            var positiveSubjects = _chcNotificationsData.GetPositiveDetails(cpData);
+            return positiveSubjects;
+        }
+
         public CHCTimeoutResponse MoveTimeout(CHCNotificationTimeoutRequest cnData) 
         {
             CHCTimeoutResponse response = new CHCTimeoutResponse();
