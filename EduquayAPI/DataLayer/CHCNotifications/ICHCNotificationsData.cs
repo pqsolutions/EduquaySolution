@@ -16,6 +16,8 @@ namespace EduquayAPI.DataLayer.CHCNotifications
         List<BarcodeSample> FetchBarcode(string barcodeNo);
         string AddTimeoutExpiry(CHCNotificationTimeoutRequest cnData);
         string AddSampleRecollection(SampleRecollectionRequest srData);
+        List<CHCHPLCPositiveSamples> GetPositiveDetails(CHCPositiveSamplesRequest cpData);
+
 
     }
     public interface ICHCNotificationsDataFactory

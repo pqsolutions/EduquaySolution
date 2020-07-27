@@ -86,7 +86,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used for get shipment list of particular ANM user 
+        /// Used for get shipment list of particular CHC 
         [HttpPost]
         [Route("RetrieveCHCShipmentLog")]
         public async Task<IActionResult> GetCHCShipmentList(ANMCHCShipmentLogRequest asData)

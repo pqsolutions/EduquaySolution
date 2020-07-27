@@ -15,6 +15,9 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         List<CBCSSTest> RetrieveSST(int testingCHCId);
         void AddCBCTest(AddCBCTestRequest cbcData);
         void AddSSTest(AddSSTestRequest ssData);
+        List<CHCCentralPickandPackSample> RetrievePickandPack(int testingCHCId);
+        List<CHCShipmentID> AddCHCShipment(AddCHCShipmentRequest csData);
+        CHCShipments RetrieveCHCShipmentLog(int testingCHCId);
 
     }
     public interface ICHCReceiptDataFactory

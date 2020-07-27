@@ -16,6 +16,6 @@ namespace EduquayAPI.Services.CHCNotifications
         Task<CHCUnsentSamplesResponse> RetrieveUnsentSamples(CHCNotificationSamplesRequest cnData);
         CHCTimeoutResponse MoveTimeout(CHCNotificationTimeoutRequest cnData);
         Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData);
-
+        List<CHCHPLCPositiveSamples> GetPositiveDetails(CHCPositiveSamplesRequest cpData);
     }
 }

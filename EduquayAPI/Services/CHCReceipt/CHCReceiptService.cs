@@ -189,5 +189,128 @@ namespace EduquayAPI.Services.CHCReceipt
             }
             return rsResponse;
         }
+
+        public List<CHCCentralPickandPackSample> RetrievePickandPack(int testingCHCId)
+        {
+            var pickpack = _chcReceiptData.RetrievePickandPack(testingCHCId);
+            return pickpack;
+        }
+
+        public async  Task<CHCShipmentResponse> AddCHCShipment(AddCHCShipmentRequest csData)
+        {
+            var shipmentResponse = new CHCShipmentResponse();
+            try
+            {
+                var msg = checkCHCValidation(csData);
+                if (msg == "")
+                {
+                    var shipmentDetails = _chcReceiptData.AddCHCShipment(csData);
+                    foreach (var shipment in shipmentDetails)
+                    {
+                        shipmentResponse.Shipment = shipment;
+
+                        if (!string.IsNullOrEmpty(shipmentResponse.Shipment.shipmentId))
+                        {
+                            shipmentResponse.Status = "true";
+                            shipmentResponse.Message = "";
+                        }
+                        else
+                        {
+                            shipmentResponse.Status = "false";
+                            shipmentResponse.Message = shipmentResponse.Shipment.errorMessage;
+                        }
+                    }
+                }
+                else
+                {
+                    shipmentResponse.Status = "false";
+                    shipmentResponse.Message = msg;
+                }
+            }
+            catch (Exception e)
+            {
+                shipmentResponse.Status = "false";
+                shipmentResponse.Message = e.Message;
+            }
+            return shipmentResponse;
+        }
+
+        public string checkCHCValidation(AddCHCShipmentRequest csData)
+        {
+            var message = "";
+            if (csData.barcodeNo == "")
+            {
+                message = "Barcode is missing";
+            }
+            if (csData.labTechnicianName  == "")
+            {
+                message = "Lab Technician name is missing";
+            }
+            else if (csData.chcUserId <= 0)
+            {
+                message = "Invalid chc user id";
+            }
+            else if (csData.testingCHCId <= 0)
+            {
+                message = "Invalid testing CHC id";
+            }
+            else if (csData.receivingCentralLabId  <= 0)
+            {
+                message = "Invalid central lab id";
+            }
+            else if (csData.logisticsProviderId <= 0)
+            {
+                message = "Invalid logistics provider id";
+            }
+            else if (csData.deliveryExecutiveName == "")
+            {
+                message = "Delivery executive name is missing";
+            }
+            if (csData.executiveContactNo == "")
+            {
+                message = "Executive contactno is missing";
+            }
+            return message;
+        }
+
+        public async Task<CHCShipmentLogsResponse> RetrieveCHCShipmentLogs(int testingCHCId)
+        {
+            var shipmentDetails = _chcReceiptData.RetrieveCHCShipmentLog(testingCHCId);
+            var shipmentLogResponse = new CHCShipmentLogsResponse();
+            var shipmentLogs = new List<CHCShipmentLog>();
+            try
+            {
+                var shipmentId = "";
+                foreach (var shipment in shipmentDetails.ShipmentLog)
+                {
+                    var shipmentLog = new CHCShipmentLog();
+                    if (shipmentId != shipment.shipmentId)
+                    {
+                        var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId == shipment.id).ToList();
+                        shipmentLog.id = shipment.id;
+                        shipmentLog.shipmentId = shipment.shipmentId;
+                        shipmentLog.receivingCentralLab = shipment.receivingCentralLab;
+                        shipmentLog.testingCHC = shipment.testingCHC;
+                        shipmentLog.logisticsProviderName = shipment.logisticsProviderName;
+                        shipmentLog.contactNo = shipment.contactNo;
+                        shipmentLog.deliveryExecutiveName = shipment.deliveryExecutiveName;
+                        shipmentLog.labTechnicianName = shipment.labTechnicianName;
+                        shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
+                        shipmentLog.SamplesDetail = shipmentDetail;
+                        shipmentId = shipment.shipmentId;
+                        shipmentLogs.Add(shipmentLog);
+                    }
+                }
+                shipmentLogResponse.ShipmentLogs = shipmentLogs;
+                shipmentLogResponse.Status = "true";
+                shipmentLogResponse.Message = string.Empty;
+            }
+            catch (Exception e)
+            {
+                shipmentLogResponse.Status = "false";
+                shipmentLogResponse.Message = e.Message;
+            }
+            return shipmentLogResponse;
+        }
     }
 }

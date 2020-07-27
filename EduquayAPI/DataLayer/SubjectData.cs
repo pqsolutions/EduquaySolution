@@ -285,6 +285,7 @@ namespace EduquayAPI.DataLayer
                 new SqlParameter("@CHCId", casData.chcId),
                 new SqlParameter("@FromDate", casData.fromDate ?? casData.fromDate),
                 new SqlParameter("@ToDate", casData.toDate ?? casData.toDate),
+                new SqlParameter("@RegisteredFrom", casData.registeredFrom),
             };
             var allData = UtilityDL.FillData<CHCANWSubjectDetail>(stProc, pList);
             return allData;

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Contracts.V1.Request
+namespace EduquayAPI.Contracts.V1.Request.CHCNotifications
 {
-    public class CHCANWSubjectRequest
+    public class CHCPositiveSamplesRequest
     {
         public int chcId { get; set; }
-        public string fromDate { get; set; }
-        public string toDate { get; set; }
         public int registeredFrom { get; set; }
     }
 }

@@ -12,9 +12,10 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
 {
     public class ANMCHCShipmentData : IANMCHCShipmentData
     {
-        private const string addShipment = "SPC_AddANMCHCShipments";
-        private const string fetchANMCHCShipmentLog = "SPC_FetchANMCHCShipmentLog";
-        private const string addCHCShipment = "SPC_AddCHCCHCShipments";
+        private const string AddShipment = "SPC_AddANMCHCShipments";
+        private const string FetchANMCHCShipmentLog = "SPC_FetchANMCHCShipmentLog";
+        private const string AddCHCShipments = "SPC_AddCHCCHCShipments";
+
         public ANMCHCShipmentData()
         {
 
@@ -24,7 +25,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
         {
             try
             {
-                string stProc = addShipment;
+                string stProc = AddShipment;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@BarcodeNo", asData.barcodeNo ?? asData.barcodeNo),
@@ -55,7 +56,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
         {
             try
             {
-                string stProc = addCHCShipment;
+                string stProc = AddCHCShipments;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@BarcodeNo", csData.barcodeNo ?? csData.barcodeNo),
@@ -82,7 +83,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
 
         public CHCCHCShipments RetrieveCHCShipmentLog(ANMCHCShipmentLogRequest asData)
         {
-            string stProc = fetchANMCHCShipmentLog;
+            string stProc = FetchANMCHCShipmentLog;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserID", asData.userId),
@@ -98,7 +99,7 @@ namespace EduquayAPI.DataLayer.ANMCHCShipment
 
         public ANMCHCShipments RetrieveShipmentLog(ANMCHCShipmentLogRequest asData)
         {
-            string stProc = fetchANMCHCShipmentLog;
+            string stProc = FetchANMCHCShipmentLog;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserID", asData.userId),

@@ -112,5 +112,26 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used for fetch HPLC positive subjects
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveHPLCPositiveSubjects")]
+        public HPLCPositiveSubjectsResponse GetHPLCPositiveSubjects(CHCPositiveSamplesRequest cpData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var positiveSubjects = _chcNotificationsService.GetPositiveDetails(cpData);
+                _logger.LogInformation($"Received hplc positive subject data {positiveSubjects}");
+                return positiveSubjects.Count == 0 ? new HPLCPositiveSubjectsResponse { Status = "true", Message = "No positive subjects data found", positiveSubjects = new List<CHCHPLCPositiveSamples>() }
+                : new HPLCPositiveSubjectsResponse { Status = "true", Message = string.Empty, positiveSubjects = positiveSubjects };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  receiving hplc positive subjects data {e.StackTrace}");
+                return new HPLCPositiveSubjectsResponse { Status = "false", Message = e.Message, positiveSubjects = null };
+            }
+        }
     }
 }
