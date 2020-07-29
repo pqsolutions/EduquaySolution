@@ -66,6 +66,46 @@ namespace EduquayAPI.Services.MobileSubject
 
         }
 
+        public async Task<TimeoutResponse> AddMoveTimeout(AddTimeoutExpireMobileRequest eData)
+        {
+            var tResponse =  new TimeoutResponse();
+            var barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(eData.data.MoveTimeoutRequest[0].samples.userId, eData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    tResponse.Valid = false;
+                    tResponse.Status = "false";
+                    tResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in eData.data.MoveTimeoutRequest)
+                    {
+                        var slist = new BarcodeSampleDetail();
+                        barcodeNo = sample.samples.barcodeNo;
+                        _mobileSubjectData.AddTimeoutExpiry(sample.samples);
+                        slist.barcodeNo = sample.samples.barcodeNo;
+                        barcodes.Add(slist);
+                    }
+                    tResponse.Valid = true;
+                    tResponse.Status = "true";
+                    tResponse.Message = barcodes.Count + " Samples successfully  moved to expiry";
+                    tResponse.Barcodes = barcodes;
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.Valid = true;
+                tResponse.Status = "false";
+                tResponse.Message = e.Message;
+                tResponse.Barcodes = barcodes;
+            }
+            return tResponse;
+        }
+
         public async Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData)
         {
             List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
@@ -240,7 +280,7 @@ namespace EduquayAPI.Services.MobileSubject
         public async Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData)
         {
             var nlResponse = new NotificationListResponse();
-
+            var total = 0;
             try
             {
                 var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
@@ -254,11 +294,15 @@ namespace EduquayAPI.Services.MobileSubject
                 {
                     var damagedSamples = _mobileSubjectData.DamagedSamples(mrData.userId);
                     var timeoutSamples = _mobileSubjectData.SampleTimeout(mrData.userId);
+                    var hplcPositiveSubjects = _mobileSubjectData.PositiveSubjects(mrData.userId);
+                    total = damagedSamples.Count + timeoutSamples.Count +hplcPositiveSubjects.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
                     nlResponse.Message = string.Empty;
+                    nlResponse.totalNotifications = total;
                     nlResponse.DamagedSamples = damagedSamples;
                     nlResponse.TimeoutExpirySamples = timeoutSamples;
+                    nlResponse.PositiveSubjects = hplcPositiveSubjects;
                 }
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
@@ -22,13 +23,12 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void SampleColection(SampleCollectionsRequest ssData);
         List<SampleCollection> MobileSampleDetail(int userId);
         void AddShipment(MobileShipmentRequest msData);
+        void AddTimeoutExpiry(MobileAddExpiryRequest meData);
         ANMMobileShipment MobileANMShipmentDetail(int userId);
         List<MobileNotificationSamples> DamagedSamples(int userId);
         List<MobileNotificationSamples> SampleTimeout(int userId);
+        List<MobilePositiveSubjects> PositiveSubjects(int userId);
         Device  CheckDevice(int userId, string deviceId);
-
-
-
     }
 
     public interface IMobileSubjectDataFactory

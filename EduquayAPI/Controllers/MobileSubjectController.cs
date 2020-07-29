@@ -24,7 +24,7 @@ using EduquayAPI.Contracts.V1.Request.Mobile;
 
 namespace EduquayAPI.Controllers
 {
-   [Authorize]
+    [Authorize]
     [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class MobileSubjectController : ControllerBase
@@ -50,6 +50,7 @@ namespace EduquayAPI.Controllers
                 return Unauthorized(new SubjectResigrationListResponse
                 {
                     Status = "false",
+                    Valid = subRegListResponse.Valid,
                     Message = subRegListResponse.Message
                 });
             }
@@ -80,6 +81,7 @@ namespace EduquayAPI.Controllers
                 return Unauthorized(new NotificationListResponse
                 {
                     Status = "false",
+                    Valid = nlResponse.Valid,
                     Message = nlResponse.Message
                 });
             }
@@ -88,11 +90,41 @@ namespace EduquayAPI.Controllers
             {
                 Status = nlResponse.Status,
                 Message = nlResponse.Message,
+                Valid = nlResponse.Valid,
+                totalNotifications = nlResponse.totalNotifications,
                 DamagedSamples = nlResponse.DamagedSamples,
                 TimeoutExpirySamples = nlResponse.TimeoutExpirySamples,
+                PositiveSubjects = nlResponse.PositiveSubjects,
             });
         }
 
+        [HttpPost]
+        [Route("MoveTimeoutExpiry")]
+        public async Task<IActionResult> AddMultipleTimeoutExpiry(AddTimeoutExpireMobileRequest eData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Move sample in timeout expiry in mobile app- {JsonConvert.SerializeObject(eData)}");
+            var tResponse = await _mobileSubjectService.AddMoveTimeout(eData);
+
+            if (!tResponse.Valid)
+            {
+                return Unauthorized(new TimeoutResponse
+                {
+                    Status = "false",
+                    Valid = tResponse.Valid,
+                    Message = tResponse.Message
+                });
+            }
+
+            return Ok(new TimeoutResponse
+            {
+                Status = tResponse.Status,
+                Valid = tResponse.Valid,
+                Message = tResponse.Message,
+                Barcodes = tResponse.Barcodes
+            });
+
+        }
 
         [HttpPost]
         [Route("Add")]
@@ -107,6 +139,7 @@ namespace EduquayAPI.Controllers
                 return Unauthorized(new SubRegSuccessResponse
                 {
                     Status = "false",
+                    Valid = subRegResponse.Valid,
                     Message = subRegResponse.Message
                 });
             }
@@ -114,6 +147,7 @@ namespace EduquayAPI.Controllers
             return Ok(new SubRegSuccessResponse
             {
                 Status = subRegResponse.Status,
+                Valid = subRegResponse.Valid,
                 Message = subRegResponse.Message,
                 SuccessIds = subRegResponse.SuccessIds,
             });
@@ -133,12 +167,14 @@ namespace EduquayAPI.Controllers
                 return Unauthorized(new SampleCollectionListResponse
                 {
                     Status = "false",
+                    Valid = sclResponse.Valid,
                     Message = sclResponse.Message
                 });
             }
             return Ok(new SampleCollectionListResponse
             {
                 Status = sclResponse.Status,
+                Valid = sclResponse.Valid,
                 Message = sclResponse.Message,
                 Barcodes = sclResponse.Barcodes,
             });
@@ -156,12 +192,14 @@ namespace EduquayAPI.Controllers
                 return Unauthorized(new ShipmentListResponse
                 {
                     Status = "false",
+                    Valid = sclResponse.Valid,
                     Message = sclResponse.Message
                 });
             }
             return Ok(new ShipmentListResponse
             {
                 Status = sclResponse.Status,
+                Valid = sclResponse.Valid,
                 Message = sclResponse.Message,
                 ShipmentIds = sclResponse.ShipmentIds,
             });

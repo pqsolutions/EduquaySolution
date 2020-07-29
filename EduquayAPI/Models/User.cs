@@ -17,6 +17,8 @@ namespace EduquayAPI.Models
         public string userGovCode { get; set; }
         public string userName { get; set; }
         public int stateId { get; set; }
+        public int centralLabId { get; set; }
+        public string centralLabName { get; set; }
         public int districtId { get; set; }
         public string districtName { get; set; }
         public int blockId { get; set; }
@@ -63,6 +65,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "StateID"))
                 this.stateId = Convert.ToInt32(reader["StateID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CentralLabId"))
+                this.centralLabId = Convert.ToInt32(reader["CentralLabId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CentralLabName"))
+                this.centralLabName = Convert.ToString(reader["CentralLabName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DistrictID"))
                 this.districtId = Convert.ToInt32(reader["DistrictID"]);

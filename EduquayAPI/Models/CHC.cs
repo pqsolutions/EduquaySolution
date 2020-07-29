@@ -20,6 +20,8 @@ namespace EduquayAPI.Models
         public string chcName { get; set; }
         public int testingCHCId { get; set; }
         public string testingCHC { get; set; }
+        public int centralLabId { get; set; }
+        public string centralLabName { get; set; }
         public string isTestingFacility { get; set; }
         public string isActive { get; set; }
         public string comments { get; set; }
@@ -62,6 +64,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestingCHC"))
                 this.testingCHC = Convert.ToString(reader["TestingCHC"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CentralLabId"))
+                this.centralLabId = Convert.ToInt32(reader["CentralLabId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CentralLabName"))
+                this.centralLabName = Convert.ToString(reader["CentralLabName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.pincode = Convert.ToString(reader["Pincode"]);
