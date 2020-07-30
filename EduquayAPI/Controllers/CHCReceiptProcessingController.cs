@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EduquayAPI.Contracts.V1;
 using EduquayAPI.Contracts.V1.Request.CHCReceiptProcessing;
 using EduquayAPI.Contracts.V1.Response.CHCReceipt;
 using EduquayAPI.Models.CHCReceipt;
@@ -14,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace EduquayAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.Base + "/[controller]")]
     [ApiController]
     public class CHCReceiptProcessingController : ControllerBase
     {
@@ -64,44 +65,6 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used for add samples to CBC Test 
-        /// </summary>
-        [HttpPost]
-        [Route("AddCBCTest")]
-        public async Task<IActionResult> AddCBCTest(CBCTestAddRequest cbcRequest)
-        {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"CBC test for multiple samples - {JsonConvert.SerializeObject(cbcRequest)}");
-            var rsResponse = await _chcReceiptService.AddCBCTest(cbcRequest);
-
-            return Ok(new CHCReceivedShipmentResponse
-            {
-                Status = rsResponse.Status,
-                Message = rsResponse.Message,
-                Barcodes = rsResponse.Barcodes,
-            });
-        }
-
-        /// <summary>
-        /// Used for add samples to SS Test 
-        /// </summary>
-        [HttpPost]
-        [Route("AddSSTest")]
-        public async Task<IActionResult> AddSSTest(SSTestAddRequest ssRequest)
-        {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"SS test for multiple samples - {JsonConvert.SerializeObject(ssRequest)}");
-            var rsResponse = await _chcReceiptService.AddSSTest(ssRequest);
-
-            return Ok(new CHCReceivedShipmentResponse
-            {
-                Status = rsResponse.Status,
-                Message = rsResponse.Message,
-                Barcodes = rsResponse.Barcodes,
-            });
-        }
-
-        /// <summary>
         /// Used to fetch sample  for  CBC Test 
         /// </summary>
         [HttpGet]
@@ -122,6 +85,25 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used for add samples to CBC Test 
+        /// </summary>
+        [HttpPost]
+        [Route("AddCBCTest")]
+        public async Task<IActionResult> AddCBCTest(CBCTestAddRequest cbcRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"CBC test for multiple samples - {JsonConvert.SerializeObject(cbcRequest)}");
+            var rsResponse = await _chcReceiptService.AddCBCTest(cbcRequest);
+
+            return Ok(new CBCSSTAddResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+                Barcodes = rsResponse.Barcodes,
+            });
+        }
+
+        /// <summary>
         /// Used to fetch sample  for  SS Test 
         /// </summary>
         [HttpGet]
@@ -139,6 +121,25 @@ namespace EduquayAPI.Controllers
             {
                 return new SSTResponse { Status = "false", Message = e.Message, SSTDetail = null };
             }
+        }
+
+        /// <summary>
+        /// Used for add samples to SS Test 
+        /// </summary>
+        [HttpPost]
+        [Route("AddSSTest")]
+        public async Task<IActionResult> AddSSTest(SSTestAddRequest ssRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"SS test for multiple samples - {JsonConvert.SerializeObject(ssRequest)}");
+            var rsResponse = await _chcReceiptService.AddSSTest(ssRequest);
+
+            return Ok(new CBCSSTAddResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+                Barcodes = rsResponse.Barcodes,
+            });
         }
 
         /// <summary>

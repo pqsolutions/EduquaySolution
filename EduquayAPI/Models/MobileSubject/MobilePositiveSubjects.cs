@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Models.MobileSubject
 {
-    public class MobileNotificationSamples :IFill
+    public class MobilePositiveSubjects : IFill
     {
         public string uniqueSubjectId { get; set; }
         public string firstName { get; set; }
@@ -18,9 +18,11 @@ namespace EduquayAPI.Models.MobileSubject
         public string ecNumber { get; set; }
         public bool isNotified { get; set; }
         public string lmpDate { get; set; }
+        public string hplcTestResult { get; set; }
         public int subjectTypeId { get; set; }
         public int childSubjectTypeId { get; set; }
         public decimal gestationalAge { get; set; }
+
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
@@ -52,6 +54,9 @@ namespace EduquayAPI.Models.MobileSubject
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsNotified"))
                 this.isNotified = Convert.ToBoolean(reader["IsNotified"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HPLCTestResult"))
+                this.hplcTestResult = Convert.ToString(reader["HPLCTestResult"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
                 this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);

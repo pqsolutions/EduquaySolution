@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
+﻿using EduquayAPI.Contracts.V1.Request.Mobile;
+using EduquayAPI.Contracts.V1.Request.MobileAppSampleCollection;
 using EduquayAPI.Contracts.V1.Request.MobileAppShipment;
 using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
@@ -30,6 +31,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchTimooutExpiry = "SPC_FetchMobileNotificationTimeout";
         private const string FetchLastId = "SPC_FetchLastIds";
         private const string CheckValidDevice = "SPC_CheckValidDevice";
+        private const string MoveTimeoutExpiry = "SPC_AddTimeoutExpiryInUnsentSamples";
+        private const string HPLCPositive = "SPC_FetchMobilePositiveSubjectDetail";
 
         public MobileSubjectData()
         {
@@ -326,6 +329,32 @@ namespace EduquayAPI.DataLayer.MobileSubject
             };
             var allData = UtilityDL.FillEntity<Device>(stProc, pList);
             return allData;
+        }
+
+        public void AddTimeoutExpiry(MobileAddExpiryRequest meData)
+        {
+            try
+            {
+                var stProc = MoveTimeoutExpiry;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@BarcodeNo", meData.barcodeNo  ?? meData.barcodeNo),
+                    new SqlParameter("@ANMID", meData.userId ),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<MobilePositiveSubjects> PositiveSubjects(int userId)
+        {
+            string stProc = HPLCPositive;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ANMID", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePositiveSubjects>(stProc, pList);
+            return allSampleData;
         }
     }
 }

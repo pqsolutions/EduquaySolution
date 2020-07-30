@@ -14,6 +14,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string chcName { get; set; }
         public string isTestingFacility { get; set; }
         public int testingCHCId { get; set; }
+        public int centralLabId { get; set; }
         public string pincode { get; set; }
         public string isActive { get; set; }
         public string comments { get; set; }

@@ -19,6 +19,7 @@ namespace EduquayAPI.Services.MobileSubject
         Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData);
         Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData);
         Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData);
+        Task<TimeoutResponse> AddMoveTimeout(AddTimeoutExpireMobileRequest eData);
 
     }
 }
