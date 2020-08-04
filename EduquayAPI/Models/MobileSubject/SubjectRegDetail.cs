@@ -11,6 +11,7 @@ namespace EduquayAPI.Models.MobileSubject
         public List<SubjectAddress> AddressSubjectList { get; set; }
         public List<SubjectPregnancy> PregnancySubjectList { get; set; }
         public List<SubjectParent> ParentSubjectList { get; set; }
+        public List<TestResult> Results { get; set; }
 
     }
 }

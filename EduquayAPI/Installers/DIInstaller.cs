@@ -11,6 +11,7 @@ using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
+using EduquayAPI.DataLayer.Pathologist;
 using EduquayAPI.DataLayer.WebMaster;
 using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
@@ -21,6 +22,7 @@ using EduquayAPI.Services.CHCNotifications;
 using EduquayAPI.Services.CHCReceipt;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
+using EduquayAPI.Services.Pathologist;
 using EduquayAPI.Services.WebMaster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -131,6 +133,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<ICHCNotificationsDataFactory, CHCNotificationsDataFactory>();
             services.AddScoped<ICHCNotificationsService, CHCNotificationsService>();
+
+            services.AddScoped<IPathologistDataFactory, PathologistDataFactory>();
+            services.AddScoped<IPathologistService, PathologistService>();
 
             services.AddSingleton<DbConnect>();
         }

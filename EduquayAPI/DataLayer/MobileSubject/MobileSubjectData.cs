@@ -33,6 +33,10 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string CheckValidDevice = "SPC_CheckValidDevice";
         private const string MoveTimeoutExpiry = "SPC_AddTimeoutExpiryInUnsentSamples";
         private const string HPLCPositive = "SPC_FetchMobilePositiveSubjectDetail";
+        private const string UpdateStatusNotifications = "SPC_UpdateStatusANMMobileNotification";
+        private const string UpdateStatusPositiveSubjects = "SPC_UpdateStatusANMMobilePositiveSubjects";
+        private const string FetchTestResults = "SPC_FetchMobileSubjectResultDetail";
+        private const string AddResultAcknowledgements = "SPC_AddResultAcknowledgement";
 
         public MobileSubjectData()
         {
@@ -79,39 +83,39 @@ namespace EduquayAPI.DataLayer.MobileSubject
 
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@SubjectTypeID", sprData.subjectTypeId),
-                    new SqlParameter("@ChildSubjectTypeID", sprData.childSubjectTypeId),
+                    new SqlParameter("@SubjectTypeID", Convert.ToInt32(sprData.subjectTypeId)),
+                    new SqlParameter("@ChildSubjectTypeID", Convert.ToInt32(sprData.childSubjectTypeId)),
                     new SqlParameter("@UniqueSubjectID", sprData.uniqueSubjectId ?? sprData.uniqueSubjectId),
-                    new SqlParameter("@DistrictID", sprData.districtId),
-                    new SqlParameter("@CHCID", sprData.chcId),
-                    new SqlParameter("@PHCID", sprData.phcId),
-                    new SqlParameter("@SCID", sprData.scId),
-                    new SqlParameter("@RIID", sprData.riId),
+                    new SqlParameter("@DistrictID", Convert.ToInt32(sprData.districtId)),
+                    new SqlParameter("@CHCID", Convert.ToInt32(sprData.chcId)),
+                    new SqlParameter("@PHCID", Convert.ToInt32(sprData.phcId)),
+                    new SqlParameter("@SCID", Convert.ToInt32(sprData.scId)),
+                    new SqlParameter("@RIID", Convert.ToInt32(sprData.riId)),
                     new SqlParameter("@SubjectTitle", sprData.subjectTitle.ToCheckNull()),
                     new SqlParameter("@FirstName", sprData.firstName ?? sprData.firstName),
                     new SqlParameter("@MiddleName", sprData.middleName.ToCheckNull()),
                     new SqlParameter("@LastName", sprData.lastName.ToCheckNull()),
                     new SqlParameter("@DOB", sprData.dob.ToCheckNull()),
-                    new SqlParameter("@Age", sprData.age),
+                    new SqlParameter("@Age", Convert.ToInt32(sprData.age)),
                     new SqlParameter("@Gender", sprData.gender.ToCheckNull()),
                     new SqlParameter("@MaritalStatus", sprData.maritalStatus ?? sprData.maritalStatus),
                     new SqlParameter("@MobileNo", sprData.mobileNo.ToCheckNull()),
                     new SqlParameter("@EmailId", sprData.emailId.ToCheckNull()),
-                    new SqlParameter("@GovIdType_ID", sprData.govIdTypeId),
+                    new SqlParameter("@GovIdType_ID", Convert.ToInt32(sprData.govIdTypeId)),
                     new SqlParameter("@GovIdDetail", sprData.govIdDetail.ToCheckNull()),
                     new SqlParameter("@SpouseSubjectID", sprData.spouseSubjectId.ToCheckNull()),
                     new SqlParameter("@Spouse_FirstName", sprData.spouseFirstName.ToCheckNull()),
                     new SqlParameter("@Spouse_MiddleName", sprData.spouseMiddleName.ToCheckNull()),
                     new SqlParameter("@Spouse_LastName", sprData.spouseLastName.ToCheckNull()),
                     new SqlParameter("@Spouse_ContactNo", sprData.spouseContactNo.ToCheckNull()),
-                    new SqlParameter("@Spouse_GovIdType_ID", sprData.spouseGovIdTypeId),
+                    new SqlParameter("@Spouse_GovIdType_ID", Convert.ToInt32(sprData.spouseGovIdTypeId)),
                     new SqlParameter("@Spouse_GovIdDetail", sprData.spouseGovIdDetail.ToCheckNull()),
-                    new SqlParameter("@AssignANM_ID", sprData.assignANMId),
+                    new SqlParameter("@AssignANM_ID", Convert.ToInt32(sprData.assignANMId)),
                     new SqlParameter("@DateofRegister", sprData.dateOfRegister.ToCheckNull()),
-                    new SqlParameter("@RegisteredFrom", sprData.registeredFrom),
+                    new SqlParameter("@RegisteredFrom", Convert.ToInt32(sprData.registeredFrom)),
                     new SqlParameter("@Isactive", sprData.isActive),
-                    new SqlParameter("@Createdby", sprData.createdBy),
-                    new SqlParameter("@Updatedby", sprData.updatedBy),
+                    new SqlParameter("@Createdby", Convert.ToInt32(sprData.createdBy)),
+                    new SqlParameter("@Updatedby", Convert.ToInt32(sprData.updatedBy)),
                     new SqlParameter("@Source", sprData.source),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -136,11 +140,11 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@RCHID", spData.rchId.ToCheckNull()),
                     new SqlParameter("@ECNumber", spData.ecNumber.ToCheckNull()),
                     new SqlParameter("@LMP_Date", spData.lmpDate.ToCheckNull()),
-                    new SqlParameter("@G", spData.g),
-                    new SqlParameter("@P", spData.p),
-                    new SqlParameter("@L", spData.l),
-                    new SqlParameter("@A", spData.a),
-                    new SqlParameter("@UpdatedBy", spData.updatedBy),
+                    new SqlParameter("@G", Convert.ToInt32(spData.g)),
+                    new SqlParameter("@P", Convert.ToInt32(spData.p)),
+                    new SqlParameter("@L", Convert.ToInt32(spData.l)),
+                    new SqlParameter("@A", Convert.ToInt32(spData.a)),
+                    new SqlParameter("@UpdatedBy", Convert.ToInt32(spData.updatedBy)),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -165,19 +169,19 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@Mother_FirstName", spaData.motherFirstName.ToCheckNull()),
                     new SqlParameter("@Mother_MiddleName", spaData.motherMiddleName.ToCheckNull()),
                     new SqlParameter("@Mother_LastName", spaData.motherLastName.ToCheckNull()),
-                    new SqlParameter("@Mother_GovIdType_ID", spaData.motherGovIdTypeId ),
+                    new SqlParameter("@Mother_GovIdType_ID", Convert.ToInt32(spaData.motherGovIdTypeId)),
                     new SqlParameter("@Mother_GovIdDetail", spaData.motherGovIdDetail.ToCheckNull()),
                     new SqlParameter("@Mother_ContactNo", spaData.motherContactNo.ToCheckNull()),
                     new SqlParameter("@Father_FirstName", spaData.fatherFirstName.ToCheckNull()),
                     new SqlParameter("@Father_MiddleName", spaData.fatherMiddleName.ToCheckNull()),
                     new SqlParameter("@Father_LastName", spaData.fatherLastName.ToCheckNull()),
-                    new SqlParameter("@Father_GovIdType_ID", spaData.fatherGovIdTypeId ),
+                    new SqlParameter("@Father_GovIdType_ID", Convert.ToInt32(spaData.fatherGovIdTypeId)),
                     new SqlParameter("@Father_GovIdDetail", spaData.fatherGovIdDetail.ToCheckNull()),
                     new SqlParameter("@Father_ContactNo", spaData.fatherContactNo.ToCheckNull()),
                     new SqlParameter("@Gaurdian_FirstName", spaData.gaurdianFirstName.ToCheckNull()),
                     new SqlParameter("@Gaurdian_MiddleName", spaData.gaurdianMiddleName.ToCheckNull()),
                     new SqlParameter("@Gaurdian_LastName", spaData.gaurdianLastName.ToCheckNull()),
-                    new SqlParameter("@Guardian_GovIdType_ID", spaData.gaurdianGovIdTypeId),
+                    new SqlParameter("@Guardian_GovIdType_ID", Convert.ToInt32(spaData.gaurdianGovIdTypeId)),
                     new SqlParameter("@Guardian_GovIdDetail", spaData.gaurdianGovIdDetail.ToCheckNull()),
                     new SqlParameter("@Gaurdian_ContactNo", spaData.gaurdianContactNo.ToCheckNull()),
                     new SqlParameter("@RBSKId", spaData.rbskId.ToCheckNull()),
@@ -191,7 +195,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@Standard", spaData.standard.ToCheckNull()),
                     new SqlParameter("@Section", spaData.section.ToCheckNull()),
                     new SqlParameter("@RollNo", spaData.rollNo.ToCheckNull()),
-                    new SqlParameter("@UpdatedBy", spaData.updatedBy),
+                    new SqlParameter("@UpdatedBy", Convert.ToInt32(spaData.updatedBy)),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -212,15 +216,15 @@ namespace EduquayAPI.DataLayer.MobileSubject
                 var pList = new List<SqlParameter>()
                 {
                     new SqlParameter("@UniqueSubjectID", saData.uniqueSubjectId ?? saData.uniqueSubjectId),
-                    new SqlParameter("@Religion_Id", saData.religionId),
-                    new SqlParameter("@Caste_Id", saData.casteId),
-                    new SqlParameter("@Community_Id", saData.communityId),
+                    new SqlParameter("@Religion_Id", Convert.ToInt32(saData.religionId)),
+                    new SqlParameter("@Caste_Id", Convert.ToInt32(saData.casteId)),
+                    new SqlParameter("@Community_Id", Convert.ToInt32(saData.communityId)),
                     new SqlParameter("@Address1", saData.address1.ToCheckNull()),
                     new SqlParameter("@Address2", saData.address2.ToCheckNull()),
                     new SqlParameter("@Address3", saData.address3.ToCheckNull()),
                     new SqlParameter("@Pincode", saData.pincode.ToCheckNull()),
                     new SqlParameter("@StateName", saData.stateName.ToCheckNull()),
-                    new SqlParameter("@UpdatedBy", saData.updatedBy),
+                    new SqlParameter("@UpdatedBy", Convert.ToInt32(saData.updatedBy)),
                     retVal
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -266,11 +270,13 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var allAddressData = UtilityDL.FillData<SubjectAddress>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancy>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParent>(stProc, pList);
+            var allResults = UtilityDL.FillData<TestResult>(stProc, pList);
             var subDetail = new SubjectRegDetail();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
+            subDetail.Results = allResults;
             return subDetail;
         }
 
@@ -355,6 +361,71 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var pList = new List<SqlParameter>() { new SqlParameter("@ANMID", userId) };
             var allSampleData = UtilityDL.FillData<MobilePositiveSubjects>(stProc, pList);
             return allSampleData;
+        }
+
+        public void UpdateNotificationStatus(UpdateStatusRequest usData)
+        {
+            try
+            {
+                var stProc = UpdateStatusNotifications;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@BarcodeNo", usData.barcodeNo  ?? usData.barcodeNo),
+                    new SqlParameter("@ANMID", usData.userId ),
+                    new SqlParameter("@NotifiedOn", usData.notifiedOn ?? usData.notifiedOn),
+
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdatePositiveSubjectStatus(UpdateStatusRequest usData)
+        {
+            try
+            {
+                var stProc = UpdateStatusPositiveSubjects;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@BarcodeNo", usData.barcodeNo  ?? usData.barcodeNo),
+                    new SqlParameter("@ANMID", usData.userId ),
+                    new SqlParameter("@NotifiedOn", usData.notifiedOn ?? usData.notifiedOn),
+
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<TestResult> GetTestResults(int userId)
+        {
+            string stProc = FetchTestResults;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allResultsData = UtilityDL.FillData<TestResult>(stProc, pList);
+            return allResultsData;
+        }
+
+        public void AddResultAcknowledgement(string uniqueSubjectId)
+        {
+            try
+            {
+                var stProc = AddResultAcknowledgements;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", uniqueSubjectId  ?? uniqueSubjectId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

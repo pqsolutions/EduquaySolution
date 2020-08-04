@@ -95,6 +95,7 @@ namespace EduquayAPI.Controllers
                 DamagedSamples = nlResponse.DamagedSamples,
                 TimeoutExpirySamples = nlResponse.TimeoutExpirySamples,
                 PositiveSubjects = nlResponse.PositiveSubjects,
+                Results = nlResponse.Results,
             });
         }
 
@@ -123,7 +124,86 @@ namespace EduquayAPI.Controllers
                 Message = tResponse.Message,
                 Barcodes = tResponse.Barcodes
             });
+        }
 
+        [HttpPost]
+        [Route("UpdateStatusSamples")]
+        public async Task<IActionResult> AddUpdateSamples(AddUpdateStatusRequest usData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add status update for damaged or timeout expiry samples in mobile app- {JsonConvert.SerializeObject(usData)}");
+            var uResponse = await _mobileSubjectService.UpdateNotificationStatus(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new UpdateStatusResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new UpdateStatusResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+                Barcodes = uResponse.Barcodes
+            });
+        }
+
+        [HttpPost]
+        [Route("UpdateStatusPositiveSubjects")]
+        public async Task<IActionResult> AddUpdateStatusPositiveSubjects(AddUpdateStatusRequest usData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add status update for hplc postive subjects in mobile app- {JsonConvert.SerializeObject(usData)}");
+            var uResponse = await _mobileSubjectService.UpdatatePositiveStatus(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new UpdateStatusResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new UpdateStatusResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+                Barcodes = uResponse.Barcodes
+            });
+        }
+
+        [HttpPost]
+        [Route("AddAcknowledgement")]
+        public async Task<IActionResult> AddAcknowledgement(AcnowledgementRequest usData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add acknowledgement test results of subjects in mobile app- {JsonConvert.SerializeObject(usData)}");
+            var uResponse = await _mobileSubjectService.AddAcknowledgement(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new AcknowledgementResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new AcknowledgementResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+            });
         }
 
         [HttpPost]
