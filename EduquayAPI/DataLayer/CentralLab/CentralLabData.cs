@@ -79,7 +79,7 @@ namespace EduquayAPI.DataLayer.CentralLab
                 var pList = new List<SqlParameter>()
                 {
                     new SqlParameter("@UniqueSubjectId", hplcData.subjectId ?? hplcData.subjectId),
-                    new SqlParameter("@BarcodNo", hplcData.barcodeNo ?? hplcData.barcodeNo),
+                    new SqlParameter("@BarcodeNo", hplcData.barcodeNo ?? hplcData.barcodeNo),
                     new SqlParameter("@CentralLabId",Convert.ToInt32(hplcData.centralLabId)),
                     new SqlParameter("@HbF",Convert.ToDecimal(hplcData.HbF)),
                     new SqlParameter("@HbA0",Convert.ToDecimal(hplcData.HbA0)),

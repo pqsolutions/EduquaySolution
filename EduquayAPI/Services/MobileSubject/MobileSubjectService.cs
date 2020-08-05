@@ -106,6 +106,117 @@ namespace EduquayAPI.Services.MobileSubject
             return tResponse;
         }
 
+        public async Task<UpdateStatusResponse> UpdatatePositiveStatus(AddUpdateStatusRequest usData)
+        {
+            var uResponse = new UpdateStatusResponse();
+            var barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(usData.data.UpdateStatusRequest[0].Samples.userId, usData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in usData.data.UpdateStatusRequest)
+                    {
+                        var slist = new BarcodeSampleDetail();
+                        barcodeNo = sample.Samples.barcodeNo;
+                        _mobileSubjectData.UpdatePositiveSubjectStatus(sample.Samples);
+                        slist.barcodeNo = sample.Samples.barcodeNo;
+                        barcodes.Add(slist);
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = barcodes.Count + " Samples status successfully updated";
+                    uResponse.Barcodes = barcodes;
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+                uResponse.Barcodes = barcodes;
+            }
+            return uResponse;
+        }
+        public async Task<AcknowledgementResponse> AddAcknowledgement(AcnowledgementRequest aData)
+        {
+            var uResponse = new AcknowledgementResponse();
+            var ackCount = 0;
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(aData.data.AcknowledgementRequest[0].userId, aData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in aData.data.AcknowledgementRequest)
+                    {
+                        _mobileSubjectData.AddResultAcknowledgement(sample.uniqueSubjectId);
+                        ackCount = ackCount+ 1;
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = ackCount + " Acknowledgement successfully received";
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
+        public async Task<UpdateStatusResponse> UpdateNotificationStatus(AddUpdateStatusRequest usData)
+        {
+            var uResponse = new UpdateStatusResponse();
+            var barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(usData.data.UpdateStatusRequest[0].Samples.userId, usData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in usData.data.UpdateStatusRequest)
+                    {
+                        var slist = new BarcodeSampleDetail();
+                        barcodeNo = sample.Samples.barcodeNo;
+                        _mobileSubjectData.UpdateNotificationStatus(sample.Samples);
+                        slist.barcodeNo = sample.Samples.barcodeNo;
+                        barcodes.Add(slist);
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = barcodes.Count + " Samples status successfully updated";
+                    uResponse.Barcodes = barcodes;
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+                uResponse.Barcodes = barcodes;
+            }
+            return uResponse;
+        }
         public async Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData)
         {
             List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
@@ -222,11 +333,13 @@ namespace EduquayAPI.Services.MobileSubject
                         var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
                         var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                         var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var results = subjectDetails.Results.FirstOrDefault(r => r.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
                         subjectRegistration.PrimaryDetail = primarySubject;
                         subjectRegistration.AddressDetail = address;
                         subjectRegistration.PregnancyDetail = pregnancy;
                         subjectRegistration.ParentDetail = parent;
+                        subjectRegistration.Results = results;
                         subjectRegistrations.Add(subjectRegistration);
                     }
                     var shipmentId = "";
@@ -295,6 +408,7 @@ namespace EduquayAPI.Services.MobileSubject
                     var damagedSamples = _mobileSubjectData.DamagedSamples(mrData.userId);
                     var timeoutSamples = _mobileSubjectData.SampleTimeout(mrData.userId);
                     var hplcPositiveSubjects = _mobileSubjectData.PositiveSubjects(mrData.userId);
+                    var testResults = _mobileSubjectData.GetTestResults(mrData.userId);
                     total = damagedSamples.Count + timeoutSamples.Count +hplcPositiveSubjects.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
@@ -303,6 +417,7 @@ namespace EduquayAPI.Services.MobileSubject
                     nlResponse.DamagedSamples = damagedSamples;
                     nlResponse.TimeoutExpirySamples = timeoutSamples;
                     nlResponse.PositiveSubjects = hplcPositiveSubjects;
+                    nlResponse.Results = testResults;
                 }
             }
             catch (Exception ex)
@@ -314,6 +429,8 @@ namespace EduquayAPI.Services.MobileSubject
             }
             return nlResponse;
         }
+
+       
     }
 }
 

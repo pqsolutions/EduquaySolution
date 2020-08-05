@@ -28,7 +28,11 @@ namespace EduquayAPI.DataLayer.MobileSubject
         List<MobileNotificationSamples> DamagedSamples(int userId);
         List<MobileNotificationSamples> SampleTimeout(int userId);
         List<MobilePositiveSubjects> PositiveSubjects(int userId);
-        Device  CheckDevice(int userId, string deviceId);
+        List<TestResult> GetTestResults(int userId);
+        Device CheckDevice(int userId, string deviceId);
+        void UpdateNotificationStatus(UpdateStatusRequest usData);
+        void UpdatePositiveSubjectStatus(UpdateStatusRequest usData);
+        void AddResultAcknowledgement(string uniqueSubjectId);
     }
 
     public interface IMobileSubjectDataFactory

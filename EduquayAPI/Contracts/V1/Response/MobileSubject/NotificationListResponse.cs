@@ -15,6 +15,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<MobileNotificationSamples> DamagedSamples { get; set; }
         public List<MobileNotificationSamples> TimeoutExpirySamples { get; set; }
         public List<MobilePositiveSubjects> PositiveSubjects  { get; set; }
+        public List<TestResult> Results { get; set; }
 
     }
 }

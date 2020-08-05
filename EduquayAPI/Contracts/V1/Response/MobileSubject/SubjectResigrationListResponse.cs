@@ -26,6 +26,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public SubjectAddress AddressDetail { get; set; }
         public SubjectPregnancy PregnancyDetail { get; set; }
         public SubjectParent ParentDetail { get; set; }
+        public TestResult Results { get; set; }
 
     }
 

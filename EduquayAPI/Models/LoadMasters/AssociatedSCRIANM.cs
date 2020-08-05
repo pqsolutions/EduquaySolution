@@ -8,6 +8,8 @@ namespace EduquayAPI.Models.LoadMasters
 {
     public class AssociatedSCRIANM : IFill
     {
+        public int phcId { get; set; }
+        public string phcName { get; set; }
         public int scId { get; set; }
         public string scName { get; set; }
         public string scAddress { get; set; }
@@ -21,6 +23,12 @@ namespace EduquayAPI.Models.LoadMasters
         public string testingCHC { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCID"))
+                this.phcId = Convert.ToInt32(reader["PHCID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCName"))
+                this.phcName = Convert.ToString(reader["PHCName"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCID"))
                 this.scId = Convert.ToInt32(reader["SCID"]);
 

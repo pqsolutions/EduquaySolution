@@ -12,15 +12,19 @@ namespace EduquayAPI.Models.MobileSubject
         public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }
-        public string rchID { get; set; }
+        public string rchId { get; set; }
         public string barcodeNo { get; set; }
         public string mobileNo { get; set; }
         public string ecNumber { get; set; }
         public bool isNotified { get; set; }
+        public string notifiedOn { get; set; }
         public string lmpDate { get; set; }
         public int subjectTypeId { get; set; }
         public int childSubjectTypeId { get; set; }
         public decimal gestationalAge { get; set; }
+        public string dateOfRegister { get; set; }
+        public string sampleCollectionDate { get; set; }
+        public string sampleCollectionTime { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
@@ -36,7 +40,7 @@ namespace EduquayAPI.Models.MobileSubject
                 this.lastName = Convert.ToString(reader["LastName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
-                this.rchID = Convert.ToString(reader["RCHID"]);
+                this.rchId = Convert.ToString(reader["RCHID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
@@ -53,6 +57,9 @@ namespace EduquayAPI.Models.MobileSubject
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsNotified"))
                 this.isNotified = Convert.ToBoolean(reader["IsNotified"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NotifiedOn"))
+                this.notifiedOn = Convert.ToString(reader["NotifiedOn"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
                 this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);
 
@@ -61,6 +68,16 @@ namespace EduquayAPI.Models.MobileSubject
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GestationalAge"))
                 this.gestationalAge = Convert.ToDecimal(reader["GestationalAge"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateofRegister"))
+                this.dateOfRegister = Convert.ToString(reader["DateofRegister"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDate"))
+                this.sampleCollectionDate = Convert.ToString(reader["SampleCollectionDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionTime"))
+                this.sampleCollectionTime = Convert.ToString(reader["SampleCollectionTime"]);
+
         }
     }
 }
