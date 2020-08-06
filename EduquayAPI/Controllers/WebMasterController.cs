@@ -430,5 +430,49 @@ namespace EduquayAPI.Controllers
                 return new LoadProviderResponse { Status = "false", Message = e.Message, LogisticsProvider = null };
             }
         }
+
+
+        [HttpGet]
+        [Route("RetrieveCentralLab/{chcId}")]
+        public LoadCentralLabResponse GetCentralLab(int chcId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var centralLab = _webMasterService.RetrieveCentralLabbyCHC(chcId);
+
+                _logger.LogInformation($"Received central lab master data by chc {centralLab}");
+                return centralLab.Count == 0 ?
+                    new LoadCentralLabResponse { Status = "true", Message = "No record found", CentalLab = new List<LoadCentralLab>() }
+                    : new LoadCentralLabResponse { Status = "true", Message = string.Empty, CentalLab = centralLab };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving central lab master data by chc {e.StackTrace}");
+                return new LoadCentralLabResponse { Status = "false", Message = e.Message, CentalLab = null };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("RetrieveMolecularLab/{centralLabId}")]
+        public LoadMolecularLabResponse GetMolecularLab(int centralLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var molecularLab = _webMasterService.RetrieveMolecularLabbyCentralLab(centralLabId);
+
+                _logger.LogInformation($"Received molecular lab master data by central lab {molecularLab}");
+                return molecularLab.Count == 0 ?
+                    new LoadMolecularLabResponse { Status = "true", Message = "No record found", MolecularLab = new List<LoadMolecularLab>() }
+                    : new LoadMolecularLabResponse { Status = "true", Message = string.Empty, MolecularLab = molecularLab };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving molecular lab master data by central lab {e.StackTrace}");
+                return new LoadMolecularLabResponse { Status = "false", Message = e.Message, MolecularLab = null };
+            }
+        }
     }
 }

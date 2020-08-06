@@ -76,7 +76,8 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
                 var hplc = _centralLabService.RetrieveHPLC(centralLabId);
-                return hplc.Count == 0 ? new HPLCResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTest>() } : new HPLCResponse  { Status = "true", Message = string.Empty, HPLCDetail = hplc };
+                return hplc.Count == 0 ? new HPLCResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTest>() }
+                : new HPLCResponse  { Status = "true", Message = string.Empty, HPLCDetail = hplc };
             }
             catch (Exception e)
             {
@@ -103,6 +104,60 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Used to fetch sample  for Pick and Pack 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePickandPack/{centralLabId}")]
+        public CentralLabPickPackResponse GetPickandPack(int centralLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received hplc positive samples for pick and pack- {JsonConvert.SerializeObject(centralLabId)}");
+                var pickpack = _centralLabService.RetrievePickandPack(centralLabId);
+                return pickpack.Count == 0 ? new CentralLabPickPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CentralLabPickandPack>() }
+                : new CentralLabPickPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
+            }
+            catch (Exception e)
+            {
+                return new CentralLabPickPackResponse { Status = "false", Message = e.Message, PickandPack = null };
+            }
+        }
 
+        /// <summary>
+        /// Used for add samples to shipment for Central Lab to molecular lab  
+        /// </summary>
+        [HttpPost]
+        [Route("AddShipment")]
+        public async Task<IActionResult> AddCHCShipment(AddCentralLabShipmentRequest csData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding central lab shipment data - {JsonConvert.SerializeObject(csData)}");
+            var sampleShipment = await _centralLabService.AddCentralLabShipment(csData);
+            return Ok(new CentralLabShipmentResponse
+            {
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
+        }
+
+        /// <summary>
+        /// Used for get shipment list of particular Central Lab 
+        [HttpGet]
+        [Route("RetrieveShipmentLog/{centralLabId}")]
+        public async Task<IActionResult> GetCHCShipmentList(int centralLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var shipmentLogResponse = await _centralLabService.RetrieveCentralLabShipmentLog(centralLabId);
+
+            return Ok(new CentralLabShipmentLogsResponse
+            {
+                Status = shipmentLogResponse.Status,
+                Message = shipmentLogResponse.Message,
+                ShipmentLogs = shipmentLogResponse.ShipmentLogs,
+            });
+        }
     }
 }

@@ -266,7 +266,7 @@ namespace EduquayAPI.Services.CHCReceipt
             {
                 message = "Delivery executive name is missing";
             }
-            if (csData.executiveContactNo == "")
+            else  if (csData.executiveContactNo == "")
             {
                 message = "Executive contactno is missing";
             }

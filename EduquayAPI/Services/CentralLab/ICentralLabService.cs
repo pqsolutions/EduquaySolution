@@ -14,5 +14,8 @@ namespace EduquayAPI.Services.CentralLab
         Task<CentralLabReceivedShipmentResponse> AddReceivedShipment(AddCentralLabShipmentReceiptRequest clRequest);
         List<HPLCTest> RetrieveHPLC(int CentralLabId);
         Task<HPLCAddResponse> AddHPLCTest(HPLCTestAddRequest hplcRequest);
+        List<CentralLabPickandPack> RetrievePickandPack(int centralLabId);
+        Task<CentralLabShipmentResponse> AddCentralLabShipment(AddCentralLabShipmentRequest csData);
+        Task<CentralLabShipmentLogsResponse> RetrieveCentralLabShipmentLog(int centralLabId);
     }
 }

@@ -27,6 +27,8 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadAVD> RetrieveAVD(int riId);
         List<LoadAssociatedANM> RetrieveAssociatedANM(int riId);
         List<LoadLogisticsProvider> RetrieveLogisticsProvider();
+        List<LoadCentralLab> RetrieveCentralLabbyCHC(int chcId);
+        List<LoadMolecularLab> RetrieveMolecularLabbyCentralLab(int centralLabId);
 
     }
     public interface IWebMasterDataFactory

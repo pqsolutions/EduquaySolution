@@ -143,7 +143,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used to fetch sample  for  CBC Test 
+        /// Used to fetch sample  for Pick and Pack 
         /// </summary>
         [HttpGet]
         [Route("RetrievePickandPack/{testingCHCId}")]
@@ -152,7 +152,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received positive samples for pick and apack- {JsonConvert.SerializeObject(testingCHCId)}");
+                _logger.LogDebug($"Received positive samples for pick and pack- {JsonConvert.SerializeObject(testingCHCId)}");
                 var pickpack = _chcReceiptService.RetrievePickandPack(testingCHCId);
                 return pickpack.Count == 0 ? new CHCCentralPickandPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CHCCentralPickandPackSample>() } : new CHCCentralPickandPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
             }
@@ -163,7 +163,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used for add samples to shipment for CHC  
+        /// Used for add samples to shipment for Central Lab  
         /// </summary>
         [HttpPost]
         [Route("AddShipment")]

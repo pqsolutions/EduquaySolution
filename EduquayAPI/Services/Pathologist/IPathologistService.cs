@@ -1,4 +1,6 @@
-﻿using EduquayAPI.Contracts.V1.Response.Pathologist;
+﻿using EduquayAPI.Contracts.V1.Request.Pathologist;
+using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Pathologist;
 using EduquayAPI.Models.Pathologist;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace EduquayAPI.Services.Pathologist
     public interface IPathologistService
     {
         Task<HPLCTestDetailResponse> HPLCResultDetail(int centralLabId);
-
+        List<HPLCResult> HPLCResult();
+        Task<ServiceResponse> AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
     }
 }
