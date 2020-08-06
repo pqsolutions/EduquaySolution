@@ -23,7 +23,6 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         {
 
         }
-
         public void AddReceivedShipment(AddReceivedShipmentRequest rsData)
         {
             try
@@ -101,7 +100,6 @@ namespace EduquayAPI.DataLayer.CHCReceipt
                     new SqlParameter("@MCV",Convert.ToDecimal(cbcData.mcv)),
                     new SqlParameter("@RDW",Convert.ToDecimal(cbcData.rdw)),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(cbcData.createdBy)),
-
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
             }

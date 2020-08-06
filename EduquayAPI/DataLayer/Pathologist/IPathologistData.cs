@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Models.Pathologist;
+﻿using EduquayAPI.Contracts.V1.Request.Pathologist;
+using EduquayAPI.Models.Pathologist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace EduquayAPI.DataLayer.Pathologist
     public interface IPathologistData
     {
         List<HPLCTestDetails> HPLCResultDetail(int centralLabId);
+        List<HPLCResult> HPLCResult();
+        string AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
     }
 
     public interface IPathologistDataFactory

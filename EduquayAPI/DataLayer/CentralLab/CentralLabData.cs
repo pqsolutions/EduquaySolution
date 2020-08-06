@@ -14,6 +14,9 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string AddCentralLabReceipt = "SPC_AddCentralLabReceipt";
         private const string FetchDetailforHPLCTest = "SPC_FetchDetailforHPLCTest";
         private const string AddHPLCTests = "SPC_AddHPLCTest";
+        private const string FetchSamplesCentralMolecularPickPack = "SPC_FetchSamplesCentralMolecularPickPack";
+        private const string AddCentralLabShipments = "SPC_AddCentralLabShipments";
+        private const string FetchCentralMolecularShipmentLog = "SPC_FetchCentralMolecularShipmentLog";
 
         public CentralLabData()
         {
@@ -88,7 +91,6 @@ namespace EduquayAPI.DataLayer.CentralLab
                     new SqlParameter("@HbC",Convert.ToDecimal(hplcData.HbC)),
                     new SqlParameter("@HbD",Convert.ToDecimal(hplcData.HbD)),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(hplcData.createdBy)),
-
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
             }
@@ -96,6 +98,60 @@ namespace EduquayAPI.DataLayer.CentralLab
             {
                 throw ex;
             }
+        }
+        public List<CentralLabPickandPack> RetrievePickandPack(int centralLabId)
+        {
+            string stProc = FetchSamplesCentralMolecularPickPack;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CentralLabId", centralLabId),
+            };
+            var allData = UtilityDL.FillData<CentralLabPickandPack>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabShipmentId> AddCentralLabShipment(AddCentralLabShipmentRequest csData)
+        {
+            try
+            {
+                string stProc = AddCentralLabShipments;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@BarcodeNo", csData.barcodeNo ?? csData.barcodeNo),
+                    new SqlParameter("@LabTechnicianName", csData.labTechnicianName ?? csData.labTechnicianName),
+                    new SqlParameter("@CentralLabUserId", csData.centralLabUserId),
+                    new SqlParameter("@CentralLabId", csData.centralLabId),
+                    new SqlParameter("@CentralLabLocation", csData.centralLabLocation ?? csData.centralLabLocation),
+                    new SqlParameter("@ReceivingMolecularLabId", csData.receivingMolecularLabId),
+                    new SqlParameter("@LogisticsProviderName", csData.logisticsProviderName ?? csData.logisticsProviderName),
+                    new SqlParameter("@DeliveryExecutiveName", csData.deliveryExecutiveName ?? csData.deliveryExecutiveName),
+                    new SqlParameter("@ExecutiveContactNo", csData.executiveContactNo ?? csData.executiveContactNo),
+                    new SqlParameter("@DateofShipment", csData.dateOfShipment ?? csData.dateOfShipment),
+                    new SqlParameter("@TimeofShipment", csData.timeOfShipment ?? csData.timeOfShipment),
+                    new SqlParameter("@Source",csData.source ?? csData.source),
+                };
+                var allData = UtilityDL.FillData<CentralLabShipmentId>(stProc, pList);
+                return allData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public CentralLabShipments RetrieveCentralLabShipmentLog(int centralLabId)
+        {
+            string stProc = FetchCentralMolecularShipmentLog;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CentralLabId", centralLabId ),
+            };
+            var allCLShipmentLogs = UtilityDL.FillData<CentralLabShipmentsLogs>(stProc, pList);
+            var allCLShipmentSubjects = UtilityDL.FillData<CentralLabShipmentLogsDetail>(stProc, pList);
+            var shiplogDetail = new CentralLabShipments();
+            shiplogDetail.ShipmentLog = allCLShipmentLogs;
+            shiplogDetail.ShipmentSubjectDetail = allCLShipmentSubjects;
+            return shiplogDetail;
         }
     }
 }

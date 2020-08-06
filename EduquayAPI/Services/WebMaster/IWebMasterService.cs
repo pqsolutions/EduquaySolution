@@ -27,5 +27,7 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadAVD> RetrieveAVD(int riId);
         List<AssociatedSCRIANM> RetrieveAssociatedANMByCHC(int chcId);
         List<LoadLogisticsProvider> RetrieveLogisticsProvider();
+        List<LoadCentralLab> RetrieveCentralLabbyCHC(int chcId);
+        List<LoadMolecularLab> RetrieveMolecularLabbyCentralLab(int centralLabId);
     }
 }
