@@ -377,10 +377,11 @@ namespace EduquayAPI.Controllers
             {
                 var avd = _webMasterService.RetrieveAVD(riId);
 
+
                 _logger.LogInformation($"Received AVD master data {avd}");
                 return avd.Count == 0 ?
-                    new LoadAVDResponse { Status = "true", Message = "No record found", AVD = new List<LoadAVD>() }
-                    : new LoadAVDResponse { Status = "true", Message = string.Empty, AVD = avd };
+                    new LoadAVDResponse { Status = "true", Message = "No record found", AVD = new LoadAVD() }
+                    : new LoadAVDResponse { Status = "true", Message = string.Empty, AVD = avd[0] };
             }
             catch (Exception e)
             {

@@ -176,9 +176,10 @@ namespace EduquayAPI.Services.ANMCHCShipment
                 var shipmentId = "";
                 foreach (var shipment in shipmentDetails.ShipmentLog)
                 {
-                    var shipmentLog = new ShipmentLogs();
+
                     if (shipmentId != shipment.shipmentId)
                     {
+                        var shipmentLog = new ShipmentLogs();
                         var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId == shipment.id).ToList();
                         shipmentLog.id = shipment.id;
                         shipmentLog.shipmentId = shipment.shipmentId;
@@ -195,6 +196,7 @@ namespace EduquayAPI.Services.ANMCHCShipment
                         shipmentId = shipment.shipmentId;
                         shipmentLogs.Add(shipmentLog);
                     }
+
                 }
                 shipmentLogResponse.ShipmentLogs = shipmentLogs;
                 shipmentLogResponse.Status = "true";
@@ -218,9 +220,9 @@ namespace EduquayAPI.Services.ANMCHCShipment
                 var shipmentId = "";
                 foreach (var shipment in shipmentDetails.ShipmentLog)
                 {
-                    var shipmentLog = new CHC2CHCShipmentLog();
                     if (shipmentId != shipment.shipmentId)
                     {
+                        var shipmentLog = new CHC2CHCShipmentLog();
                         var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId == shipment.id).ToList();
                         shipmentLog.id = shipment.id;
                         shipmentLog.shipmentId = shipment.shipmentId;

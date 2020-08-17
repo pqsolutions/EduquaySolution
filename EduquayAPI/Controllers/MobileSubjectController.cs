@@ -95,6 +95,8 @@ namespace EduquayAPI.Controllers
                 DamagedSamples = nlResponse.DamagedSamples,
                 TimeoutExpirySamples = nlResponse.TimeoutExpirySamples,
                 PositiveSubjects = nlResponse.PositiveSubjects,
+                chcSubjectResigrations = nlResponse.chcSubjectResigrations,
+                chcSampleCollections = nlResponse.chcSampleCollections,
                 Results = nlResponse.Results,
             });
         }
@@ -205,6 +207,59 @@ namespace EduquayAPI.Controllers
                 Message = uResponse.Message,
             });
         }
+
+        [HttpPost]
+        [Route("AddCHCSubjectAcknowledgement")]
+        public async Task<IActionResult> AddCHCSubjectAcknowledgement(AcnowledgementRequest usData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add acknowledgement chc subjects registered received in mobile app- {JsonConvert.SerializeObject(usData)}");
+            var uResponse = await _mobileSubjectService.AddCHCSubjectAcknowledgement(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new AcknowledgementResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new AcknowledgementResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+            });
+        }
+
+        [HttpPost]
+        [Route("AddCHCSamplesAcknowledgement")]
+        public async Task<IActionResult> AddCHCSamplesAcknowledgement(AcnowledgementRequest usData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add acknowledgement chc subjects samples collected received in mobile app- {JsonConvert.SerializeObject(usData)}");
+            var uResponse = await _mobileSubjectService.AddCHCSampleAcknowledgement(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new AcknowledgementResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new AcknowledgementResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+            });
+        }
+
 
         [HttpPost]
         [Route("Add")]

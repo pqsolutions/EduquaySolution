@@ -21,6 +21,8 @@ namespace EduquayAPI.DataLayer
         private const string FetchANWSubjectDetail = "SPC_FetchANMANWSubjectDetail";
         private const string FetchCHCANWSubjectDetail = "SPC_FetchCHCANWPositiveSubjectDetail";
 
+        private const string FetchAllSubjectDetailByANM = "SPC_FetchAllSubjectDetailByANM";
+
         public SubjectData()
         {
 

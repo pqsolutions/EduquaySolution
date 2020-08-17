@@ -46,6 +46,10 @@ namespace EduquayAPI.Models
         public int assignANMId { get; set; }
         public string anmName { get; set; }
         public Boolean isActive { get; set; }
+        public string cbcTestResult { get; set; }
+        public string ssTestResult { get; set; }
+        public string hplcTestResult { get; set; }
+
 
         public void Fill(SqlDataReader reader)
         {
@@ -162,6 +166,15 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsActive"))
                 this.isActive  = Convert.ToBoolean(reader["IsActive"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CBCTestResult"))
+                this.cbcTestResult = Convert.ToString(reader["CBCTestResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SSTestResult"))
+                this.ssTestResult = Convert.ToString(reader["SSTestResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HPLCTestResult"))
+                this.hplcTestResult = Convert.ToString(reader["HPLCTestResult"]);
 
         }
     }

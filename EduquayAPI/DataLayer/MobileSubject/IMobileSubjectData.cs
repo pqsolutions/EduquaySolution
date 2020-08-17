@@ -33,6 +33,10 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void UpdateNotificationStatus(UpdateStatusRequest usData);
         void UpdatePositiveSubjectStatus(UpdateStatusRequest usData);
         void AddResultAcknowledgement(string uniqueSubjectId);
+        void AddCHCSubAcknowledgement(string uniqueSubjectId);
+        void AddCHCSamplesAcknowledgement(string uniqueSubjectId);
+        List<SampleCollection> MobileCHCSampleDetail(int userId);
+        SubjectRegDetail MobileCHCSubjectRegDetail(int userId);
     }
 
     public interface IMobileSubjectDataFactory

@@ -88,7 +88,7 @@ namespace EduquayAPI.Services.ANMNotifications
                 else
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = $"This Barcode No - {srData.barcodeNo} already exist";
+                    sResponse.Message = $" This barcode no- {srData.barcodeNo} is already associated with another subject";
                     return sResponse;
                 }
             }

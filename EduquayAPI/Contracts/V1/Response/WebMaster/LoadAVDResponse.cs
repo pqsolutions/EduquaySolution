@@ -10,6 +10,8 @@ namespace EduquayAPI.Contracts.V1.Response.WebMaster
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<LoadAVD> AVD { get; set; }
+       // public List<LoadAVD> AVD { get; set; }
+        public LoadAVD AVD { get; set; }
+
     }
 }

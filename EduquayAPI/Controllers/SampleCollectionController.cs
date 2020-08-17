@@ -43,7 +43,7 @@ namespace EduquayAPI.Controllers
             var toDate = "";
             if (ssData.fromDate == "" || ssData.fromDate == null)
             {
-                fromDate = DateTime.Now.AddDays(-5).ToString("dd/MM/yyyy");
+                fromDate = DateTime.Now.AddYears(-1).ToString("dd/MM/yyyy");
             }
             else
             {

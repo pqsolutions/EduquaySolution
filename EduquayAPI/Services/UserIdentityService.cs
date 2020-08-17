@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using BCrypt.Net;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.DataLayer;
+using EduquayAPI.Models.MobileSubject;
 
 namespace EduquayAPI.Services
 {
@@ -19,11 +21,13 @@ namespace EduquayAPI.Services
     {
         private readonly IUsersService _usersService;
         private readonly JwtSettings _jwtSettings;
+        private readonly IUsersData _usersData;
 
-        public UserIdentityService(IUsersService usersService, JwtSettings jwtSettings)
+        public UserIdentityService(IUsersService usersService, JwtSettings jwtSettings, IUsersData usersData)
         {
             _usersService = usersService;
             _jwtSettings = jwtSettings;
+            _usersData = usersData;
         }
 
        
@@ -164,6 +168,7 @@ namespace EduquayAPI.Services
                         };
                     }
                 }
+                _usersData.AddLoginDetails(user.id, userName, "", "PC");
 
                 return GenerateAuthenticationResult(user);
             }
@@ -222,7 +227,7 @@ namespace EduquayAPI.Services
                         };
                     }
                 }
-
+                _usersData.AddLoginDetails(user.id, userName, deviceId, "TABLET");
                 return GenerateMobileAuthenticationResult(user);
             }
             catch (Exception e)
