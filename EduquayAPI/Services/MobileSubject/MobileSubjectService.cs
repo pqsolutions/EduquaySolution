@@ -145,39 +145,7 @@ namespace EduquayAPI.Services.MobileSubject
             }
             return uResponse;
         }
-        public async Task<AcknowledgementResponse> AddAcknowledgement(AcnowledgementRequest aData)
-        {
-            var uResponse = new AcknowledgementResponse();
-            var ackCount = 0;
-            try
-            {
-                var checkdevice = _mobileSubjectData.CheckDevice(aData.data.AcknowledgementRequest[0].userId, aData.deviceId);
-                if (checkdevice.valid == false)
-                {
-                    uResponse.Valid = false;
-                    uResponse.Status = "false";
-                    uResponse.Message = checkdevice.msg;
-                }
-                else
-                {
-                    foreach (var sample in aData.data.AcknowledgementRequest)
-                    {
-                        _mobileSubjectData.AddResultAcknowledgement(sample.uniqueSubjectId);
-                        ackCount = ackCount+ 1;
-                    }
-                    uResponse.Valid = true;
-                    uResponse.Status = "true";
-                    uResponse.Message = ackCount + " Acknowledgement successfully received";
-                }
-            }
-            catch (Exception e)
-            {
-                uResponse.Valid = true;
-                uResponse.Status = "false";
-                uResponse.Message = e.Message;
-            }
-            return uResponse;
-        }
+       
         public async Task<UpdateStatusResponse> UpdateNotificationStatus(AddUpdateStatusRequest usData)
         {
             var uResponse = new UpdateStatusResponse();
@@ -393,9 +361,11 @@ namespace EduquayAPI.Services.MobileSubject
         public async Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData)
         {
             var nlResponse = new NotificationListResponse();
+            var chcSubjectRegistrations = new List<CHCSubjectResigration>();
             var total = 0;
             try
             {
+               
                 var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
                 if (checkdevice.valid == false)
                 {
@@ -408,8 +378,27 @@ namespace EduquayAPI.Services.MobileSubject
                     var damagedSamples = _mobileSubjectData.DamagedSamples(mrData.userId);
                     var timeoutSamples = _mobileSubjectData.SampleTimeout(mrData.userId);
                     var hplcPositiveSubjects = _mobileSubjectData.PositiveSubjects(mrData.userId);
+                    var subjectDetails = _mobileSubjectData.MobileCHCSubjectRegDetail(mrData.userId);
+                    var sampleDetails = _mobileSubjectData.MobileCHCSampleDetail(mrData.userId);
+
+                    foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                    {
+                        var chcSubjectRegistration = new CHCSubjectResigration();
+                        var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var results = subjectDetails.Results.FirstOrDefault(r => r.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                        chcSubjectRegistration.PrimaryDetail = primarySubject;
+                        chcSubjectRegistration.AddressDetail = address;
+                        chcSubjectRegistration.PregnancyDetail = pregnancy;
+                        chcSubjectRegistration.ParentDetail = parent;
+                        chcSubjectRegistration.Results = results;
+                        chcSubjectRegistrations.Add(chcSubjectRegistration);
+                    }
                     var testResults = _mobileSubjectData.GetTestResults(mrData.userId);
-                    total = damagedSamples.Count + timeoutSamples.Count +hplcPositiveSubjects.Count;
+
+                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
                     nlResponse.Message = string.Empty;
@@ -417,6 +406,8 @@ namespace EduquayAPI.Services.MobileSubject
                     nlResponse.DamagedSamples = damagedSamples;
                     nlResponse.TimeoutExpirySamples = timeoutSamples;
                     nlResponse.PositiveSubjects = hplcPositiveSubjects;
+                    nlResponse.chcSubjectResigrations = chcSubjectRegistrations;
+                    nlResponse.chcSampleCollections = sampleDetails;
                     nlResponse.Results = testResults;
                 }
             }
@@ -430,7 +421,107 @@ namespace EduquayAPI.Services.MobileSubject
             return nlResponse;
         }
 
-       
+        public async Task<AcknowledgementResponse> AddCHCSubjectAcknowledgement(AcnowledgementRequest aData)
+        {
+            var uResponse = new AcknowledgementResponse();
+            var ackCount = 0;
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(aData.data.AcknowledgementRequest[0].userId, aData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in aData.data.AcknowledgementRequest)
+                    {
+                        _mobileSubjectData.AddCHCSubAcknowledgement(sample.uniqueSubjectId);
+                        ackCount = ackCount + 1;
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = ackCount + " Acknowledgement successfully received";
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
+
+        public async Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcnowledgementRequest aData)
+        {
+            var uResponse = new AcknowledgementResponse();
+            var ackCount = 0;
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(aData.data.AcknowledgementRequest[0].userId, aData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in aData.data.AcknowledgementRequest)
+                    {
+                        _mobileSubjectData.AddCHCSamplesAcknowledgement(sample.uniqueSubjectId);
+                        ackCount = ackCount + 1;
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = ackCount + " Acknowledgement successfully received";
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
+
+        public async Task<AcknowledgementResponse> AddAcknowledgement(AcnowledgementRequest aData)
+        {
+            var uResponse = new AcknowledgementResponse();
+            var ackCount = 0;
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(aData.data.AcknowledgementRequest[0].userId, aData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in aData.data.AcknowledgementRequest)
+                    {
+                        _mobileSubjectData.AddResultAcknowledgement(sample.uniqueSubjectId);
+                        ackCount = ackCount + 1;
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = ackCount + " Acknowledgement successfully received";
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
     }
 }
 

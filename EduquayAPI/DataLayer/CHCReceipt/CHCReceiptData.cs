@@ -86,7 +86,6 @@ namespace EduquayAPI.DataLayer.CHCReceipt
             chcReceipt.ReceiptDetail = allReceiptDetail;
             return chcReceipt;
         }
-
         public void AddCBCTest(AddCBCTestRequest cbcData)
         {
             try
@@ -99,6 +98,8 @@ namespace EduquayAPI.DataLayer.CHCReceipt
                     new SqlParameter("@TestingCHCId",Convert.ToInt32(cbcData.testingCHCId)),
                     new SqlParameter("@MCV",Convert.ToDecimal(cbcData.mcv)),
                     new SqlParameter("@RDW",Convert.ToDecimal(cbcData.rdw)),
+                    new SqlParameter("@TestCompleteOn", cbcData.testCompleteOn ?? cbcData.testCompleteOn),
+                    new SqlParameter("@SampleDateTime", cbcData.sampleDateTime ?? cbcData.sampleDateTime),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(cbcData.createdBy)),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);

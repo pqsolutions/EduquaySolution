@@ -23,6 +23,7 @@ namespace EduquayAPI.DataLayer
         private const string FetchWebLoginStatus = "SPC_FetchWebLoginStatus";
         private const string ResetANMLogin = "SPC_ResetANMLogin";
         private const string LogoutUser = "SPC_Logout";
+        private const string LoginUserDetail = "SPC_AddLoginDetails";
 
         public UsersData()
         {
@@ -235,6 +236,24 @@ namespace EduquayAPI.DataLayer
             return allData;
         }
 
-      
+        public void AddLoginDetails(int userId, string userName, string deviceId, string loginFrom)
+        {
+            try
+            {
+                var stProc = LoginUserDetail;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UserId", userId),
+                    new SqlParameter("@UserName", userName ?? userName),
+                    new SqlParameter("@DeviceId", deviceId.ToCheckNull()),
+                    new SqlParameter("@LoginFrom", loginFrom ?? loginFrom),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

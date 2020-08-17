@@ -38,6 +38,12 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchTestResults = "SPC_FetchMobileSubjectResultDetail";
         private const string AddResultAcknowledgements = "SPC_AddResultAcknowledgement";
 
+        private const string FetchMobileCHCSubjectDetail = "SPC_FetchMobileCHCSubjectDetail";
+        private const string FetchMobileCHCSampleDetailList = "SPC_FetchMobileCHCSampleDetailList";
+        private const string AddCHCSubjectAcknowledgement = "SPC_AddCHCSubjectAcknowledgement";
+        private const string AddCHCSampleAcknowledgement = "SPC_AddCHCSampleAcknowledgement";
+
+
         public MobileSubjectData()
         {
 
@@ -426,6 +432,68 @@ namespace EduquayAPI.DataLayer.MobileSubject
             {
                 throw ex;
             }
+        }
+
+
+
+        public void AddCHCSubAcknowledgement(string uniqueSubjectId)
+        {
+            try
+            {
+                var stProc = AddCHCSubjectAcknowledgement;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", uniqueSubjectId  ?? uniqueSubjectId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AddCHCSamplesAcknowledgement(string uniqueSubjectId)
+        {
+            try
+            {
+                var stProc = AddCHCSampleAcknowledgement;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", uniqueSubjectId  ?? uniqueSubjectId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<SampleCollection> MobileCHCSampleDetail(int userId)
+        {
+            string stProc = FetchMobileCHCSampleDetailList;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<SampleCollection>(stProc, pList);
+            return allSampleData;
+        }
+
+        public SubjectRegDetail MobileCHCSubjectRegDetail(int userId)
+        {
+            string stProc = FetchMobileCHCSubjectDetail;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allPrimaryData = UtilityDL.FillData<SubjectPrimary>(stProc, pList);
+            var allAddressData = UtilityDL.FillData<SubjectAddress>(stProc, pList);
+            var allPregnancyData = UtilityDL.FillData<SubjectPregnancy>(stProc, pList);
+            var allParentData = UtilityDL.FillData<SubjectParent>(stProc, pList);
+            var allResults = UtilityDL.FillData<TestResult>(stProc, pList);
+            var subDetail = new SubjectRegDetail();
+            subDetail.PrimarySubjectList = allPrimaryData;
+            subDetail.AddressSubjectList = allAddressData;
+            subDetail.PregnancySubjectList = allPregnancyData;
+            subDetail.ParentSubjectList = allParentData;
+            subDetail.Results = allResults;
+            return subDetail;
         }
     }
 }

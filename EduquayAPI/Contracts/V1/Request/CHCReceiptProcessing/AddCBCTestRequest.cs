@@ -12,6 +12,8 @@ namespace EduquayAPI.Contracts.V1.Request.CHCReceiptProcessing
         public int testingCHCId { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string testCompleteOn { get; set; }
+        public string sampleDateTime { get; set; }
         public int createdBy { get; set; }
     }
 }

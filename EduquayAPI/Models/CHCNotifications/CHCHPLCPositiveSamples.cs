@@ -13,6 +13,9 @@ namespace EduquayAPI.Models.CHCNotifications
         public int childSubjectTypeId { get; set; }
         public string uniqueSubjectId { get; set; }
         public string subjectName { get; set; }
+        public string firstName { get; set; }
+        public string middleName { get; set; }
+        public string lastName { get; set; }
         public int districtId { get; set; }
         public int chcId { get; set; }
         public int phcId { get; set; }
@@ -77,6 +80,15 @@ namespace EduquayAPI.Models.CHCNotifications
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstName"))
+                this.firstName = Convert.ToString(reader["FirstName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "MiddleName"))
+                this.middleName = Convert.ToString(reader["MiddleName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LastName"))
+                this.lastName = Convert.ToString(reader["LastName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MobileNo"))
                 this.contactNo = Convert.ToString(reader["MobileNo"]);

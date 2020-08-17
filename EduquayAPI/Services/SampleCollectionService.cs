@@ -80,7 +80,7 @@ namespace EduquayAPI.Services
                 else
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = $"This Barcode No - {ssData.barcodeNo} already exist";
+                    sResponse.Message = $" This barcode no- {ssData.barcodeNo} is already associated with another subject";
                     return sResponse;
                 }
             }
