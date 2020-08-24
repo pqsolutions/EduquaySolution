@@ -38,11 +38,7 @@ namespace EduquayAPI.Services
             return subRegSuccess;
         }
 
-        public List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData)
-        {
-            var subjectAddress = _subjectData.RetrieveAddressDetail(sData);
-            return subjectAddress;
-        }
+
 
         public List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData)
         {
@@ -56,22 +52,140 @@ namespace EduquayAPI.Services
             return anwSubjects;
         }
 
-        public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
+        public async Task<SubjectRegistrationResponse> RetrieveCHCSubjectDetail(SubjectDetailRequest sdData)
         {
-            var subjectParent = _subjectData.RetrieveParentDetail(sData);
-            return subjectParent;
+            var subjectRegistrationResponse = new SubjectRegistrationResponse();
+            var subjectRegistrations = new List<SubjectsDetail>();
+            try
+            {
+                var subjectDetails = _subjectData.RetrieveCHCSubjectDetail(sdData);
+                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                {
+                    var subjectRegistration = new SubjectsDetail();
+                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                    subjectRegistration.PrimaryDetail = primarySubject;
+                    subjectRegistration.AddressDetail = address;
+                    subjectRegistration.PregnancyDetail = pregnancy;
+                    subjectRegistration.ParentDetail = parent;
+                    subjectRegistrations.Add(subjectRegistration);
+                }
+
+                subjectRegistrationResponse.SubjectsDetail = subjectRegistrations;
+                subjectRegistrationResponse.Status = "true";
+                subjectRegistrationResponse.Message = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                subjectRegistrationResponse.Status = "false";
+                subjectRegistrationResponse.Message = ex.Message;
+            }
+
+            return subjectRegistrationResponse;
         }
 
-        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData)
+        public async Task<SubjectRegistrationResponse> RetrieveParticularCHCSubjectDetail(SubjectsDetailRequest sdData)
         {
-            var subjectPregnancy = _subjectData.RetrievePregnancyDetail(sData);
-            return subjectPregnancy;
+            var subjectRegistrationResponse = new SubjectRegistrationResponse();
+            var subjectRegistrations = new List<SubjectsDetail>();
+            try
+            {
+                var subjectDetails = _subjectData.RetrieveParticularCHCSubjectDetail(sdData);
+                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                {
+                    var subjectRegistration = new SubjectsDetail();
+                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                    subjectRegistration.PrimaryDetail = primarySubject;
+                    subjectRegistration.AddressDetail = address;
+                    subjectRegistration.PregnancyDetail = pregnancy;
+                    subjectRegistration.ParentDetail = parent;
+                    subjectRegistrations.Add(subjectRegistration);
+                }
+
+                subjectRegistrationResponse.SubjectsDetail = subjectRegistrations;
+                subjectRegistrationResponse.Status = "true";
+                subjectRegistrationResponse.Message = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                subjectRegistrationResponse.Status = "false";
+                subjectRegistrationResponse.Message = ex.Message;
+            }
+
+            return subjectRegistrationResponse;
         }
 
-        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData)
+        public async Task<SubjectRegistrationResponse> RetrieveParticularSubjectDetail(SubjectsDetailRequest sdData)
         {
-            var subjectPrimary = _subjectData.RetrievePrimaryDetail(sData);
-            return subjectPrimary;
+            var subjectRegistrationResponse = new SubjectRegistrationResponse();
+            var subjectRegistrations = new List<SubjectsDetail>();
+            try
+            {
+                var subjectDetails = _subjectData.RetrieveParticularSubjectDetail(sdData);
+                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                {
+                    var subjectRegistration = new SubjectsDetail();
+                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                    subjectRegistration.PrimaryDetail = primarySubject;
+                    subjectRegistration.AddressDetail = address;
+                    subjectRegistration.PregnancyDetail = pregnancy;
+                    subjectRegistration.ParentDetail = parent;
+                    subjectRegistrations.Add(subjectRegistration);
+                }
+
+                subjectRegistrationResponse.SubjectsDetail = subjectRegistrations;
+                subjectRegistrationResponse.Status = "true";
+                subjectRegistrationResponse.Message = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                subjectRegistrationResponse.Status = "false";
+                subjectRegistrationResponse.Message = ex.Message;
+            }
+
+            return subjectRegistrationResponse;
+        }
+
+        public async Task<SubjectRegistrationResponse> RetrieveSubjectDetail(SubjectDetailRequest sdData)
+        {
+            var subjectRegistrationResponse = new SubjectRegistrationResponse();
+            var subjectRegistrations = new List<SubjectsDetail>();
+            try
+            {
+                var subjectDetails = _subjectData.RetrieveSubjectDetail(sdData);
+                foreach (var primarySubject in subjectDetails.PrimarySubjectList)
+                {
+                    var subjectRegistration = new SubjectsDetail();
+                    var address = subjectDetails.AddressSubjectList.FirstOrDefault(ad => ad.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
+                    subjectRegistration.PrimaryDetail = primarySubject;
+                    subjectRegistration.AddressDetail = address;
+                    subjectRegistration.PregnancyDetail = pregnancy;
+                    subjectRegistration.ParentDetail = parent;
+                    subjectRegistrations.Add(subjectRegistration);
+                }
+
+                subjectRegistrationResponse.SubjectsDetail = subjectRegistrations;
+                subjectRegistrationResponse.Status = "true";
+                subjectRegistrationResponse.Message = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                subjectRegistrationResponse.Status = "false";
+                subjectRegistrationResponse.Message = ex.Message;
+            }
+
+            return subjectRegistrationResponse;
         }
     }
 }

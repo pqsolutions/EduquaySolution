@@ -12,14 +12,12 @@ namespace EduquayAPI.DataLayer
     public interface ISubjectData
     {
         UniqueIdDetail AddSubject(SubjectRegistrationRequest subRegData);
-        List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData);
-        List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData);
-        List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData);
-        List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData);
         List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData);
         List<CHCANWSubjectDetail> RetrieveCHCANWDetail(CHCANWSubjectRequest casData);
-
-
+        public SubjectDetails RetrieveSubjectDetail(SubjectDetailRequest sdData);
+        public SubjectDetails RetrieveCHCSubjectDetail(SubjectDetailRequest sdData);
+        public SubjectDetails RetrieveParticularSubjectDetail(SubjectsDetailRequest sdData);
+        public SubjectDetails RetrieveParticularCHCSubjectDetail(SubjectsDetailRequest sdData);
     }
     public interface ISubjectDataFactory
     {

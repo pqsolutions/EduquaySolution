@@ -10,9 +10,17 @@ namespace EduquayAPI.Contracts.V1.Response
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<SubjectPrimaryDetail> primaryDetail { get; set; }
-        public List<SubjectAddresDetail> addressDetail { get; set; }
-        public List<SubjectPregnancyDetail> pregnancyDetail { get; set; }
-        public List<SubjectParentDetail> parentDetail { get; set; }
+
+        public List<SubjectsDetail> SubjectsDetail { get; set; }
+
+    }
+
+    public class SubjectsDetail
+    {
+        public SubjectPrimaryDetail PrimaryDetail { get; set; }
+        public SubjectAddresDetail AddressDetail { get; set; }
+        public SubjectPregnancyDetail PregnancyDetail { get; set; }
+        public SubjectParentDetail ParentDetail { get; set; }
+
     }
 }

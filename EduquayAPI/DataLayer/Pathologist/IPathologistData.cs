@@ -10,8 +10,10 @@ namespace EduquayAPI.DataLayer.Pathologist
     public interface IPathologistData
     {
         List<HPLCTestDetails> HPLCResultDetail(int centralLabId);
+        List<HPLCDiagnosisDetails> EditHPLCDiagnosisDetail(int centralLabId);
         List<HPLCResult> HPLCResult();
         string AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
+        void AutomaticHPLCDiagnosisUpdate(int centralLabId);
     }
 
     public interface IPathologistDataFactory

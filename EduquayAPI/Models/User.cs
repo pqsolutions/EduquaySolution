@@ -14,6 +14,8 @@ namespace EduquayAPI.Models
         public string userType { get; set; }
         public int userRoleId { get; set; }
         public string userRole { get; set; }
+        public string userRoleDescription { get; set; }
+        public string userRoleAccessModule { get; set; }
         public string userGovCode { get; set; }
         public string userName { get; set; }
         public int stateId { get; set; }
@@ -56,6 +58,12 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Userrolename"))
                 this.userRole  = Convert.ToString(reader["Userrolename"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "UserRoleDescription"))
+                this.userRoleDescription = Convert.ToString(reader["UserRoleDescription"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AccessModules"))
+                this.userRoleAccessModule = Convert.ToString(reader["AccessModules"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "User_gov_code"))
                 this.userGovCode = Convert.ToString(reader["User_gov_code"]);

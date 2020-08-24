@@ -34,7 +34,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void UpdatePositiveSubjectStatus(UpdateStatusRequest usData);
         void AddResultAcknowledgement(string uniqueSubjectId);
         void AddCHCSubAcknowledgement(string uniqueSubjectId);
-        void AddCHCSamplesAcknowledgement(string uniqueSubjectId);
+        void AddCHCSamplesAcknowledgement(string barcodeNo);
         List<SampleCollection> MobileCHCSampleDetail(int userId);
         SubjectRegDetail MobileCHCSubjectRegDetail(int userId);
     }

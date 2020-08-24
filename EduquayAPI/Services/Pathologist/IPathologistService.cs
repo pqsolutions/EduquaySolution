@@ -12,6 +12,7 @@ namespace EduquayAPI.Services.Pathologist
     public interface IPathologistService
     {
         Task<HPLCTestDetailResponse> HPLCResultDetail(int centralLabId);
+        Task<HPLCDiagnosisDetailResponse> EditHPLCDiagnosisDetail(int centralLabId);
         List<HPLCResult> HPLCResult();
         Task<ServiceResponse> AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
     }

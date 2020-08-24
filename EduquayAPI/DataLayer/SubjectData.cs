@@ -17,11 +17,15 @@ namespace EduquayAPI.DataLayer
         private const string AddSubjectAddressDetail = "SPC_AddSubjectAddressDetail";
         private const string AddSubjectPregnancyDetail = "SPC_AddSubjectPregnancyDetail";
         private const string AddSubjectParentDetail = "SPC_AddSubjectParentDetail";
-        private const string FetchSubjectDetail = "SPC_FetchSubjectDetail";
+        private const string FetchParticularANMSubjectDetail = "SPC_FetchSubjectDetail";
+        private const string FetchCHCParticularSubjectDetail = "SPC_FetchCHCParticularSubjectDetail";
+
         private const string FetchANWSubjectDetail = "SPC_FetchANMANWSubjectDetail";
         private const string FetchCHCANWSubjectDetail = "SPC_FetchCHCANWPositiveSubjectDetail";
 
         private const string FetchAllSubjectDetailByANM = "SPC_FetchAllSubjectDetailByANM";
+        private const string FetchAllSubjectDetailByCHC = "SPC_FetchAllSubjectDetailByCHC";
+
 
         public SubjectData()
         {
@@ -234,38 +238,7 @@ namespace EduquayAPI.DataLayer
             }
         }
 
-        public List<SubjectPrimaryDetail> RetrievePrimaryDetail(SubjectRequest sData)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
-            var allData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
-            return allData;
-        }
-
-        public List<SubjectAddresDetail> RetrieveAddressDetail(SubjectRequest sData)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
-            var allData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
-            return allData;
-        }
-
-        public List<SubjectPregnancyDetail> RetrievePregnancyDetail(SubjectRequest sData)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
-            var allData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
-            return allData;
-        }
-
-        public List<SubjectParentDetail> RetrieveParentDetail(SubjectRequest sData)
-        {
-            string stProc = FetchSubjectDetail;
-            var pList = new List<SqlParameter>() { new SqlParameter("@UniqueSubjectID", sData.subjectId) };
-            var allData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
-            return allData;
-        }
-
+       
         public List<ANWSubjectDetail> RetrieveANWDetail(ANWSubjectRequest asData)
         {
             string stProc = FetchANWSubjectDetail;
@@ -291,6 +264,88 @@ namespace EduquayAPI.DataLayer
             };
             var allData = UtilityDL.FillData<CHCANWSubjectDetail>(stProc, pList);
             return allData;
+        }
+
+        public SubjectDetails RetrieveSubjectDetail(SubjectDetailRequest sdData)
+        {
+            string stProc = FetchAllSubjectDetailByANM;
+            var pList = new List<SqlParameter>()
+            { 
+                new SqlParameter("@UserId", sdData.userId),
+                new SqlParameter("@FromDate", sdData.fromDate.ToCheckNull()),
+                new SqlParameter("@ToDate", sdData.toDate.ToCheckNull())
+            };
+            var allPrimaryData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
+            var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
+            var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
+            var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var subDetail = new SubjectDetails();
+            subDetail.PrimarySubjectList = allPrimaryData;
+            subDetail.AddressSubjectList = allAddressData;
+            subDetail.PregnancySubjectList = allPregnancyData;
+            subDetail.ParentSubjectList = allParentData;
+            return subDetail;
+        }
+
+        public SubjectDetails RetrieveCHCSubjectDetail(SubjectDetailRequest sdData)
+        {
+            string stProc = FetchAllSubjectDetailByCHC;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+                new SqlParameter("@FromDate", sdData.fromDate.ToCheckNull()),
+                new SqlParameter("@ToDate", sdData.toDate.ToCheckNull())
+            };
+            var allPrimaryData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
+            var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
+            var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
+            var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var subDetail = new SubjectDetails();
+            subDetail.PrimarySubjectList = allPrimaryData;
+            subDetail.AddressSubjectList = allAddressData;
+            subDetail.PregnancySubjectList = allPregnancyData;
+            subDetail.ParentSubjectList = allParentData;
+            return subDetail;
+        }
+
+        public SubjectDetails RetrieveParticularSubjectDetail(SubjectsDetailRequest sdData)
+        {
+            string stProc = FetchParticularANMSubjectDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+                new SqlParameter("@UniqueSubjectID", sdData.userInput ?? sdData.userInput),
+            };
+            var allPrimaryData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
+            var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
+            var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
+            var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var subDetail = new SubjectDetails();
+            subDetail.PrimarySubjectList = allPrimaryData;
+            subDetail.AddressSubjectList = allAddressData;
+            subDetail.PregnancySubjectList = allPregnancyData;
+            subDetail.ParentSubjectList = allParentData;
+            return subDetail;
+        }
+
+        public SubjectDetails RetrieveParticularCHCSubjectDetail(SubjectsDetailRequest sdData)
+        {
+            string stProc = FetchCHCParticularSubjectDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+                new SqlParameter("@UniqueSubjectID", sdData.userInput ?? sdData.userInput),
+            };
+            var allPrimaryData = UtilityDL.FillData<SubjectPrimaryDetail>(stProc, pList);
+            var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
+            var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
+            var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var subDetail = new SubjectDetails();
+            subDetail.PrimarySubjectList = allPrimaryData;
+            subDetail.AddressSubjectList = allAddressData;
+            subDetail.PregnancySubjectList = allPregnancyData;
+            subDetail.ParentSubjectList = allParentData;
+            return subDetail;
         }
     }
 }

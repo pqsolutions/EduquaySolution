@@ -8,7 +8,9 @@ namespace EduquayAPI.Models
 {
     public class SubjectPrimaryDetail:IFill
     {
+        
         public int id { get; set; }
+        public string registeredFrom { get; set; }
         public int subjectTypeId { get; set; }
         public string subjectType { get; set; }
         public int childSubjectTypeId { get; set; }
@@ -55,6 +57,9 @@ namespace EduquayAPI.Models
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
                 this.id = Convert.ToInt32(reader["ID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RegisterBy"))
+                this.registeredFrom = Convert.ToString(reader["RegisterBy"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
                 this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);

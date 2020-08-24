@@ -24,6 +24,6 @@ namespace EduquayAPI.Services.MobileSubject
         Task<UpdateStatusResponse> UpdatatePositiveStatus(AddUpdateStatusRequest usData);
         Task<AcknowledgementResponse> AddAcknowledgement(AcnowledgementRequest aData);
         Task<AcknowledgementResponse> AddCHCSubjectAcknowledgement(AcnowledgementRequest aData);
-        Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcnowledgementRequest aData);
+        Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcknowledgementBarocdeRequest aData);
     }
 }
