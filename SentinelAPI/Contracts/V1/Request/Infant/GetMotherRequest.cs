@@ -7,6 +7,7 @@ namespace SentinelAPI.Contracts.V1.Request.Infant
 {
     public class GetMotherRequest
     {
+        public int hospitalId { get; set; }
         public string motherUniqueSubjectId { get; set; }
     }
 }
