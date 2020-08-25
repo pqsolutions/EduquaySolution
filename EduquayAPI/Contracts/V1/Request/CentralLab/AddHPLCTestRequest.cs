@@ -16,6 +16,7 @@ namespace EduquayAPI.Contracts.V1.Request.CentralLab
         public string HbS { get; set; }
         public string HbC { get; set; }
         public string HbD { get; set; }
+        public string testCompleteOn { get; set; }
         public int createdBy { get; set; }
     }
 }

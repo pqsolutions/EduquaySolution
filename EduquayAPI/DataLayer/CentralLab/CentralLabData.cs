@@ -90,6 +90,7 @@ namespace EduquayAPI.DataLayer.CentralLab
                     new SqlParameter("@HbS",Convert.ToDecimal(hplcData.HbS)),
                     new SqlParameter("@HbC",Convert.ToDecimal(hplcData.HbC)),
                     new SqlParameter("@HbD",Convert.ToDecimal(hplcData.HbD)),
+                    new SqlParameter("@TestCompleteOn", hplcData.testCompleteOn ?? hplcData.testCompleteOn),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(hplcData.createdBy)),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);

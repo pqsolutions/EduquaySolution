@@ -236,7 +236,7 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("AddCHCSamplesAcknowledgement")]
-        public async Task<IActionResult> AddCHCSamplesAcknowledgement(AcnowledgementRequest usData)
+        public async Task<IActionResult> AddCHCSamplesAcknowledgement(AcknowledgementBarocdeRequest usData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Add acknowledgement chc subjects samples collected received in mobile app- {JsonConvert.SerializeObject(usData)}");

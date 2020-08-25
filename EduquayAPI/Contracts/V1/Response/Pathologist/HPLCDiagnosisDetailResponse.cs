@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Contracts.V1.Response.Pathologist
 {
-    public class HPLCTestDetailResponse
+    public class HPLCDiagnosisDetailResponse
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<HPLCallTestDetail> SubjectDetails { get; set; }
+        public List<HPLCDiagnosisDetail> SubjectDetails { get; set; }
     }
-
-    public class HPLCallTestDetail
+    public class HPLCDiagnosisDetail
     {
         public string uniqueSubjectId { get; set; }
         public string subjectName { get; set; }
@@ -44,6 +43,14 @@ namespace EduquayAPI.Contracts.V1.Response.Pathologist
         public bool isNormal { get; set; }
         public int hplcTestResultId { get; set; }
         public string agingOfTest { get; set; }
+        public int clinicalDiagnosisId { get; set; }
+        public bool isConsultSeniorPathologist { get; set; }
+        public string seniorPathologistName { get; set; }
+        public string seniorPathologistRemarks { get; set; }
+        public string hplcResultMasterId { get; set; }
+        public string othersResult { get; set; }
+        public string diagnosisSummary { get; set; }
+
 
     }
 }

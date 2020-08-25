@@ -453,14 +453,14 @@ namespace EduquayAPI.DataLayer.MobileSubject
             }
         }
 
-        public void AddCHCSamplesAcknowledgement(string uniqueSubjectId)
+        public void AddCHCSamplesAcknowledgement(string barcodeNo)
         {
             try
             {
                 var stProc = AddCHCSampleAcknowledgement;
                 var pList = new List<SqlParameter>()
                 {
-                    new SqlParameter("@UniqueSubjectId", uniqueSubjectId  ?? uniqueSubjectId),
+                    new SqlParameter("@BarcodeNo", barcodeNo  ?? barcodeNo),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
             }

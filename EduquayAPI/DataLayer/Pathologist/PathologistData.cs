@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.Pathologist;
+using EduquayAPI.Models;
 using EduquayAPI.Models.Pathologist;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace EduquayAPI.DataLayer.Pathologist
         private const string FetchPathoDiognosticSubjectsList = "SPC_FetchPathoDiognosticSubjectsList";
         private const string FetchAllHPLCResult = "SPC_FetchAllHPLCResult";
         private const string AddHPLCDiagnosisResults = "SPC_AddHPLCDiagnosisResult";
+        private const string FetchPathoEditDiognosisSubjectsList = "SPC_FetchPathoEditDiognosisSubjectsList";
+        private const string AddHPLCDiagnosisResultByAutomatic = "SPC_AddHPLCDiagnosisResultByAutomatic";
+
 
         public PathologistData()
         {
@@ -38,6 +42,9 @@ namespace EduquayAPI.DataLayer.Pathologist
                     new SqlParameter("@SeniorPathologistName", aData.seniorPathologistName  ?? aData.seniorPathologistName),
                     new SqlParameter("@SeniorPathologistRemarks", aData.seniorPathologistRemarks  ?? aData.seniorPathologistRemarks),
                     new SqlParameter("@CreatedBy", aData.userId ),
+                    new SqlParameter("@IsDiagnosisComplete", aData.isDiagnosisComplete),
+                    new SqlParameter("@OthersResult", aData.othersResult.ToCheckNull()),
+
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
                 return $"HPLC diagnosis result updated successfully";
@@ -46,6 +53,31 @@ namespace EduquayAPI.DataLayer.Pathologist
             {
                 throw ex;
             }
+        }
+
+        public void AutomaticHPLCDiagnosisUpdate(int centralLabId)
+        {
+            try
+            {
+                var stProc = AddHPLCDiagnosisResultByAutomatic;
+                var pList = new List<SqlParameter>()
+                {
+                     new SqlParameter("@CentralLabId", centralLabId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<HPLCDiagnosisDetails> EditHPLCDiagnosisDetail(int centralLabId)
+        {
+            string stProc = FetchPathoEditDiognosisSubjectsList;
+            var pList = new List<SqlParameter>() { new SqlParameter("@CentralLabId", centralLabId) };
+            var allSampleData = UtilityDL.FillData<HPLCDiagnosisDetails>(stProc, pList);
+            return allSampleData;
         }
 
         public List<HPLCResult> HPLCResult()

@@ -16,8 +16,6 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<SubjectResigration> SubjectResigrations { get; set; }
         public List<SampleCollection> SampleCollections { get; set; }
         public List<ShipmentLogs> ShipmentLogDetail { get; set; }
-
-
     }
 
     public class SubjectResigration

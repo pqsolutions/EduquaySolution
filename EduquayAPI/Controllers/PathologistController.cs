@@ -49,6 +49,25 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used for get for edit  hplc diagnosis data which are not update their result
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveEditHPLCDiagnosisDetail/{centralLabId}")]
+        public async Task<IActionResult> GetdiagnosisList(int centralLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var subjectList = await _pathologistService.EditHPLCDiagnosisDetail(centralLabId);
+            _logger.LogInformation($"Received hplc diagnosis  details {subjectList}");
+            return Ok(new HPLCDiagnosisDetailResponse
+            {
+                Status = subjectList.Status,
+                Message = subjectList.Message,
+                SubjectDetails = subjectList.SubjectDetails,
+            });
+        }
+
+        /// <summary>
         /// Used for get hplc result master 
         /// </summary>
         [HttpGet]

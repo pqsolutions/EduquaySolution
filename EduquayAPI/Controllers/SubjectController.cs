@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using EduquayAPI.Contracts.V1;
 using Microsoft.AspNetCore.Http.Extensions;
+using EduquayAPI.Contracts.V1.Response.MobileSubject;
 
 namespace EduquayAPI.Controllers
 {
@@ -49,25 +50,63 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpPost]
-        [Route("Retrieve")]
-        public SubjectRegistrationResponse GetSubject(SubjectRequest sData)
+        [Route("RetrieveSubjectList")]
+        public async Task<IActionResult> RetrieveSubjectList(SubjectDetailRequest sdData)
         {
-            try
-            {
-                var subjecPrimary = _subjectService.RetrievePrimaryDetail(sData);
-                var subjectAddress = _subjectService.RetrieveAddressDetail(sData);
-                var subjectPregnancy = _subjectService.RetrievePregnancyDetail(sData);
-                var subjectParent = _subjectService.RetrieveParentDetail(sData);
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _subjectService.RetrieveSubjectDetail(sdData);
 
-
-                return subjecPrimary.Count == 0 && subjectAddress.Count == 0 && subjectPregnancy.Count == 0 && subjectParent.Count == 0 ?
-                    new SubjectRegistrationResponse { Status = "true", Message = "No subject found", primaryDetail = new List<SubjectPrimaryDetail>(), addressDetail = new List<SubjectAddresDetail>(), pregnancyDetail = new List<SubjectPregnancyDetail>() , parentDetail = new List<SubjectParentDetail>() } 
-                    : new SubjectRegistrationResponse { Status = "true", Message = string.Empty, primaryDetail = subjecPrimary , addressDetail = subjectAddress , pregnancyDetail = subjectPregnancy , parentDetail = subjectParent };
-            }
-            catch (Exception e)
+            return Ok(new  SubjectRegistrationResponse
             {
-                return new SubjectRegistrationResponse { Status = "false", Message = e.Message, primaryDetail = null , addressDetail = null , pregnancyDetail = null , parentDetail = null };
-            }
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectsDetail = subRegListResponse.SubjectsDetail,
+            });
+        }
+
+        [HttpPost]
+        [Route("RetrieveParticularSubjectList")]
+        public async Task<IActionResult> RetrieveParticularSubjectList(SubjectsDetailRequest sdData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _subjectService.RetrieveParticularSubjectDetail(sdData);
+
+            return Ok(new SubjectRegistrationResponse
+            {
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectsDetail = subRegListResponse.SubjectsDetail,
+            });
+        }
+
+        [HttpPost]
+        [Route("RetrieveCHCSubjectList")]
+        public async Task<IActionResult> RetrieveCHCSubjectList(SubjectDetailRequest sdData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _subjectService.RetrieveCHCSubjectDetail(sdData);
+
+            return Ok(new SubjectRegistrationResponse
+            {
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectsDetail = subRegListResponse.SubjectsDetail,
+            });
+        }
+
+        [HttpPost]
+        [Route("RetrieveParticularCHCSubjectList")]
+        public async Task<IActionResult> RetrieveParticularCHCSubjectList(SubjectsDetailRequest sdData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var subRegListResponse = await _subjectService.RetrieveParticularCHCSubjectDetail(sdData);
+
+            return Ok(new SubjectRegistrationResponse
+            {
+                Status = subRegListResponse.Status,
+                Message = subRegListResponse.Message,
+                SubjectsDetail = subRegListResponse.SubjectsDetail,
+            });
         }
 
         [HttpPost]

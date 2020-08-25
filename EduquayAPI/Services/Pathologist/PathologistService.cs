@@ -92,6 +92,71 @@ namespace EduquayAPI.Services.Pathologist
             }
         }
 
+        public async Task<HPLCDiagnosisDetailResponse> EditHPLCDiagnosisDetail(int centralLabId)
+        {
+            var hplcResultResponse = new HPLCDiagnosisDetailResponse();
+            try
+            {
+                var hplcData = _pathologistData.EditHPLCDiagnosisDetail(centralLabId);
+                var hplcAllTestDetail = new List<HPLCDiagnosisDetail>();
+                foreach (var hplc in hplcData)
+                {
+                    var hplcDet = new HPLCDiagnosisDetail();
+                    hplcDet.uniqueSubjectId = hplc.uniqueSubjectId;
+                    hplcDet.subjectName = hplc.subjectName;
+                    hplcDet.barcodeNo = hplc.barcodeNo;
+                    hplcDet.rchId = hplc.rchId;
+                    hplcDet.ga = hplc.ga;
+                    hplcDet.dateOfTest = hplc.dateOfTest;
+                    hplcDet.district = hplc.district;
+                    hplcDet.testingCHC = hplc.testingCHC;
+                    hplcDet.riPoint = hplc.riPoint;
+                    hplcDet.age = hplc.age;
+                    hplcDet.contactNo = hplc.contactNo;
+                    hplcDet.address = hplc.address;
+                    hplcDet.spouseName = hplc.spouseName;
+                    hplcDet.spouseContact = hplc.spouseContact;
+                    hplcDet.lmpDate = hplc.lmpDate;
+                    hplcDet.obstetricsScore = hplc.obstetricsScore;
+                    hplcDet.sstResult = hplc.sstResult;
+                    hplcDet.cbcResult = hplc.cbcResult;
+                    hplcDet.mcv = hplc.mcv;
+                    hplcDet.rdw = hplc.rdw;
+                    hplcDet.hbF = hplc.hbF;
+                    hplcDet.hbA0 = hplc.hbA0;
+                    hplcDet.hbA2 = hplc.hbA2;
+                    hplcDet.hbC = hplc.hbC;
+                    hplcDet.hbD = hplc.hbD;
+                    hplcDet.hbS = hplc.hbS;
+                    hplcDet.isNormal = hplc.isNormal;
+                    hplcDet.hplcTestResultId = hplc.hplcTestResultId;
+                    DateTime myDate1 = DateTime.Now;
+                    DateTime myDate2 = Convert.ToDateTime(hplc.dateOfTest);
+                    TimeSpan difference = myDate1.Subtract(myDate2);
+                    double totalDays = Math.Round(difference.TotalDays);
+                    hplcDet.agingOfTest = Convert.ToString(totalDays);
+                    hplcDet.clinicalDiagnosisId = hplc.clinicalDiagnosisId;
+                    hplcDet.isConsultSeniorPathologist = hplc.isConsultSeniorPathologist;
+                    hplcDet.seniorPathologistName = hplc.seniorPathologistName;
+                    hplcDet.seniorPathologistRemarks = hplc.seniorPathologistRemarks;
+                    hplcDet.hplcResultMasterId = hplc.hplcResultMasterId;
+                    hplcDet.othersResult = hplc.othersResult;
+                    hplcDet.diagnosisSummary = hplc.diagnosisSummary;
+                    hplcAllTestDetail.Add(hplcDet);
+                }
+
+                hplcResultResponse.Status = "true";
+                hplcResultResponse.Message = "";
+                hplcResultResponse.SubjectDetails = hplcAllTestDetail;
+            }
+            catch (Exception e)
+            {
+                hplcResultResponse.Status = "true";
+                hplcResultResponse.Message = e.Message;
+            }
+            return hplcResultResponse;
+        }
+
         public List<HPLCResult> HPLCResult()
         {
             var allHPLCResult = _pathologistData.HPLCResult();
@@ -103,10 +168,52 @@ namespace EduquayAPI.Services.Pathologist
             var hplcResultResponse = new HPLCTestDetailResponse();
             try
             {
+                _pathologistData.AutomaticHPLCDiagnosisUpdate(centralLabId);
+
                 var hplcData = _pathologistData.HPLCResultDetail(centralLabId);
+
+                var hplcAllTestDetail = new List<HPLCallTestDetail>();
+                foreach (var hplc in hplcData)
+                {
+                    var hplcDet = new HPLCallTestDetail();
+                    hplcDet.uniqueSubjectId = hplc.uniqueSubjectId;
+                    hplcDet.subjectName = hplc.subjectName;
+                    hplcDet.barcodeNo = hplc.barcodeNo;
+                    hplcDet.rchId = hplc.rchId;
+                    hplcDet.ga = hplc.ga;
+                    hplcDet.dateOfTest = hplc.dateOfTest;
+                    hplcDet.district = hplc.district;
+                    hplcDet.testingCHC = hplc.testingCHC;
+                    hplcDet.riPoint = hplc.riPoint;
+                    hplcDet.age = hplc.age;
+                    hplcDet.contactNo = hplc.contactNo;
+                    hplcDet.address = hplc.address;
+                    hplcDet.spouseName = hplc.spouseName;
+                    hplcDet.spouseContact = hplc.spouseContact;
+                    hplcDet.lmpDate = hplc.lmpDate;
+                    hplcDet.obstetricsScore = hplc.obstetricsScore;
+                    hplcDet.sstResult = hplc.sstResult;
+                    hplcDet.cbcResult = hplc.cbcResult;
+                    hplcDet.mcv = hplc.mcv;
+                    hplcDet.rdw = hplc.rdw;
+                    hplcDet.hbF = hplc.hbF;
+                    hplcDet.hbA0 = hplc.hbA0;
+                    hplcDet.hbA2 = hplc.hbA2;
+                    hplcDet.hbC = hplc.hbC;
+                    hplcDet.hbD = hplc.hbD;
+                    hplcDet.hbS = hplc.hbS;
+                    hplcDet.isNormal = hplc.isNormal;
+                    hplcDet.hplcTestResultId = hplc.hplcTestResultId;
+                    DateTime myDate1 = DateTime.Now;
+                    DateTime myDate2 = Convert.ToDateTime(hplc.dateOfTest);
+                    TimeSpan difference = myDate1.Subtract(myDate2);
+                    double totalDays = Math.Round(difference.TotalDays);
+                    hplcDet.agingOfTest = Convert.ToString(totalDays);
+                    hplcAllTestDetail.Add(hplcDet);
+                }
                 hplcResultResponse.Status = "true";
                 hplcResultResponse.Message = "";
-                hplcResultResponse.SubjectDetails = hplcData;
+                hplcResultResponse.SubjectDetails = hplcAllTestDetail;
             }
             catch (Exception e)
             {

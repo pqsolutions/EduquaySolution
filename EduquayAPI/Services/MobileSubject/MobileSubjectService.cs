@@ -455,7 +455,7 @@ namespace EduquayAPI.Services.MobileSubject
             return uResponse;
         }
 
-        public async Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcnowledgementRequest aData)
+        public async Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcknowledgementBarocdeRequest aData)
         {
             var uResponse = new AcknowledgementResponse();
             var ackCount = 0;
@@ -472,7 +472,7 @@ namespace EduquayAPI.Services.MobileSubject
                 {
                     foreach (var sample in aData.data.AcknowledgementRequest)
                     {
-                        _mobileSubjectData.AddCHCSamplesAcknowledgement(sample.uniqueSubjectId);
+                        _mobileSubjectData.AddCHCSamplesAcknowledgement(sample.barcodeNo);
                         ackCount = ackCount + 1;
                     }
                     uResponse.Valid = true;
