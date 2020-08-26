@@ -9,11 +9,12 @@ namespace SentinelAPI.Models.Infant
     public class MotherInfant : IFill
     {
         public int mothersId { get; set; }
-
         public string infantSubjectId { get; set; }
         public string infantName { get; set; }
         public string gender { get; set; }
         public string deliveryDateTime { get; set; }
+        public string infantRCHID { get; set; }
+        public bool allowCollect { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MothersId"))
@@ -30,6 +31,12 @@ namespace SentinelAPI.Models.Infant
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DeliveryDatetime"))
                 this.deliveryDateTime = Convert.ToString(reader["DeliveryDatetime"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "InfantRCHID"))
+                this.infantRCHID = Convert.ToString(reader["InfantRCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AllowCollect"))
+                this.allowCollect = Convert.ToBoolean(reader["AllowCollect"]);
         }
     }
 }

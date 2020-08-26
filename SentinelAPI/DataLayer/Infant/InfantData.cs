@@ -12,7 +12,7 @@ namespace SentinelAPI.DataLayer.Infant
     public class InfantData : IInfantData
     {
         private const string AddInfantsDetail = "SPC_AddInfantDetail";
-        private const string FetchMotherDetail = "SPC_FetchMotherInfantDetail";
+        private const string FetchMotherDetail = "SPC_FetchMotherInfantDetail"; 
 
         public InfantData()
         {
@@ -60,6 +60,7 @@ namespace SentinelAPI.DataLayer.Infant
             string stProc = FetchMotherDetail;
             var pList = new List<SqlParameter>()
             {
+                new SqlParameter("@HospitalId", mData.hospitalId),
                 new SqlParameter("@MothersRchSubHospID", mData.motherUniqueSubjectId ?? mData.motherUniqueSubjectId),
             };
             var motherdetail = UtilityDL.FillData<InfantMother>(stProc, pList);

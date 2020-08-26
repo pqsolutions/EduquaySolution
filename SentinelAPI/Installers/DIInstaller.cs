@@ -15,6 +15,10 @@ using SentinelAPI.DataLayer.LoadMaster;
 using SentinelAPI.Services.Master.LoadMaster;
 using SentinelAPI.DataLayer.Infant;
 using SentinelAPI.Services.Infant;
+using SentinelAPI.DataLayer.SampleCollection;
+using SentinelAPI.Services.SampleCollection;
+using SentinelAPI.DataLayer.PickandPack;
+using SentinelAPI.Services.PickandPack;
 
 namespace SentinelAPI.Installers
 {
@@ -36,6 +40,12 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<ILoadMasterDataFactory, LoadMasterDataFactory>();
             services.AddScoped<ILoadMasterService, LoadMasterService>();
+
+            services.AddScoped<ISampleCollectionDataFactory, SampleCollectionDataFactory>();
+            services.AddScoped<ISampleCollectionService, SampleCollectionService>();
+
+            services.AddScoped<IPickandPackDataFactory, PickandPackDataFactory>();
+            services.AddScoped<IPickandPackService, PickandPackService>();
 
         }
     }
