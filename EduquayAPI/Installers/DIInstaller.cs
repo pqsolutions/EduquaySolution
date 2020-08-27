@@ -13,6 +13,8 @@ using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.DataLayer.MolecularLab;
 using EduquayAPI.DataLayer.Pathologist;
+using EduquayAPI.DataLayer.PNDT;
+using EduquayAPI.DataLayer.PNDTandMTPMaster;
 using EduquayAPI.DataLayer.WebMaster;
 using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
@@ -25,6 +27,8 @@ using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Services.MolecularLab;
 using EduquayAPI.Services.Pathologist;
+using EduquayAPI.Services.PNDT;
+using EduquayAPI.Services.PNDTandMTPMaster;
 using EduquayAPI.Services.WebMaster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -141,6 +145,12 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IMolecularLabDataFactory, MolecularLabDataFactory>();
             services.AddScoped<IMolecularLabService, MolecularLabService>();
+
+            services.AddScoped<IPNDTDataFactory, PNDTDataFactory>();
+            services.AddScoped<IPNDTService, PNDTService>();
+
+            services.AddScoped<IPMMasterDataFactory, PMMasterDataFactory>();
+            services.AddScoped<IPMMasterService, PMMasterService>();
 
             services.AddSingleton<DbConnect>();
         }
