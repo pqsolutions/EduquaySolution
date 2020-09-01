@@ -1,0 +1,91 @@
+﻿using EduquayAPI.Contracts.V1.Request.Obstetrician;
+using EduquayAPI.Models.PNDTObstetrician;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EduquayAPI.DataLayer.PNDTObstetrician
+{
+    public class PNDTObstetricianData : IPNDTObstetricianData
+    {
+        private const string FetchSubjectsPNDTPending = "SPC_FetchSubjectsPNDTPending";
+        private const string AddPNDTestData = "SPC_AddPNDTest";
+        private const string FetchSubjectsPNDTNotCompleted = "SPC_FetchSubjectsPNDTNotCompleted";
+        private const string FetchSubjectsPNDTCompleted = "SPC_FetchSubjectsPNDTCompleted";
+
+        public PNDTObstetricianData()
+        {
+
+        }
+
+        public PNDTMsg AddPNDTest(AddPNDTestRequest aData)
+        {
+            string stProc = AddPNDTestData;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@PrePNDTCounsellingId", aData.prePNDTCounsellingId),
+                new SqlParameter("@ANWSubjectId", aData.anwsubjectId ?? aData.anwsubjectId),
+                new SqlParameter("@SpouseSubjectId", aData.spouseSubjectId ?? aData.spouseSubjectId),
+                new SqlParameter("@CounsellorId", aData.counsellorId),
+                new SqlParameter("@ObstetricianId", aData.obstetricianId),
+                new SqlParameter("@ClinicalHistory", aData.clinicalHistory ?? aData.clinicalHistory),
+                new SqlParameter("@Examination", aData.examination ?? aData.examination),
+                new SqlParameter("@ProcedureOfTestingId", aData.procedureOfTestingId),
+                new SqlParameter("@OthersPOT", aData.othersProcedureofTesting ?? aData.othersProcedureofTesting),
+                new SqlParameter("@PNDTComplecationsId", aData.pndtComplecationsId ?? aData.pndtComplecationsId),
+                new SqlParameter("@OthersComplecations", aData.othersComplecations ?? aData.othersComplecations),
+                new SqlParameter("@PNDTDiagnosisId", aData.pndtDiagnosisId),
+                new SqlParameter("@PNDTResultId", aData.pndtResultId),
+                new SqlParameter("@MotherVoided", aData.motherVoided),
+                new SqlParameter("@MotherVitalStable", aData.motherVitalStable),
+                new SqlParameter("@FoetalHeartRateDocumentScan", aData.foetalHeartRateDocumentScan),
+                new SqlParameter("@PlanForPregnencyContinue", aData.planForPregnencyContinue),
+                new SqlParameter("@IsCompletePNDT", aData.isCompletePNDT),
+                new SqlParameter("@CreatedBy", aData.userId),
+            };
+            var schedulingData = UtilityDL.FillEntity<PNDTMsg>(stProc, pList);
+            return schedulingData;
+        }
+
+        public List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData)
+        {
+            string stProc = FetchSubjectsPNDTNotCompleted;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserInput", oData.userInput),
+            };
+            var notCompletedData = UtilityDL.FillData<PNDTCompletedSummary>(stProc, pList);
+            return notCompletedData;
+        }
+
+        public List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData)
+        {
+            string stProc = FetchSubjectsPNDTNotCompleted;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@DistrictId", oData.districtId),
+                new SqlParameter("@CHCId", oData.chcId),
+                new SqlParameter("@PHCId", oData.phcId),
+                new SqlParameter("@ANMId", oData.anmId)
+            };
+            var notCompletedData = UtilityDL.FillData<PNDTNotCompleted>(stProc, pList);
+            return notCompletedData;
+        }
+
+        public List<PNDTPending> GetPNDTPending(ObstetricianRequest oData)
+        {
+            string stProc = FetchSubjectsPNDTPending;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@DistrictId", oData.districtId),
+                new SqlParameter("@CHCId", oData.chcId),
+                new SqlParameter("@PHCId", oData.phcId),
+                new SqlParameter("@ANMId", oData.anmId)
+            };
+            var pendingData = UtilityDL.FillData<PNDTPending>(stProc, pList);
+            return pendingData;
+        }
+    }
+}

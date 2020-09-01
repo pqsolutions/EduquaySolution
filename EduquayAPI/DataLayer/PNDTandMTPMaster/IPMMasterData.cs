@@ -12,6 +12,13 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
         List<PMMaster> GetCHCbyDistrict(int id);
         List<PMMaster> GetPHCbyCHC(int id);
         List<PMMaster> GetANMbyPHC(int id);
+        List<PMMaster> GetCounsellor();
+        List<PMMaster> GetPNDTObstetrician();
+        List<PMMaster> GetAllDistricts();
+        List<PMMaster> GetAllProcedureofTesting();
+        List<PMMaster> GetAllPNDTComplecations();
+        List<PMMaster> GetAllPNDTDiagnosis();
+        List<PMMaster> GetAllPNDTResultMaster();
     }
 
     public interface IPMMasterDataFactory

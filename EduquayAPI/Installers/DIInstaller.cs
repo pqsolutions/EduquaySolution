@@ -15,6 +15,7 @@ using EduquayAPI.DataLayer.MolecularLab;
 using EduquayAPI.DataLayer.Pathologist;
 using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.DataLayer.PNDTandMTPMaster;
+using EduquayAPI.DataLayer.PNDTObstetrician;
 using EduquayAPI.DataLayer.WebMaster;
 using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
@@ -29,6 +30,7 @@ using EduquayAPI.Services.MolecularLab;
 using EduquayAPI.Services.Pathologist;
 using EduquayAPI.Services.PNDT;
 using EduquayAPI.Services.PNDTandMTPMaster;
+using EduquayAPI.Services.PNDTObstetrician;
 using EduquayAPI.Services.WebMaster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -151,6 +153,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IPMMasterDataFactory, PMMasterDataFactory>();
             services.AddScoped<IPMMasterService, PMMasterService>();
+
+            services.AddScoped<IPNDTObstetricianDataFactory, PNDTObstetricianDataFactory>();
+            services.AddScoped<IPNDTObstetricianService, PNDTObstetricianService>();
 
             services.AddSingleton<DbConnect>();
         }

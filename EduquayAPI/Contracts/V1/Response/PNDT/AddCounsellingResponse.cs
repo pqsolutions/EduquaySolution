@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Contracts.V1.Response.PNDT
 {
-    public class AddSchedulingResponse
+    public class AddCounsellingResponse
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public CounsellingDateTime data { get; set; } 
+        public PrePNDTScheduleDateTime data { get; set; }
     }
 }

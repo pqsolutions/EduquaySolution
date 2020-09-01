@@ -17,6 +17,36 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             _pmMasterData = new PMMasterDataFactory().Create();
         }
 
+        public List<PMMaster> GetAllDistricts()
+        {
+            var pmMaster = _pmMasterData.GetAllDistricts();
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetAllPNDTComplecations()
+        {
+            var pmMaster = _pmMasterData.GetAllPNDTComplecations();
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetAllPNDTDiagnosis()
+        {
+            var pmMaster = _pmMasterData.GetAllPNDTDiagnosis();
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetAllPNDTResultMaster()
+        {
+            var pmMaster = _pmMasterData.GetAllPNDTResultMaster();
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetAllProcedureofTesting()
+        {
+            var pmMaster = _pmMasterData.GetAllProcedureofTesting();
+            return pmMaster;
+        }
+
         public List<PMMaster> GetANMbyPHC(int id)
         {
             var pmMaster = _pmMasterData.GetANMbyPHC(id);
@@ -29,9 +59,21 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             return pmMaster;
         }
 
+        public List<PMMaster> GetCounsellor()
+        {
+            var pmMaster = _pmMasterData.GetCounsellor();
+            return pmMaster;
+        }
+
         public List<PMMaster> GetPHCbyCHC(int id)
         {
             var pmMaster = _pmMasterData.GetPHCbyCHC(id);
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetPNDTObstetrician()
+        {
+            var pmMaster = _pmMasterData.GetPNDTObstetrician();
             return pmMaster;
         }
 

@@ -13,6 +13,7 @@ namespace EduquayAPI.Models.PNDT
         public string spouseSubjectId { get; set; }
         public string spouseName { get; set; }
         public string rchId { get; set; }
+        public string contactNo { get; set; }
         public string ga { get; set; }
         public string obstetricScore { get; set; }
 
@@ -32,6 +33,9 @@ namespace EduquayAPI.Models.PNDT
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
                 this.rchId = Convert.ToString(reader["RCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
+                this.contactNo = Convert.ToString(reader["ContactNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GestationalAge"))
                 this.ga = Convert.ToString(reader["GestationalAge"]);

@@ -1,15 +1,15 @@
-﻿using EduquayAPI.Models.PNDT;
+﻿using EduquayAPI.Models.PNDTObstetrician;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Contracts.V1.Response.PNDT
+namespace EduquayAPI.Contracts.V1.Response.Obstetrician
 {
-    public class AddSchedulingResponse
+    public class PNDTPendingListResponse
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public CounsellingDateTime data { get; set; } 
+        public List<PNDTPending> data { get; set; }
     }
 }

@@ -18,6 +18,27 @@ namespace EduquayAPI.Services.PNDT
         {
             _pndtData = new PNDTDataFactory().Create();
         }
+
+        public async Task<AddCounsellingResponse> AddCounselling(AddPrePNDTCounsellingRequest acData)
+        {
+            var sResponse = new AddCounsellingResponse();
+            try
+            {
+                var schedulingDateTime = _pndtData.AddCounselling(acData);
+                sResponse.Status = "true";
+                sResponse.Message = string.Empty;
+                sResponse.data = schedulingDateTime;
+                return sResponse;
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to add scheduling - {e.Message}";
+                return sResponse;
+            }
+
+        }
+
         public async Task<AddSchedulingResponse> AddScheduling(AddSchedulingRequest asData)
         {
             var sResponse = new AddSchedulingResponse();
@@ -56,6 +77,31 @@ namespace EduquayAPI.Services.PNDT
         {
             var schedulingData = _pndtData.GetPositiveSubjectsScheduling(psData);
             return schedulingData;
+        }
+
+        public List<PrePNDTCounselling> GetScheduledForCounselling(PNDTSchedulingRequest psData)
+        {
+            _pndtData.AutomaticPrePNDTCousellingUpdate();
+            var counsellingData = _pndtData.GetScheduledForCounselling(psData);
+            return counsellingData;
+        }
+
+        public List<PrePNDTCounselled> GetSubjectsCounselledNo(PNDTSchedulingRequest pcData)
+        {
+            var counseledNoData = _pndtData.GetSubjectsCounselledNo(pcData);
+            return counseledNoData;
+        }
+
+        public List<PrePNDTCounselled> GetSubjectsCounselledPending(PNDTSchedulingRequest pcData)
+        {
+            var counseledPendingData = _pndtData.GetSubjectsCounselledPending(pcData);
+            return counseledPendingData;
+        }
+
+        public List<PrePNDTCounselled> GetSubjectsCounselledYes(PNDTSchedulingRequest pcData)
+        {
+            var counseledYesData = _pndtData.GetSubjectsCounselledYes(pcData);
+            return counseledYesData;
         }
 
         public List<PrePNDTScheduled> GetSubjectsScheduled(PNDTSchedulingRequest psData)
