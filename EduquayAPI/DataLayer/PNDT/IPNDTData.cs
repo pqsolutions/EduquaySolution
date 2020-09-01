@@ -12,6 +12,13 @@ namespace EduquayAPI.DataLayer.PNDT
         List<PrePNDTScheduling> GetPositiveSubjectsScheduling(PNDTSchedulingRequest psData);
         List<PrePNDTScheduled> GetSubjectsScheduled(PNDTSchedulingRequest psData);
         CounsellingDateTime AddScheduling(AddSchedulingRequest asData);
+        List<PrePNDTCounselling> GetScheduledForCounselling(PNDTSchedulingRequest psData);
+        PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData);
+        List<PrePNDTCounselled> GetSubjectsCounselledYes(PNDTSchedulingRequest pcData);
+        List<PrePNDTCounselled> GetSubjectsCounselledNo(PNDTSchedulingRequest pcData);
+        List<PrePNDTCounselled> GetSubjectsCounselledPending(PNDTSchedulingRequest pcData);
+        void AutomaticPrePNDTCousellingUpdate();
+
     }
     public interface IPNDTDataFactory
     {
