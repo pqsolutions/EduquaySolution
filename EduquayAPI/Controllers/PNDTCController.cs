@@ -187,5 +187,162 @@ namespace EduquayAPI.Controllers
             }
         }
 
-    }  
+
+        /// <summary>
+        /// Used to retrieve schedule for the counselling POST PNDT
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTScheduling")]
+        public PostPNDTSchedulingResponse GetPostPNDTScheduling(PNDTSchedulingRequest psData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve schedule for the counselling POST PNDT - {JsonConvert.SerializeObject(psData)}");
+                var postPNDTScheduling = _pndtService.GetPostPNDTScheduling(psData);
+                return postPNDTScheduling.Count == 0 ? new PostPNDTSchedulingResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTScheduling>() } : new PostPNDTSchedulingResponse { Status = "true", Message = string.Empty, data = postPNDTScheduling };
+            }
+            catch (Exception e)
+            {
+                return new PostPNDTSchedulingResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to add subjects  Post PNDT schedule for the counselling
+        /// </summary>
+        [HttpPost]
+        [Route("ADDPostPNDTScheduling")]
+        public async Task<IActionResult> AddPostPNDTScheduling(AddSchedulingRequest asData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var counselling = await _pndtService.AddPostPNDTScheduling(asData);
+            _logger.LogInformation($"Add Scheduling the counselling for Post PNDT  {counselling}");
+            return Ok(new AddSchedulingResponse
+            {
+                Status = counselling.Status,
+                Message = counselling.Message,
+                data = counselling.data,
+            });
+        }
+        /// <summary>
+        /// Used to retrieve Post PNDT  scheduled for the  counselling
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTScheduled")]
+        public PrePNDTScheduledResponse GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve post PNDT  scheduled for the  counselling - {JsonConvert.SerializeObject(psData)}");
+                var postPNDTScheduling = _pndtService.GetSubjectsPostPNDTScheduled(psData);
+                return postPNDTScheduling.Count == 0 ? new PrePNDTScheduledResponse { Status = "true", Message = "No subjects found", data = new List<PrePNDTScheduled>() } : new PrePNDTScheduledResponse { Status = "true", Message = string.Empty, data = postPNDTScheduling };
+            }
+            catch (Exception e)
+            {
+                return new PrePNDTScheduledResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to  scheduled the counselling for Post PNDT
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTCounselling")]
+        public PostPNDTCounsellingResponse GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve subjects for the post PNDT counselling - {JsonConvert.SerializeObject(psData)}");
+                var postPNDTCounselling = _pndtService.GetScheduledForPostPNDTCounselling(psData);
+                return postPNDTCounselling.Count == 0 ? new PostPNDTCounsellingResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselling>() } : new PostPNDTCounsellingResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
+            }
+            catch (Exception e)
+            {
+                return new PostPNDTCounsellingResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to add subjects for counselling for the Post PNDT
+        /// </summary>
+        [HttpPost]
+        [Route("ADDPostPNDTCounselling")]
+        public async Task<IActionResult> AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var counselling = await _pndtService.AddPostPNDTCounselling(acData);
+            _logger.LogInformation($"Add  counselling for MTP - {counselling}");
+            return Ok(new AddPostCounsellingResponse
+            {
+                Status = counselling.Status,
+                Message = counselling.Message,
+                data = counselling.data,
+            });
+        }
+
+        /// <summary>
+        /// Used to retrieve subjects for the counselled MTP agree yes
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTCounselledYes")]
+        public PostPNDTCounselledResponse GetScheduledForPostPNDTCounselledPYes(PNDTSchedulingRequest pcData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve subjects for the counselled MTP agree yes - {JsonConvert.SerializeObject(pcData)}");
+                var postPNDTCounselling = _pndtService.GetSubjectsPostPNDTCounselledYes(pcData);
+                return postPNDTCounselling.Count == 0 ? new PostPNDTCounselledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselled>() } : new PostPNDTCounselledResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
+            }
+            catch (Exception e)
+            {
+                return new PostPNDTCounselledResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to retrieve subjects for the counselled MTP agree No
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTCounselledNo")]
+        public PostPNDTCounselledResponse GetScheduledForPostPNDTCounselledNo(PNDTSchedulingRequest pcData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve subjects for the counselled MTP agree No - {JsonConvert.SerializeObject(pcData)}");
+                var postPNDTCounselling = _pndtService.GetSubjectsPostPNDTCounselledNo(pcData);
+                return postPNDTCounselling.Count == 0 ? new PostPNDTCounselledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselled>() } : new PostPNDTCounselledResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
+            }
+            catch (Exception e)
+            {
+                return new PostPNDTCounselledResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to retrieve subjects for the counselled MTP agree pending
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePostPNDTCounselledPending")]
+        public PostPNDTCounselledResponse GetScheduledForPostPNDTCounselledPending(PNDTSchedulingRequest pcData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve subjects for the counselled MTP agree pending - {JsonConvert.SerializeObject(pcData)}");
+                var postPNDTCounselling = _pndtService.GetSubjectsPostPNDTCounselledPending(pcData);
+                return postPNDTCounselling.Count == 0 ? new PostPNDTCounselledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselled>() } : new PostPNDTCounselledResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
+            }
+            catch (Exception e)
+            {
+                return new PostPNDTCounselledResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+    }
 }

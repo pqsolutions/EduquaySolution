@@ -12,6 +12,7 @@ using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.DataLayer.MolecularLab;
+using EduquayAPI.DataLayer.MTPObstetrician;
 using EduquayAPI.DataLayer.Pathologist;
 using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.DataLayer.PNDTandMTPMaster;
@@ -27,6 +28,7 @@ using EduquayAPI.Services.CHCReceipt;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Services.MolecularLab;
+using EduquayAPI.Services.MTPObstetrician;
 using EduquayAPI.Services.Pathologist;
 using EduquayAPI.Services.PNDT;
 using EduquayAPI.Services.PNDTandMTPMaster;
@@ -156,6 +158,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IPNDTObstetricianDataFactory, PNDTObstetricianDataFactory>();
             services.AddScoped<IPNDTObstetricianService, PNDTObstetricianService>();
+
+            services.AddScoped<IMTPObstetricianDataFactory, MTPObstetricianDataFactory>();
+            services.AddScoped<IMTPObstetricianService, MTPObstetricianService>();
 
             services.AddSingleton<DbConnect>();
         }

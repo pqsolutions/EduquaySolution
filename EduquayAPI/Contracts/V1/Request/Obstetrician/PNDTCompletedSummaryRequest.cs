@@ -7,6 +7,6 @@ namespace EduquayAPI.Contracts.V1.Request.Obstetrician
 {
     public class PNDTCompletedSummaryRequest
     {
-        public int userInput { get; set; }
+        public string userInput { get; set; }
     }
 }

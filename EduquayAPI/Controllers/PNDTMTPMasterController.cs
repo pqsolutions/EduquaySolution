@@ -241,5 +241,43 @@ namespace EduquayAPI.Controllers
                 return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+
+        /// <summary>
+        /// Used to fetch all MTP Complecations
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMTPComplications")]
+        public PMMasterResponse GetAllMTPComplecations()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var pmMaster = _pmMasterService.GetAllMTPComplications();
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+            }
+            catch (Exception e)
+            {
+                return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to fetch all MTP Discharge Condition
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMTPDischargeConditions")]
+        public PMMasterResponse GetAllDischargeConditions()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var pmMaster = _pmMasterService.GetAllMTPDischargeCondition();
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+            }
+            catch (Exception e)
+            {
+                return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
     }
 }
