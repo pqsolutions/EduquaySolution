@@ -20,6 +20,7 @@ namespace SentinelAPI.DataLayer.LoadMaster
         private const string FetchCommunity = "SPC_FetchCommunityByCaste";
         private const string FetchAllGovIdType = "SPC_FetchAllGovIDType";
         private const string FetchAllBirthStatus = "SPC_FetchAllBirthStatus";
+        private const string FetchMolecularLab = "SPC_FetchMolecularLab";
 
         public LoadMasterData()
         {
@@ -94,6 +95,14 @@ namespace SentinelAPI.DataLayer.LoadMaster
             string stProc = FetchAllBirthStatus;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadBirthStatus>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadMolecularLab> RetrieveMolecularLab()
+        {
+            string stProc = FetchMolecularLab;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadMolecularLab>(stProc, pList);
             return allData;
         }
     }

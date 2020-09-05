@@ -19,6 +19,8 @@ using SentinelAPI.DataLayer.SampleCollection;
 using SentinelAPI.Services.SampleCollection;
 using SentinelAPI.DataLayer.PickandPack;
 using SentinelAPI.Services.PickandPack;
+using SentinelAPI.DataLayer.Shipments;
+using SentinelAPI.Services.Shipments;
 
 namespace SentinelAPI.Installers
 {
@@ -46,6 +48,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IPickandPackDataFactory, PickandPackDataFactory>();
             services.AddScoped<IPickandPackService, PickandPackService>();
+
+            services.AddScoped<IShipmentDataFactory, ShipmentDataFactory>();
+            services.AddScoped<IShipmentService, ShipmentService>();
 
         }
     }
