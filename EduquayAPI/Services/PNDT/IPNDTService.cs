@@ -18,6 +18,17 @@ namespace EduquayAPI.Services.PNDT
         List<PrePNDTCounselled> GetSubjectsCounselledYes(PNDTSchedulingRequest pcData);
         List<PrePNDTCounselled> GetSubjectsCounselledNo(PNDTSchedulingRequest pcData);
         List<PrePNDTCounselled> GetSubjectsCounselledPending(PNDTSchedulingRequest pcData);
+        List<PostPNDTScheduling> GetPostPNDTScheduling(PNDTSchedulingRequest psData);
+        Task<AddSchedulingResponse> AddPostPNDTScheduling(AddSchedulingRequest asData);
+        List<PrePNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
+        List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
+        Task<AddPostCounsellingResponse> AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData);
+
+        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
+        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
+        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
+
+
 
     }
 }

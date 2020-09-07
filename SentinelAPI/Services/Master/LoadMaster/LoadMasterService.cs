@@ -64,6 +64,12 @@ namespace SentinelAPI.Services.Master.LoadMaster
             return hospital;
         }
 
+        public List<LoadMolecularLab> RetrieveMolecularLab()
+        {
+            var allMLab = _loadMasterData.RetrieveMolecularLab();
+            return allMLab;
+        }
+
         public List<LoadReligion> RetrieveReligion()
         {
             var allReligions = _loadMasterData.RetrieveReligion();

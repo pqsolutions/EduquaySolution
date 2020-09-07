@@ -49,15 +49,12 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
             return schedulingData;
         }
 
-        public List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData)
+        public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
         {
-            string stProc = FetchSubjectsPNDTNotCompleted;
-            var pList = new List<SqlParameter>()
-            {
-                new SqlParameter("@UserInput", oData.userInput),
-            };
-            var notCompletedData = UtilityDL.FillData<PNDTCompletedSummary>(stProc, pList);
-            return notCompletedData;
+            string stProc = FetchSubjectsPNDTCompleted;
+            var pList = new List<SqlParameter>();
+            var summaryData = UtilityDL.FillData<PNDTCompletedSummary>(stProc, pList);
+            return summaryData;
         }
 
         public List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData)

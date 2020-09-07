@@ -218,5 +218,26 @@ namespace SentinelAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveMolecularLab")]
+        public LoadMolecularLabResponse GetMolecularLab()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var mLab = _loadMasterService.RetrieveMolecularLab();
+
+                _logger.LogInformation($"Received molecularlab master data {mLab}");
+                return mLab.Count == 0 ?
+                    new LoadMolecularLabResponse { Status = "true", Message = "No record found", MolecularLab = new List<LoadMolecularLab>() }
+                    : new LoadMolecularLabResponse { Status = "true", Message = string.Empty, MolecularLab = mLab };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving molecular lab  data {e.StackTrace}");
+                return new LoadMolecularLabResponse { Status = "false", Message = e.Message, MolecularLab = null };
+            }
+        }
+
     }
 }

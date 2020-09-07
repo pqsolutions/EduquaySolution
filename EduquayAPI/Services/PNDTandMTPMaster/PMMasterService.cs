@@ -23,6 +23,18 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             return pmMaster;
         }
 
+        public List<PMMaster> GetAllMTPComplications()
+        {
+            var pmMaster = _pmMasterData.GetAllMTPComplications();
+            return pmMaster;
+        }
+
+        public List<PMMaster> GetAllMTPDischargeCondition()
+        {
+            var pmMaster = _pmMasterData.GetAllMTPDischargeCondition();
+            return pmMaster;
+        }
+
         public List<PMMaster> GetAllPNDTComplecations()
         {
             var pmMaster = _pmMasterData.GetAllPNDTComplecations();

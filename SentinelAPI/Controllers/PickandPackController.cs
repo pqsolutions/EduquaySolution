@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using SentinelAPI.Contracts.V1.Request.PickandPack;
 using SentinelAPI.Contracts.V1.Response.PickandPack;
 using SentinelAPI.Models.PickandPack;
 using SentinelAPI.Services.PickandPack;
@@ -48,6 +50,22 @@ namespace SentinelAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Used for add samples to shipment for particular hospital 
+        /// </summary>
+        [HttpPost]
+        [Route("AddShipment")]
+        public async Task<IActionResult> AddShipment(AddPickandPackRequest asData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Adding shipment data - {JsonConvert.SerializeObject(asData)}");
+            var sampleShipment = await _pickandPackService.AddShipment(asData);
+            return Ok(new AddShipmentResponse
+            {
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
+        }
     }
 }

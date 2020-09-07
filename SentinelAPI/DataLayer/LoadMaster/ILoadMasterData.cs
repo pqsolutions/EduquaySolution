@@ -18,6 +18,8 @@ namespace SentinelAPI.DataLayer.LoadMaster
         List<LoadCommunity> RetrieveCommunity();
         List<LoadCommunity> RetrieveCommunity(int casteId);
         List<LoadBirthStatus> RetrieveBirthStatus();
+        List<LoadMolecularLab> RetrieveMolecularLab();
+
     }
 
     public interface ILoadMasterDataFactory

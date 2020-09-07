@@ -91,15 +91,14 @@ namespace EduquayAPI.Controllers
         /// <summary>
         /// Used to retrieve  PNDT  Completed Summary
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("RetrievePNDTCompletedSummary")]
-        public PNDTCompletedSummaryResponse GetPNDTCompleted(PNDTCompletedSummaryRequest oData)
+        public PNDTCompletedSummaryResponse GetPNDTCompleted()
         {
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Retrieve subjects for PNDT completed summary - {JsonConvert.SerializeObject(oData)}");
-                var completed = _pndtObstetricianService.GetPNDTCompletedSummary(oData);
+                var completed = _pndtObstetricianService.GetPNDTCompletedSummary();
                 return completed.Count == 0 ? new PNDTCompletedSummaryResponse { Status = "true", Message = "No subjects found", data = new List<PNDTCompletedSummary>() }
                 : new PNDTCompletedSummaryResponse { Status = "true", Message = string.Empty, data = completed };
             }

@@ -50,7 +50,7 @@ namespace EduquayAPI.Services.PNDTObstetrician
                 else if (string.IsNullOrEmpty(aData.pndtComplecationsId))
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = "Complecations are missing";
+                    sResponse.Message = "Complications are missing";
                     return sResponse;
                 }
                 else
@@ -72,9 +72,9 @@ namespace EduquayAPI.Services.PNDTObstetrician
 
         }
 
-        public List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData)
+        public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
         {
-            var completedData = _pndtObstetricianData.GetPNDTCompletedSummary(oData);
+            var completedData = _pndtObstetricianData.GetPNDTCompletedSummary();
             return completedData;
         }
 

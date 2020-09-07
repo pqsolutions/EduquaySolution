@@ -17,5 +17,7 @@ namespace SentinelAPI.Services.Master.LoadMaster
         List<LoadCommunity> RetrieveCommunity(int casteId);
         List<LoadHospitals> RetrieveHospitalByDistrict(int districtId);
         List<LoadBirthStatus> RetrieveBirthStatus();
+        List<LoadMolecularLab> RetrieveMolecularLab();
+
     }
 }

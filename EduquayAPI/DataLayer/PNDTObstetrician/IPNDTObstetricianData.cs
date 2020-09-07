@@ -12,7 +12,9 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
         List<PNDTPending> GetPNDTPending(ObstetricianRequest oData);
         PNDTMsg AddPNDTest(AddPNDTestRequest aData);
         List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData);
-        List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData);
+        //List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData);
+
+        List<PNDTCompletedSummary> GetPNDTCompletedSummary();
     }
     public interface IPNDTObstetricianDataFactory
     {
