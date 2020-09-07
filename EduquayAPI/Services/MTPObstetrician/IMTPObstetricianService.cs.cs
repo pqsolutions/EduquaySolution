@@ -12,7 +12,7 @@ namespace EduquayAPI.Services.MTPObstetrician
     {
         List<MTPPending> GetMTPPending(ObstetricianRequest oData);
         Task<AddMTPResponse> AddMTPService(AddMTPTestRequest aData);
-        List<MTPCompleted> GetMTPCompleted(ObstetricianRequest oData);
+        List<MTPSummary> GetMTPCompleted(ObstetricianRequest oData);
         List<MTPSummary> GetMTPSummary();
 
     }

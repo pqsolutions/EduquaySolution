@@ -10,6 +10,6 @@ namespace EduquayAPI.Contracts.V1.Response.Obstetrician
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<MTPCompleted> data { get; set; }
+        public List<MTPSummary> data { get; set; }
     }
 }

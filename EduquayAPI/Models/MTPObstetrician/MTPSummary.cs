@@ -22,9 +22,11 @@ namespace EduquayAPI.Models.MTPObstetrician
         public string anwCBCTestResult { get; set; }
         public string anwSSTestResult { get; set; }
         public string anwHPLCTestResult { get; set; }
+        public string anwHPLCDiagnosis { get; set; }
         public string spouseCBCTestResult { get; set; }
         public string spouseSSTestResult { get; set; }
         public string spouseHPLCTestResult { get; set; }
+        public string spouseHPLCDiagnosis { get; set; }
         public string prePNDTCounsellingDateTime { get; set; }
         public string prePNDTCounsellorName { get; set; }
         public string prePNDTCounsellingRemarks { get; set; }
@@ -55,6 +57,7 @@ namespace EduquayAPI.Models.MTPObstetrician
         public int mtpObstetricianId { get; set; }
         public int mtpCounsellorId { get; set; }
         public string mtpCounsellorName { get; set; }
+        public string mtpObstetricianName { get; set; }
         public string mtpClinicalHistory { get; set; }
         public string mtpExamination { get; set; }
         public string mtpProcedureOfTesting { get; set; }
@@ -111,6 +114,12 @@ namespace EduquayAPI.Models.MTPObstetrician
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWHPLCResult"))
                 this.anwHPLCTestResult = Convert.ToString(reader["ANWHPLCResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWHPLCDiagnosis"))
+                this.anwHPLCDiagnosis = Convert.ToString(reader["ANWHPLCDiagnosis"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SPouseHPLCDiagnosis"))
+                this.spouseHPLCDiagnosis = Convert.ToString(reader["SPouseHPLCDiagnosis"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseCBCResult"))
                 this.spouseCBCTestResult = Convert.ToString(reader["SpouseCBCResult"]);
@@ -207,6 +216,9 @@ namespace EduquayAPI.Models.MTPObstetrician
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPCounsellorName"))
                 this.mtpCounsellorName = Convert.ToString(reader["MTPCounsellorName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPObstetricianName"))
+                this.mtpObstetricianName = Convert.ToString(reader["MTPObstetricianName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPClinicalHistory"))
                 this.mtpClinicalHistory = Convert.ToString(reader["MTPClinicalHistory"]);

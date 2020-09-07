@@ -41,7 +41,7 @@ namespace EduquayAPI.DataLayer.MTPObstetrician
             return mtpData;
         }
 
-        public List<MTPCompleted> GetMTPCompleted(ObstetricianRequest oData)
+        public List<MTPSummary> GetMTPCompleted(ObstetricianRequest oData)
         {
             string stProc = FetchSubjectsMTPCompleted;
             var pList = new List<SqlParameter>()
@@ -51,7 +51,7 @@ namespace EduquayAPI.DataLayer.MTPObstetrician
                 new SqlParameter("@PHCId", oData.phcId),
                 new SqlParameter("@ANMId", oData.anmId)
             };
-            var completedData = UtilityDL.FillData<MTPCompleted>(stProc, pList);
+            var completedData = UtilityDL.FillData<MTPSummary>(stProc, pList);
             return completedData;
         }
 
