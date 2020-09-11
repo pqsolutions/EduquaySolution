@@ -18,5 +18,7 @@ namespace EduquayAPI.Services.ANMNotifications
         List<ANMHPLCPositiveSamples> GetPositiveDetails(int userId);
         Task<ANMUnsentSamplesResponse> RetrieveUnsentSamples(int userId);
         ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData);
+        List<ANMPNDTReferal> GetPNDTReferal(int userId);
+        List<ANMMTPReferal> GetMTPReferal(int userId);
     }
 }

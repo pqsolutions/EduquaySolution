@@ -20,6 +20,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         private const string MoveTimeoutExpiry = "SPC_AddTimeoutExpiryInUnsentSamples";
         private const string FetchPositiveSubjects = "SPC_FetchANMPositiveSubjectDetail";
         private const string UpdatePositiveStatus = "SPC_UpdateStatusANMPositiveSubjects";
+        private const string FetchANMNotificationPNDTReferal = "SPC_FetchANMNotificationPNDTReferal";
+        private const string FetchANMNotificationMTPReferal = "SPC_FetchANMNotificationMTPReferal";
 
         public ANMNotificationsData()
         {
@@ -153,6 +155,28 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             {
                 throw e;
             }
+        }
+
+        public List<ANMPNDTReferal> GetPNDTReferal(int userId)
+        {
+            string stProc = FetchANMNotificationPNDTReferal;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", userId),
+            };
+            var samplesData = UtilityDL.FillData<ANMPNDTReferal>(stProc, pList);
+            return samplesData;
+        }
+
+        public List<ANMMTPReferal> GetMTPReferal(int userId)
+        {
+            string stProc = FetchANMNotificationMTPReferal;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", userId),
+            };
+            var samplesData = UtilityDL.FillData<ANMMTPReferal>(stProc, pList);
+            return samplesData;
         }
     }
 }

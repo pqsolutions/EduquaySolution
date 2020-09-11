@@ -18,6 +18,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         string AddTimeoutExpiry(NotificationUpdateStatusRequest usData);
         string AddSampleRecollection(SampleRecollectionRequest srData);
         List<BarcodeSample> FetchBarcode(string barcodeNo);
+        List<ANMPNDTReferal> GetPNDTReferal(int userId);
+        List<ANMMTPReferal> GetMTPReferal(int userId);
 
     }
     public interface IANMNotificationsDataFactory

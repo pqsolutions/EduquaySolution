@@ -9,6 +9,7 @@ using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.DataLayer.CentralLab;
 using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.DataLayer.CHCReceipt;
+using EduquayAPI.DataLayer.DistrictCoordinator;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.DataLayer.MolecularLab;
@@ -25,6 +26,7 @@ using EduquayAPI.Services.ANMNotifications;
 using EduquayAPI.Services.CentralLab;
 using EduquayAPI.Services.CHCNotifications;
 using EduquayAPI.Services.CHCReceipt;
+using EduquayAPI.Services.DistrictCoordinator;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Services.MolecularLab;
@@ -161,6 +163,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IMTPObstetricianDataFactory, MTPObstetricianDataFactory>();
             services.AddScoped<IMTPObstetricianService, MTPObstetricianService>();
+
+            services.AddScoped<IDCDataFactory, DCDataFactory>();
+            services.AddScoped<IDCService, DCService>();
 
             services.AddSingleton<DbConnect>();
         }
