@@ -20,10 +20,10 @@ namespace EduquayAPI.Contracts.V1.Request.Obstetrician
         public string othersComplecations { get; set; }
         public int pndtDiagnosisId { get; set; }
         public int pndtResultId { get; set; }
-        public bool motherVoided { get; set; }
-        public bool motherVitalStable { get; set; }
-        public bool foetalHeartRateDocumentScan { get; set; }
-        public bool planForPregnencyContinue { get; set; }
+        public string motherVoided { get; set; }
+        public string motherVitalStable { get; set; }
+        public string foetalHeartRateDocumentScan { get; set; }
+        public string planForPregnencyContinue { get; set; }
         public bool isCompletePNDT { get; set; }
         public int userId { get; set; }
 

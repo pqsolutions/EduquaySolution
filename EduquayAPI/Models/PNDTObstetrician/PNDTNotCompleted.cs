@@ -22,9 +22,11 @@ namespace EduquayAPI.Models.PNDTObstetrician
         public string anwCBCTestResult { get; set; }
         public string anwSSTestResult { get; set; }
         public string anwHPLCTestResult { get; set; }
+        public string anwHPLCDiagnosis { get; set; }
         public string spouseCBCTestResult { get; set; }
         public string spouseSSTestResult { get; set; }
         public string spouseHPLCTestResult { get; set; }
+        public string spouseHPLCDiagnosis { get; set; }
         public int prePNDTCounsellingId { get; set; }
         public int schedulingId { get; set; }
         public string counsellingDateTime { get; set; }
@@ -96,6 +98,13 @@ namespace EduquayAPI.Models.PNDTObstetrician
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWHPLCResult"))
                 this.anwHPLCTestResult = Convert.ToString(reader["ANWHPLCResult"]);
+
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWHPLCDiagnosis"))
+                this.anwHPLCDiagnosis = Convert.ToString(reader["ANWHPLCDiagnosis"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SPouseHPLCDiagnosis"))
+                this.spouseHPLCDiagnosis = Convert.ToString(reader["SPouseHPLCDiagnosis"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseCBCResult"))
                 this.spouseCBCTestResult = Convert.ToString(reader["SpouseCBCResult"]);

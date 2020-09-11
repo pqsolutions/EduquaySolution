@@ -79,7 +79,7 @@ namespace EduquayAPI.Services.MTPObstetrician
             }
         }
 
-        public List<MTPCompleted> GetMTPCompleted(ObstetricianRequest oData)
+        public List<MTPSummary> GetMTPCompleted(ObstetricianRequest oData)
         {
             var completedData = _mtpObstetricianData.GetMTPCompleted(oData);
             return completedData;

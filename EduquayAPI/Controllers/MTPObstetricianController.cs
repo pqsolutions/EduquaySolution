@@ -79,7 +79,7 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Retrieve subjects for completed MTP  - {JsonConvert.SerializeObject(oData)}");
                 var mtpCompleted = _mtpObstetricianService.GetMTPCompleted(oData);
-                return mtpCompleted.Count == 0 ? new MTPCompletedResponse { Status = "true", Message = "No subjects found", data = new List<MTPCompleted>() } : new MTPCompletedResponse { Status = "true", Message = string.Empty, data = mtpCompleted };
+                return mtpCompleted.Count == 0 ? new MTPCompletedResponse { Status = "true", Message = "No subjects found", data = new List<MTPSummary>() } : new MTPCompletedResponse { Status = "true", Message = string.Empty, data = mtpCompleted };
             }
             catch (Exception e)
             {

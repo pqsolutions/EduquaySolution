@@ -11,7 +11,7 @@ namespace EduquayAPI.DataLayer.MTPObstetrician
     {
         List<MTPPending> GetMTPPending(ObstetricianRequest oData);
         MTPMsg AddMTPService(AddMTPTestRequest aData);
-        List<MTPCompleted> GetMTPCompleted(ObstetricianRequest oData);
+        List<MTPSummary> GetMTPCompleted(ObstetricianRequest oData);
         List<MTPSummary> GetMTPSummary();
 
     }
