@@ -181,6 +181,30 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used for update the Status in DC notification PNDT referal
+        /// </summary>
+        [HttpPost]
+        [Route("UpdatePNDTReferalStatus")]
+        public ActionResult<ServiceResponse> UpdatePNDTReferalStatus(ReferalDCRequest rData)
+        {
+            try
+            {
+
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Updating pndt referal status data - {JsonConvert.SerializeObject(rData)}");
+                var sampleStatus = _dcService.UpdatePNDTReferalStatus(rData);
+                _logger.LogInformation($"pndt referal status updated successfully - {rData}");
+                return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update the pndt referal status  - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
+            }
+        }
+
+
+        /// <summary>
         /// Used to retrieve mtp referal for DC 
         /// </summary>
         [HttpGet]
@@ -198,6 +222,29 @@ namespace EduquayAPI.Controllers
             catch (Exception e)
             {
                 return new DCMTPReferalResponse { Status = "false", Message = e.Message, Samples = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for update the Status in DC notification MTP Referal
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateMTPReferalStatus")]
+        public ActionResult<ServiceResponse> UpdateMTPReferalStatus(ReferalDCRequest rData)
+        {
+            try
+            {
+
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Updating mtp referal status data - {JsonConvert.SerializeObject(rData)}");
+                var sampleStatus = _dcService.UpdateMTPReferalStatus(rData);
+                _logger.LogInformation($"mtp referal status updated successfully - {rData}");
+                return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update the mtp referal status  - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
             }
         }
 

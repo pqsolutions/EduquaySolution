@@ -16,6 +16,8 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
         private const string UpdateStatusDCPositiveSubjects = "SPC_UpdateStatusDCPositiveSubjects";
         private const string FetchDCNotificationPNDTReferal = "SPC_FetchDCNotificationPNDTReferal";
         private const string FetchDCNotificationMTPReferal = "SPC_FetchDCNotificationMTPReferal";
+        private const string UpdateStatusDCNotificationPNDTReferal = "SPC_UpdateStatusDCNotificationPNDTReferal";
+        private const string UpdateStatusDCNotificationMTPReferal = "SPC_UpdateStatusDCNotificationMTPReferal";
 
         public DCData()
         {
@@ -89,6 +91,44 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
             };
             var samplesData = UtilityDL.FillData<NotificationSamples>(stProc, pList);
             return samplesData;
+        }
+
+        public string UpdateMTPReferalStatus(ReferalDCRequest rData)
+        {
+            try
+            {
+                string stProc = UpdateStatusDCNotificationMTPReferal;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@MTPReferalId", rData.referalId ?? rData.referalId),
+                    new SqlParameter("@UserId", rData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "MTP referal status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string UpdatePNDTReferalStatus(ReferalDCRequest rData)
+        {
+            try
+            {
+                string stProc = UpdateStatusDCNotificationPNDTReferal;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@PNDTReferalId", rData.referalId ?? rData.referalId),
+                    new SqlParameter("@UserId", rData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "PNDT referal status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public string UpdatePositiveSubjectStatus(NotificationDCRequest nData)

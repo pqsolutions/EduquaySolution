@@ -29,6 +29,13 @@ namespace EduquayAPI.Services.PNDTObstetrician
                     sResponse.Message = "Invalid Obstetrician";
                     return sResponse;
                 }
+                else if (string.IsNullOrEmpty(aData.pndtDateTime))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "PNDT date and time is missing";
+                    return sResponse;
+                }
+
                 else if (string.IsNullOrEmpty(aData.clinicalHistory))
                 {
                     sResponse.Status = "false";

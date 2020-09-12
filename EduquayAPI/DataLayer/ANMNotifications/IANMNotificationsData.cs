@@ -20,6 +20,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         List<BarcodeSample> FetchBarcode(string barcodeNo);
         List<ANMPNDTReferal> GetPNDTReferal(int userId);
         List<ANMMTPReferal> GetMTPReferal(int userId);
+        string UpdatePNDTReferalStatus(ANMReferalRequest rData);
+        string UpdateMTPReferalStatus(ANMReferalRequest rData);
 
     }
     public interface IANMNotificationsDataFactory

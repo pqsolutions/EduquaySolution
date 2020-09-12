@@ -18,5 +18,8 @@ namespace EduquayAPI.Services.DistrictCoordinator
         ServiceResponse UpdatePositiveSubjectStatus(NotificationDCRequest nData);
         List<PNDTReferal> GetPNDTReferal(int districtId);
         List<MTPReferal> GetMTPReferal(int districtId);
+
+        ServiceResponse UpdatePNDTReferalStatus(ReferalDCRequest rData);
+        ServiceResponse UpdateMTPReferalStatus(ReferalDCRequest rData);
     }
 }

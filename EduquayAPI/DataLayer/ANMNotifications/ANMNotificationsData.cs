@@ -22,6 +22,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         private const string UpdatePositiveStatus = "SPC_UpdateStatusANMPositiveSubjects";
         private const string FetchANMNotificationPNDTReferal = "SPC_FetchANMNotificationPNDTReferal";
         private const string FetchANMNotificationMTPReferal = "SPC_FetchANMNotificationMTPReferal";
+        private const string UpdateStatusANMNotificationPNDTReferal = "SPC_UpdateStatusANMNotificationPNDTReferal";
+        private const string UpdateStatusANMNotificationMTPReferal = "SPC_UpdateStatusANMNotificationMTPReferal";
 
         public ANMNotificationsData()
         {
@@ -177,6 +179,44 @@ namespace EduquayAPI.DataLayer.ANMNotifications
             };
             var samplesData = UtilityDL.FillData<ANMMTPReferal>(stProc, pList);
             return samplesData;
+        }
+
+        public string UpdatePNDTReferalStatus(ANMReferalRequest rData)
+        {
+            try
+            {
+                string stProc = UpdateStatusANMNotificationPNDTReferal;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@PNDTReferalId", rData.referalId ?? rData.referalId),
+                    new SqlParameter("@UserId", rData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "PNDT referal status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public string UpdateMTPReferalStatus(ANMReferalRequest rData)
+        {
+            try
+            {
+                string stProc = UpdateStatusANMNotificationMTPReferal;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@MTPReferalId", rData.referalId ?? rData.referalId),
+                    new SqlParameter("@UserId", rData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "MTP referal status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
