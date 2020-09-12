@@ -183,6 +183,48 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used to retrieve pndt referal for ANM 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePNDTReferal/{userId}")]
+        public ANMPNDTResponse GetPNDTReferal(int userId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve pndt referals for ANM  - {JsonConvert.SerializeObject(userId)}");
+                var notificationSamples = _anmNotificationsService.GetPNDTReferal(userId);
+                return notificationSamples.Count == 0 ? new ANMPNDTResponse { Status = "true", Message = "No subjects found", Samples = new List<ANMPNDTReferal>() }
+                : new ANMPNDTResponse { Status = "true", Message = string.Empty, Samples = notificationSamples };
+            }
+            catch (Exception e)
+            {
+                return new ANMPNDTResponse { Status = "false", Message = e.Message, Samples = null };
+            }
+        }
+
+        /// <summary>
+        /// Used to retrieve mtp referal for ANM 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMTPReferal/{userId}")]
+        public ANMMTPResponse GetMTPReferal(int userId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve mtp referals for ANM  - {JsonConvert.SerializeObject(userId)}");
+                var notificationSamples = _anmNotificationsService.GetMTPReferal(userId);
+                return notificationSamples.Count == 0 ? new ANMMTPResponse { Status = "true", Message = "No subjects found", Samples = new List<ANMMTPReferal>() }
+                : new ANMMTPResponse { Status = "true", Message = string.Empty, Samples = notificationSamples };
+            }
+            catch (Exception e)
+            {
+                return new ANMMTPResponse { Status = "false", Message = e.Message, Samples = null };
+            }
+        }
+
 
     }
 }

@@ -266,5 +266,17 @@ namespace EduquayAPI.Services.ANMNotifications
             }
             return response;
         }
+
+        public List<ANMPNDTReferal> GetPNDTReferal(int userId)
+        {
+            var pndtReferal = _anmNotificationsData.GetPNDTReferal(userId);
+            return pndtReferal;
+        }
+
+        public List<ANMMTPReferal> GetMTPReferal(int userId)
+        {
+            var mtpReferal = _anmNotificationsData.GetMTPReferal(userId);
+            return mtpReferal;
+        }
     }
 }
