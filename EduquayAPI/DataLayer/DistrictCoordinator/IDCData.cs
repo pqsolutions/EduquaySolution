@@ -17,6 +17,8 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
         string UpdatePositiveSubjectStatus(NotificationDCRequest nData);
         List<PNDTReferal> GetPNDTReferal(int districtId);
         List<MTPReferal> GetMTPReferal(int districtId);
+        string UpdatePNDTReferalStatus(ReferalDCRequest rData);
+        string UpdateMTPReferalStatus(ReferalDCRequest rData);
 
     }
     public interface IDCDataFactory

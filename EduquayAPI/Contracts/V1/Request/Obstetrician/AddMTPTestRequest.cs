@@ -10,6 +10,7 @@ namespace EduquayAPI.Contracts.V1.Request.Obstetrician
         public int postPNDTCounsellingId { get; set; }
         public string anwsubjectId { get; set; }
         public string spouseSubjectId { get; set; }
+        public string mtpDateTime { get; set; }
         public int counsellorId { get; set; }
         public int obstetricianId { get; set; }
         public string clinicalHistory { get; set; }

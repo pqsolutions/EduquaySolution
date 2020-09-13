@@ -55,6 +55,86 @@ namespace EduquayAPI.Services.DistrictCoordinator
             return notificationSamples;
         }
 
+        public ServiceResponse UpdateMTPReferalStatus(ReferalDCRequest rData)
+        {
+            var response = new ServiceResponse();
+            try
+            {
+
+                if (rData.userId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid user id";
+                }
+                else if (string.IsNullOrEmpty(rData.referalId))
+                {
+                    response.Status = "false";
+                    response.Message = "referal id is missing";
+                }
+                else
+                {
+                    var result = _dcData.UpdateMTPReferalStatus(rData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update mtp referal status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
+        public ServiceResponse UpdatePNDTReferalStatus(ReferalDCRequest rData)
+        {
+            var response = new ServiceResponse();
+            try
+            {
+
+                if (rData.userId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid user id";
+                }
+                else if (string.IsNullOrEmpty(rData.referalId))
+                {
+                    response.Status = "false";
+                    response.Message = "referal id is missing";
+                }
+                else
+                {
+                    var result = _dcData.UpdatePNDTReferalStatus(rData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update pndt referal status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
         public ServiceResponse UpdatePositiveSubjectStatus(NotificationDCRequest nData)
         {
             var response = new ServiceResponse();

@@ -28,6 +28,7 @@ namespace EduquayAPI.DataLayer.MTPObstetrician
                 new SqlParameter("@PostPNDTCounsellingId", aData.postPNDTCounsellingId),
                 new SqlParameter("@ANWSubjectId", aData.anwsubjectId ?? aData.anwsubjectId),
                 new SqlParameter("@SpouseSubjectId", aData.spouseSubjectId ?? aData.spouseSubjectId),
+                new SqlParameter("@MTPDateTime", aData.mtpDateTime ?? aData.mtpDateTime),
                 new SqlParameter("@CounsellorId", aData.counsellorId),
                 new SqlParameter("@ObstetricianId", aData.obstetricianId),
                 new SqlParameter("@ClinicalHistory", aData.clinicalHistory ?? aData.clinicalHistory),

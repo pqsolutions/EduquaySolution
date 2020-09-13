@@ -31,6 +31,12 @@ namespace EduquayAPI.Services.MTPObstetrician
                     sResponse.Message = "Invalid Obstetrician";
                     return sResponse;
                 }
+                else if (string.IsNullOrEmpty(aData.mtpDateTime))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "MTP date and time is missing";
+                    return sResponse;
+                }
                 else if (string.IsNullOrEmpty(aData.clinicalHistory))
                 {
                     sResponse.Status = "false";

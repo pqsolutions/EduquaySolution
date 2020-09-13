@@ -20,5 +20,7 @@ namespace EduquayAPI.Services.ANMNotifications
         ANMTimeoutResponse MoveTimeout(NotificationUpdateStatusRequest usData);
         List<ANMPNDTReferal> GetPNDTReferal(int userId);
         List<ANMMTPReferal> GetMTPReferal(int userId);
+        ServiceResponse UpdatePNDTReferalStatus(ANMReferalRequest rData);
+        ServiceResponse UpdateMTPReferalStatus(ANMReferalRequest rData);
     }
 }

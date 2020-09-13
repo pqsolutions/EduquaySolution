@@ -28,6 +28,7 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
                 new SqlParameter("@PrePNDTCounsellingId", aData.prePNDTCounsellingId),
                 new SqlParameter("@ANWSubjectId", aData.anwsubjectId ?? aData.anwsubjectId),
                 new SqlParameter("@SpouseSubjectId", aData.spouseSubjectId ?? aData.spouseSubjectId),
+                new SqlParameter("@PNDTDateTime", aData.pndtDateTime ?? aData.pndtDateTime),
                 new SqlParameter("@CounsellorId", aData.counsellorId),
                 new SqlParameter("@ObstetricianId", aData.obstetricianId),
                 new SqlParameter("@ClinicalHistory", aData.clinicalHistory ?? aData.clinicalHistory),
