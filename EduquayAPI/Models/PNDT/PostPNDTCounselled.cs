@@ -42,6 +42,7 @@ namespace EduquayAPI.Models.PNDT
         public int postPNDTSchedulingId { get; set; }
         public int postPNDTCounsellingId { get; set; }
         public int postPNDTObstetricianId { get; set; }
+        public string postPNDTCounsellingDateTime { get; set; }
         public string mtpScheduleDate { get; set; }
         public string mtpScheduleTime { get; set; }
         public string postPNDTCounsellingRemarks { get; set; }
@@ -154,6 +155,9 @@ namespace EduquayAPI.Models.PNDT
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "AssignedObstetricianId"))
                 this.postPNDTObstetricianId = Convert.ToInt32(reader["AssignedObstetricianId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CounsellingDateTime"))
+                this.postPNDTCounsellingDateTime = Convert.ToString(reader["CounsellingDateTime"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ScheduleMTPDate"))
                 this.mtpScheduleDate = Convert.ToString(reader["ScheduleMTPDate"]);

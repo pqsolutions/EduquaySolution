@@ -74,7 +74,7 @@ namespace EduquayAPI.Models.ANMNotifications
         public string postPNDTCounsellingDate { get; set; }
         public string mtpDate { get; set; }
         public int mtpReferalId { get; set; }
-        public string followUpStatus { get; set; }
+        public string notifiedStatus { get; set; }
 
 
         public void Fill(SqlDataReader reader)
@@ -103,8 +103,8 @@ namespace EduquayAPI.Models.ANMNotifications
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
                 this.anwBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
-                this.spouseBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseBarcodeNo"))
+                this.spouseBarcodes = Convert.ToString(reader["SpouseBarcodeNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWContactNo"))
                 this.anwContactNo = Convert.ToString(reader["ANWContactNo"]);
@@ -217,8 +217,8 @@ namespace EduquayAPI.Models.ANMNotifications
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPDate"))
                 this.mtpDate = Convert.ToString(reader["MTPDate"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "FollowUpStatus"))
-                this.followUpStatus = Convert.ToString(reader["FollowUpStatus"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NoitifiedStatus"))
+                this.notifiedStatus = Convert.ToString(reader["NoitifiedStatus"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPReferalId"))
                 this.mtpReferalId = Convert.ToInt32(reader["MTPReferalId"]);

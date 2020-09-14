@@ -40,7 +40,8 @@ namespace EduquayAPI.Models.PNDT
         public int postPNDTCounsellorId { get; set; }
         public string postPNDTCounsellorName { get; set; }
         public int postPNDTSchedulingId { get; set; }
-       
+        public string postPNDTCounsellingDateTime { get; set; }
+
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWSubjectId"))
@@ -138,6 +139,9 @@ namespace EduquayAPI.Models.PNDT
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CounsellorId"))
                 this.postPNDTCounsellorId = Convert.ToInt32(reader["CounsellorId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CounsellingDateTime"))
+                this.postPNDTCounsellingDateTime = Convert.ToString(reader["CounsellingDateTime"]);
 
         }
     }
