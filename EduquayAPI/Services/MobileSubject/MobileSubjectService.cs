@@ -291,12 +291,6 @@ namespace EduquayAPI.Services.MobileSubject
                     var sampleDetails = _mobileSubjectData.MobileSampleDetail(mrData.userId);
                     var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(mrData.userId);
 
-                    var prePNDTCounselling = _mobileSubjectData.FetchPrePNDTCounselling(mrData.userId);
-                    var pndTesting = _mobileSubjectData.FetchPNDTesting(mrData.userId);
-
-                    var postPNDTCounselling = _mobileSubjectData.FetchPostPNDTCounselling(mrData.userId);
-                    var mtpService = _mobileSubjectData.FetchMTPService(mrData.userId);
-
                     subjectRegistrationResponse.Valid = true;
                     subjectRegistrationResponse.LastUniqueSubjectId = LastIds.LastUniqueSubjectId;
                     subjectRegistrationResponse.LastShipmentId = LastIds.LastShipmentId;
@@ -308,12 +302,21 @@ namespace EduquayAPI.Services.MobileSubject
                         var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                         var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
                         var results = subjectDetails.Results.FirstOrDefault(r => r.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var prePndtCounselling = subjectDetails.prePndtCounselling.FirstOrDefault(prp => prp.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var pndtTesting = subjectDetails.pndtTesting.FirstOrDefault(pn => pn.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var postPndtCounselling = subjectDetails.postPndtCounselling.FirstOrDefault(pop => pop.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                        var mtpService = subjectDetails.mtpService.FirstOrDefault(ms => ms.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
                         subjectRegistration.PrimaryDetail = primarySubject;
                         subjectRegistration.AddressDetail = address;
                         subjectRegistration.PregnancyDetail = pregnancy;
                         subjectRegistration.ParentDetail = parent;
                         subjectRegistration.Results = results;
+                        subjectRegistration.prePndtCounselling  = prePndtCounselling;
+                        subjectRegistration.pndtTesting = pndtTesting;
+                        subjectRegistration.postPndtCounselling = postPndtCounselling;
+                        subjectRegistration.mtpService = mtpService;
+
                         subjectRegistrations.Add(subjectRegistration);
                     }
                     var shipmentId = "";
@@ -350,11 +353,6 @@ namespace EduquayAPI.Services.MobileSubject
                     subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
                     subjectRegistrationResponse.SampleCollections = sampleDetails;
                     subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
-                    subjectRegistrationResponse.prePndtCounselling = prePNDTCounselling;
-                    subjectRegistrationResponse.pndtTesting = pndTesting;
-                    subjectRegistrationResponse.postPndtCounselling = postPNDTCounselling;
-                    subjectRegistrationResponse.mtpService = mtpService;
-
                     subjectRegistrationResponse.Status = "true";
                     subjectRegistrationResponse.Message = string.Empty;
                 }

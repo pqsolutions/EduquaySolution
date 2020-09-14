@@ -65,11 +65,6 @@ namespace EduquayAPI.Controllers
                 SubjectResigrations = subRegListResponse.SubjectResigrations,
                 SampleCollections = subRegListResponse.SampleCollections,
                 ShipmentLogDetail = subRegListResponse.ShipmentLogDetail,
-                prePndtCounselling = subRegListResponse.prePndtCounselling,
-                pndtTesting = subRegListResponse.pndtTesting,
-                postPndtCounselling = subRegListResponse.postPndtCounselling,
-                mtpService = subRegListResponse.mtpService,
-
             });
         }
 

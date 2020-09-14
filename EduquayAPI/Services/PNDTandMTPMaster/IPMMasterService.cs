@@ -22,6 +22,6 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
         List<PMMaster> GetAllPNDTResultMaster();
         List<PMMaster> GetAllMTPComplications();
         List<PMMaster> GetAllMTPDischargeCondition();
-
+        List<PMMaster> GetAllPostMTPFollowUp();
     }
 }

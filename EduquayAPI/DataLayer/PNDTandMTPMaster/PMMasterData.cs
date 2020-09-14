@@ -23,6 +23,7 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
         private const string FetchAllPNDTResultMaster = "SPC_FetchAllPNDTResultMaster";
         private const string FetchAllMTPComplecations = "SPC_FetchAllMTPComplecations";
         private const string FetchAllMTPDischarge = "SPC_FetchAllMTPDischarge";
+        private const string FetchAllPostMTPFollowup = "SPC_FetchAllPostMTPFollowup";
 
 
         public PMMasterData()
@@ -132,6 +133,14 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var districtData = UtilityDL.FillData<PMMaster>(stProc, pList);
             return districtData;
+        }
+
+        public List<PMMaster> GetAllPostMTPFollowUp()
+        {
+            string stProc = FetchAllPostMTPFollowup;
+            var pList = new List<SqlParameter>();
+            var followUpData = UtilityDL.FillData<PMMaster>(stProc, pList);
+            return followUpData;
         }
     }
 }

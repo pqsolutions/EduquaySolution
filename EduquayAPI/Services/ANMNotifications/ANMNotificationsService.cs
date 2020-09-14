@@ -246,7 +246,9 @@ namespace EduquayAPI.Services.ANMNotifications
                     response.Status = "false";
                     response.Message = "Barcodeno is missing";
                 }
-                else { var result = _anmNotificationsData.UpdatePositiveSubjectStatus(usData); 
+                else 
+                { 
+                    var result = _anmNotificationsData.UpdatePositiveSubjectStatus(usData); 
                     if (string.IsNullOrEmpty(result))
                     {
                         response.Status = "false";
@@ -342,6 +344,57 @@ namespace EduquayAPI.Services.ANMNotifications
                     {
                         response.Status = "false";
                         response.Message = "Unable to update mtp referal status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
+        public List<ANMPostMTPFollowUp> FetchMTPFollowUp(int userId)
+        {
+            var mtpFollowUp = _anmNotificationsData.FetchMTPFollowUp(userId);
+            return mtpFollowUp;
+        }
+
+        public ServiceResponse UpdateMTPFollowUpStatus(AddFollowUpStatus fData)
+        {
+            var response = new ServiceResponse();
+            try
+            {
+
+                if (fData.userId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid user id";
+                }
+                else if (fData.mtpId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid mtp id";
+                }
+                else if (fData.followUpNo <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid followup no";
+                }
+                else
+                {
+                    var result = _anmNotificationsData.UpdateMTPFollowUpStatus(fData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update mtp follow up status";
                     }
                     else
                     {

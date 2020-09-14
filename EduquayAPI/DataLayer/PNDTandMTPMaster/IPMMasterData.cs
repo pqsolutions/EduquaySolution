@@ -21,6 +21,7 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
         List<PMMaster> GetAllPNDTResultMaster();
         List<PMMaster> GetAllMTPComplications();
         List<PMMaster> GetAllMTPDischargeCondition();
+        List<PMMaster> GetAllPostMTPFollowUp();
     }
 
     public interface IPMMasterDataFactory
