@@ -65,6 +65,10 @@ namespace EduquayAPI.Controllers
                 SubjectResigrations = subRegListResponse.SubjectResigrations,
                 SampleCollections = subRegListResponse.SampleCollections,
                 ShipmentLogDetail = subRegListResponse.ShipmentLogDetail,
+                prePndtCounselling = subRegListResponse.prePndtCounselling,
+                pndtTesting = subRegListResponse.pndtTesting,
+                postPndtCounselling = subRegListResponse.postPndtCounselling,
+                mtpService = subRegListResponse.mtpService,
 
             });
         }
@@ -92,12 +96,18 @@ namespace EduquayAPI.Controllers
                 Message = nlResponse.Message,
                 Valid = nlResponse.Valid,
                 totalNotifications = nlResponse.totalNotifications,
-                DamagedSamples = nlResponse.DamagedSamples,
-                TimeoutExpirySamples = nlResponse.TimeoutExpirySamples,
-                PositiveSubjects = nlResponse.PositiveSubjects,
+                damagedSamples = nlResponse.damagedSamples,
+                timeoutExpirySamples = nlResponse.timeoutExpirySamples,
+                positiveSubjects = nlResponse.positiveSubjects,
                 chcSubjectResigrations = nlResponse.chcSubjectResigrations,
                 chcSampleCollections = nlResponse.chcSampleCollections,
-                Results = nlResponse.Results,
+                results = nlResponse.results,
+                pndtReferral = nlResponse.pndtReferral,
+                mtpReferral = nlResponse.mtpReferral,
+                prePndtCounselling = nlResponse.prePndtCounselling,
+                pndtTesting = nlResponse.pndtTesting,
+                postPndtCounselling = nlResponse.postPndtCounselling,
+                mtpService = nlResponse.mtpService,
             });
         }
 
@@ -241,6 +251,86 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Add acknowledgement chc subjects samples collected received in mobile app- {JsonConvert.SerializeObject(usData)}");
             var uResponse = await _mobileSubjectService.AddCHCSampleAcknowledgement(usData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new AcknowledgementResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new AcknowledgementResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+            });
+        }
+
+        [HttpPost]
+        [Route("UpdatePNDTStatus")]
+        public async Task<IActionResult> UpdatePNDTStatus(AddReferalStatusRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Status update subjects for pndt referal  in mobile app- {JsonConvert.SerializeObject(rData)}");
+            var uResponse = await _mobileSubjectService.UpdatePNDTReferalStatus(rData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new UpdateReferalStatusResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new UpdateReferalStatusResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+                SubjectIds = uResponse.SubjectIds
+            });
+        }
+
+        [HttpPost]
+        [Route("UpdateMTPStatus")]
+        public async Task<IActionResult> UpdateMTPStatus(AddReferalStatusRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Status update subjects for mtp referal  in mobile app- {JsonConvert.SerializeObject(rData)}");
+            var uResponse = await _mobileSubjectService.UpdateMTPReferalStatus(rData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new UpdateReferalStatusResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message
+                });
+            }
+
+            return Ok(new UpdateReferalStatusResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+                SubjectIds = uResponse.SubjectIds
+            });
+        }
+
+        [HttpPost]
+        [Route("AddPrePostPNDTMTPAcknowledgement")]
+        public async Task<IActionResult> AddPrePostPNDTMTPAcknowledgement(AddPrePostStatusRequest aData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add acknowledgement pre and post counselling and pndt test and mtp service in mobile app- {JsonConvert.SerializeObject(aData)}");
+            var uResponse = await _mobileSubjectService.UpdatePrePostPNDTMTPAcknowledgement(aData);
 
             if (!uResponse.Valid)
             {

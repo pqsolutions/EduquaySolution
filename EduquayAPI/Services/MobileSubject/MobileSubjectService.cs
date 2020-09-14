@@ -291,6 +291,12 @@ namespace EduquayAPI.Services.MobileSubject
                     var sampleDetails = _mobileSubjectData.MobileSampleDetail(mrData.userId);
                     var shipmentDetails = _mobileSubjectData.MobileANMShipmentDetail(mrData.userId);
 
+                    var prePNDTCounselling = _mobileSubjectData.FetchPrePNDTCounselling(mrData.userId);
+                    var pndTesting = _mobileSubjectData.FetchPNDTesting(mrData.userId);
+
+                    var postPNDTCounselling = _mobileSubjectData.FetchPostPNDTCounselling(mrData.userId);
+                    var mtpService = _mobileSubjectData.FetchMTPService(mrData.userId);
+
                     subjectRegistrationResponse.Valid = true;
                     subjectRegistrationResponse.LastUniqueSubjectId = LastIds.LastUniqueSubjectId;
                     subjectRegistrationResponse.LastShipmentId = LastIds.LastShipmentId;
@@ -344,6 +350,11 @@ namespace EduquayAPI.Services.MobileSubject
                     subjectRegistrationResponse.SubjectResigrations = subjectRegistrations;
                     subjectRegistrationResponse.SampleCollections = sampleDetails;
                     subjectRegistrationResponse.ShipmentLogDetail = shipmentLogs;
+                    subjectRegistrationResponse.prePndtCounselling = prePNDTCounselling;
+                    subjectRegistrationResponse.pndtTesting = pndTesting;
+                    subjectRegistrationResponse.postPndtCounselling = postPNDTCounselling;
+                    subjectRegistrationResponse.mtpService = mtpService;
+
                     subjectRegistrationResponse.Status = "true";
                     subjectRegistrationResponse.Message = string.Empty;
                 }
@@ -362,6 +373,8 @@ namespace EduquayAPI.Services.MobileSubject
         {
             var nlResponse = new NotificationListResponse();
             var chcSubjectRegistrations = new List<CHCSubjectResigration>();
+            var mobilePNDTReferral = new List<MobilePNDTReferral>();
+            var mobileMTPReferral = new List<MobileMTPReferral>();
             var total = 0;
             try
             {
@@ -381,6 +394,12 @@ namespace EduquayAPI.Services.MobileSubject
                     var subjectDetails = _mobileSubjectData.MobileCHCSubjectRegDetail(mrData.userId);
                     var sampleDetails = _mobileSubjectData.MobileCHCSampleDetail(mrData.userId);
 
+                    var prePNDTCounsellingNotification = _mobileSubjectData.FetchPrePNDTCounsellingNotification(mrData.userId);
+                    var pndTestingNotification = _mobileSubjectData.FetchPNDTestingNotification(mrData.userId);
+
+                    var postPNDTCounsellingNotification = _mobileSubjectData.FetchPostPNDTCounsellingNotification(mrData.userId);
+                    var mtpServiceNotification = _mobileSubjectData.FetchMTPServiceNotification(mrData.userId);
+
                     foreach (var primarySubject in subjectDetails.PrimarySubjectList)
                     {
                         var chcSubjectRegistration = new CHCSubjectResigration();
@@ -396,19 +415,57 @@ namespace EduquayAPI.Services.MobileSubject
                         chcSubjectRegistration.Results = results;
                         chcSubjectRegistrations.Add(chcSubjectRegistration);
                     }
+
                     var testResults = _mobileSubjectData.GetTestResults(mrData.userId);
 
-                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count;
+                    var pndtDetail = _mobileSubjectData.GetPNDTReferral(mrData.userId);
+                    foreach (var sub in pndtDetail.subject)
+                    {
+                        var pndtReferral = new MobilePNDTReferral();
+                        var spouse = pndtDetail.spouse.FirstOrDefault(sp => sp.spouseSubjectId == sub.uniqueSubjectId);
+                        var prePNDTCounselling = pndtDetail.prePndtCounselling.FirstOrDefault(pr => pr.uniqueSubjectId == sub.uniqueSubjectId);
+                        var pndtTest = pndtDetail.pndtTesting.FirstOrDefault(pt => pt.uniqueSubjectId == sub.uniqueSubjectId);
+
+                        pndtReferral.subject = sub;
+                        pndtReferral.spouse = spouse;
+                        pndtReferral.prePndtCounselling = prePNDTCounselling;
+                        pndtReferral.pndtTesting = pndtTest;
+                        mobilePNDTReferral.Add(pndtReferral);
+                    }
+
+                    var mtpDetail = _mobileSubjectData.GetMTPReferral(mrData.userId);
+                    foreach (var sub in mtpDetail.subject)
+                    {
+                        var mtpReferral = new MobileMTPReferral();
+                        var spouse = mtpDetail.spouse.FirstOrDefault(sp => sp.spouseSubjectId == sub.uniqueSubjectId);
+                        var postPNDTCounselling = mtpDetail.postPndtCounselling.FirstOrDefault(pr => pr.uniqueSubjectId == sub.uniqueSubjectId);
+                        var mtpService = mtpDetail.mtpService.FirstOrDefault(pt => pt.uniqueSubjectId == sub.uniqueSubjectId);
+
+                        mtpReferral.subject = sub;
+                        mtpReferral.spouse = spouse;
+                        mtpReferral.postPndtCounselling = postPNDTCounselling;
+                        mtpReferral.mtpService = mtpService;
+                        mobileMTPReferral.Add(mtpReferral);
+                    }
+
+                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count + pndtDetail.subject.Count + mtpDetail.subject.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
                     nlResponse.Message = string.Empty;
                     nlResponse.totalNotifications = total;
-                    nlResponse.DamagedSamples = damagedSamples;
-                    nlResponse.TimeoutExpirySamples = timeoutSamples;
-                    nlResponse.PositiveSubjects = hplcPositiveSubjects;
+                    nlResponse.damagedSamples = damagedSamples;
+                    nlResponse.timeoutExpirySamples = timeoutSamples;
+                    nlResponse.positiveSubjects = hplcPositiveSubjects;
                     nlResponse.chcSubjectResigrations = chcSubjectRegistrations;
                     nlResponse.chcSampleCollections = sampleDetails;
-                    nlResponse.Results = testResults;
+                    nlResponse.results = testResults;
+                    nlResponse.pndtReferral = mobilePNDTReferral;
+                    nlResponse.mtpReferral = mobileMTPReferral;
+                    nlResponse.prePndtCounselling = prePNDTCounsellingNotification;
+                    nlResponse.pndtTesting = pndTestingNotification;
+                    nlResponse.postPndtCounselling = postPNDTCounsellingNotification;
+                    nlResponse.mtpService = mtpServiceNotification;
+
                 }
             }
             catch (Exception ex)
@@ -507,6 +564,121 @@ namespace EduquayAPI.Services.MobileSubject
                     foreach (var sample in aData.data.AcknowledgementRequest)
                     {
                         _mobileSubjectData.AddResultAcknowledgement(sample.uniqueSubjectId);
+                        ackCount = ackCount + 1;
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = ackCount + " Acknowledgement successfully received";
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
+
+        public async Task<UpdateReferalStatusResponse> UpdatePNDTReferalStatus(AddReferalStatusRequest rData)
+        {
+
+            var uResponse = new UpdateReferalStatusResponse();
+            var subjectIds = new List<SubjectIdList>();
+            var subjectId = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(rData.data[0].userId, rData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sub in rData.data)
+                    {
+                        var slist = new SubjectIdList();
+                        subjectId = sub.uniqueSubjectId;
+                        _mobileSubjectData.UpdatePNDTReferalStatus(sub);
+                        slist.uniqueSubjectId = sub.uniqueSubjectId;
+                        subjectIds.Add(slist);
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = subjectIds.Count + " subjects pndt referal status successfully updated";
+                    uResponse.SubjectIds = subjectIds;
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+                uResponse.SubjectIds = subjectIds;
+            }
+            return uResponse;
+        }
+
+        public async Task<UpdateReferalStatusResponse> UpdateMTPReferalStatus(AddReferalStatusRequest rData)
+        {
+            var uResponse = new UpdateReferalStatusResponse();
+            var subjectIds = new List<SubjectIdList>();
+            var subjectId = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(rData.data[0].userId, rData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sub in rData.data)
+                    {
+                        var slist = new SubjectIdList();
+                        subjectId = sub.uniqueSubjectId;
+                        _mobileSubjectData.UpdateMTPReferalStatus(sub);
+                        slist.uniqueSubjectId = sub.uniqueSubjectId;
+                        subjectIds.Add(slist);
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = subjectIds.Count + " subjects mtp referal status successfully updated";
+                    uResponse.SubjectIds = subjectIds;
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+                uResponse.SubjectIds = subjectIds;
+            }
+            return uResponse;
+        }
+
+        public async Task<AcknowledgementResponse> UpdatePrePostPNDTMTPAcknowledgement(AddPrePostStatusRequest aData)
+        {
+            var uResponse = new AcknowledgementResponse();
+            var ackCount = 0;
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(aData.data[0].userId, aData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in aData.data)
+                    {
+                        _mobileSubjectData.UpdatePrePostPNDTMTPAcknowledgement(sample);
                         ackCount = ackCount + 1;
                     }
                     uResponse.Valid = true;

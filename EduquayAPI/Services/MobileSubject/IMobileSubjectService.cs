@@ -25,5 +25,9 @@ namespace EduquayAPI.Services.MobileSubject
         Task<AcknowledgementResponse> AddAcknowledgement(AcnowledgementRequest aData);
         Task<AcknowledgementResponse> AddCHCSubjectAcknowledgement(AcnowledgementRequest aData);
         Task<AcknowledgementResponse> AddCHCSampleAcknowledgement(AcknowledgementBarocdeRequest aData);
+        Task<UpdateReferalStatusResponse> UpdatePNDTReferalStatus(AddReferalStatusRequest rData);
+        Task<UpdateReferalStatusResponse> UpdateMTPReferalStatus(AddReferalStatusRequest rData);
+        Task<AcknowledgementResponse> UpdatePrePostPNDTMTPAcknowledgement(AddPrePostStatusRequest aData);
+
     }
 }

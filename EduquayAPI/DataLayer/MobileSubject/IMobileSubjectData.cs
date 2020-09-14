@@ -37,6 +37,20 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void AddCHCSamplesAcknowledgement(string barcodeNo);
         List<SampleCollection> MobileCHCSampleDetail(int userId);
         SubjectRegDetail MobileCHCSubjectRegDetail(int userId);
+        MobilePNDTReferal GetPNDTReferral(int userId);
+        MobileMTPReferal GetMTPReferral(int userId);
+        void UpdatePNDTReferalStatus(MobileReferalRequest rData);
+        void UpdateMTPReferalStatus(MobileReferalRequest rData);
+        List<MobilePrePNDTCounselling> FetchPrePNDTCounselling(int userId);
+        List<MobilePNDTesting> FetchPNDTesting(int userId);
+        List<MobilePostPNDTCounselling> FetchPostPNDTCounselling(int userId);
+        List<MobileMTPService> FetchMTPService(int userId);
+
+        List<MobilePrePNDTCounselling> FetchPrePNDTCounsellingNotification(int userId);
+        List<MobilePNDTesting> FetchPNDTestingNotification(int userId);
+        List<MobilePostPNDTCounselling> FetchPostPNDTCounsellingNotification(int userId);
+        List<MobileMTPService> FetchMTPServiceNotification(int userId);
+        void UpdatePrePostPNDTMTPAcknowledgement(AddPNDTMTPAckRequest aData);
     }
 
     public interface IMobileSubjectDataFactory

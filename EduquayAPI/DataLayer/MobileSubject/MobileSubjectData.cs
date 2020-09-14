@@ -43,6 +43,23 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string AddCHCSubjectAcknowledgement = "SPC_AddCHCSubjectAcknowledgement";
         private const string AddCHCSampleAcknowledgement = "SPC_AddCHCSampleAcknowledgement";
 
+        private const string FetchANMMobileNotificationPNDTReferal = "SPC_FetchANMMobileNotificationPNDTReferal";
+        private const string FetchANMMobileNotificationMTPReferal = "SPC_FetchANMMobileNotificationMTPReferal";
+        private const string UpdateStatusANMMobileNotificationPNDTReferal = "SPC_UpdateStatusANMMobileNotificationPNDTReferal";
+        private const string UpdateStatusANMMobileNotificationMTPReferal = "SPC_UpdateStatusANMMobileNotificationMTPReferal";
+
+        private const string FetchANMMobilePrePNDTCounselling = "SPC_FetchANMMobilePrePNDTCounselling";
+        private const string FetchANMMobilePNDTesting = "SPC_FetchANMMobilePNDTesting";
+        private const string FetchANMMobilePostPNDTCounselling = "SPC_FetchANMMobilePostPNDTCounselling";
+        private const string FetchANMMobileMTPService = "SPC_FetchANMMobileMTPService";
+
+        private const string FetchANMMobileNotificationPrePC = "SPC_FetchANMMobileNotificationPrePC";
+        private const string FetchANMMobileNotificationPNDTesting = "SPC_FetchANMMobileNotificationPNDTesting";
+        private const string FetchANMMobileNotificationPostPC = "SPC_FetchANMMobileNotificationPostPC";
+        private const string FetchANMMobileNotificationMTPService = "SPC_FetchANMMobileNotificationMTPService";
+
+        private const string AddPrePostPNDTMTPAcknowledgement = "SPC_AddPrePostPNDTMTPAcknowledgement";
+
 
         public MobileSubjectData()
         {
@@ -494,6 +511,156 @@ namespace EduquayAPI.DataLayer.MobileSubject
             subDetail.ParentSubjectList = allParentData;
             subDetail.Results = allResults;
             return subDetail;
+        }
+
+        public MobilePNDTReferal GetPNDTReferral(int userId)
+        {
+            string stProc = FetchANMMobileNotificationPNDTReferal;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSubjectData = UtilityDL.FillData<MobilePNDTSubject>(stProc, pList);
+            var allSpouseData = UtilityDL.FillData<MobilePNDTSpouse>(stProc, pList);
+            var allPPCData = UtilityDL.FillData<NotificationPrePNDTCounselling>(stProc, pList);
+            var allPNDTTestData = UtilityDL.FillData<NotificationPNDTesting>(stProc, pList);
+            var pndtRefferalDetail = new MobilePNDTReferal();
+            pndtRefferalDetail.subject = allSubjectData;
+            pndtRefferalDetail.spouse = allSpouseData;
+            pndtRefferalDetail.prePndtCounselling = allPPCData;
+            pndtRefferalDetail.pndtTesting = allPNDTTestData;
+            return pndtRefferalDetail;
+        }
+
+        public MobileMTPReferal GetMTPReferral(int userId)
+        {
+            string stProc = FetchANMMobileNotificationMTPReferal;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSubjectData = UtilityDL.FillData<MobileMTPSubject>(stProc, pList);
+            var allSpouseData = UtilityDL.FillData<MobileMTPSpouse>(stProc, pList);
+            var allPPCData = UtilityDL.FillData<NotificationPostPNDTCounselling>(stProc, pList);
+            var allMTPService = UtilityDL.FillData<NotificationMTPService>(stProc, pList);
+            var mtpRefferalDetail = new MobileMTPReferal();
+            mtpRefferalDetail.subject = allSubjectData;
+            mtpRefferalDetail.spouse = allSpouseData;
+            mtpRefferalDetail.postPndtCounselling = allPPCData;
+            mtpRefferalDetail.mtpService = allMTPService;
+            return mtpRefferalDetail;
+        }
+
+        public void UpdatePNDTReferalStatus(MobileReferalRequest rData)
+        {
+            try
+            {
+                var stProc = UpdateStatusANMMobileNotificationPNDTReferal;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANWSubjectId", rData.uniqueSubjectId  ?? rData.uniqueSubjectId),
+                    new SqlParameter("@ANMID", rData.userId ),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateMTPReferalStatus(MobileReferalRequest rData)
+        {
+            try
+            {
+                var stProc = UpdateStatusANMMobileNotificationMTPReferal;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANWSubjectId", rData.uniqueSubjectId  ?? rData.uniqueSubjectId),
+                    new SqlParameter("@ANMID", rData.userId ),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<MobilePrePNDTCounselling> FetchPrePNDTCounselling(int userId)
+        {
+            string stProc = FetchANMMobilePrePNDTCounselling;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePrePNDTCounselling>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobilePNDTesting> FetchPNDTesting(int userId)
+        {
+            string stProc = FetchANMMobilePNDTesting;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePNDTesting>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobilePostPNDTCounselling> FetchPostPNDTCounselling(int userId)
+        {
+            string stProc = FetchANMMobilePostPNDTCounselling;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePostPNDTCounselling>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobileMTPService> FetchMTPService(int userId)
+        {
+            string stProc = FetchANMMobileMTPService;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobileMTPService>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobilePrePNDTCounselling> FetchPrePNDTCounsellingNotification(int userId)
+        {
+            string stProc = FetchANMMobileNotificationPrePC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePrePNDTCounselling>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobilePNDTesting> FetchPNDTestingNotification(int userId)
+        {
+            string stProc = FetchANMMobileNotificationPNDTesting;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePNDTesting>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobilePostPNDTCounselling> FetchPostPNDTCounsellingNotification(int userId)
+        {
+            string stProc = FetchANMMobileNotificationPostPC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobilePostPNDTCounselling>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<MobileMTPService> FetchMTPServiceNotification(int userId)
+        {
+            string stProc = FetchANMMobileNotificationMTPService;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var allSampleData = UtilityDL.FillData<MobileMTPService>(stProc, pList);
+            return allSampleData;
+        }
+
+        public void UpdatePrePostPNDTMTPAcknowledgement(AddPNDTMTPAckRequest aData)
+        {
+            try
+            {
+                var stProc = AddPrePostPNDTMTPAcknowledgement;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", aData.uniqueSubjectId  ?? aData.uniqueSubjectId),
+                    new SqlParameter("@Request", aData.inputRequest),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

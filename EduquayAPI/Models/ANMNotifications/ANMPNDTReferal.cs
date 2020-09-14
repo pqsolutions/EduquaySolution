@@ -10,7 +10,6 @@ namespace EduquayAPI.Models.ANMNotifications
     {
         public string anmName { get; set; }
         public string anmContactNo { get; set; }
-
         public string anwSubjectId { get; set; }
         public string anwSubjectName { get; set; }
         public string rchId { get; set; }
@@ -59,7 +58,7 @@ namespace EduquayAPI.Models.ANMNotifications
         public string prePNDTCounsellingDate { get; set; }
         public string pndtDate { get; set; }
         public int pndtReferalId { get; set; }
-        public string followUpStatus { get; set; }
+        public string notifiedStatus { get; set; }
 
 
         public void Fill(SqlDataReader reader)
@@ -89,8 +88,8 @@ namespace EduquayAPI.Models.ANMNotifications
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
                 this.anwBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
-                this.spouseBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseBarcodeNo"))
+                this.spouseBarcodes = Convert.ToString(reader["SpouseBarcodeNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWContactNo"))
                 this.anwContactNo = Convert.ToString(reader["ANWContactNo"]);
@@ -203,8 +202,8 @@ namespace EduquayAPI.Models.ANMNotifications
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTDate"))
                 this.pndtDate = Convert.ToString(reader["PNDTDate"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "FollowUpStatus"))
-                this.followUpStatus = Convert.ToString(reader["FollowUpStatus"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "NoitifiedStatus"))
+                this.notifiedStatus = Convert.ToString(reader["NoitifiedStatus"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTReferalId"))
                 this.pndtReferalId = Convert.ToInt32(reader["PNDTReferalId"]);

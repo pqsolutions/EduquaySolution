@@ -89,8 +89,8 @@ namespace EduquayAPI.Models.DiscrictCoordinator
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
                 this.anwBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
-                this.spouseBarcodes = Convert.ToString(reader["ANWBarcodeNo"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseBarcodeNo"))
+                this.spouseBarcodes = Convert.ToString(reader["SpouseBarcodeNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWContactNo"))
                 this.anwContactNo = Convert.ToString(reader["ANWContactNo"]);
