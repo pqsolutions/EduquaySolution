@@ -51,6 +51,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         List<MobilePostPNDTCounselling> FetchPostPNDTCounsellingNotification(int userId);
         List<MobileMTPService> FetchMTPServiceNotification(int userId);
         void UpdatePrePostPNDTMTPAcknowledgement(AddPNDTMTPAckRequest aData);
+        ANMMobileMTPFollowUp MobileMTPFollowUp(int userId);
+        void UpdatePostMTPFollowupStatus(AddUpdateFollowupStatusRequest fData);
     }
 
     public interface IMobileSubjectDataFactory

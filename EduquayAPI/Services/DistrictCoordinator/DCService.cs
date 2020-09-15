@@ -25,6 +25,12 @@ namespace EduquayAPI.Services.DistrictCoordinator
             return notificationSamples;
         }
 
+        public List<DCPostMTPFollowUp> GetMTPFollowUp(int districtId)
+        {
+            var notificationSamples = _dcData.GetMTPFollowUp(districtId);
+            return notificationSamples;
+        }
+
         public List<MTPReferal> GetMTPReferal(int districtId)
         {
             var mtpReferal = _dcData.GetMTPReferal(districtId);
@@ -53,6 +59,46 @@ namespace EduquayAPI.Services.DistrictCoordinator
         {
             var notificationSamples = _dcData.GetUnsentSamples(districtId);
             return notificationSamples;
+        }
+
+        public ServiceResponse UpdateMTPFollowUpStatus(AddPostMTPRequest rData)
+        {
+            var response = new ServiceResponse();
+            try
+            {
+
+                if (rData.userId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid user id";
+                }
+                else if (string.IsNullOrEmpty(rData.mtpId))
+                {
+                    response.Status = "false";
+                    response.Message = "mtp id is missing";
+                }
+                else
+                {
+                    var result = _dcData.UpdateMTPFollowUpStatus(rData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        response.Status = "false";
+                        response.Message = "Unable to update mtp followup status data";
+                    }
+                    else
+                    {
+                        response.Status = "true";
+                        response.Message = result;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = e.Message;
+            }
+            return response;
         }
 
         public ServiceResponse UpdateMTPReferalStatus(ReferalDCRequest rData)

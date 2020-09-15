@@ -2,6 +2,7 @@
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Models;
 using EduquayAPI.Models.ANMSubjectRegistration;
+using EduquayAPI.Models.Subjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,16 @@ namespace EduquayAPI.DataLayer
 
         private const string FetchAllSubjectDetailByANM = "SPC_FetchAllSubjectDetailByANM";
         private const string FetchAllSubjectDetailByCHC = "SPC_FetchAllSubjectDetailByCHC";
+
+        private const string FetchSubjectANMPrePC = "SPC_FetchSubjectANMPrePC";
+        private const string FetchSubjectANMPostPC = "SPC_FetchSubjectANMPostPC";
+        private const string FetchSubjectANMPNDTesting = "SPC_FetchSubjectANMPNDTesting";
+        private const string FetchANMMTPService = "SPC_FetchANMMTPService";
+
+        private const string FetchSubjectCHCPrePC = "SPC_FetchSubjectCHCPrePC";
+        private const string FetchSubjectCHCPostPC = "SPC_FetchSubjectCHCPostPC";
+        private const string FetchSubjectCHCPNDTesting = "SPC_FetchSubjectCHCPNDTesting";
+        private const string FetchCHCMTPService = "SPC_FetchCHCMTPService";
 
 
         public SubjectData()
@@ -269,6 +280,12 @@ namespace EduquayAPI.DataLayer
         public SubjectDetails RetrieveSubjectDetail(SubjectDetailRequest sdData)
         {
             string stProc = FetchAllSubjectDetailByANM;
+
+            string stProc1 = FetchSubjectANMPrePC;
+            string stProc2 = FetchSubjectANMPNDTesting;
+            string stProc3 = FetchSubjectANMPostPC;
+            string stProc4 = FetchANMMTPService;
+
             var pList = new List<SqlParameter>()
             { 
                 new SqlParameter("@UserId", sdData.userId),
@@ -279,17 +296,37 @@ namespace EduquayAPI.DataLayer
             var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+
+            var pList1 = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+            };
+            var allPrPC = UtilityDL.FillData<SubjectPrePNDTCounselling>(stProc1, pList1);
+            var allPNDTTest = UtilityDL.FillData<SubjectPNDTTesting>(stProc2, pList1);
+            var allPoPC = UtilityDL.FillData<SubjectPostPNDTCounselling>(stProc3, pList1);
+            var allMTP = UtilityDL.FillData<SubjectMTPService>(stProc4, pList1);
+
             var subDetail = new SubjectDetails();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
+            subDetail.prePndtCounselling = allPrPC;
+            subDetail.pndtTesting = allPNDTTest;
+            subDetail.postPndtCounselling = allPoPC;
+            subDetail.mtpService = allMTP;
             return subDetail;
         }
 
         public SubjectDetails RetrieveCHCSubjectDetail(SubjectDetailRequest sdData)
         {
             string stProc = FetchAllSubjectDetailByCHC;
+
+            string stProc1 = FetchSubjectCHCPrePC;
+            string stProc2 = FetchSubjectCHCPNDTesting;
+            string stProc3 = FetchSubjectCHCPostPC;
+            string stProc4 = FetchCHCMTPService;
+
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserId", sdData.userId),
@@ -300,17 +337,35 @@ namespace EduquayAPI.DataLayer
             var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var pList1 = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+            };
+            var allPrPC = UtilityDL.FillData<SubjectPrePNDTCounselling>(stProc1, pList1);
+            var allPNDTTest = UtilityDL.FillData<SubjectPNDTTesting>(stProc2, pList1);
+            var allPoPC = UtilityDL.FillData<SubjectPostPNDTCounselling>(stProc3, pList1);
+            var allMTP = UtilityDL.FillData<SubjectMTPService>(stProc4, pList1);
             var subDetail = new SubjectDetails();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
+            subDetail.prePndtCounselling = allPrPC;
+            subDetail.pndtTesting = allPNDTTest;
+            subDetail.postPndtCounselling = allPoPC;
+            subDetail.mtpService = allMTP;
             return subDetail;
         }
 
         public SubjectDetails RetrieveParticularSubjectDetail(SubjectsDetailRequest sdData)
         {
             string stProc = FetchParticularANMSubjectDetail;
+
+            string stProc1 = FetchSubjectANMPrePC;
+            string stProc2 = FetchSubjectANMPNDTesting;
+            string stProc3 = FetchSubjectANMPostPC;
+            string stProc4 = FetchANMMTPService;
+
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserId", sdData.userId),
@@ -320,17 +375,35 @@ namespace EduquayAPI.DataLayer
             var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var pList1 = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+            };
+            var allPrPC = UtilityDL.FillData<SubjectPrePNDTCounselling>(stProc1, pList1);
+            var allPNDTTest = UtilityDL.FillData<SubjectPNDTTesting>(stProc2, pList1);
+            var allPoPC = UtilityDL.FillData<SubjectPostPNDTCounselling>(stProc3, pList1);
+            var allMTP = UtilityDL.FillData<SubjectMTPService>(stProc4, pList1);
+
             var subDetail = new SubjectDetails();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
+            subDetail.prePndtCounselling = allPrPC;
+            subDetail.pndtTesting = allPNDTTest;
+            subDetail.postPndtCounselling = allPoPC;
+            subDetail.mtpService = allMTP;
             return subDetail;
         }
 
         public SubjectDetails RetrieveParticularCHCSubjectDetail(SubjectsDetailRequest sdData)
         {
             string stProc = FetchCHCParticularSubjectDetail;
+            string stProc1 = FetchSubjectCHCPrePC;
+            string stProc2 = FetchSubjectCHCPNDTesting;
+            string stProc3 = FetchSubjectCHCPostPC;
+            string stProc4 = FetchCHCMTPService;
+
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UserId", sdData.userId),
@@ -340,11 +413,23 @@ namespace EduquayAPI.DataLayer
             var allAddressData = UtilityDL.FillData<SubjectAddresDetail>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancyDetail>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParentDetail>(stProc, pList);
+            var pList1 = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", sdData.userId),
+            };
+            var allPrPC = UtilityDL.FillData<SubjectPrePNDTCounselling>(stProc1, pList1);
+            var allPNDTTest = UtilityDL.FillData<SubjectPNDTTesting>(stProc2, pList1);
+            var allPoPC = UtilityDL.FillData<SubjectPostPNDTCounselling>(stProc3, pList1);
+            var allMTP = UtilityDL.FillData<SubjectMTPService>(stProc4, pList1);
             var subDetail = new SubjectDetails();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
+            subDetail.prePndtCounselling = allPrPC;
+            subDetail.pndtTesting = allPNDTTest;
+            subDetail.postPndtCounselling = allPoPC;
+            subDetail.mtpService = allMTP;
             return subDetail;
         }
     }

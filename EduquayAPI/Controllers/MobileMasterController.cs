@@ -63,7 +63,8 @@ namespace EduquayAPI.Controllers
                 Religion = mmResponse.Religion,
                 Caste = mmResponse.Caste,
                 Community = mmResponse.Community,
-                ConstantValues = mmResponse.ConstantValues
+                ConstantValues = mmResponse.ConstantValues,
+                FollowUpStatus = mmResponse.FollowUpStatus,
             });
         }
 

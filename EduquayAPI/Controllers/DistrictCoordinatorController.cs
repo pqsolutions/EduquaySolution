@@ -248,5 +248,49 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used to retrieve post mtp followup for DC 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePostMTPFollowUp/{districtId}")]
+        public DCMTPFollowUpResponse GetMTPFollowUp(int districtId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve mtp followup for DC  - {JsonConvert.SerializeObject(districtId)}");
+                var notificationSamples = _dcService.GetMTPFollowUp(districtId);
+                return notificationSamples.Count == 0 ? new DCMTPFollowUpResponse { Status = "true", Message = "No subjects found", Samples = new List<DCPostMTPFollowUp>() }
+                : new DCMTPFollowUpResponse { Status = "true", Message = string.Empty, Samples = notificationSamples };
+            }
+            catch (Exception e)
+            {
+                return new DCMTPFollowUpResponse { Status = "false", Message = e.Message, Samples = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for update the Status in DC notification MTP followup
+        /// </summary>
+        [HttpPost]
+        [Route("UpdatePostMTPFollowupStatus")]
+        public ActionResult<ServiceResponse> UpdateMTPFollowUpStatus(AddPostMTPRequest rData)
+        {
+            try
+            {
+
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Updating mtp followup status data - {JsonConvert.SerializeObject(rData)}");
+                var sampleStatus = _dcService.UpdateMTPFollowUpStatus(rData);
+                _logger.LogInformation($"mtp followup status updated successfully - {rData}");
+                return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update the mtp referal status  - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
+            }
+        }
+
     }
 }

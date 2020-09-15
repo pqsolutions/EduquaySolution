@@ -21,5 +21,7 @@ namespace EduquayAPI.Services.DistrictCoordinator
 
         ServiceResponse UpdatePNDTReferalStatus(ReferalDCRequest rData);
         ServiceResponse UpdateMTPReferalStatus(ReferalDCRequest rData);
+        List<DCPostMTPFollowUp> GetMTPFollowUp(int districtId);
+        ServiceResponse UpdateMTPFollowUpStatus(AddPostMTPRequest rData);
     }
 }

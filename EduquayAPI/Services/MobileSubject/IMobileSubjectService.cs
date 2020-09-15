@@ -28,6 +28,7 @@ namespace EduquayAPI.Services.MobileSubject
         Task<UpdateReferalStatusResponse> UpdatePNDTReferalStatus(AddReferalStatusRequest rData);
         Task<UpdateReferalStatusResponse> UpdateMTPReferalStatus(AddReferalStatusRequest rData);
         Task<AcknowledgementResponse> UpdatePrePostPNDTMTPAcknowledgement(AddPrePostStatusRequest aData);
+        Task<UpdateFollowupStatusResponse> UpdatePostMTPFollowupStatus(AddFollowUpRequest fData);
 
     }
 }

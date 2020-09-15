@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Subjects;
 
 namespace EduquayAPI.Contracts.V1.Response
 {
@@ -21,6 +22,10 @@ namespace EduquayAPI.Contracts.V1.Response
         public SubjectAddresDetail AddressDetail { get; set; }
         public SubjectPregnancyDetail PregnancyDetail { get; set; }
         public SubjectParentDetail ParentDetail { get; set; }
+        public SubjectPrePNDTCounselling prePndtCounselling { get; set; }
+        public SubjectPNDTTesting pndtTesting { get; set; }
+        public SubjectPostPNDTCounselling postPndtCounselling { get; set; }
+        public SubjectMTPService mtpService { get; set; }
 
     }
 }

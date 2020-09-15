@@ -19,7 +19,8 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
         List<MTPReferal> GetMTPReferal(int districtId);
         string UpdatePNDTReferalStatus(ReferalDCRequest rData);
         string UpdateMTPReferalStatus(ReferalDCRequest rData);
-
+        List<DCPostMTPFollowUp> GetMTPFollowUp(int districtId);
+        string UpdateMTPFollowUpStatus(AddPostMTPRequest rData);
     }
     public interface IDCDataFactory
     {

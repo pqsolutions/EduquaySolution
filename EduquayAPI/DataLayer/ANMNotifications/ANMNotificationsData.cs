@@ -242,6 +242,7 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                     new SqlParameter("@MTPID", fData.mtpId),
                     new SqlParameter("@FollowUpNo", fData.followUpNo),
                     new SqlParameter("@FollowUpStatusId", fData.followUpStatusId),
+                    new SqlParameter("@FollowUpStatusDetail", fData.followUpStatusDetail.ToCheckNull()),
                     new SqlParameter("@UserId", fData.userId),
 
                 };

@@ -373,6 +373,7 @@ namespace EduquayAPI.Services.MobileSubject
             var chcSubjectRegistrations = new List<CHCSubjectResigration>();
             var mobilePNDTReferral = new List<MobilePNDTReferral>();
             var mobileMTPReferral = new List<MobileMTPReferral>();
+            var mobileMTPFollowups = new List<ANMMobileMTPFollowups>();
             var total = 0;
             try
             {
@@ -397,6 +398,7 @@ namespace EduquayAPI.Services.MobileSubject
 
                     var postPNDTCounsellingNotification = _mobileSubjectData.FetchPostPNDTCounsellingNotification(mrData.userId);
                     var mtpServiceNotification = _mobileSubjectData.FetchMTPServiceNotification(mrData.userId);
+
 
                     foreach (var primarySubject in subjectDetails.PrimarySubjectList)
                     {
@@ -446,7 +448,35 @@ namespace EduquayAPI.Services.MobileSubject
                         mobileMTPReferral.Add(mtpReferral);
                     }
 
-                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count + pndtDetail.subject.Count + mtpDetail.subject.Count;
+                    var mtpfollowUpDetail = _mobileSubjectData.MobileMTPFollowUp(mrData.userId);
+
+                    var subjId = "";
+                    foreach (var postMTP in mtpfollowUpDetail.postMtpFollowUp)
+                    {
+                        var mtpFollowup = new ANMMobileMTPFollowups();
+                        if (subjId  != postMTP.uniqueSubjectId)
+                        {
+                            var firstFollowup = mtpfollowUpDetail.firstFollowUp.Where(ff => ff.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+                            var secondFollowup = mtpfollowUpDetail.secondFollowUp.Where(sf => sf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+                            var thirdFollowup = mtpfollowUpDetail.thirdFollowUp.Where(tf => tf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+
+                            mtpFollowup.uniqueSubjectId = postMTP.uniqueSubjectId;
+                            mtpFollowup.subjectName = postMTP.subjectName;
+                            mtpFollowup.rchId = postMTP.rchId;
+                            mtpFollowup.contactNo = postMTP.contactNo;
+                            mtpFollowup.mtpDateTime = postMTP.mtpDateTime;
+                            mtpFollowup.obstetricianName = postMTP.obstetricianName;
+
+                            mtpFollowup.firstFollowUp = firstFollowup;
+                            mtpFollowup.secondFollowUp = secondFollowup;
+                            mtpFollowup.thirdFollowUp = thirdFollowup;
+                            subjId = postMTP.uniqueSubjectId;
+                            mobileMTPFollowups.Add(mtpFollowup);
+                        }
+                    }
+
+                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count + 
+                                pndtDetail.subject.Count + mtpDetail.subject.Count  + mtpfollowUpDetail.postMtpFollowUp.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
                     nlResponse.Message = string.Empty;
@@ -463,7 +493,7 @@ namespace EduquayAPI.Services.MobileSubject
                     nlResponse.pndtTesting = pndTestingNotification;
                     nlResponse.postPndtCounselling = postPNDTCounsellingNotification;
                     nlResponse.mtpService = mtpServiceNotification;
-
+                    nlResponse.postMtpFollowUp = mobileMTPFollowups;
                 }
             }
             catch (Exception ex)
@@ -689,6 +719,47 @@ namespace EduquayAPI.Services.MobileSubject
                 uResponse.Valid = true;
                 uResponse.Status = "false";
                 uResponse.Message = e.Message;
+            }
+            return uResponse;
+        }
+
+        public async Task<UpdateFollowupStatusResponse> UpdatePostMTPFollowupStatus(AddFollowUpRequest fData)
+        {
+            var uResponse = new UpdateFollowupStatusResponse();
+            var subList = new List<SubjectIdsList>();
+            var subjectId = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(fData.data[0].userId, fData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    uResponse.Valid = false;
+                    uResponse.Status = "false";
+                    uResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var subject in fData.data)
+                    {
+                        var slist = new SubjectIdsList();
+                        subjectId = subject.uniqueSubjectId;
+                        _mobileSubjectData.UpdatePostMTPFollowupStatus(subject);
+                        slist.uniqueSubjectId = subject.uniqueSubjectId;
+                        subList.Add(slist);
+                    }
+                    uResponse.Valid = true;
+                    uResponse.Status = "true";
+                    uResponse.Message = subList.Count + " Subjects status successfully updated";
+                    uResponse.SubjectIds = subList;
+                }
+            }
+            catch (Exception e)
+            {
+                uResponse.Valid = true;
+                uResponse.Status = "false";
+                uResponse.Message = e.Message;
+                uResponse.SubjectIds = subList;
+
             }
             return uResponse;
         }

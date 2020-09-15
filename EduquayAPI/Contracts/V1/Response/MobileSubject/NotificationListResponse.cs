@@ -24,8 +24,23 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<MobilePNDTesting> pndtTesting { get; set; }
         public List<MobilePostPNDTCounselling> postPndtCounselling { get; set; }
         public List<MobileMTPService> mtpService { get; set; }
+        public List<ANMMobileMTPFollowups> postMtpFollowUp { get; set; }
+
+    }
 
 
+    public class ANMMobileMTPFollowups
+    {
+
+        public string uniqueSubjectId { get; set; }
+        public string subjectName { get; set; }
+        public string rchId { get; set; }
+        public string contactNo { get; set; }
+        public string mtpDateTime { get; set; }
+        public string obstetricianName { get; set; }
+        public List<MTPFirstFollowup> firstFollowUp { get; set; }
+        public List<MTPSecondFollowup> secondFollowUp { get; set; }
+        public List<MTPThirdFollowup> thirdFollowUp { get; set; }
     }
 
     public class CHCSubjectResigration
