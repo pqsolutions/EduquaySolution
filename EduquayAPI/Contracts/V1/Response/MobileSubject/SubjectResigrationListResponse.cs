@@ -16,11 +16,6 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<SubjectResigration> SubjectResigrations { get; set; }
         public List<SampleCollection> SampleCollections { get; set; }
         public List<ShipmentLogs> ShipmentLogDetail { get; set; }
-        public List<MobilePrePNDTCounselling> prePndtCounselling { get; set; }
-        public List<MobilePNDTesting> pndtTesting { get; set; }
-        public List<MobilePostPNDTCounselling> postPndtCounselling { get; set; }
-        public List<MobileMTPService> mtpService { get; set; }
-
     }
 
     public class SubjectResigration
@@ -30,6 +25,10 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public SubjectPregnancy PregnancyDetail { get; set; }
         public SubjectParent ParentDetail { get; set; }
         public TestResult Results { get; set; }
+        public MobilePrePNDTCounselling prePndtCounselling { get; set; }
+        public MobilePNDTesting pndtTesting { get; set; }
+        public MobilePostPNDTCounselling postPndtCounselling { get; set; }
+        public MobileMTPService mtpService { get; set; }
 
     }
 

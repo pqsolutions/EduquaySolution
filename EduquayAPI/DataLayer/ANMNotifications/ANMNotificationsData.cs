@@ -24,6 +24,8 @@ namespace EduquayAPI.DataLayer.ANMNotifications
         private const string FetchANMNotificationMTPReferal = "SPC_FetchANMNotificationMTPReferal";
         private const string UpdateStatusANMNotificationPNDTReferal = "SPC_UpdateStatusANMNotificationPNDTReferal";
         private const string UpdateStatusANMNotificationMTPReferal = "SPC_UpdateStatusANMNotificationMTPReferal";
+        private const string FetchANMNotificationPostMTPFollowUp = "SPC_FetchANMNotificationPostMTPFollowUp";
+        private const string UpdatePostMTPFollowUpStatus = "SPC_UpdatePostMTPFollowUpStatus";
 
         public ANMNotificationsData()
         {
@@ -212,6 +214,40 @@ namespace EduquayAPI.DataLayer.ANMNotifications
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
                 return "MTP referal status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<ANMPostMTPFollowUp> FetchMTPFollowUp(int userId)
+        {
+            string stProc = FetchANMNotificationPostMTPFollowUp;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UserId", userId),
+            };
+            var samplesData = UtilityDL.FillData<ANMPostMTPFollowUp>(stProc, pList);
+            return samplesData;
+        }
+
+        public string UpdateMTPFollowUpStatus(AddFollowUpStatus fData)
+        {
+            try
+            {
+                string stProc = UpdatePostMTPFollowUpStatus;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@MTPID", fData.mtpId),
+                    new SqlParameter("@FollowUpNo", fData.followUpNo),
+                    new SqlParameter("@FollowUpStatusId", fData.followUpStatusId),
+                    new SqlParameter("@UserId", fData.userId),
+
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+
+                return "Follow up status updated successfully";
             }
             catch (Exception e)
             {

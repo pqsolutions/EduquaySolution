@@ -279,5 +279,24 @@ namespace EduquayAPI.Controllers
                 return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+
+        /// <summary>
+        /// Used to fetch all post MTP followup
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveFollowUp")]
+        public PMMasterResponse GetAllPostMTPFollowUp()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var pmMaster = _pmMasterService.GetAllPostMTPFollowUp();
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+            }
+            catch (Exception e)
+            {
+                return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
     }
 }

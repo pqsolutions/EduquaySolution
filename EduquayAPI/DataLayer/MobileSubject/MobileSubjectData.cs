@@ -288,18 +288,31 @@ namespace EduquayAPI.DataLayer.MobileSubject
         public SubjectRegDetail MobileSubjectRegDetail(int userId)
         {
             string stProc = FetchMobileSubjectsDetail;
+            string stProc1 = FetchANMMobilePrePNDTCounselling;
+            string stProc2 = FetchANMMobilePNDTesting;
+            string stProc3 = FetchANMMobilePostPNDTCounselling;
+            string stProc4 = FetchANMMobileMTPService;
+
             var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
             var allPrimaryData = UtilityDL.FillData<SubjectPrimary>(stProc, pList);
             var allAddressData = UtilityDL.FillData<SubjectAddress>(stProc, pList);
             var allPregnancyData = UtilityDL.FillData<SubjectPregnancy>(stProc, pList);
             var allParentData = UtilityDL.FillData<SubjectParent>(stProc, pList);
             var allResults = UtilityDL.FillData<TestResult>(stProc, pList);
+            var allPrPC = UtilityDL.FillData<MobilePrePNDTCounselling>(stProc1, pList);
+            var allPNDTTest = UtilityDL.FillData<MobilePNDTesting>(stProc2, pList);
+            var allPoPC = UtilityDL.FillData<MobilePostPNDTCounselling>(stProc3, pList);
+            var allMTP = UtilityDL.FillData<MobileMTPService>(stProc4, pList);
             var subDetail = new SubjectRegDetail();
             subDetail.PrimarySubjectList = allPrimaryData;
             subDetail.AddressSubjectList = allAddressData;
             subDetail.PregnancySubjectList = allPregnancyData;
             subDetail.ParentSubjectList = allParentData;
             subDetail.Results = allResults;
+            subDetail.prePndtCounselling = allPrPC;
+            subDetail.pndtTesting = allPNDTTest;
+            subDetail.postPndtCounselling = allPoPC;
+            subDetail.mtpService = allMTP;
             return subDetail;
         }
 

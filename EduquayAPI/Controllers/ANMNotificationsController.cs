@@ -271,5 +271,49 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used to retrieve post mtp followup for ANM 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePostMTPFollowUp/{userId}")]
+        public ANMFollowUpResponse GETMTPFollowUp(int userId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve post mtp followup for ANM  - {JsonConvert.SerializeObject(userId)}");
+                var notificationSamples = _anmNotificationsService.FetchMTPFollowUp(userId);
+                return notificationSamples.Count == 0 ? new ANMFollowUpResponse { Status = "true", Message = "No subjects found", subjects = new List<ANMPostMTPFollowUp>() }
+                : new ANMFollowUpResponse { Status = "true", Message = string.Empty, subjects = notificationSamples };
+            }
+            catch (Exception e)
+            {
+                return new ANMFollowUpResponse { Status = "false", Message = e.Message, subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for update the mtp follow up status in ANM notification
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateMTPFollowUpStatus")]
+        public ActionResult<ServiceResponse> UpdateMTPFollowUpStatus(AddFollowUpStatus fData)
+        {
+            try
+            {
+
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Updating mtp followup status data - {JsonConvert.SerializeObject(fData)}");
+                var sampleStatus = _anmNotificationsService.UpdateMTPFollowUpStatus(fData);
+                _logger.LogInformation($"mtp followup status updated successfully - {fData}");
+                return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to update the mtp followup status  - {ex.StackTrace}");
+                return new ServiceResponse { Status = "false", Message = ex.Message, Result = null };
+            }
+        }
+
     }
 }

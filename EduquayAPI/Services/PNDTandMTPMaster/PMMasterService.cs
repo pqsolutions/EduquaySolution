@@ -53,6 +53,12 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             return pmMaster;
         }
 
+        public List<PMMaster> GetAllPostMTPFollowUp()
+        {
+            var pmMaster = _pmMasterData.GetAllPostMTPFollowUp();
+            return pmMaster;
+        }
+
         public List<PMMaster> GetAllProcedureofTesting()
         {
             var pmMaster = _pmMasterData.GetAllProcedureofTesting();

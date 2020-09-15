@@ -22,5 +22,8 @@ namespace EduquayAPI.Services.ANMNotifications
         List<ANMMTPReferal> GetMTPReferal(int userId);
         ServiceResponse UpdatePNDTReferalStatus(ANMReferalRequest rData);
         ServiceResponse UpdateMTPReferalStatus(ANMReferalRequest rData);
+        List<ANMPostMTPFollowUp> FetchMTPFollowUp(int userId);
+        ServiceResponse UpdateMTPFollowUpStatus(AddFollowUpStatus fData);
+
     }
 }
