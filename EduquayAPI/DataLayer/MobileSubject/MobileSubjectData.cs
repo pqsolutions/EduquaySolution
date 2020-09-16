@@ -57,8 +57,10 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchANMMobileNotificationPNDTesting = "SPC_FetchANMMobileNotificationPNDTesting";
         private const string FetchANMMobileNotificationPostPC = "SPC_FetchANMMobileNotificationPostPC";
         private const string FetchANMMobileNotificationMTPService = "SPC_FetchANMMobileNotificationMTPService";
-
         private const string AddPrePostPNDTMTPAcknowledgement = "SPC_AddPrePostPNDTMTPAcknowledgement";
+
+        private const string FetchANMNotificationPostMTPFollowUp = "SPC_FetchANMNotificationPostMTPFollowUp";
+        private const string UpdateMobilePostMTPFollowUpStatus = "SPC_UpdateMobilePostMTPFollowUpStatus";
 
 
         public MobileSubjectData()
@@ -673,6 +675,44 @@ namespace EduquayAPI.DataLayer.MobileSubject
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public ANMMobileMTPFollowUp MobileMTPFollowUp(int userId)
+        {
+            string stProc = FetchANMNotificationPostMTPFollowUp;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserID", userId) };
+            var postMtpFollowUp = UtilityDL.FillData<MTPFollowupDetail>(stProc, pList);
+            var firstFollowUp = UtilityDL.FillData<MTPFirstFollowup>(stProc, pList);
+            var secondFollowUp = UtilityDL.FillData<MTPSecondFollowup>(stProc, pList);
+            var thirdFollowUp = UtilityDL.FillData<MTPThirdFollowup>(stProc, pList);
+            var mtpFollowup = new ANMMobileMTPFollowUp();
+            mtpFollowup.postMtpFollowUp = postMtpFollowUp;
+            mtpFollowup.firstFollowUp = firstFollowUp;
+            mtpFollowup.secondFollowUp = secondFollowUp;
+            mtpFollowup.thirdFollowUp = thirdFollowUp;
+            return mtpFollowup;
+        }
+
+        public void UpdatePostMTPFollowupStatus(AddUpdateFollowupStatusRequest fData)
+        {
+            try
+            {
+                string stProc = UpdateMobilePostMTPFollowUpStatus;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@UniqueSubjectId", fData.uniqueSubjectId),
+                    new SqlParameter("@FollowUpNo", fData.followUpNo),
+                    new SqlParameter("@FollowUpStatusId", fData.followUpStatusId),
+                    new SqlParameter("@FollowUpStatusDetail", fData.followUpStatusDetail.ToCheckNull()),
+                    new SqlParameter("@UserId", fData.userId),
+
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

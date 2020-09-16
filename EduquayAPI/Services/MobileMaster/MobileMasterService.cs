@@ -41,6 +41,7 @@ namespace EduquayAPI.Services.MobileMaster
                     var allCastes = _mobileMasterData.RetrieveCaste();
                     var allCommunity = _mobileMasterData.RetrieveCommunity();
                     var allConstant = _mobileMasterData.RetrieveConstantValues();
+                    var allFollowUp = _mobileMasterData.RetrieveFollowups();
                     mmResponse.Valid = true;
                     mmResponse.Status = "true";
                     mmResponse.Message = string.Empty;
@@ -55,6 +56,7 @@ namespace EduquayAPI.Services.MobileMaster
                     mmResponse.Caste = allCastes;
                     mmResponse.Community = allCommunity;
                     mmResponse.ConstantValues = allConstant;
+                    mmResponse.FollowUpStatus = allFollowUp;
                 }
             }
             catch (Exception e)

@@ -26,7 +26,7 @@ namespace EduquayAPI.DataLayer.MobileMaster
         private const string FetchAVD = "SPC_FetchAVDByRI";
         private const string FetchStates = "SPC_FetchAllStates";
         private const string CheckValidDevice = "SPC_CheckValidDevice";
-
+        private const string FetchAllPostMTPFollowup = "SPC_FetchAllPostMTPFollowup";
         public MobileMasterData()
         {
 
@@ -160,6 +160,14 @@ namespace EduquayAPI.DataLayer.MobileMaster
 
             };
             var allData = UtilityDL.FillEntity<Device>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadFollowUps> RetrieveFollowups()
+        {
+            string stProc = FetchAllPostMTPFollowup;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadFollowUps>(stProc, pList);
             return allData;
         }
     }

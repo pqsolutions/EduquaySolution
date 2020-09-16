@@ -18,6 +18,8 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
         private const string FetchDCNotificationMTPReferal = "SPC_FetchDCNotificationMTPReferal";
         private const string UpdateStatusDCNotificationPNDTReferal = "SPC_UpdateStatusDCNotificationPNDTReferal";
         private const string UpdateStatusDCNotificationMTPReferal = "SPC_UpdateStatusDCNotificationMTPReferal";
+        private const string FetchDCPostMTPFollowUp = "SPC_FetchDCPostMTPFollowUp";
+        private const string UpdateStatusDCPostMTPFollowUp = "SPC_UpdateStatusDCPostMTPFollowUp";
 
         public DCData()
         {
@@ -33,6 +35,17 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
                 new SqlParameter("@Notification", 1),
             };
             var samplesData = UtilityDL.FillData<NotificationSamples>(stProc, pList);
+            return samplesData;
+        }
+
+        public List<DCPostMTPFollowUp> GetMTPFollowUp(int districtId)
+        {
+            string stProc = FetchDCPostMTPFollowUp;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@DistrictId", districtId),
+            };
+            var samplesData = UtilityDL.FillData<DCPostMTPFollowUp>(stProc, pList);
             return samplesData;
         }
 
@@ -91,6 +104,25 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
             };
             var samplesData = UtilityDL.FillData<NotificationSamples>(stProc, pList);
             return samplesData;
+        }
+
+        public string UpdateMTPFollowUpStatus(AddPostMTPRequest rData)
+        {
+            try
+            {
+                string stProc = UpdateStatusDCPostMTPFollowUp;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@MTPID", rData.mtpId ?? rData.mtpId),
+                    new SqlParameter("@UserId", rData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+                return "MTP followup status updated successfully";
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public string UpdateMTPReferalStatus(ReferalDCRequest rData)

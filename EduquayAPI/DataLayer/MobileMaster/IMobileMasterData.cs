@@ -22,6 +22,7 @@ namespace EduquayAPI.DataLayer.MobileMaster
         List<LoadConstantValues> RetrieveConstantValues();
         List<LoadState> RetrieveState();
         Device CheckDevice(int userId, string deviceId);
+        List<LoadFollowUps> RetrieveFollowups();
 
     }
 

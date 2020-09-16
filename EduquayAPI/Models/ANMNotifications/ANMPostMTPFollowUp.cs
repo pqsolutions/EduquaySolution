@@ -16,8 +16,11 @@ namespace EduquayAPI.Models.ANMNotifications
         public string mtpDateTime { get; set; }
         public string obstetricianName { get; set; }
         public int firstFollowUp { get; set; }
+        public string firstFollowUpStatusDetail { get; set; }
         public int secondFollowUp { get; set; }
+        public string SecondFollowUpStatusDetail { get; set; }
         public int thirdFollowUp { get; set; }
+        public string thirdFollowUpStatusDetail { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -42,11 +45,20 @@ namespace EduquayAPI.Models.ANMNotifications
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstFollowup"))
                 this.firstFollowUp = Convert.ToInt32(reader["FirstFollowup"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "FirstFollowupStatusDetail"))
+                this.firstFollowUpStatusDetail = Convert.ToString(reader["FirstFollowupStatusDetail"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SecondFollowup"))
                 this.secondFollowUp  = Convert.ToInt32(reader["SecondFollowup"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SecondFollowupStatusDetail"))
+                this.SecondFollowUpStatusDetail = Convert.ToString(reader["SecondFollowupStatusDetail"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ThirdFollowup"))
                 this.thirdFollowUp  = Convert.ToInt32(reader["ThirdFollowup"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ThirdFollowupStatusDetail"))
+                this.thirdFollowUpStatusDetail  = Convert.ToString(reader["ThirdFollowupStatusDetail"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MTPID"))
                 this.mtpId  = Convert.ToInt32(reader["MTPID"]);

@@ -103,6 +103,7 @@ namespace EduquayAPI.Controllers
                 pndtTesting = nlResponse.pndtTesting,
                 postPndtCounselling = nlResponse.postPndtCounselling,
                 mtpService = nlResponse.mtpService,
+                postMtpFollowUp = nlResponse.postMtpFollowUp,
             });
         }
 
@@ -345,6 +346,33 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        [HttpPost]
+        [Route("AddMTPFollowupStatus")]
+        public async Task<IActionResult> AddMTPFollowupStatus(AddFollowUpRequest fData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Add post mtp followup status in mobile app- {JsonConvert.SerializeObject(fData)}");
+            var uResponse = await _mobileSubjectService.UpdatePostMTPFollowupStatus(fData);
+
+            if (!uResponse.Valid)
+            {
+                return Unauthorized(new UpdateFollowupStatusResponse
+                {
+                    Status = "false",
+                    Valid = uResponse.Valid,
+                    Message = uResponse.Message,
+                    SubjectIds = uResponse.SubjectIds,
+                });
+            }
+
+            return Ok(new UpdateFollowupStatusResponse
+            {
+                Status = uResponse.Status,
+                Valid = uResponse.Valid,
+                Message = uResponse.Message,
+                SubjectIds = uResponse.SubjectIds,
+            });
+        }
 
         [HttpPost]
         [Route("Add")]

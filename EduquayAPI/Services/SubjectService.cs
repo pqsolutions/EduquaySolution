@@ -66,10 +66,19 @@ namespace EduquayAPI.Services
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
+                    var prePndtCounselling = subjectDetails.prePndtCounselling.FirstOrDefault(prp => prp.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pndtTesting = subjectDetails.pndtTesting.FirstOrDefault(pn => pn.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var postPndtCounselling = subjectDetails.postPndtCounselling.FirstOrDefault(pop => pop.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var mtpService = subjectDetails.mtpService.FirstOrDefault(ms => ms.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
                     subjectRegistration.PrimaryDetail = primarySubject;
                     subjectRegistration.AddressDetail = address;
                     subjectRegistration.PregnancyDetail = pregnancy;
                     subjectRegistration.ParentDetail = parent;
+                    subjectRegistration.prePndtCounselling = prePndtCounselling;
+                    subjectRegistration.pndtTesting = pndtTesting;
+                    subjectRegistration.postPndtCounselling = postPndtCounselling;
+                    subjectRegistration.mtpService = mtpService;
                     subjectRegistrations.Add(subjectRegistration);
                 }
 
@@ -100,10 +109,19 @@ namespace EduquayAPI.Services
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
+                    var prePndtCounselling = subjectDetails.prePndtCounselling.FirstOrDefault(prp => prp.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pndtTesting = subjectDetails.pndtTesting.FirstOrDefault(pn => pn.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var postPndtCounselling = subjectDetails.postPndtCounselling.FirstOrDefault(pop => pop.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var mtpService = subjectDetails.mtpService.FirstOrDefault(ms => ms.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
                     subjectRegistration.PrimaryDetail = primarySubject;
                     subjectRegistration.AddressDetail = address;
                     subjectRegistration.PregnancyDetail = pregnancy;
                     subjectRegistration.ParentDetail = parent;
+                    subjectRegistration.prePndtCounselling = prePndtCounselling;
+                    subjectRegistration.pndtTesting = pndtTesting;
+                    subjectRegistration.postPndtCounselling = postPndtCounselling;
+                    subjectRegistration.mtpService = mtpService;
                     subjectRegistrations.Add(subjectRegistration);
                 }
 
@@ -134,10 +152,19 @@ namespace EduquayAPI.Services
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
+                    var prePndtCounselling = subjectDetails.prePndtCounselling.FirstOrDefault(prp => prp.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pndtTesting = subjectDetails.pndtTesting.FirstOrDefault(pn => pn.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var postPndtCounselling = subjectDetails.postPndtCounselling.FirstOrDefault(pop => pop.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var mtpService = subjectDetails.mtpService.FirstOrDefault(ms => ms.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
                     subjectRegistration.PrimaryDetail = primarySubject;
                     subjectRegistration.AddressDetail = address;
                     subjectRegistration.PregnancyDetail = pregnancy;
                     subjectRegistration.ParentDetail = parent;
+                    subjectRegistration.prePndtCounselling = prePndtCounselling;
+                    subjectRegistration.pndtTesting = pndtTesting;
+                    subjectRegistration.postPndtCounselling = postPndtCounselling;
+                    subjectRegistration.mtpService = mtpService;
                     subjectRegistrations.Add(subjectRegistration);
                 }
 
@@ -168,10 +195,19 @@ namespace EduquayAPI.Services
                     var pregnancy = subjectDetails.PregnancySubjectList.FirstOrDefault(pr => pr.uniqueSubjectId == primarySubject.uniqueSubjectId);
                     var parent = subjectDetails.ParentSubjectList.FirstOrDefault(pa => pa.uniqueSubjectId == primarySubject.uniqueSubjectId);
 
+                    var prePndtCounselling = subjectDetails.prePndtCounselling.FirstOrDefault(prp => prp.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var pndtTesting = subjectDetails.pndtTesting.FirstOrDefault(pn => pn.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var postPndtCounselling = subjectDetails.postPndtCounselling.FirstOrDefault(pop => pop.uniqueSubjectId == primarySubject.uniqueSubjectId);
+                    var mtpService = subjectDetails.mtpService.FirstOrDefault(ms => ms.uniqueSubjectId == primarySubject.uniqueSubjectId);
+
                     subjectRegistration.PrimaryDetail = primarySubject;
                     subjectRegistration.AddressDetail = address;
                     subjectRegistration.PregnancyDetail = pregnancy;
                     subjectRegistration.ParentDetail = parent;
+                    subjectRegistration.prePndtCounselling = prePndtCounselling;
+                    subjectRegistration.pndtTesting = pndtTesting;
+                    subjectRegistration.postPndtCounselling = postPndtCounselling;
+                    subjectRegistration.mtpService = mtpService;
                     subjectRegistrations.Add(subjectRegistration);
                 }
 

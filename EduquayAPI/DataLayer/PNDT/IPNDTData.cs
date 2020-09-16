@@ -21,7 +21,7 @@ namespace EduquayAPI.DataLayer.PNDT
 
         List<PostPNDTScheduling> GetPostPNDTScheduling(PNDTSchedulingRequest psData);
         CounsellingDateTime AddPostPNDTScheduling(AddSchedulingRequest asData);
-        List<PrePNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
+        List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
         List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
         MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
