@@ -38,9 +38,9 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public string contactNo { get; set; }
         public string mtpDateTime { get; set; }
         public string obstetricianName { get; set; }
-        public List<MTPFirstFollowup> firstFollowUp { get; set; }
-        public List<MTPSecondFollowup> secondFollowUp { get; set; }
-        public List<MTPThirdFollowup> thirdFollowUp { get; set; }
+        public MTPFirstFollowup firstFollowUp { get; set; }
+        public MTPSecondFollowup secondFollowUp { get; set; }
+        public MTPThirdFollowup thirdFollowUp { get; set; }
     }
 
     public class CHCSubjectResigration

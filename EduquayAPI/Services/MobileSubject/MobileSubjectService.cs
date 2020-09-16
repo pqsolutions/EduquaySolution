@@ -456,10 +456,13 @@ namespace EduquayAPI.Services.MobileSubject
                         var mtpFollowup = new ANMMobileMTPFollowups();
                         if (subjId  != postMTP.uniqueSubjectId)
                         {
-                            var firstFollowup = mtpfollowUpDetail.firstFollowUp.Where(ff => ff.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
-                            var secondFollowup = mtpfollowUpDetail.secondFollowUp.Where(sf => sf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
-                            var thirdFollowup = mtpfollowUpDetail.thirdFollowUp.Where(tf => tf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+                            var firstFollowup1 = mtpfollowUpDetail.firstFollowUp.Where(ff => ff.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+                            var secondFollowup1 = mtpfollowUpDetail.secondFollowUp.Where(sf => sf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
+                            var thirdFollowup1 = mtpfollowUpDetail.thirdFollowUp.Where(tf => tf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
 
+                            var firstFollowup = firstFollowup1[0];
+                            var secondFollowup = secondFollowup1[0];
+                            var thirdFollowup = thirdFollowup1[0];
                             mtpFollowup.uniqueSubjectId = postMTP.uniqueSubjectId;
                             mtpFollowup.subjectName = postMTP.subjectName;
                             mtpFollowup.rchId = postMTP.rchId;

@@ -206,7 +206,7 @@ namespace EduquayAPI.DataLayer.PNDT
             return schedulingData;
         }
 
-        public List<PrePNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
+        public List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
         {
             string stProc = FetchSubjectsPostPNDTScheduled;
             var pList = new List<SqlParameter>()
@@ -217,7 +217,7 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@PHCId", psData.phcId),
                 new SqlParameter("@ANMId", psData.anmId)
             };
-            var scheduledData = UtilityDL.FillData<PrePNDTScheduled>(stProc, pList);
+            var scheduledData = UtilityDL.FillData<PostPNDTScheduled>(stProc, pList);
             return scheduledData;
         }
 

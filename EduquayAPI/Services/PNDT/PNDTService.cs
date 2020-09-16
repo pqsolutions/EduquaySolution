@@ -188,7 +188,7 @@ namespace EduquayAPI.Services.PNDT
             return counseledNoData;
         }
 
-        public List<PrePNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
+        public List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
         {
             var scheduledData = _pndtData.GetSubjectsPostPNDTScheduled(psData);
             return scheduledData;

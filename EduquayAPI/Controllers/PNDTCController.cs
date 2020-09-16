@@ -231,18 +231,18 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("RetrievePostPNDTScheduled")]
-        public PrePNDTScheduledResponse GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
+        public PostPNDTScheduledResponse GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)
         {
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Retrieve post PNDT  scheduled for the  counselling - {JsonConvert.SerializeObject(psData)}");
                 var postPNDTScheduling = _pndtService.GetSubjectsPostPNDTScheduled(psData);
-                return postPNDTScheduling.Count == 0 ? new PrePNDTScheduledResponse { Status = "true", Message = "No subjects found", data = new List<PrePNDTScheduled>() } : new PrePNDTScheduledResponse { Status = "true", Message = string.Empty, data = postPNDTScheduling };
+                return postPNDTScheduling.Count == 0 ? new PostPNDTScheduledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTScheduled>() } : new PostPNDTScheduledResponse { Status = "true", Message = string.Empty, data = postPNDTScheduling };
             }
             catch (Exception e)
             {
-                return new PrePNDTScheduledResponse { Status = "false", Message = e.Message, data = null };
+                return new PostPNDTScheduledResponse { Status = "false", Message = e.Message, data = null };
             }
         }
 
