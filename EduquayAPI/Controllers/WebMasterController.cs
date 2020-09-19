@@ -475,5 +475,70 @@ namespace EduquayAPI.Controllers
                 return new LoadMolecularLabResponse { Status = "false", Message = e.Message, MolecularLab = null };
             }
         }
+
+        [HttpGet]
+        [Route("RetrieveMolecularResult")]
+        public LoadMolecularResultResponse GetMolecularLResult()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var molecularResult = _webMasterService.RetrieveMolecularResult();
+
+                _logger.LogInformation($"Received molecular result master data {molecularResult}");
+                return molecularResult.Count == 0 ?
+                    new LoadMolecularResultResponse { Status = "true", Message = "No record found", MolecularResults = new List<LoadMolecularResult>() }
+                    : new LoadMolecularResultResponse { Status = "true", Message = string.Empty, MolecularResults = molecularResult };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving molecular result master data {e.StackTrace}");
+                return new LoadMolecularResultResponse { Status = "false", Message = e.Message, MolecularResults = null };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("RetrieveCHCByTestingCHC/{testingCHCId}")]
+        public LoadCHCResponse GetCHCbyTestingCHC(int testingCHCId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _webMasterService.RetrieveCHCbyTestingCHC(testingCHCId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new LoadCHCResponse { Status = "true", Message = "No record found", CHC = new List<LoadCHCs>() }
+                    : new LoadCHCResponse { Status = "true", Message = string.Empty, CHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadCHCResponse { Status = "false", Message = e.Message, CHC = null };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("RetrieveCHCByCentralLab/{centralLabId}")]
+        public LoadCHCResponse GetCHCbyCentralLab(int centralLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var chc = _webMasterService.RetrieveCHCbyCentralLab(centralLabId);
+
+                _logger.LogInformation($"Received chc master data {chc}");
+                return chc.Count == 0 ?
+                    new LoadCHCResponse { Status = "true", Message = "No record found", CHC = new List<LoadCHCs>() }
+                    : new LoadCHCResponse { Status = "true", Message = string.Empty, CHC = chc };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadCHCResponse { Status = "false", Message = e.Message, CHC = null };
+            }
+        }
     }
 }

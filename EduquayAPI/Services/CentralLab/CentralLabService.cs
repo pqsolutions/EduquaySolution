@@ -256,5 +256,17 @@ namespace EduquayAPI.Services.CentralLab
             }
             return shipmentLogResponse;
         }
+
+        public List<CentralLabSampleStatus> RetrieveSampleStatus()
+        {
+            var allData = _centralLabReceiptData.RetrieveSampleStatus();
+            return allData;
+        }
+
+        public List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData)
+        {
+            var allSubject = _centralLabReceiptData.RetriveCentralLabReports(mrData);
+            return allSubject;
+        }
     }
 }

@@ -140,6 +140,7 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Password", password),
                     new SqlParameter("@StateID", addUser.stateId),
                     new SqlParameter("@CentralLabId", addUser.centralLabId),
+                    new SqlParameter("@MolecularLabId", addUser.molecularLabId),
                     new SqlParameter("@DistrictID", addUser.districtId),
                     new SqlParameter("@BlockID", addUser.blockId),
                     new SqlParameter("@CHCID", addUser.chcId),

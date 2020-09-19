@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EduquayAPI.Models.CentralLab
+{
+    public class CentralLabReports : IFill
+    {
+        public string subjectName { get; set; }
+        public string uniqueSubjectId { get; set; }
+        public string subjectType { get; set; }
+        public string rchId { get; set; }
+        public string age { get; set; }
+        public string gender { get; set; }
+        public string dob { get; set; }
+        public string contactNo { get; set; }
+        public string ecNumber { get; set; }
+        public string lmpDate { get; set; }
+        public string ga { get; set; }
+        public string obstetricScore { get; set; }
+        public string barcodeNo { get; set; }
+        public string anmName { get; set; }
+        public string district { get; set; }
+        public string chc { get; set; }
+        public string phc { get; set; }
+        public string sc { get; set; }
+        public string riPoint { get; set; }
+        public string shipmentDate { get; set; }
+        public string sampleStatus { get; set; }
+        public string hplcResult { get; set; }
+        public string hbA0 { get; set; }
+        public string hbA2 { get; set; }
+        public string hbC { get; set; }
+        public string hbD { get; set; }
+        public string hbF { get; set; }
+        public string hbS { get; set; }
+        public string hplcDiagnosis { get; set; }
+
+
+        public void Fill(SqlDataReader reader)
+        {
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectType"))
+                this.subjectType = Convert.ToString(reader["SubjectType"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
+                this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
+                this.rchId = Convert.ToString(reader["RCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
+                this.contactNo = Convert.ToString(reader["ContactNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ECNumber"))
+                this.ecNumber = Convert.ToString(reader["ECNumber"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMPDate"))
+                this.lmpDate = Convert.ToString(reader["LMPDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "GestationalAge"))
+                this.ga = Convert.ToString(reader["GestationalAge"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ObstetricScore"))
+                this.obstetricScore = Convert.ToString(reader["ObstetricScore"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Age"))
+                this.age = Convert.ToString(reader["Age"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gender"))
+                this.gender = Convert.ToString(reader["Gender"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DOB"))
+                this.dob = Convert.ToString(reader["DOB"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
+                this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
+                this.anmName = Convert.ToString(reader["ANMName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Districtname"))
+                this.district = Convert.ToString(reader["Districtname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCname"))
+                this.chc = Convert.ToString(reader["CHCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCname"))
+                this.phc = Convert.ToString(reader["PHCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCname"))
+                this.sc = Convert.ToString(reader["SCname"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIPoint"))
+                this.riPoint = Convert.ToString(reader["RIPoint"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentDate"))
+                this.shipmentDate = Convert.ToString(reader["ShipmentDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleStatus"))
+                this.sampleStatus = Convert.ToString(reader["SampleStatus"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Result"))
+                this.hplcResult = Convert.ToString(reader["Result"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbA0"))
+                this.hbA0 = Convert.ToString(reader["HbA0"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbA2"))
+                this.hbA2 = Convert.ToString(reader["HbA2"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbC"))
+                this.hbC = Convert.ToString(reader["HbC"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbD"))
+                this.hbD = Convert.ToString(reader["HbD"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbF"))
+                this.hbF = Convert.ToString(reader["HbF"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "HbS"))
+                this.hbS = Convert.ToString(reader["HbS"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DiagnosisName"))
+                this.hplcDiagnosis = Convert.ToString(reader["DiagnosisName"]);
+
+        }
+    }
+
+}

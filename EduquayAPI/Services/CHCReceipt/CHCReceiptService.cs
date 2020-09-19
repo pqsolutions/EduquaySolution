@@ -312,5 +312,17 @@ namespace EduquayAPI.Services.CHCReceipt
             }
             return shipmentLogResponse;
         }
+
+        public List<CHCSampleStatus> RetrieveSampleStatus()
+        {
+            var allData = _chcReceiptData.RetrieveSampleStatus();
+            return allData;
+        }
+
+        public List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData)
+        {
+            var allSubject = _chcReceiptData.RetriveCHCReports(mrData);
+            return allSubject;
+        }
     }
 }

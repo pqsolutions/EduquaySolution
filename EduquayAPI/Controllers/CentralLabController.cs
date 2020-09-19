@@ -159,5 +159,46 @@ namespace EduquayAPI.Controllers
                 ShipmentLogs = shipmentLogResponse.ShipmentLogs,
             });
         }
+
+        /// <summary>
+        /// Used for get  reports for Central Lab result 
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveCentralLabReports")]
+        public CentralLabReportResponse GetCentralLabReports(CentralLabReportRequest mrData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for central lab test reports  - {JsonConvert.SerializeObject(mrData)}");
+                var subjects = _centralLabService.RetriveCentralLabReports(mrData);
+                return subjects.Count == 0 ? new CentralLabReportResponse { Status = "true", Message = "No subjects found", Subjects = new List<CentralLabReports>() }
+                : new CentralLabReportResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new CentralLabReportResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for get sample status in Central Lab 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveCentralLabSampleStatus")]
+        public CentralLabSampleStatusResponse GetSampleStatus()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var sampleStatus = _centralLabService.RetrieveSampleStatus();
+                return sampleStatus.Count == 0 ? new CentralLabSampleStatusResponse { Status = "true", Message = "No subjects found", sampleStatus = new List<CentralLabSampleStatus>() }
+                : new CentralLabSampleStatusResponse { Status = "true", Message = string.Empty, sampleStatus = sampleStatus };
+            }
+            catch (Exception e)
+            {
+                return new CentralLabSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
+            }
+        }
     }
 }

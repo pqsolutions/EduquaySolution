@@ -14,6 +14,7 @@ namespace EduquayAPI.Contracts.V1.Request
         public string password { get; set; }
         public int stateId { get; set; }
         public int centralLabId { get; set; }
+        public int molecularLabId { get; set; }
         public int districtId { get; set; }
         public int blockId { get; set; }
         public int chcId { get; set; }

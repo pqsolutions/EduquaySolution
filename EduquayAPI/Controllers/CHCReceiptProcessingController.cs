@@ -197,5 +197,46 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Used for get  reports for Central Lab result 
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveCHCSampleStatusReports")]
+        public CHCReportResponse GETCHCSampleStatusReports(CHCReportsRequest mrData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for chc test reports  - {JsonConvert.SerializeObject(mrData)}");
+                var subjects = _chcReceiptService.RetriveCHCReports(mrData);
+                return subjects.Count == 0 ? new CHCReportResponse { Status = "true", Message = "No subjects found", Subjects = new List<CHCSampleStatusReports>() }
+                : new CHCReportResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new CHCReportResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for get sample status in CHC  
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveCHCSampleStatus")]
+        public CHCSampleStatusResponse GetSampleStatus()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var sampleStatus = _chcReceiptService.RetrieveSampleStatus();
+                return sampleStatus.Count == 0 ? new CHCSampleStatusResponse { Status = "true", Message = "No subjects found", sampleStatus = new List<CHCSampleStatus>() }
+                : new CHCSampleStatusResponse { Status = "true", Message = string.Empty, sampleStatus = sampleStatus };
+            }
+            catch (Exception e)
+            {
+                return new CHCSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
+            }
+        }
+
     }
 }

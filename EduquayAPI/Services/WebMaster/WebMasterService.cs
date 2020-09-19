@@ -142,5 +142,23 @@ namespace EduquayAPI.Services.WebMaster
             var allMolecularLab = _webMasterData.RetrieveMolecularLabbyCentralLab(centralLabId);
             return allMolecularLab;
         }
+
+        public List<LoadMolecularResult> RetrieveMolecularResult()
+        {
+            var allResults = _webMasterData.RetrieveMolecularResult();
+            return allResults;
+        }
+
+        public List<LoadCHCs> RetrieveCHCbyTestingCHC(int testingCHCId)
+        {
+            var chc = _webMasterData.RetrieveCHCbyTestingCHC(testingCHCId);
+            return chc;
+        }
+
+        public List<LoadCHCs> RetrieveCHCbyCentralLab(int centralLabId)
+        {
+            var chc = _webMasterData.RetrieveCHCbyCentralLab(centralLabId);
+            return chc;
+        }
     }
 }

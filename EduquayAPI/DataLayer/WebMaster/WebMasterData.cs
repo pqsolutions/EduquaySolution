@@ -30,6 +30,9 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchTestingCHCByCHC = "SPC_FetchTestingCHCByCHC";
         private const string FetchMolecularLabLabByCentralLab = "SPC_FetchMolecularLabLabByCentralLab";
         private const string FetchCentralLabByCHC = "SPC_FetchCentralLabByCHC";
+        private const string FetchAllMolecularResultMaster = "SPC_FetchAllMolecularResultMaster";
+        private const string FetchAllCHCByTestingCHC = "SPC_FetchAllCHCByTestingCHC";
+        private const string FetchAllCHCByCentralLab = "SPC_FetchAllCHCByCentralLab";
 
 
         public WebMasterData()
@@ -199,6 +202,30 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchMolecularLabLabByCentralLab;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", centralLabId) };
             var allData = UtilityDL.FillData<LoadMolecularLab>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadMolecularResult> RetrieveMolecularResult()
+        {
+            string stProc = FetchAllMolecularResultMaster;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadMolecularResult>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCHCs> RetrieveCHCbyTestingCHC(int testingCHCId)
+        {
+            string stProc = FetchAllCHCByTestingCHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", testingCHCId) };
+            var allData = UtilityDL.FillData<LoadCHCs>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCHCs> RetrieveCHCbyCentralLab(int centralLabId)
+        {
+            string stProc = FetchAllCHCByCentralLab;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", centralLabId) };
+            var allData = UtilityDL.FillData<LoadCHCs>(stProc, pList);
             return allData;
         }
     }

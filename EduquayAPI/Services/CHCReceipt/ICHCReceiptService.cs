@@ -19,5 +19,8 @@ namespace EduquayAPI.Services.CHCReceipt
         List<CHCCentralPickandPackSample> RetrievePickandPack(int testingCHCId);
         Task<CHCShipmentResponse> AddCHCShipment(AddCHCShipmentRequest csData);
         Task<CHCShipmentLogsResponse> RetrieveCHCShipmentLogs(int testingCHCId);
+        List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData);
+        List<CHCSampleStatus> RetrieveSampleStatus();
+
     }
 }

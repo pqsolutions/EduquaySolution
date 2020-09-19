@@ -18,7 +18,8 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         List<CHCCentralPickandPackSample> RetrievePickandPack(int testingCHCId);
         List<CHCShipmentID> AddCHCShipment(AddCHCShipmentRequest csData);
         CHCShipments RetrieveCHCShipmentLog(int testingCHCId);
-
+        List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData);
+        List<CHCSampleStatus> RetrieveSampleStatus();
     }
     public interface ICHCReceiptDataFactory
     {
