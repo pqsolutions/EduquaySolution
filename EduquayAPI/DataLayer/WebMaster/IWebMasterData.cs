@@ -29,6 +29,9 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadLogisticsProvider> RetrieveLogisticsProvider();
         List<LoadCentralLab> RetrieveCentralLabbyCHC(int chcId);
         List<LoadMolecularLab> RetrieveMolecularLabbyCentralLab(int centralLabId);
+        List<LoadMolecularResult> RetrieveMolecularResult();
+        List<LoadCHCs> RetrieveCHCbyTestingCHC(int testingCHCId);
+        List<LoadCHCs> RetrieveCHCbyCentralLab(int centralLabId);
 
     }
     public interface IWebMasterDataFactory

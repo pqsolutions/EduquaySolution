@@ -17,5 +17,8 @@ namespace EduquayAPI.Services.CentralLab
         List<CentralLabPickandPack> RetrievePickandPack(int centralLabId);
         Task<CentralLabShipmentResponse> AddCentralLabShipment(AddCentralLabShipmentRequest csData);
         Task<CentralLabShipmentLogsResponse> RetrieveCentralLabShipmentLog(int centralLabId);
+        List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData);
+        List<CentralLabSampleStatus> RetrieveSampleStatus();
+
     }
 }

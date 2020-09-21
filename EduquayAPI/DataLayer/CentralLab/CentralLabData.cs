@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.CentralLab;
+using EduquayAPI.Models;
 using EduquayAPI.Models.CentralLab;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string FetchSamplesCentralMolecularPickPack = "SPC_FetchSamplesCentralMolecularPickPack";
         private const string AddCentralLabShipments = "SPC_AddCentralLabShipments";
         private const string FetchCentralMolecularShipmentLog = "SPC_FetchCentralMolecularShipmentLog";
+        private const string FetchCentralLabSampleStatus = "SPC_FetchCentralLabSampleStatus"; 
+        private const string FetchCentralLabStatusReports = "SPC_FetchCentralLabStatusReports";
 
         public CentralLabData()
         {
@@ -153,6 +156,32 @@ namespace EduquayAPI.DataLayer.CentralLab
             shiplogDetail.ShipmentLog = allCLShipmentLogs;
             shiplogDetail.ShipmentSubjectDetail = allCLShipmentSubjects;
             return shiplogDetail;
+        }
+
+        public List<CentralLabSampleStatus> RetrieveSampleStatus()
+        {
+            string stProc = FetchCentralLabSampleStatus;
+            var pList = new List<SqlParameter>();
+
+            var allSampleStatus = UtilityDL.FillData<CentralLabSampleStatus>(stProc, pList);
+            return allSampleStatus;
+        }
+
+        public List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData)
+        {
+            string stProc = FetchCentralLabStatusReports;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@SampleStatus", mrData.sampleStatus),
+                new SqlParameter("@CentralLabId", mrData.centralLabId),
+                new SqlParameter("@CHCID", mrData.chcId),
+                new SqlParameter("@PHCID", mrData.phcId),
+                new SqlParameter("@ANMID", mrData.anmId),
+                new SqlParameter("@FromDate", mrData.fromDate.ToCheckNull()),
+                new SqlParameter("@ToDate", mrData.toDate.ToCheckNull()),
+            };
+            var allSubjects = UtilityDL.FillData<CentralLabReports>(stProc, pList);
+            return allSubjects;
         }
     }
 }

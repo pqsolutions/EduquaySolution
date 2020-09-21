@@ -1,7 +1,9 @@
 ﻿using EduquayAPI.Contracts.V1.Request.MolecularLab;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.MolecularLab;
 using EduquayAPI.DataLayer.MolecularLab;
 using EduquayAPI.Models.ANMSubjectRegistration;
+using EduquayAPI.Models.MolecularLab;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,80 @@ namespace EduquayAPI.Services.MolecularLab
         public MolecularLabService(IMolecularLabDataFactory molecularLabDataFactory)
         {
             _molecularLabReceiptData = new MolecularLabDataFactory().Create();
+        }
+
+        public async Task<ServiceResponse> AddMolecularResult(AddMolecularResultRequest mrData)
+        {
+            var sResponse = new ServiceResponse();
+            string message = CheckVal(mrData);
+            try
+            {
+                if(message == "")
+                {
+                    var result = _molecularLabReceiptData.AddMolecularResult(mrData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"Unable to update the molecular result for this uniquesubjectid - {mrData.uniqueSubjectId}";
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result;
+                        return sResponse;
+                    }
+                }
+                else
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = message;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to update the molecular result - {e.Message}";
+                return sResponse;
+            }
+        }
+
+        public  string CheckVal(AddMolecularResultRequest mrData)
+        {
+            string msg = "";
+            if (string.IsNullOrEmpty(mrData.uniqueSubjectId))
+            {
+                msg = "Uniquesubjectid is missing";
+            }
+            else if (string.IsNullOrEmpty(mrData.barcodeNo))
+            {
+                msg = "Barcode is missing";
+            }
+            else if (mrData.processSample == true)
+            {
+                if (mrData.diagnosisId <= 0)
+                {
+                    msg = "Invalid diagnosis Id";
+                }
+                else if (mrData.resultId <= 0)
+                {
+                    msg = "Invalid result Id";
+                }
+            }
+            else if (mrData.processSample == false)
+            {
+                if (string.IsNullOrEmpty(mrData.remarks))
+                {
+                    msg = "Remark is missing";
+                }
+            }
+            if (mrData.userId <= 0)
+            {
+                msg = "Invalid us er Id";
+            }
+            return msg;
+
         }
 
         public async Task<MolecularReceiptResponse> AddReceivedShipment(AddMolecularLabReceiptRequest mlRequest)
@@ -83,6 +159,24 @@ namespace EduquayAPI.Services.MolecularLab
                 molecularLabReceiptsResponse.Message = e.Message;
             }
             return molecularLabReceiptsResponse;
+        }
+
+        public List<MolecularSubjectsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveSubjectForMolecularTest(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularReports> RetriveMolecularReports(MolecularReportRequest mrData)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveMolecularReports(mrData);
+            return allSubject;
+        }
+
+        public List<MolecularSampleStatus> RetrieveSampleStatus()
+        {
+            var allData = _molecularLabReceiptData.RetrieveSampleStatus();
+            return allData;
         }
     }
 }

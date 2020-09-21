@@ -16,6 +16,9 @@ namespace EduquayAPI.DataLayer.CentralLab
         List<CentralLabPickandPack> RetrievePickandPack(int centralLabId);
         List<CentralLabShipmentId> AddCentralLabShipment(AddCentralLabShipmentRequest csData);
         CentralLabShipments RetrieveCentralLabShipmentLog(int centralLabId);
+        List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData);
+        List<CentralLabSampleStatus> RetrieveSampleStatus();
+
     }
 
     public interface ICentralLabDataFactory

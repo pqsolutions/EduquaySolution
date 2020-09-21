@@ -11,6 +11,11 @@ namespace EduquayAPI.DataLayer.MolecularLab
     {
         MolecularLabReceipts RetrieveMolecularLabReceipts(int molecularLabId);
         void AddReceivedShipment(AddMolecularReceiptRequest mrData);
+        List<MolecularSubjectsForTest> RetriveSubjectForMolecularTest(int molecularLabId);
+        string AddMolecularResult(AddMolecularResultRequest mrData);
+        List<MolecularReports> RetriveMolecularReports(MolecularReportRequest mrData);
+        List<MolecularSampleStatus> RetrieveSampleStatus();
+
     }
 
     public interface IMolecularLabDataFactory

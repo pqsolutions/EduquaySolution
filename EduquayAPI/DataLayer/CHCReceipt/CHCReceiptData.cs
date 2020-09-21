@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.CHCReceiptProcessing;
+using EduquayAPI.Models;
 using EduquayAPI.Models.CHCReceipt;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         private const string FetchSamplesCHCCentralPickPack = "SPC_FetchSamplesCHCCentralPickPack";
         private const string AddCHCShipments = "SPC_AddCHCCentralShipments";
         private const string FetchCHCCentralShipmentLog = "SPC_FetchCHCCentralShipmentLog";
+        private const string FetchCHCSampleStatus = "SPC_FetchCHCSampleStatus";
+        private const string FetchCHCStatusReports = "SPC_FetchCHCStatusReports";
+
         public CHCReceiptData()
         {
 
@@ -184,6 +188,32 @@ namespace EduquayAPI.DataLayer.CHCReceipt
             shiplogDetail.ShipmentLog = allCHCShipmentLogs;
             shiplogDetail.ShipmentSubjectDetail = allCHCShipmentSubjects;
             return shiplogDetail;
+        }
+
+        public List<CHCSampleStatus> RetrieveSampleStatus()
+        {
+            string stProc = FetchCHCSampleStatus;
+            var pList = new List<SqlParameter>();
+
+            var allSampleStatus = UtilityDL.FillData<CHCSampleStatus>(stProc, pList);
+            return allSampleStatus;
+        }
+
+        public List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData)
+        {
+            string stProc = FetchCHCStatusReports;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@SampleStatus", mrData.sampleStatus),
+                new SqlParameter("@TestingCHCId", mrData.testingCHCId),
+                new SqlParameter("@CHCID", mrData.chcId),
+                new SqlParameter("@PHCID", mrData.phcId),
+                new SqlParameter("@ANMID", mrData.anmId),
+                new SqlParameter("@FromDate", mrData.fromDate.ToCheckNull()),
+                new SqlParameter("@ToDate", mrData.toDate.ToCheckNull()),
+            };
+            var allSubjects = UtilityDL.FillData<CHCSampleStatusReports>(stProc, pList);
+            return allSubjects;
         }
     }
 }
