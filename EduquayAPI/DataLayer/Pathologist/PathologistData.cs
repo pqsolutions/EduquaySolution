@@ -16,6 +16,7 @@ namespace EduquayAPI.DataLayer.Pathologist
         private const string AddHPLCDiagnosisResults = "SPC_AddHPLCDiagnosisResult";
         private const string FetchPathoEditDiognosisSubjectsList = "SPC_FetchPathoEditDiognosisSubjectsList";
         private const string AddHPLCDiagnosisResultByAutomatic = "SPC_AddHPLCDiagnosisResultByAutomatic";
+        private const string FetchPathologistSampleStatus = "SPC_FetchPathologistSampleStatus";
 
 
         public PathologistData()
@@ -94,6 +95,15 @@ namespace EduquayAPI.DataLayer.Pathologist
             var pList = new List<SqlParameter>() { new SqlParameter("@CentralLabId", centralLabId) };
             var allSampleData = UtilityDL.FillData<HPLCTestDetails>(stProc, pList);
             return allSampleData;
+        }
+
+        public List<PathologistSampleStatus> RetrieveSampleStatus()
+        {
+            string stProc = FetchPathologistSampleStatus;
+            var pList = new List<SqlParameter>();
+
+            var allSampleStatus = UtilityDL.FillData<PathologistSampleStatus>(stProc, pList);
+            return allSampleStatus;
         }
     }
 }

@@ -102,5 +102,26 @@ namespace EduquayAPI.Controllers
                 Message = hplcDiagnosis.Message,
             });
         }
+
+        /// <summary>
+        /// Used for get sample status in  Diagnosis  
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveDiagnosisSampleStatus")]
+        public PathologistSampleStatusResponse GetSampleStatus()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var sampleStatus = _pathologistService.RetrieveSampleStatus();
+                return sampleStatus.Count == 0 ? new PathologistSampleStatusResponse { Status = "true", Message = "No subjects found", sampleStatus = new List<PathologistSampleStatus>() }
+                : new PathologistSampleStatusResponse { Status = "true", Message = string.Empty, sampleStatus = sampleStatus };
+            }
+            catch (Exception e)
+            {
+                return new PathologistSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
+            }
+        }
+
     }
 }

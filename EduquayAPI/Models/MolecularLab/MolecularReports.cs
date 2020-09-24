@@ -22,7 +22,6 @@ namespace EduquayAPI.Models.MolecularLab
         public string obstetricScore { get; set; }
         public string barcodeNo { get; set; }
         public string district { get; set; }
-
         public string shipmentDate { get; set; }
         public string sampleStatus { get; set; }
         public string diagnosis { get; set; }

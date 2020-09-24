@@ -36,7 +36,7 @@ namespace EduquayAPI.Models.PNDT
         public string schedulePNDTTime { get; set; }
         public string counsellingRemarks { get; set; }
         public string fileName { get; set; }
-        public string fileData { get; set; }
+        public string fileLocation { get; set; }
         public bool isPNDTAgreeYes { get; set; }
         public bool isPNDTAgreeNo { get; set; }
         public bool isPNDTAgreePending { get; set; }
@@ -126,6 +126,9 @@ namespace EduquayAPI.Models.PNDT
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FileName"))
                 this.fileName = Convert.ToString(reader["FileName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "FileLocation"))
+                this.fileLocation = Convert.ToString(reader["FileLocation"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsPNDTAgreeYes"))
                 this.isPNDTAgreeYes = Convert.ToBoolean(reader["IsPNDTAgreeYes"]);

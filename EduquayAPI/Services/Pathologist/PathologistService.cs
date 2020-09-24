@@ -222,5 +222,11 @@ namespace EduquayAPI.Services.Pathologist
             }
             return hplcResultResponse;
         }
+
+        public List<PathologistSampleStatus> RetrieveSampleStatus()
+        {
+            var allSampleStatus = _pathologistData.RetrieveSampleStatus();
+            return allSampleStatus;
+        }
     }
 }
