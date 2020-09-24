@@ -88,7 +88,7 @@ namespace EduquayAPI.Services.MolecularLab
             }
             if (mrData.userId <= 0)
             {
-                msg = "Invalid us er Id";
+                msg = "Invalid user Id";
             }
             return msg;
 

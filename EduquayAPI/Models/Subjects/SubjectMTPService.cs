@@ -42,8 +42,8 @@ namespace EduquayAPI.Models.Subjects
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Examination"))
                 this.examination = Convert.ToString(reader["Examination"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTProcedureOfTesting"))
-                this.procedureOfTesting = Convert.ToString(reader["PNDTProcedureOfTesting"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ProcedureOfTesting"))
+                this.procedureOfTesting = Convert.ToString(reader["ProcedureOfTesting"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DischargeConditionName"))
                 this.conditionAtDischarge = Convert.ToString(reader["DischargeConditionName"]);

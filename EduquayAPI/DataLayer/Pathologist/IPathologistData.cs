@@ -14,6 +14,8 @@ namespace EduquayAPI.DataLayer.Pathologist
         List<HPLCResult> HPLCResult();
         string AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
         void AutomaticHPLCDiagnosisUpdate(int centralLabId);
+        List<PathologistSampleStatus> RetrieveSampleStatus();
+
     }
 
     public interface IPathologistDataFactory

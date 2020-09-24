@@ -4,6 +4,7 @@ using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.Models.PNDT;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +25,42 @@ namespace EduquayAPI.Services.PNDT
             var sResponse = new AddCounsellingResponse();
             try
             {
-                var schedulingDateTime = _pndtData.AddCounselling(acData);
+                var extension = "";
+                var fileNames = "";
+                var fullPath = "";
+                if (acData.isPNDTAgreeYes == true)
+                {
+                    if (acData.fileData.FileName != null || acData.fileData.FileName != "")
+                    {
+                        extension = "." + acData.fileData.FileName.Split('.')[acData.fileData.FileName.Split('.').Length - 1];
+                        fileNames = DateTime.Now.Ticks + "_" + acData.fileData.FileName; //Create a new Name for the file due to security reasons.
+
+                        if (acData.fileData.Length > 0)
+                        {
+                            // full path to file in location
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PrePNDTForm");
+
+                            if (!Directory.Exists(filePath))
+                            {
+                                Directory.CreateDirectory(filePath);
+                            }
+
+                            fullPath = Path.Combine(filePath, fileNames);
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                acData.fileData.CopyTo(stream);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"File is missing";
+                        return sResponse;
+                    }
+                }
+
+                var schedulingDateTime = _pndtData.AddCounselling(acData, fileNames, fullPath);
                 sResponse.Status = "true";
                 sResponse.Message = string.Empty;
                 sResponse.data = schedulingDateTime;
@@ -44,7 +80,42 @@ namespace EduquayAPI.Services.PNDT
             var sResponse = new AddPostCounsellingResponse();
             try
             {
-                var schedulingDateTime = _pndtData.AddPostPNDTCounselling(acData);
+                var extension = "";
+                var fileNames = "";
+                var fullPath = "";
+                if (acData.isMTPAgreeYes == true)
+                {
+                    if (acData.fileData.FileName != null || acData.fileData.FileName != "")
+                    {
+                        extension = "." + acData.fileData.FileName.Split('.')[acData.fileData.FileName.Split('.').Length - 1];
+                        fileNames = DateTime.Now.Ticks + "_" + acData.fileData.FileName; //Create a new Name for the file due to security reasons.
+                       
+                        if (acData.fileData.Length > 0)
+                        {
+                            // full path to file in location
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "MTPForm");
+
+                            if (!Directory.Exists(filePath))
+                            {
+                                Directory.CreateDirectory(filePath);
+                            }
+
+                            fullPath = Path.Combine(filePath, fileNames);
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                acData.fileData.CopyTo(stream);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"File is missing";
+                        return sResponse;
+                    }
+                }
+
+                var schedulingDateTime = _pndtData.AddPostPNDTCounselling(acData, fileNames, fullPath);
                 sResponse.Status = "true";
                 sResponse.Message = string.Empty;
                 sResponse.data = schedulingDateTime;

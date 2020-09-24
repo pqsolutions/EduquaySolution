@@ -15,5 +15,7 @@ namespace EduquayAPI.Services.Pathologist
         Task<HPLCDiagnosisDetailResponse> EditHPLCDiagnosisDetail(int centralLabId);
         List<HPLCResult> HPLCResult();
         Task<ServiceResponse> AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData);
+        List<PathologistSampleStatus> RetrieveSampleStatus();
+
     }
 }

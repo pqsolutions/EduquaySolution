@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace EduquayAPI.Contracts.V1.Request.PNDTC
         public string scheduleMTPDate { get; set; }
         public string scheduleMTPTime { get; set; }
         public bool isFoetalDisease { get; set; }
+        public IFormFile fileData { get; set; }
         public int userId { get; set; }
     }
 }
