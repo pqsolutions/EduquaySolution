@@ -16,6 +16,7 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
         private const string FetchANMbyPHC = "SPC_FetchANMbyPHC";
         private const string FetchAllCounsellor = "SPC_FetchAllCounsellor";
         private const string FetchAllPNDTObstetrician = "SPC_FetchAllPNDTObstetrician";
+        private const string FetchAllMTPObstetrician = "SPC_FetchAllMTPObstetrician";
         private const string FetchAllDistrictss = "SPC_FetchAllDistrictss";
         private const string FetchAllProcedureOfTesting = "SPC_FetchAllProcedureOfTesting";
         private const string FetchAllPNDTComplecations = "SPC_FetchAllPNDTComplecations";
@@ -141,6 +142,14 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
             var pList = new List<SqlParameter>();
             var followUpData = UtilityDL.FillData<PMMaster>(stProc, pList);
             return followUpData;
+        }
+
+        public List<PMMaster> GetMTPObstetrician()
+        {
+            string stProc = FetchAllMTPObstetrician;
+            var pList = new List<SqlParameter>();
+            var pndtObsData = UtilityDL.FillData<PMMaster>(stProc, pList);
+            return pndtObsData;
         }
     }
 }

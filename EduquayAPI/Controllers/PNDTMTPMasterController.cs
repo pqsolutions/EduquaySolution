@@ -146,6 +146,25 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used to fetch MTP Obstetrician 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMTPObstetrician")]
+        public PMMasterResponse GetMTPObstetrician()
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                var pmMaster = _pmMasterService.GetMTPObstetrician();
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+            }
+            catch (Exception e)
+            {
+                return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
         /// Used to fetch all District
         /// </summary>
         [HttpGet]

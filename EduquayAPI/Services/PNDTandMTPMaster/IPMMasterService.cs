@@ -15,6 +15,7 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
         List<PMMaster> GetANMbyPHC(int id);
         List<PMMaster> GetCounsellor();
         List<PMMaster> GetPNDTObstetrician();
+        List<PMMaster> GetMTPObstetrician();
         List<PMMaster> GetAllProcedureofTesting();
         List<PMMaster> GetAllDistricts();
         List<PMMaster> GetAllPNDTComplecations();

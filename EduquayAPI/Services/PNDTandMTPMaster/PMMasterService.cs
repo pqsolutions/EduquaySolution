@@ -83,6 +83,12 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             return pmMaster;
         }
 
+        public List<PMMaster> GetMTPObstetrician()
+        {
+            var pmMaster = _pmMasterData.GetMTPObstetrician();
+            return pmMaster;
+        }
+
         public List<PMMaster> GetPHCbyCHC(int id)
         {
             var pmMaster = _pmMasterData.GetPHCbyCHC(id);
