@@ -10,6 +10,6 @@ namespace SentinelAPI.Contracts.V1.Response.LoadMaster
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<LoadHospitals> Hospital { get; set; }
+        public List<LoadHospitals> data { get; set; }
     }
 }

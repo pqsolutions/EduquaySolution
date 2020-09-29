@@ -1,6 +1,7 @@
 ﻿using SentinelAPI.Contracts.V1.Request.Mother;
 using SentinelAPI.Contracts.V1.Response.Mother;
 using SentinelAPI.DataLayer.Mother;
+using SentinelAPI.Models.Mother;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,11 @@ namespace SentinelAPI.Services.Mother
                 if (msg == "")
                 {
                     var motherDetail = _motherData.AddMotherDetail(mrData);
-                    foreach (var mom in motherDetail)
-                    {
-                        motherResponse.Status = "true";
-                        motherResponse.Message = mom.responseMsg;
-                        motherResponse.MotherSubjectId = mom.subjectId;
-                    }
+
+                    motherResponse.Status = "true";
+                    motherResponse.Message = motherDetail.responseMsg;
+                    motherResponse.MotherSubjectId = motherDetail.subjectId;
+
                 }
                 else
                 {
@@ -58,9 +58,9 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid Hospital Id";
             }
-            else if (mrData.hospitalFileId == "")
+            else if (mrData.hospitalNo == "")
             {
-                message = "Invalid Hospital File Id";
+                message = "Invalid Hospital No";
             }
             else if (mrData.dateofRegistration == "")
             {
@@ -74,7 +74,7 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid Last name";
             }
-            else if (mrData.motherGovIdTypeId  <= 0)
+            else if (mrData.motherGovIdTypeId <= 0)
             {
                 message = "Invalid Mother Gov.Id Type";
             }
@@ -98,38 +98,45 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid pincode";
             }
-            else if (mrData.state == "")
+            else if (mrData.stateId <= 0)
             {
                 message = "Invalid state";
             }
             return message;
         }
 
+        public async Task<FetchMotherResponse> RetrieveMother(FetchMotherRequest fmData)
+        {
 
-        //public string AddMotherDetail(AddMotherRequest mrData)
-        //{
-        //    try
-        //    {
-        //        if (mrData.districtId <= 0)
-        //        {
-        //            return "Invalid District Id";
-        //        }
-        //        if (mrData.motherFirstName == "")
-        //        {
-        //            return "Invalid Mother name";
-        //        }
-        //        if (mrData.motherLastName == "")
-        //        {
-        //            return "Invalid Last name";
-        //        }
-        //        var result = _motherData.AddMotherDetail(mrData);
-        //        return string.IsNullOrEmpty(result) ? $"Unable to add mother detail" : result;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return $"Unable to add mother detail - {e.Message}";
-        //    }
+            var motherResponse = new FetchMotherResponse();
+            try
+            {
 
-        //}
+                if (fmData.motherInput == "")
+                {
+                    motherResponse.Status = "true";
+                    motherResponse.Message = "Enter SubjectId or RCH Id or Hospital File Id";
+                }
+                else if (fmData.hospitalId <= 0)
+                {
+                    motherResponse.Status = "false";
+                    motherResponse.Message = "Invalid hospital";
+                }
+                else
+                {
+                    var motherDetail = _motherData.RetrieveMother(fmData);
+
+                    motherResponse.Status = "true";
+                    motherResponse.Message = string.Empty;
+                    motherResponse.data = motherDetail;
+                }
+            }
+            catch (Exception e)
+            {
+                motherResponse.Status = "false";
+                motherResponse.Message = e.Message;
+            }
+            return motherResponse;
+        }
     }
 }

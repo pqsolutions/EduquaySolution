@@ -9,7 +9,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
     public class LoadGovIdType : IFill
     {
         public int id { get; set; }
-        public string govIdTypeName { get; set; }
+        public string name { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -17,7 +17,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
                 this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GovIDType"))
-                this.govIdTypeName = Convert.ToString(reader["GovIDType"]);
+                this.name = Convert.ToString(reader["GovIDType"]);
         }
     }
 }

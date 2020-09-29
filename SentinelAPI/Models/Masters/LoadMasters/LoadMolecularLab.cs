@@ -9,7 +9,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
     public class LoadMolecularLab : IFill
     {
         public int id { get; set; }
-        public string molecularLabName { get; set; }
+        public string name { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -17,7 +17,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
                 this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MolecularLabName"))
-                this.molecularLabName = Convert.ToString(reader["MolecularLabName"]);
+                this.name = Convert.ToString(reader["MolecularLabName"]);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace SentinelAPI.Contracts.V1.Response.LoadMaster
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<LoadDistricts> District { get; set; }
+        public List<LoadDistricts> data { get; set; }
     }
 }

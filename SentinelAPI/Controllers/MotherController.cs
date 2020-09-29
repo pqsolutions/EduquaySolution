@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SentinelAPI.Contracts.V1.Request.Mother;
 using SentinelAPI.Contracts.V1.Response.Mother;
+using SentinelAPI.Models.Mother;
 using SentinelAPI.Services.Mother;
 
 namespace SentinelAPI.Controllers
@@ -29,7 +30,7 @@ namespace SentinelAPI.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
+        [Route("AddMotherDetail")]
         public async Task<IActionResult> AddMotherDetail(AddMotherRequest mrData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
@@ -40,6 +41,22 @@ namespace SentinelAPI.Controllers
                 Status = motherResponse.Status,
                 Message = motherResponse.Message,
                 MotherSubjectId = motherResponse.MotherSubjectId,
+            });
+        }
+
+        [HttpPost]
+        [Route("RetrieveMotherDetail")]
+        public async Task<IActionResult> GetMotherDetail(FetchMotherRequest fmData)
+        {
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve Mother Detail - {JsonConvert.SerializeObject(fmData)}");
+            var motherResponse = await _motherService.RetrieveMother(fmData);
+            return Ok(new FetchMotherResponse
+            {
+                Status = motherResponse.Status,
+                Message = motherResponse.Message,
+                data = motherResponse.data,
             });
         }
     }

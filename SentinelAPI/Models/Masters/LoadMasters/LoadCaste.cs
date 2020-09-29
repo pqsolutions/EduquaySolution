@@ -9,7 +9,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
     public class LoadCaste : IFill
     {
         public int id { get; set; }
-        public string casteName { get; set; }
+        public string name { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -17,7 +17,7 @@ namespace SentinelAPI.Models.Masters.LoadMasters
                 this.id = Convert.ToInt32(reader["ID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Castename"))
-                this.casteName = Convert.ToString(reader["Castename"]);
+                this.name = Convert.ToString(reader["Castename"]);
         }
     }
 }
