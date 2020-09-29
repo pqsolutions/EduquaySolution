@@ -10,6 +10,6 @@ namespace SentinelAPI.Contracts.V1.Response.LoadMaster
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<LoadReligion> Religion { get; set; }
+        public List<LoadReligion> data { get; set; }
     }
 }

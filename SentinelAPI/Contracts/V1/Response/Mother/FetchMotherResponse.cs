@@ -1,15 +1,15 @@
-﻿using SentinelAPI.Models.Masters.LoadMasters;
+﻿using SentinelAPI.Models.Mother;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SentinelAPI.Contracts.V1.Response.LoadMaster
+namespace SentinelAPI.Contracts.V1.Response.Mother
 {
-    public class LoadCommunityResponse
+    public class FetchMotherResponse
     {
         public string Status { get; set; }
         public string Message { get; set; }
-        public List<LoadCommunity> data { get; set; }
+        public MotherDetail data { get; set; }
     }
 }
