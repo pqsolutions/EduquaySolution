@@ -36,7 +36,7 @@ namespace EduquayAPI.DataLayer.PNDT
 
         }
 
-        public PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData, string fileName, string fileLocation)
+        public PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData)
         {
             string stProc = AddPrePNDTCounselling;
             var pList = new List<SqlParameter>()
@@ -52,8 +52,8 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@IsPNDTAgreePending", acData.isPNDTAgreePending),
                 new SqlParameter("@SchedulePNDTDate", acData.schedulePNDTDate ?? acData.schedulePNDTDate),
                 new SqlParameter("@SchedulePNDTtime", acData.schedulePNDTTime ?? acData.schedulePNDTTime),
-                new SqlParameter("@FileName", fileName.ToCheckNull()),
-                new SqlParameter("@FileLocation", fileLocation.ToCheckNull()),
+                new SqlParameter("@FileName", acData.fileName.ToCheckNull()),
+                new SqlParameter("@FileLocation", acData.fileLocation.ToCheckNull()),
                 new SqlParameter("@CreatedBy", acData.userId),
             };
             var schedulingData = UtilityDL.FillEntity<PrePNDTScheduleDateTime>(stProc, pList);
@@ -239,7 +239,7 @@ namespace EduquayAPI.DataLayer.PNDT
             return counsellingData;
         }
 
-        public MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData, string fileName, string fileLocation)
+        public MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData)
         {
             string stProc = AddPostCounselling;
             var pList = new List<SqlParameter>()
@@ -255,8 +255,8 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@IsMTPAgreePending", acData.isMTPAgreePending),
                 new SqlParameter("@ScheduleMTPDate", acData.scheduleMTPDate ?? acData.scheduleMTPDate),
                 new SqlParameter("@ScheduleMTPTime", acData.scheduleMTPTime ?? acData.scheduleMTPTime),
-                new SqlParameter("@FileName", fileName.ToCheckNull()),
-                new SqlParameter("@FileLocation", fileLocation.ToCheckNull()),
+                new SqlParameter("@FileName", acData.fileName.ToCheckNull()),
+                new SqlParameter("@FileLocation", acData.fileLocation.ToCheckNull()),
                 new SqlParameter("@IsFoetalDisease", acData.isFoetalDisease),
                 new SqlParameter("@CreatedBy", acData.userId),
             };

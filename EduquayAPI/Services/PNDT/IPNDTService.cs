@@ -1,8 +1,11 @@
 ﻿using EduquayAPI.Contracts.V1.Request.PNDTC;
 using EduquayAPI.Contracts.V1.Response.PNDT;
 using EduquayAPI.Models.PNDT;
+using Microsoft.AspNetCore.Http;
+using Nancy;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,12 +26,11 @@ namespace EduquayAPI.Services.PNDT
         List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
         List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
         Task<AddPostCounsellingResponse> AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData);
-
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
 
-
-
+       Task<FileResponse> GetPrePNDTFileDetails(IFormFile formData);
+        Task<FileResponse> GetPostPNDTFileDetails(IFormFile formData);
     }
 }

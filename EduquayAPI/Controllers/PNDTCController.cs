@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace EduquayAPI.Controllers
 {
@@ -107,6 +109,77 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used to add subjects for counselling for the PrePNDT
+        /// </summary>
+        [HttpPost]
+        [Route("TestingPurpose")]
+        public async Task<IActionResult> TestingPurpose([FromForm]object formdata)
+        {
+          
+            try
+            {
+                //call the service method  to save file (from postedFile)  in the app server folder
+                IFormFile file = HttpContext.Request.Form.Files[0];
+                var folderName = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                if (!Directory.Exists(folderName))
+                {
+                    Directory.CreateDirectory(folderName);
+                }
+
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (file.Length > 0)
+                {
+                    // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fileName = DateTime.Now.Ticks + "_" + file.FileName; //Create a new Name for the file due to security reasons.
+
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return Ok();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Used to add the consent form file the PrePNDT in server Location
+        /// </summary>
+        [HttpGet]
+        [Route("PrePNDTFileUpload")]
+        public async Task<IActionResult> UploadPNDT([FromForm]object formdata)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                 IFormFile file = HttpContext.Request.Form.Files[0];
+                var counselling = await _pndtService.GetPrePNDTFileDetails(file);
+                _logger.LogInformation($"Add Consent form for who agreed PNDT  - {counselling}");
+                return Ok(new FileResponse
+                {
+                    Status = counselling.Status,
+                    Message = counselling.Message,
+                    data = counselling.data,
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
         /// <summary>
         /// Used to add subjects for counselling for the PrePNDT
@@ -115,16 +188,24 @@ namespace EduquayAPI.Controllers
         [Route("ADDPrePNDTCounselling")]
         public async Task<IActionResult> AddCounselling(AddPrePNDTCounsellingRequest acData)
         {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
-            var counselling = await _pndtService.AddCounselling(acData);
-            _logger.LogInformation($"Add  counselling for positive subjects for PNDT - {counselling}");
-            return Ok(new AddCounsellingResponse
+            try
             {
-                Status = counselling.Status,
-                Message = counselling.Message,
-                data = counselling.data,
-            });
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+               // IFormFile file = HttpContext.Request.Form.Files[0];
+                var counselling = await _pndtService.AddCounselling(acData);
+                _logger.LogInformation($"Add  counselling for positive subjects for PNDT - {counselling}");
+                return Ok(new AddCounsellingResponse
+                {
+                    Status = counselling.Status,
+                    Message = counselling.Message,
+                    data = counselling.data,
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         /// <summary>
@@ -267,22 +348,57 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used to add the consent form file the PrePNDT in server Location
+        /// </summary>
+        [HttpPost]
+        [Route("PostPNDTFileUpload")]
+        public async Task<IActionResult> UploadMTP([FromForm]object formdata)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                IFormFile file = HttpContext.Request.Form.Files[0];
+                var counselling = await _pndtService.GetPostPNDTFileDetails(file);
+                _logger.LogInformation($"Add Consent form for who agreed MTP - {counselling}");
+                return Ok(new FileResponse
+                {
+                    Status = counselling.Status,
+                    Message = counselling.Message,
+                    data = counselling.data,
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
         /// Used to add subjects for counselling for the Post PNDT
         /// </summary>
         [HttpPost]
         [Route("ADDPostPNDTCounselling")]
         public async Task<IActionResult> AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData)
         {
-            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
-            var counselling = await _pndtService.AddPostPNDTCounselling(acData);
-            _logger.LogInformation($"Add  counselling for MTP - {counselling}");
-            return Ok(new AddPostCounsellingResponse
+            try
             {
-                Status = counselling.Status,
-                Message = counselling.Message,
-                data = counselling.data,
-            });
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+             //   IFormFile file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
+                var counselling = await _pndtService.AddPostPNDTCounselling(acData);
+                _logger.LogInformation($"Add  counselling the positive subjects for MTP - {counselling}");
+                return Ok(new AddPostCounsellingResponse
+                {
+                    Status = counselling.Status,
+                    Message = counselling.Message,
+                    data = counselling.data,
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

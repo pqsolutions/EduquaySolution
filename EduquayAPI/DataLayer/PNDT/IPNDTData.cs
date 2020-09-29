@@ -13,7 +13,7 @@ namespace EduquayAPI.DataLayer.PNDT
         List<PrePNDTScheduled> GetSubjectsScheduled(PNDTSchedulingRequest psData);
         CounsellingDateTime AddScheduling(AddSchedulingRequest asData);
         List<PrePNDTCounselling> GetScheduledForCounselling(PNDTSchedulingRequest psData);
-        PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData, string fileName, string fileLocation);
+        PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData);
         List<PrePNDTCounselled> GetSubjectsCounselledYes(PNDTSchedulingRequest pcData);
         List<PrePNDTCounselled> GetSubjectsCounselledNo(PNDTSchedulingRequest pcData);
         List<PrePNDTCounselled> GetSubjectsCounselledPending(PNDTSchedulingRequest pcData);
@@ -22,7 +22,7 @@ namespace EduquayAPI.DataLayer.PNDT
         CounsellingDateTime AddPostPNDTScheduling(AddSchedulingRequest asData);
         List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
         List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
-        MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData, string fileName, string fileLocation);
+        MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
