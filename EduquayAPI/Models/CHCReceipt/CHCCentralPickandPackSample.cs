@@ -15,8 +15,13 @@ namespace EduquayAPI.Models.CHCReceipt
         public string barcodeNo { get; set; }
         public string sampleDateTime { get; set; }
         public string gestationalAge { get; set; }
+        public string cbcTestCompletedDate { get; set; }
+
+
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CBCTestCompletedDate"))
+                this.cbcTestCompletedDate = Convert.ToString(reader["CBCTestCompletedDate"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
