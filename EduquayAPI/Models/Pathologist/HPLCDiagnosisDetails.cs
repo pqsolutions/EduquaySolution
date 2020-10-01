@@ -13,6 +13,7 @@ namespace EduquayAPI.Models.Pathologist
         public string barcodeNo { get; set; }
         public string rchId { get; set; }
         public string ga { get; set; }
+        public string gender { get; set; }
         public string dateOfTest { get; set; }
         public string district { get; set; }
         public string testingCHC { get; set; }
@@ -51,6 +52,9 @@ namespace EduquayAPI.Models.Pathologist
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gender"))
+                this.gender = Convert.ToString(reader["Gender"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);

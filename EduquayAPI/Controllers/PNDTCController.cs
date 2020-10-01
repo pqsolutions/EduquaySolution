@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace EduquayAPI.Controllers
 {
@@ -23,11 +25,19 @@ namespace EduquayAPI.Controllers
     {
         private readonly IPNDTService _pndtService;
         private readonly ILogger<PNDTCController> _logger;
-        public PNDTCController(IPNDTService pndtService, ILogger<PNDTCController> logger)
+       
+        public readonly IHostingEnvironment _hostingEnvironment;
+
+       
+        public PNDTCController(IPNDTService pndtService, ILogger<PNDTCController> logger, IHostingEnvironment hostingEnvironment)
         {
             _pndtService = pndtService;
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
         }
+
+
+      
 
         /// <summary>
         /// Used to retrieve positive couple subjects for schedule the counselling
@@ -109,54 +119,124 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        public class FileUpload
+        {
+            public IFormFile fileobj { get; set; }
+
+        }
+
         /// <summary>
         /// Used to add subjects for counselling for the PrePNDT
         /// </summary>
         [HttpPost]
         [Route("TestingPurpose")]
+       
         public async Task<IActionResult> TestingPurpose([FromForm]object formdata)
         {
           
             try
             {
-                //call the service method  to save file (from postedFile)  in the app server folder
                 IFormFile file = HttpContext.Request.Form.Files[0];
-                var folderName = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
-                if (!Directory.Exists(folderName))
+                if(file.Length > 0)
                 {
-                    Directory.CreateDirectory(folderName);
-                }
-
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-                if (file.Length > 0)
-                {
-                    // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fileName = DateTime.Now.Ticks + "_" + file.FileName; //Create a new Name for the file due to security reasons.
-
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    var nameOfFile = DateTime.Now.Ticks + "_" + file.FileName;
+                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\UPLOADSDATA\\"))
+                    {
+                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\UPLOADSDATA\\");
+                    }
+                    using (FileStream stream = System.IO.File.Create(_hostingEnvironment.WebRootPath + "\\UPLOADSDATA\\" + nameOfFile))
                     {
                         file.CopyTo(stream);
+                        stream.Flush();
                     }
                     return Ok();
                 }
+                else
+                {
+                    return NoContent();
+                }
 
+                //// string webRootPath = _hostingEnvironment.WebRootPath;
+                ////call the service method  to save file (from postedFile)  in the app server folder
+                //IFormFile file = HttpContext.Request.Form.Files[0];
+                //// var folderName = Path.Combine(webRootPath, "Uploads");
+                //var folderName = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "Uploads");
 
+                //if (!Directory.Exists(folderName))
+                //{
+                //    Directory.CreateDirectory(folderName);
+                //}
+
+                //var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName);
+                //if (file.Length > 0)
+                //{
+                //    // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                //    var fileName = DateTime.Now.Ticks + "_" + file.FileName; //Create a new Name for the file due to security reasons.
+
+                //    var fullPath = Path.Combine(pathToSave, fileName);
+                //    var dbPath = Path.Combine(folderName, fileName);
+                //    using (var stream = new FileStream(fullPath, FileMode.Create))
+                //    {
+                //        file.CopyTo(stream);
+                //    }
+                //    return Ok();
+                //}
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return Ok();
+            //return Ok();
         }
 
 
+        [HttpGet]
+        [Route("DownloadFile")]
+        public async Task<IActionResult> Download(string file, string counsellingType)
+        {
+            var uploads = "";
+            if (counsellingType.ToUpper() == "" || counsellingType.ToUpper() == null)
+            {
+                return BadRequest();
+            }
+            else if (counsellingType.ToUpper() == "PREPNDT")
+            {
+                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
+            }
+            else if (counsellingType.ToUpper() == "POSTPNDT")
+            {
+                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
+            }
+
+            var filePath = Path.Combine(uploads, file);
+            if (!System.IO.File.Exists(filePath))
+                return NotFound();
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, GetContentType(filePath), file);
+        }
+
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
+        }
         /// <summary>
         /// Used to add the consent form file the PrePNDT in server Location
         /// </summary>
-        [HttpGet]
+        [HttpPost]//
         [Route("PrePNDTFileUpload")]
         public async Task<IActionResult> UploadPNDT([FromForm]object formdata)
         {

@@ -2,62 +2,69 @@
 using EduquayAPI.Contracts.V1.Response.PNDT;
 using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.Models.PNDT;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace EduquayAPI.Services.PNDT
 {
-    public class PNDTService : IPNDTService 
+    public class PNDTService : IPNDTService
     {
 
         private readonly IPNDTData _pndtData;
+        public readonly IHostingEnvironment _hostingEnvironment;
 
-        public PNDTService(IPNDTDataFactory pndtData)
+        public PNDTService(IPNDTDataFactory pndtData, IHostingEnvironment hostingEnvironment)
         {
             _pndtData = new PNDTDataFactory().Create();
+            _hostingEnvironment = hostingEnvironment;
         }
+
+
 
         public async Task<AddCounsellingResponse> AddCounselling(AddPrePNDTCounsellingRequest acData)
         {
             var sResponse = new AddCounsellingResponse();
             try
             {
-               //var extension = "";
-               // var fileNames = "";
-               // var fullPath = "";
-               // if (acData.isPNDTAgreeYes == true)
-               // {
-               //     if (formFile.FileName != null || formFile.FileName != "")
-               //     {
-               //         extension = "." + formFile.FileName.Split('.')[formFile.FileName.Split('.').Length - 1];
-               //         fileNames = DateTime.Now.Ticks + "_" + formFile.FileName; //Create a new Name for the file due to security reasons.
+                //var extension = "";
+                // var fileNames = "";
+                // var fullPath = "";
+                // if (acData.isPNDTAgreeYes == true)
+                // {
+                //     if (formFile.FileName != null || formFile.FileName != "")
+                //     {
+                //         extension = "." + formFile.FileName.Split('.')[formFile.FileName.Split('.').Length - 1];
+                //         fileNames = DateTime.Now.Ticks + "_" + formFile.FileName; //Create a new Name for the file due to security reasons.
 
-               //         if (formFile.Length > 0)
-               //         {
-               //            // full path to file in location
-               //            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PrePNDTForm");
+                //         if (formFile.Length > 0)
+                //         {
+                //            // full path to file in location
+                //            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PrePNDTForm");
 
-               //             if (!Directory.Exists(filePath))
-               //             {
-               //                 Directory.CreateDirectory(filePath);
-               //             }
-               //             using (var stream = new FileStream(fullPath, FileMode.Create))
-               //             {
-               //                 formFile.CopyTo(stream);
-               //             }
-               //         }
-               //     }
-               //     else
-               //     {
-               //         sResponse.Status = "false";
-               //         sResponse.Message = $"File is missing";
-               //         return sResponse;
-               //     }
-               // }
+                //             if (!Directory.Exists(filePath))
+                //             {
+                //                 Directory.CreateDirectory(filePath);
+                //             }
+                //             using (var stream = new FileStream(fullPath, FileMode.Create))
+                //             {
+                //                 formFile.CopyTo(stream);
+                //             }
+                //         }
+                //     }
+                //     else
+                //     {
+                //         sResponse.Status = "false";
+                //         sResponse.Message = $"File is missing";
+                //         return sResponse;
+                //     }
+                // }
 
                 var schedulingDateTime = _pndtData.AddCounselling(acData);
                 sResponse.Status = "true";
@@ -88,17 +95,32 @@ namespace EduquayAPI.Services.PNDT
                 fileNames = DateTime.Now.Ticks + "_" + formData.FileName; //Create a new Name for the file due to security reasons.                      
                 if (formData.Length > 0)
                 {
-                    // full path to file in location
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "MTPForm");
-                    if (!Directory.Exists(filePath))
+                    // HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"])
+
+                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\MTPForm\\"))
                     {
-                        Directory.CreateDirectory(filePath);
+                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
                     }
+
+
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
                     fullPath = Path.Combine(filePath, fileNames);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+
+                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + "\\MTPForm\\" + fileNames))
                     {
-                        formData.CopyTo(stream);
+                        await formData.CopyToAsync(stream);
+                        stream.Flush();
                     }
+                    // full path to file in location
+                    // var filePath = Path.Combine(Directory.GetCurrentDirectory(), "MTPForm");
+                    //if (!Directory.Exists(filePath))
+                    //{
+                    //    Directory.CreateDirectory(filePath);
+                    //}
+                    //using (var stream = new FileStream(fullPath, FileMode.Create))
+                    //{
+                    //    formData.CopyTo(stream);
+                    //}
                 }
                 fd.fileName = fileNames;
                 fd.fileLocation = fullPath;
@@ -126,17 +148,31 @@ namespace EduquayAPI.Services.PNDT
                 fileNames = DateTime.Now.Ticks + "_" + formData.FileName; //Create a new Name for the file due to security reasons.                      
                 if (formData.Length > 0)
                 {
-                    // full path to file in location
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PNDTForm");
-                    if (!Directory.Exists(filePath))
+
+                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\PNDTForm\\"))
                     {
-                        Directory.CreateDirectory(filePath);
+                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
                     }
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
                     fullPath = Path.Combine(filePath, fileNames);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+
+                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + "\\PNDTForm\\" + fileNames))
                     {
-                        formData.CopyTo(stream);
+                        await formData.CopyToAsync(stream);
+                        stream.Flush();
                     }
+
+                    //// full path to file in location
+                    //var filePath = Path.Combine(Directory.GetCurrentDirectory(), "PNDTForm");
+                    //if (!Directory.Exists(filePath))
+                    //{
+                    //    Directory.CreateDirectory(filePath);
+                    //}
+                    //fullPath = Path.Combine(filePath, fileNames);
+                    //using (var stream = new FileStream(fullPath, FileMode.Create))
+                    //{
+                    //    formData.CopyTo(stream);
+                    //}
                 }
                 fd.fileName = fileNames;
                 fd.fileLocation = fullPath;
@@ -277,7 +313,7 @@ namespace EduquayAPI.Services.PNDT
             return schedulingData;
         }
 
-       
+
 
         public List<PostPNDTScheduling> GetPostPNDTScheduling(PNDTSchedulingRequest psData)
         {
@@ -345,5 +381,6 @@ namespace EduquayAPI.Services.PNDT
             var scheduledData = _pndtData.GetSubjectsScheduled(psData);
             return scheduledData;
         }
+
     }
 }

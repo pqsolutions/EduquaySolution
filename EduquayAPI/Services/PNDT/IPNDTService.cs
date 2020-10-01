@@ -32,5 +32,7 @@ namespace EduquayAPI.Services.PNDT
 
        Task<FileResponse> GetPrePNDTFileDetails(IFormFile formData);
         Task<FileResponse> GetPostPNDTFileDetails(IFormFile formData);
+        //Task<DownloadFileResponse> GetPrePNDTDownloadFileDetails(string fileName);
+        //Task<DownloadFileResponse> GetPostPNDTDownloadFileDetails(string fileName);
     }
 }
