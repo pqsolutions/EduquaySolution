@@ -36,7 +36,7 @@ namespace SentinelAPI.Services.Shipments
                         shipmentLog.sentinelHospitalName = shipment.sentinelHospitalName;
                         shipmentLog.receivingMolecularLab = shipment.receivingMolecularLab;
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
-                        shipmentLog.logisticsProvider = shipment.logisticsProvider;
+                        shipmentLog.senderName = shipment.senderName;
                         shipmentLog.contactNo = shipment.contactNo;
                         shipmentLog.samplesDetail = shipment.samplesDetail;
                         generatedShipmentId = shipment.generatedShipmentId;

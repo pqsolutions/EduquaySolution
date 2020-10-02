@@ -11,7 +11,7 @@ namespace SentinelAPI.DataLayer.SampleCollection
 {
     public class SampleCollectionData : ISampleCollectionData
     {
-        private const string FetchInfantNotSampleCollected = "SPC_FetchInfantNotSampleCollected";
+        private const string FetchBabiesNotSampleCollected = "SPC_FetchBabiesNotSampleCollected";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
 
@@ -19,34 +19,28 @@ namespace SentinelAPI.DataLayer.SampleCollection
         {
 
         }
-
-        public string AddSample(AddSampleCollectionRequest scData)
+        public BabySampleCollection AddSample(AddSampleCollectionRequest scData)
         {
             try
             {
                 string stProc = AddSampleCollection;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
-                    new SqlParameter("@UniqueSubjectID", scData.uniqueSubjectId ?? scData.uniqueSubjectId),
+                    new SqlParameter("@BabySubjectId", scData.babySubjectId ?? scData.babySubjectId),
+                    new SqlParameter("@HospitalId", scData.hospitalId),
                     new SqlParameter("@BarcodeNo", scData.barcodeNo  ?? scData.barcodeNo),
                     new SqlParameter("@SampleCollectionDate", scData.sampleCollectionDate ?? scData.sampleCollectionDate),
                     new SqlParameter("@SampleCollectionTime", scData.sampleCollectionTime ?? scData.sampleCollectionTime),
-                    new SqlParameter("@Reason", scData.reason ?? scData.reason),
                     new SqlParameter("@CollectedBy", scData.collectedBy),
-                    new SqlParameter("@HospitalId", scData.hospitalId),
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return $"Sample collected successfully";
+                var samplecollection = UtilityDL.FillEntity<BabySampleCollection>(stProc, pList);
+                return samplecollection;
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-
         public List<BarcodeSample> FetchBarcode(string barcodeNo)
         {
             string stProc = FetchBarcodeSample;
@@ -59,9 +53,9 @@ namespace SentinelAPI.DataLayer.SampleCollection
             return allData;
         }
 
-        public List<SampleCollectionList> RetriveInfantList(SampleCollectionRequest scData)
+        public List<SampleCollectionList> RetriveBabiesList(SampleCollectionRequest scData)
         {
-            string stProc = FetchInfantNotSampleCollected;
+            string stProc = FetchBabiesNotSampleCollected;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@HospitalId", scData.hospitalId),
@@ -71,5 +65,7 @@ namespace SentinelAPI.DataLayer.SampleCollection
             var infantDetail = UtilityDL.FillData<SampleCollectionList>(stProc, pList);
             return infantDetail;
         }
+
+      
     }
 }

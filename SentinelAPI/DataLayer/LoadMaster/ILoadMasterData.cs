@@ -19,6 +19,7 @@ namespace SentinelAPI.DataLayer.LoadMaster
         List<LoadCommunity> RetrieveCommunity(int casteId);
         List<LoadBirthStatus> RetrieveBirthStatus();
         List<LoadMolecularLab> RetrieveMolecularLab();
+        List<LoadCommonMaster> RetrieveCollectionSite();
 
     }
 

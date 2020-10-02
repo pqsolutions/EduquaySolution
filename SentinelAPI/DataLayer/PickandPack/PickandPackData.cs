@@ -29,7 +29,7 @@ namespace SentinelAPI.DataLayer.PickandPack
                     new SqlParameter("@BarcodeNo", asData.barcodeNo ?? asData.barcodeNo),
                     new SqlParameter("@HospitalId", asData.hospitalId),
                     new SqlParameter("@MolecularLabId", asData.molecularLabId),
-                    new SqlParameter("@LogisticsProvider", asData.logisticsProvider ?? asData.logisticsProvider),
+                    new SqlParameter("@SenderName", asData.senderName ?? asData.senderName),
                     new SqlParameter("@ContactNo", asData.contactNo ?? asData.contactNo),
                     new SqlParameter("@DateofShipment", asData.dateOfShipment ?? asData.dateOfShipment),
                     new SqlParameter("@TimeofShipment", asData.timeOfShipment ?? asData.timeOfShipment),

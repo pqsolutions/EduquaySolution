@@ -12,7 +12,7 @@ namespace SentinelAPI.Models.Shipment
         public string generatedShipmentId { get; set; }
         public string sentinelHospitalName { get; set; }
         public string receivingMolecularLab { get; set; }
-        public string logisticsProvider { get; set; }
+        public string senderName { get; set; }
         public string contactNo { get; set; }
         public string shipmentDateTime { get; set; }
         public List<ShipmentDetail> samplesDetail { get; set; }
@@ -33,8 +33,8 @@ namespace SentinelAPI.Models.Shipment
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ReceivingMolecularLab"))
                 this.receivingMolecularLab = Convert.ToString(reader["ReceivingMolecularLab"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LogisticsProvider"))
-                this.logisticsProvider = Convert.ToString(reader["LogisticsProvider"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SenderName"))
+                this.senderName = Convert.ToString(reader["SenderName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
                 this.contactNo = Convert.ToString(reader["ContactNo"]);

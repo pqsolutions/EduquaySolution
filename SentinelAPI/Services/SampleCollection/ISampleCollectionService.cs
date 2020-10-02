@@ -11,6 +11,6 @@ namespace SentinelAPI.Services.SampleCollection
     public interface ISampleCollectionService
     {
         Task<ServiceResponse> AddSample(AddSampleCollectionRequest scData);
-        List<SampleCollectionList> RetriveInfantList(SampleCollectionRequest scData);
+        List<SampleCollectionList> RetriveBabiesList(SampleCollectionRequest scData);
     }
 }

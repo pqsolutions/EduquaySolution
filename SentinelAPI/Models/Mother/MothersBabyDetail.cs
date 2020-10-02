@@ -13,8 +13,12 @@ namespace SentinelAPI.Models.Mother
         public string babyName { get; set; }
         public string gender { get; set; }
         public string deliveryDateTime { get; set; }
+        public bool allowCollect { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "AllowCollect"))
+                this.allowCollect = Convert.ToBoolean(reader["AllowCollect"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MotherSubjectId"))
                 this.motherSubjectId = Convert.ToString(reader["MotherSubjectId"]);
 

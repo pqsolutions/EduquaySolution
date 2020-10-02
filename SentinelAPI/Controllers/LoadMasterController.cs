@@ -50,6 +50,27 @@ namespace SentinelAPI.Controllers
         }
 
         [HttpGet]
+        [Route("RetrieveCollectionSite")]
+        public CommonMasterResponse GetCollectionSite()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var collectionSites = _loadMasterService.RetrieveCollectionSite();
+
+                _logger.LogInformation($"Received collection site master data {collectionSites}");
+                return collectionSites.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = collectionSites };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in collection site data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
         [Route("RetrieveDistrict/{userId}")]
         public LoadDistrictResponse GetDistrict(int userId)
         {
