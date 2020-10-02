@@ -41,8 +41,7 @@ namespace SentinelAPI.Models.Mother
         public string guardianFirstName { get; set; }
         public string guardianLastName { get; set; }
         public string guardianContactNo { get; set; }
-        public int babysCount { get; set; }
-
+        public List<MothersBabyDetail> babyDetail { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateofRegistration"))
@@ -146,9 +145,6 @@ namespace SentinelAPI.Models.Mother
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "GuardianContactNo"))
                 this.guardianContactNo = Convert.ToString(reader["GuardianContactNo"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabysCount"))
-                this.babysCount = Convert.ToInt32(reader["BabysCount"]);
         }
     }
 }

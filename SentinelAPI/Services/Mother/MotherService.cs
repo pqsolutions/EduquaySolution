@@ -125,10 +125,57 @@ namespace SentinelAPI.Services.Mother
                 else
                 {
                     var motherDetail = _motherData.RetrieveMother(fmData);
+                    var moms = new List<MomDetail>();
+                    var motherUniqueSubjectId = "";
+                    foreach (var mother in motherDetail.motherDetail)
+                    {
+                        var mom = new MomDetail();
+                        if (motherUniqueSubjectId != mother.motherSubjectId)
+                        {
+                            var baby = motherDetail.babyDetail.Where(sd => sd.motherSubjectId == mother.motherSubjectId).ToList();
+                            mom.motherSubjectId = mother.motherSubjectId;
+                            mom.dateofRegistration = mother.dateofRegistration;
+                            mom.districtId = mother.districtId;
 
+                            mom.hospitalId = mother.hospitalId;
+                            mom.hospitalNo = mother.hospitalNo;
+                            mom.collectionSiteId= mother.collectionSiteId;
+                            mom.motherFirstName= mother.motherFirstName;
+                            mom.motherLastName= mother.motherLastName;
+                            mom.dob= mother.dob;
+                            mom.age= mother.age;
+                            mom.rchId= mother.rchId;
+                            mom.motherGovIdTypeId= mother.motherGovIdTypeId;
+                            mom.motherGovIdDetail= mother.motherGovIdDetail;
+                            mom.motherGovIdDetail= mother.motherGovIdDetail;
+                            mom.motherContactNo= mother.motherContactNo;
+                            mom.g= mother.g;
+                            mom.p= mother.p;
+                            mom.l= mother.l;
+                            mom.a= mother.a;
+                            mom.ecNumber= mother.ecNumber;
+                            mom.address1= mother.address1;
+                            mom.address2= mother.address2;
+                            mom.address3= mother.address3;
+                            mom.stateId= mother.stateId;
+                            mom.pincode= mother.pincode;
+                            mom.religionId= mother.religionId;
+                            mom.casteId= mother.casteId;
+                            mom.communityId= mother.communityId;
+                            mom.fatherFirstName= mother.fatherFirstName;
+                            mom.fatherLastName= mother.fatherLastName;
+                            mom.fatherContactNo = mother.fatherContactNo;
+                            mom.guardianFirstName = mother.guardianFirstName;
+                            mom.guardianLastName = mother.guardianLastName;
+                            mom.guardianContactNo = mother.guardianContactNo;
+                            mom.babyDetail = baby;
+                            motherUniqueSubjectId = mother.motherSubjectId;
+                            moms.Add(mom);
+                        }
+                    }
                     motherResponse.Status = "true";
                     motherResponse.Message = string.Empty;
-                    motherResponse.data = motherDetail;
+                    motherResponse.data = moms;
                 }
             }
             catch (Exception e)

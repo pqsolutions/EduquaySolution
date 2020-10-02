@@ -73,7 +73,7 @@ namespace SentinelAPI.DataLayer.Mother
 
         }
 
-        public MotherDetail RetrieveMother(FetchMotherRequest fmData)
+        public MotherDetails RetrieveMother(FetchMotherRequest fmData)
         {
             string stProc = FetchMotherDetail;
             var pList = new List<SqlParameter>()
@@ -81,9 +81,12 @@ namespace SentinelAPI.DataLayer.Mother
                 new SqlParameter("@HospitalId", fmData.hospitalId),
                 new SqlParameter("@MothersRchSubHospID", fmData.motherInput ?? fmData.motherInput),
             };
-            var motherDetail = UtilityDL.FillEntity<MotherDetail>(stProc, pList);
-          
-            return motherDetail;
+            var motherDetail = UtilityDL.FillData<MotherDetail>(stProc, pList);
+            var babyDetail = UtilityDL.FillData<MothersBabyDetail>(stProc, pList);
+            var mother = new MotherDetails();
+            mother.motherDetail = motherDetail;
+            mother.babyDetail = babyDetail;
+            return mother;
         }
     }
 }
