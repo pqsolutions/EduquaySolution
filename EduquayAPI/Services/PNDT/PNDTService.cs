@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Configuration;
 
 namespace EduquayAPI.Services.PNDT
 {
@@ -19,11 +20,14 @@ namespace EduquayAPI.Services.PNDT
 
         private readonly IPNDTData _pndtData;
         public readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IConfiguration _config;
 
-        public PNDTService(IPNDTDataFactory pndtData, IHostingEnvironment hostingEnvironment)
+
+        public PNDTService(IPNDTDataFactory pndtData, IHostingEnvironment hostingEnvironment, IConfiguration config)
         {
             _pndtData = new PNDTDataFactory().Create();
             _hostingEnvironment = hostingEnvironment;
+            _config = config;
         }
 
 
@@ -89,6 +93,7 @@ namespace EduquayAPI.Services.PNDT
             var extension = "";
             var fileNames = "";
             var fullPath = "";
+            var postPNDTFileLocation = _config.GetSection("Key").GetSection("PostPNDTFileFolder").Value;
             if (formData.FileName != null || formData.FileName != "")
             {
                 extension = "." + formData.FileName.Split('.')[formData.FileName.Split('.').Length - 1];
@@ -97,16 +102,16 @@ namespace EduquayAPI.Services.PNDT
                 {
                     // HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"])
 
-                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\MTPForm\\"))
+                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + postPNDTFileLocation))
                     {
-                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
+                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + postPNDTFileLocation);
                     }
 
 
-                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + postPNDTFileLocation);
                     fullPath = Path.Combine(filePath, fileNames);
 
-                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + "\\MTPForm\\" + fileNames))
+                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + postPNDTFileLocation + fileNames))
                     {
                         await formData.CopyToAsync(stream);
                         stream.Flush();
@@ -142,6 +147,7 @@ namespace EduquayAPI.Services.PNDT
             var extension = "";
             var fileNames = "";
             var fullPath = "";
+            var prePNDTFileLocation = _config.GetSection("Key").GetSection("PrePNDTFileFolder").Value;
             if (formData.FileName != null || formData.FileName != "")
             {
                 extension = "." + formData.FileName.Split('.')[formData.FileName.Split('.').Length - 1];
@@ -149,14 +155,14 @@ namespace EduquayAPI.Services.PNDT
                 if (formData.Length > 0)
                 {
 
-                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\PNDTForm\\"))
+                    if (!Directory.Exists(_hostingEnvironment.WebRootPath + prePNDTFileLocation))
                     {
-                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
+                        Directory.CreateDirectory(_hostingEnvironment.WebRootPath + prePNDTFileLocation);
                     }
-                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + prePNDTFileLocation);
                     fullPath = Path.Combine(filePath, fileNames);
 
-                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + "\\PNDTForm\\" + fileNames))
+                    using (FileStream stream = File.Create(_hostingEnvironment.WebRootPath + prePNDTFileLocation + fileNames))
                     {
                         await formData.CopyToAsync(stream);
                         stream.Flush();

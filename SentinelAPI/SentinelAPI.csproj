@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\V1\Request\Master\" />
+    <Folder Include="Contracts\V1\Request\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

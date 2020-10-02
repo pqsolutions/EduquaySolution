@@ -10,7 +10,7 @@ namespace SentinelAPI.DataLayer.Mother
     public interface IMotherData
     {
         MotherRegistration AddMotherDetail(AddMotherRequest mrData);
-        MotherDetail RetrieveMother(FetchMotherRequest fmData);
+        MotherDetails RetrieveMother(FetchMotherRequest fmData);
     }
 
     public interface IMotherDataFactory

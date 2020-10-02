@@ -21,6 +21,8 @@ using SentinelAPI.DataLayer.PickandPack;
 using SentinelAPI.Services.PickandPack;
 using SentinelAPI.DataLayer.Shipments;
 using SentinelAPI.Services.Shipments;
+using SentinelAPI.DataLayer.Baby;
+using SentinelAPI.Services.Baby;
 
 namespace SentinelAPI.Installers
 {
@@ -39,6 +41,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IInfantDataFactory, InfantDataFactory>();
             services.AddScoped<IInfantService, InfantService>();
+            
+            services.AddScoped<IBabyDataFactory, BabyDataFactory>();
+            services.AddScoped<IBabyService, BabyService>();
 
             services.AddScoped<ILoadMasterDataFactory, LoadMasterDataFactory>();
             services.AddScoped<ILoadMasterService, LoadMasterService>();

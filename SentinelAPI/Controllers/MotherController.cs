@@ -34,7 +34,7 @@ namespace SentinelAPI.Controllers
         public async Task<IActionResult> AddMotherDetail(AddMotherRequest mrData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding Mother Detail - {JsonConvert.SerializeObject(mrData)}");
+            _logger.LogDebug($"Adding mother detail - {JsonConvert.SerializeObject(mrData)}");
             var motherResponse = await _motherService.AddMotherDetail(mrData);
             return Ok(new AddMotherResponse
             {
@@ -48,9 +48,8 @@ namespace SentinelAPI.Controllers
         [Route("RetrieveMotherDetail")]
         public async Task<IActionResult> GetMotherDetail(FetchMotherRequest fmData)
         {
-
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Retrieve Mother Detail - {JsonConvert.SerializeObject(fmData)}");
+            _logger.LogDebug($"Retrieve mother detail with baby detail - {JsonConvert.SerializeObject(fmData)}");
             var motherResponse = await _motherService.RetrieveMother(fmData);
             return Ok(new FetchMotherResponse
             {

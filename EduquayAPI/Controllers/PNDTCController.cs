@@ -16,6 +16,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Configuration;
 
 namespace EduquayAPI.Controllers
 {
@@ -25,19 +26,17 @@ namespace EduquayAPI.Controllers
     {
         private readonly IPNDTService _pndtService;
         private readonly ILogger<PNDTCController> _logger;
-       
+        private readonly IConfiguration _config;
         public readonly IHostingEnvironment _hostingEnvironment;
 
        
-        public PNDTCController(IPNDTService pndtService, ILogger<PNDTCController> logger, IHostingEnvironment hostingEnvironment)
+        public PNDTCController(IPNDTService pndtService, ILogger<PNDTCController> logger, IHostingEnvironment hostingEnvironment, IConfiguration config)
         {
             _pndtService = pndtService;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
+            _config = config;
         }
-
-
-      
 
         /// <summary>
         /// Used to retrieve positive couple subjects for schedule the counselling
@@ -119,12 +118,6 @@ namespace EduquayAPI.Controllers
             }
         }
 
-        public class FileUpload
-        {
-            public IFormFile fileobj { get; set; }
-
-        }
-
         /// <summary>
         /// Used to add subjects for counselling for the PrePNDT
         /// </summary>
@@ -155,32 +148,6 @@ namespace EduquayAPI.Controllers
                 {
                     return NoContent();
                 }
-
-                //// string webRootPath = _hostingEnvironment.WebRootPath;
-                ////call the service method  to save file (from postedFile)  in the app server folder
-                //IFormFile file = HttpContext.Request.Form.Files[0];
-                //// var folderName = Path.Combine(webRootPath, "Uploads");
-                //var folderName = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "Uploads");
-
-                //if (!Directory.Exists(folderName))
-                //{
-                //    Directory.CreateDirectory(folderName);
-                //}
-
-                //var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName);
-                //if (file.Length > 0)
-                //{
-                //    // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                //    var fileName = DateTime.Now.Ticks + "_" + file.FileName; //Create a new Name for the file due to security reasons.
-
-                //    var fullPath = Path.Combine(pathToSave, fileName);
-                //    var dbPath = Path.Combine(folderName, fileName);
-                //    using (var stream = new FileStream(fullPath, FileMode.Create))
-                //    {
-                //        file.CopyTo(stream);
-                //    }
-                //    return Ok();
-                //}
             }
             catch (Exception ex)
             {
@@ -196,17 +163,20 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> Download(string file, string counsellingType)
         {
             var uploads = "";
+            var prePNDTFileLocation = _config.GetSection("Key").GetSection("PrePNDTFileFolder").Value;
+            var postPNDTFileLocation = _config.GetSection("Key").GetSection("PostPNDTFileFolder").Value;
+
             if (counsellingType.ToUpper() == "" || counsellingType.ToUpper() == null)
             {
                 return BadRequest();
             }
             else if (counsellingType.ToUpper() == "PREPNDT")
             {
-                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + "\\PNDTForm\\");
-            }
+                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + prePNDTFileLocation);
+            } 
             else if (counsellingType.ToUpper() == "POSTPNDT")
             {
-                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + "\\MTPForm\\");
+                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + postPNDTFileLocation);
             }
 
             var filePath = Path.Combine(uploads, file);
