@@ -18,7 +18,7 @@ namespace SentinelAPI.Services.PickandPack
             _pickandPackData = new PickandPackDataFactory().Create();
         }
 
-        public string checkANMValidation(AddPickandPackRequest asData)
+        public string checkshipmentValidation(AddPickandPackRequest asData)
         {
             var message = "";
             if (asData.barcodeNo == "")
@@ -33,9 +33,9 @@ namespace SentinelAPI.Services.PickandPack
             {
                 message = "Invalid molecular lab id";
             }
-            else if (string.IsNullOrEmpty(asData.logisticsProvider))
+            else if (string.IsNullOrEmpty(asData.senderName))
             {
-                message = " Logistics provider is missing";
+                message = " Sender name is missing";
             }
             else if (string.IsNullOrEmpty(asData.contactNo))
             {
@@ -57,7 +57,7 @@ namespace SentinelAPI.Services.PickandPack
             var shipmentResponse = new AddShipmentResponse();
             try
             {
-                var msg = checkANMValidation(asData);
+                var msg = checkshipmentValidation(asData);
                 if (msg == "")
                 {
                     var shipmentDetails = _pickandPackData.AddShipment(asData);

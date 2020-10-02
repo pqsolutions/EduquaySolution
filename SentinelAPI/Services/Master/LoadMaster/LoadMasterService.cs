@@ -28,6 +28,12 @@ namespace SentinelAPI.Services.Master.LoadMaster
             return allCastes;
         }
 
+        public List<LoadCommonMaster> RetrieveCollectionSite()
+        {
+            var allData = _loadMasterData.RetrieveCollectionSite();
+            return allData;
+        }
+
         public List<LoadCommunity> RetrieveCommunity()
         {
             var allCommunitys = _loadMasterData.RetrieveCommunity();

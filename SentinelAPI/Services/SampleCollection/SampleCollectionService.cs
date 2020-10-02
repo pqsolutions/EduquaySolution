@@ -23,10 +23,10 @@ namespace SentinelAPI.Services.SampleCollection
             ServiceResponse sResponse = new ServiceResponse();
             try
             {
-                if (string.IsNullOrEmpty(scData.uniqueSubjectId))
+                if (string.IsNullOrEmpty(scData.babySubjectId))
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = "Uniquesubjectid is missing";
+                    sResponse.Message = "Baby subjectid is missing";
                     return sResponse;
                 }
                 if (string.IsNullOrEmpty(scData.barcodeNo))
@@ -63,39 +63,30 @@ namespace SentinelAPI.Services.SampleCollection
                 var barcode = _sampleCollectionData.FetchBarcode(scData.barcodeNo);
                 if (barcode.Count <= 0)
                 {
-                    var result = _sampleCollectionData.AddSample(scData);
-                    if (string.IsNullOrEmpty(result))
-                    {
-                        sResponse.Status = "false";
-                        sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {scData.uniqueSubjectId}";
-                        return sResponse;
-                    }
-                    else
-                    {
-                        sResponse.Status = "true";
-                        sResponse.Message = result;
-                        return sResponse;
-                    }
+                    var result =  _sampleCollectionData.AddSample(scData);
+                    sResponse.Status = result.collectStatus.ToString();
+                    sResponse.Message = result.msg;
+                    return sResponse;
                 }
                 else
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = $" This barcode no- {scData.barcodeNo} is already associated with another infant subject";
+                    sResponse.Message = $" This barcode no- {scData.barcodeNo} is already associated with another baby subject";
                     return sResponse;
                 }
             }
             catch (Exception e)
             {
                 sResponse.Status = "false";
-                sResponse.Message = $"Unable to collect sampele for this uniquesubjectid - {scData.uniqueSubjectId} - {e.Message}";
+                sResponse.Message = $"Unable to collect sampele for this baby subjectid - {scData.babySubjectId} - {e.Message}";
                 return sResponse;
             }
         }
 
-        public List<SampleCollectionList> RetriveInfantList(SampleCollectionRequest scData)
+        public List<SampleCollectionList> RetriveBabiesList(SampleCollectionRequest scData)
         {
-            var infantSamples = _sampleCollectionData.RetriveInfantList(scData);
-            return infantSamples;
+            var babySamples = _sampleCollectionData.RetriveBabiesList(scData);
+            return babySamples;
         }
     }
 }

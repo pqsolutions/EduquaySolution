@@ -32,8 +32,8 @@ namespace SentinelAPI.Controllers
         /// Used for fetch infant subject list not collected sample
         /// </summary>
         [HttpPost]
-        [Route("RetrieveInfantList")]
-        public InfantSubjectResponse GetInfantSubjectList(SampleCollectionRequest scData)
+        [Route("RetrieveBabiesList")]
+        public BabiesSubjectResponse GetInfantSubjectList(SampleCollectionRequest scData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             var fromDate = "";
@@ -56,16 +56,16 @@ namespace SentinelAPI.Controllers
             }
             try
             {
-                var subjectList = _sampleCollectionService.RetriveInfantList(scData);
+                var subjectList = _sampleCollectionService.RetriveBabiesList(scData);
                 _logger.LogInformation($"Received infant subject Data {subjectList}");
                 return subjectList.Count == 0 ?
-                    new InfantSubjectResponse { status = "true", message = "No subjects found", fromDate = fromDate, toDate = toDate, infantList = new List<SampleCollectionList>() }
-                    : new InfantSubjectResponse { status = "true", message = string.Empty, fromDate = fromDate, toDate = toDate, infantList = subjectList };
+                    new BabiesSubjectResponse { status = "true", message = "No subjects found", fromDate = fromDate, toDate = toDate, data = new List<SampleCollectionList>() }
+                    : new BabiesSubjectResponse { status = "true", message = string.Empty, fromDate = fromDate, toDate = toDate, data = subjectList };
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in receiving infant subject data {e.StackTrace}");
-                return new InfantSubjectResponse { status = "false", message = e.Message, fromDate = fromDate, toDate = toDate, infantList = null };
+                return new BabiesSubjectResponse { status = "false", message = e.Message, fromDate = fromDate, toDate = toDate, data = null };
             }
         }
 
@@ -73,7 +73,7 @@ namespace SentinelAPI.Controllers
         /// Used for collect the samples of particular subject
         /// </summary>
         [HttpPost]
-        [Route("Add")]
+        [Route("AddSampleCollection")]
         public async Task<IActionResult> AddSample(AddSampleCollectionRequest scData)
         {
 

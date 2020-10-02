@@ -28,7 +28,7 @@ namespace SentinelAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddDetail")]
+        [Route("AddBabyDetail")]
         public async Task<IActionResult> AddBabyDetail(AddBabyRequest brData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");

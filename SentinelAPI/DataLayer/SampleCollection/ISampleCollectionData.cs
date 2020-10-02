@@ -9,8 +9,8 @@ namespace SentinelAPI.DataLayer.SampleCollection
 {
     public interface ISampleCollectionData
     {
-        List<SampleCollectionList> RetriveInfantList(SampleCollectionRequest scData);
-        string AddSample(AddSampleCollectionRequest scData);
+        List<SampleCollectionList> RetriveBabiesList(SampleCollectionRequest scData);
+        BabySampleCollection AddSample(AddSampleCollectionRequest scData);
         List<BarcodeSample> FetchBarcode(string barcodeNo);
     }
     public interface ISampleCollectionDataFactory

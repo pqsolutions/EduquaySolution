@@ -19,7 +19,7 @@ namespace SentinelAPI.Contracts.V1.Response.Shipments
         public string generatedShipmentId { get; set; }
         public string sentinelHospitalName { get; set; }
         public string receivingMolecularLab { get; set; }
-        public string logisticsProvider { get; set; }
+        public string senderName { get; set; }
         public string contactNo { get; set; }
         public string shipmentDateTime { get; set; }
         public List<ShipmentDetail> samplesDetail { get; set; }
