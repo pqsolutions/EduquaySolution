@@ -74,14 +74,6 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid Last name";
             }
-            else if (mrData.motherGovIdTypeId <= 0)
-            {
-                message = "Invalid Mother Gov.Id Type";
-            }
-            else if (mrData.motherGovIdDetail == "")
-            {
-                message = "Invalid Mother GovId Detail";
-            }
             else if (mrData.address1 == "")
             {
                 message = "Invalid address1 (House No or Plot No)";

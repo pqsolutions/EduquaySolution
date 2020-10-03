@@ -19,6 +19,7 @@ namespace SentinelAPI.Services.Master.LoadMaster
         List<LoadBirthStatus> RetrieveBirthStatus();
         List<LoadMolecularLab> RetrieveMolecularLab();
         List<LoadCommonMaster> RetrieveCollectionSite();
+        List<LoadCommonMaster> RetrieveStates();
 
     }
 }

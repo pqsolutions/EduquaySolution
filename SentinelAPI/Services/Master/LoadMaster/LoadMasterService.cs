@@ -81,5 +81,11 @@ namespace SentinelAPI.Services.Master.LoadMaster
             var allReligions = _loadMasterData.RetrieveReligion();
             return allReligions;
         }
+
+        public List<LoadCommonMaster> RetrieveStates()
+        {
+            var allData = _loadMasterData.RetrieveStates();
+            return allData;
+        }
     }
 }

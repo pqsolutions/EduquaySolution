@@ -29,6 +29,28 @@ namespace SentinelAPI.Controllers
         }
 
         [HttpGet]
+        [Route("RetrieveStates")]
+        public CommonMasterResponse GetStates()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var states = _loadMasterService.RetrieveStates();
+
+                _logger.LogInformation($"Received state master data {states}");
+                return states.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = states };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in state  data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+
+        [HttpGet]
         [Route("RetrieveBirthStatus")]
         public LoadBirthStatusResponse GetBirthSatus()
         {

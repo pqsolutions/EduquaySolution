@@ -38,7 +38,7 @@ namespace SentinelAPI.Services.Shipments
                         shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
                         shipmentLog.senderName = shipment.senderName;
                         shipmentLog.contactNo = shipment.contactNo;
-                        shipmentLog.samplesDetail = shipment.samplesDetail;
+                        shipmentLog.samplesDetail = shipmentDetail;
                         generatedShipmentId = shipment.generatedShipmentId;
                         shipmentLogs.Add(shipmentLog);
                     }
