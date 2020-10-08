@@ -324,5 +324,51 @@ namespace EduquayAPI.Services.CHCReceipt
             var allSubject = _chcReceiptData.RetriveCHCReports(mrData);
             return allSubject;
         }
+
+        public List<CBCTest> RetrieveCBCTest(int testingCHCId)
+        {
+            var cbc = _chcReceiptData.RetrieveCBCTest(testingCHCId);
+            return cbc;
+        }
+
+        public async Task<AddCBCResponse> AddCBC(AddCBCTestResultRequest cbcData)
+        {
+            var cbcResponse = new AddCBCResponse();
+            try
+            {
+                if (cbcData.confirmStatus <= 0)
+                {
+                    cbcResponse.Status = "false";
+                    cbcResponse.Message= "Invalid submit request";
+                }
+                else if (cbcData.testingCHCId <= 0)
+                {
+                    cbcResponse.Status = "false";
+                    cbcResponse.Message = "Invalid testing CHC id";
+                }
+                else if (cbcData.barcodeNo == "")
+                {
+                    cbcResponse.Status = "false";
+                    cbcResponse.Message = "Barcode is missing";
+                }
+                else if (cbcData.subjectId == "")
+                {
+                    cbcResponse.Status = "false";
+                    cbcResponse.Message = "Subject Id is missing";
+                }
+                else
+                {
+                    var msgs =  _chcReceiptData.AddCBCTestResult(cbcData);
+                    cbcResponse.Status = "true";
+                    cbcResponse.Message = msgs.msg;
+                }
+            }
+            catch (Exception e)
+            {
+                cbcResponse.Status = "false";
+                cbcResponse.Message = e.Message;
+            }
+            return cbcResponse;
+        }
     }
 }

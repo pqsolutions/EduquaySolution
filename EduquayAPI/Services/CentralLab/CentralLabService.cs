@@ -268,5 +268,52 @@ namespace EduquayAPI.Services.CentralLab
             var allSubject = _centralLabReceiptData.RetriveCentralLabReports(mrData);
             return allSubject;
         }
+
+        public List<HPLCTestSamples> RetrieveSubjectForHPLCTest(int centralLabId)
+        {
+            var allData = _centralLabReceiptData.RetrieveSubjectForHPLCTest(centralLabId);
+            return allData;
+        }
+
+        public async Task<AddHPLCResponse> AddHPLCTestResult(AddHPLCTestResultRequest hplcData)
+        {
+            var hplcResponse = new AddHPLCResponse();
+            try
+            {
+               if (hplcData.centralLabId <= 0)
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "Invalid central lab  id";
+                }
+                else if (hplcData.testId <= 0)
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "invalid test id";
+                }
+                else if (hplcData.subjectId == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "Subject Id is missing";
+                }
+                else if (hplcData.userId <= 0)
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "invalid user id";
+                }
+                else
+                {
+                    var msgs = _centralLabReceiptData.AddHPLCTestResult(hplcData);
+                    hplcResponse.Status = "true";
+                    hplcResponse.Message = msgs.msg;
+                }
+            }
+            catch (Exception e)
+            {
+                hplcResponse.Status = "false";
+                hplcResponse.Message = e.Message;
+            }
+            return hplcResponse;
+        }
     }
+    
 }

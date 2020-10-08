@@ -12,13 +12,14 @@ namespace EduquayAPI.DataLayer.CentralLab
         CentralLabReceipts RetrieveCentralLabReceipts(int centralLabId);
         void AddReceivedShipment(AddCentralShipmentRequest csData);
         List<HPLCTest> RetrieveHPLC(int centralLabId);
+        List<HPLCTestSamples> RetrieveSubjectForHPLCTest(int centralLabId);
         void AddHPLCTest(AddHPLCTestRequest hplcData);
         List<CentralLabPickandPack> RetrievePickandPack(int centralLabId);
         List<CentralLabShipmentId> AddCentralLabShipment(AddCentralLabShipmentRequest csData);
         CentralLabShipments RetrieveCentralLabShipmentLog(int centralLabId);
         List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData);
         List<CentralLabSampleStatus> RetrieveSampleStatus();
-
+        HPLCResultMsg AddHPLCTestResult(AddHPLCTestResultRequest hplcData);
     }
 
     public interface ICentralLabDataFactory

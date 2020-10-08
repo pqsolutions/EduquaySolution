@@ -20,6 +20,8 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         CHCShipments RetrieveCHCShipmentLog(int testingCHCId);
         List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData);
         List<CHCSampleStatus> RetrieveSampleStatus();
+        List<CBCTest> RetrieveCBCTest(int testingCHCId);
+        CBCResultMsg AddCBCTestResult(AddCBCTestResultRequest cbcData);
     }
     public interface ICHCReceiptDataFactory
     {
