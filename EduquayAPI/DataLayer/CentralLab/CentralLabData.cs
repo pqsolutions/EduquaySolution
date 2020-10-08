@@ -21,6 +21,9 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string FetchCentralLabSampleStatus = "SPC_FetchCentralLabSampleStatus"; 
         private const string FetchCentralLabStatusReports = "SPC_FetchCentralLabStatusReports";
 
+        private const string FetchReceivedSubjectforHPLCTest = "SPC_FetchReceivedSubjectforHPLCTest";
+        private const string AddHPLCTestResults = "SPC_AddHPLCTestResults";
+
         public CentralLabData()
         {
 
@@ -182,6 +185,38 @@ namespace EduquayAPI.DataLayer.CentralLab
             };
             var allSubjects = UtilityDL.FillData<CentralLabReports>(stProc, pList);
             return allSubjects;
+        }
+
+        public List<HPLCTestSamples> RetrieveSubjectForHPLCTest(int centralLabId)
+        {
+            string stProc = FetchReceivedSubjectforHPLCTest;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@CentralLabId", centralLabId),
+            };
+            var allHPLC = UtilityDL.FillData<HPLCTestSamples>(stProc, pList);
+            return allHPLC;
+        }
+
+        public HPLCResultMsg AddHPLCTestResult(AddHPLCTestResultRequest hplcData)
+        {
+            try
+            {
+                var stProc = AddHPLCTests;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", hplcData.subjectId ?? hplcData.subjectId),
+                    new SqlParameter("@CentralLabId",Convert.ToInt32(hplcData.centralLabId)),
+                    new SqlParameter("@@HPLCTestId", hplcData.testId),
+                    new SqlParameter("@CreatedBy", Convert.ToInt32(hplcData.userId)),
+                };
+                var hplcResult = UtilityDL.FillEntity<HPLCResultMsg>(stProc, pList);
+                return hplcResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

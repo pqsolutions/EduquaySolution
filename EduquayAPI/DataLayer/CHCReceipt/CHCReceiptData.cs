@@ -23,6 +23,10 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         private const string FetchCHCSampleStatus = "SPC_FetchCHCSampleStatus";
         private const string FetchCHCStatusReports = "SPC_FetchCHCStatusReports";
 
+        private const string FetchReceivedSubjectforCBCTest = "SPC_FetchReceivedSubjectforCBCTest";
+        private const string AddCBCTestResults = "SPC_AddCBCTestResults";
+
+
         public CHCReceiptData()
         {
 
@@ -214,6 +218,44 @@ namespace EduquayAPI.DataLayer.CHCReceipt
             };
             var allSubjects = UtilityDL.FillData<CHCSampleStatusReports>(stProc, pList);
             return allSubjects;
+        }
+
+        public List<CBCTest> RetrieveCBCTest(int testingCHCId)
+        {
+            string stProc = FetchReceivedSubjectforCBCTest;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@TestingCHCId", testingCHCId),
+            };
+            var allCBC = UtilityDL.FillData<CBCTest>(stProc, pList);
+            return allCBC;
+        }
+
+        public CBCResultMsg AddCBCTestResult(AddCBCTestResultRequest cbcData)
+        {
+             try
+            {
+                var stProc = AddCBCTestResults;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectId", cbcData.subjectId ?? cbcData.subjectId),
+                    new SqlParameter("@Barcode", cbcData.barcodeNo ?? cbcData.barcodeNo),
+                    new SqlParameter("@TestingCHCId",Convert.ToInt32(cbcData.testingCHCId)),
+                    new SqlParameter("@MCV",Convert.ToDecimal(cbcData.mcv)),
+                    new SqlParameter("@RDW",Convert.ToDecimal(cbcData.rdw)),
+                    new SqlParameter("@TestCompleteOn", cbcData.testCompleteOn ?? cbcData.testCompleteOn),
+                    new SqlParameter("@SampleDateTime", cbcData.sampleDateTime ?? cbcData.sampleDateTime),
+                    new SqlParameter("@ConfirmStatus", Convert.ToInt32(cbcData.confirmStatus)),
+                    new SqlParameter("@CreatedBy", Convert.ToInt32(cbcData.userId)),
+                };
+               var msg= UtilityDL.FillEntity<CBCResultMsg>(stProc, pList);
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

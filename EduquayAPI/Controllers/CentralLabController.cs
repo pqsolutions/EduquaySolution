@@ -65,7 +65,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used to fetch sample  for  CBC Test 
+        /// Used to fetch sample  for  HPLC Test  Old
         /// </summary>
         [HttpGet]
         [Route("RetrieveHPLC/{centralLabId}")]
@@ -86,7 +86,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used for add samples to HPLC Test 
+        /// Used for add samples to HPLC Test  OLD
         /// </summary>
         [HttpPost]
         [Route("AddHPLCTest")]
@@ -101,6 +101,46 @@ namespace EduquayAPI.Controllers
                 Status = rsResponse.Status,
                 Message = rsResponse.Message,
                 Barcodes = rsResponse.Barcodes,
+            });
+        }
+
+        /// <summary>
+        /// Used to fetch sample  for  HPLC Test  New
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveHPLCTest/{centralLabId}")]
+        public HPLCTestResponse GetHPLCTest(int centralLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
+                var hplc = _centralLabService.RetrieveSubjectForHPLCTest(centralLabId);
+                return hplc.Count == 0 ? new HPLCTestResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTestSamples>() }
+                : new HPLCTestResponse { Status = "true", Message = string.Empty, HPLCDetail = hplc };
+            }
+            catch (Exception e)
+            {
+                return new HPLCTestResponse { Status = "false", Message = e.Message, HPLCDetail = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for add samples to HPLC Test  New
+        /// </summary>
+        [HttpPost]
+        [Route("AddHPLCTestResult")]
+        public async Task<IActionResult> AddCBCTest(AddHPLCTestResultRequest hplcData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            var rsResponse = await _centralLabService.AddHPLCTestResult(hplcData);
+
+            return Ok(new AddHPLCResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
             });
         }
 

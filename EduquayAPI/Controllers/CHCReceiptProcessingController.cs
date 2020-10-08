@@ -65,7 +65,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used to fetch sample  for  CBC Test 
+        /// Used to fetch sample  for  CBC Test Old
         /// </summary>
         [HttpGet]
         [Route("RetrieveCBC/{testingCHCId}")]
@@ -84,6 +84,8 @@ namespace EduquayAPI.Controllers
             }
         }
 
+       
+
         /// <summary>
         /// Used for add samples to CBC Test 
         /// </summary>
@@ -100,6 +102,44 @@ namespace EduquayAPI.Controllers
                 Status = rsResponse.Status,
                 Message = rsResponse.Message,
                 Barcodes = rsResponse.Barcodes,
+            });
+        }
+
+        /// <summary>
+        /// Used to fetch sample  for  CBC Test New
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveCBCTest/{testingCHCId}")]
+        public CBCTestResponse GetCBCTest(int testingCHCId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Test CBC for received samples- {JsonConvert.SerializeObject(testingCHCId)}");
+                var cbc = _chcReceiptService.RetrieveCBCTest(testingCHCId);
+                return cbc.Count == 0 ? new CBCTestResponse { Status = "true", Message = "No sample found", CBCDetail = new List<CBCTest>() } : new CBCTestResponse { Status = "true", Message = string.Empty, CBCDetail = cbc };
+            }
+            catch (Exception e)
+            {
+                return new CBCTestResponse { Status = "false", Message = e.Message, CBCDetail = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add results to samples for CBC Test 
+        /// </summary>
+        [HttpPost]
+        [Route("AddCBCTestResults")]
+        public async Task<IActionResult> AddCBC(AddCBCTestResultRequest cbcData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"CBC test for individual sample - {JsonConvert.SerializeObject(cbcData)}");
+            var rsResponse = await _chcReceiptService.AddCBC(cbcData);
+
+            return Ok(new AddCBCResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
             });
         }
 

@@ -21,6 +21,7 @@ namespace EduquayAPI.Services.CHCReceipt
         Task<CHCShipmentLogsResponse> RetrieveCHCShipmentLogs(int testingCHCId);
         List<CHCSampleStatusReports> RetriveCHCReports(CHCReportsRequest mrData);
         List<CHCSampleStatus> RetrieveSampleStatus();
-
+        List<CBCTest> RetrieveCBCTest(int testingCHCId);
+        Task<AddCBCResponse> AddCBC(AddCBCTestResultRequest cbcData);
     }
 }
