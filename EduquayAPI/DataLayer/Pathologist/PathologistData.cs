@@ -35,7 +35,7 @@ namespace EduquayAPI.DataLayer.Pathologist
                     new SqlParameter("@CentralLabId", aData.centralLabId),
                     new SqlParameter("@BarcodeNo", aData.barcodeNo ?? aData.barcodeNo),
                     new SqlParameter("@HPLCTestResultId", aData.hplcTestResultId),
-                    new SqlParameter("@ClinicalDiagnosisId", aData.clinicalDiagnosisId),
+                    new SqlParameter("@ClinicalDiagnosisId", aData.clinicalDiagnosisId ?? aData.clinicalDiagnosisId),
                     new SqlParameter("@HPLCResultMasterId", aData.hplcResultMasterId ?? aData.hplcResultMasterId),
                     new SqlParameter("@IsNormal", aData.isNormal),
                     new SqlParameter("@DiagnosisSummary", aData.diagnosisSummary ?? aData.diagnosisSummary),

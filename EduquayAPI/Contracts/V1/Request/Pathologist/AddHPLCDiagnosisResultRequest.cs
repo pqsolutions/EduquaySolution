@@ -11,7 +11,7 @@ namespace EduquayAPI.Contracts.V1.Request.Pathologist
         public string barcodeNo { get; set; }
         public int centralLabId { get; set; }
         public int hplcTestResultId { get; set; }
-        public int clinicalDiagnosisId { get; set; }
+        public string clinicalDiagnosisId { get; set; }
         public string hplcResultMasterId { get; set; }
         public bool isNormal { get; set; }
         public string diagnosisSummary { get; set; }

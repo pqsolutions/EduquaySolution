@@ -37,7 +37,7 @@ namespace EduquayAPI.Models.Pathologist
         public string hbS { get; set; }
         public bool isNormal { get; set; }
         public int hplcTestResultId { get; set; }
-        public int clinicalDiagnosisId { get; set; }
+        public string clinicalDiagnosisId { get; set; }
         public bool isConsultSeniorPathologist { get; set; }
         public string seniorPathologistName { get; set; }
         public string seniorPathologistRemarks { get; set; }
@@ -138,7 +138,7 @@ namespace EduquayAPI.Models.Pathologist
                 this.hplcTestResultId = Convert.ToInt32(reader["HPLCTestResultId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ClinicalDiagnosisId"))
-                this.clinicalDiagnosisId  = Convert.ToInt32(reader["ClinicalDiagnosisId"]);
+                this.clinicalDiagnosisId  = Convert.ToString(reader["ClinicalDiagnosisId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsConsultSeniorPathologist"))
                 this.isConsultSeniorPathologist = Convert.ToBoolean(reader["IsConsultSeniorPathologist"]);

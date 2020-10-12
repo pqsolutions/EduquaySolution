@@ -23,5 +23,8 @@ namespace EduquayAPI.DataLayer
         List<User> RetrieveByUserRole(int userRoleId);
         List<User> RetrieveByEmail(string email);
         List<User> RetrieveByUsername(string username);
+        MsgDetail SendOTP(string userName, string otp);
+        MsgDetail ValidateOTP(OTPRequest oData);
+        MsgDetail ChangePassword(string userName,string password);
     }
 }

@@ -202,12 +202,12 @@ namespace EduquayAPI.DataLayer.CentralLab
         {
             try
             {
-                var stProc = AddHPLCTests;
+                var stProc = AddHPLCTestResults;
                 var pList = new List<SqlParameter>()
                 {
                     new SqlParameter("@UniqueSubjectId", hplcData.subjectId ?? hplcData.subjectId),
                     new SqlParameter("@CentralLabId",Convert.ToInt32(hplcData.centralLabId)),
-                    new SqlParameter("@@HPLCTestId", hplcData.testId),
+                    new SqlParameter("@HPLCTestId", hplcData.testId),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(hplcData.userId)),
                 };
                 var hplcResult = UtilityDL.FillEntity<HPLCResultMsg>(stProc, pList);

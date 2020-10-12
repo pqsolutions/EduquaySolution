@@ -24,6 +24,8 @@ namespace EduquayAPI.Services
         List<User> RetrieveByUsername(string username);
         List<User> FindByUserType(int userTypeId);
         List<User> FindByUserRole(int userRoleId);
-
+        Task<OTPResponse> SendOTP(SendOTPRequest oData);
+        Task<OTPResponse> ValidateOTP(OTPRequest oData);
+        Task<ServiceResponse> ChangePassword(LoginRequest lData);
     }
 }

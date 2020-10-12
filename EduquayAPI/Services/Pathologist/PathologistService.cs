@@ -49,10 +49,10 @@ namespace EduquayAPI.Services.Pathologist
                     sResponse.Message = "Invalid hplc test result Id";
                     return sResponse;
                 }
-                else if (aData.clinicalDiagnosisId <= 0)
+                else if (aData.clinicalDiagnosisId == "")
                 {
                     sResponse.Status = "false";
-                    sResponse.Message = "Invalid clinical diagnosis Id";
+                    sResponse.Message = "Lab diagnosis id is missing";
                     return sResponse;
                 }
                 else if (string.IsNullOrEmpty(aData.hplcResultMasterId))

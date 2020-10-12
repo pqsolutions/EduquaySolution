@@ -39,6 +39,7 @@ namespace EduquayAPI.Models
         public string middleName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
+        public string mobileNo { get; set; }
         public int registeredFrom { get; set; }
         public int sampleCollectionFrom { get; set; }
         public int shipmentFrom { get; set; }
@@ -135,6 +136,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Email"))
                 this.email = Convert.ToString(reader["Email"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo1"))
+                this.mobileNo = Convert.ToString(reader["ContactNo1"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RegisteredFrom"))
                 this.registeredFrom = Convert.ToInt32(reader["RegisteredFrom"]);

@@ -10,7 +10,9 @@ using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Nancy.Json;
 
 namespace EduquayAPI.Controllers
@@ -21,10 +23,12 @@ namespace EduquayAPI.Controllers
     {
         private readonly IUserIdentityService _userIdentityService;
         private readonly IUsersService _usersService;
-        public UserIdentityController(IUserIdentityService userIdentityService, IUsersService usersService)
+        private readonly ILogger<UserIdentityController> _logger;
+        public UserIdentityController(IUserIdentityService userIdentityService, IUsersService usersService, ILogger<UserIdentityController> logger)
         {
             _userIdentityService = userIdentityService;
             _usersService = usersService;
+            _logger = logger;
         }
 
 
@@ -162,7 +166,60 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Send OTP for Forgot Password
+        /// </summary>
+        [HttpPost]
+        [Route("SendOTP")]
+        public async Task<IActionResult> SendOTP(SendOTPRequest oData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
 
+            var otp = await _usersService.SendOTP(oData);
+            _logger.LogInformation($"Send otp for forgot passwords {otp}");
+            return Ok(new OTPResponse
+            {
+                status = otp.status,
+                message = otp.message,
+            });
+        }
+
+        /// <summary>
+        /// Valididate OTP for Forgot Password
+        /// </summary>
+        [HttpPost]
+        [Route("ValidateOTP")]
+        public async Task<IActionResult> ValidateOTP(OTPRequest oData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var otp = await _usersService.ValidateOTP(oData);
+            _logger.LogInformation($"validate otp for forgot passwords {otp}");
+            return Ok(new OTPResponse
+            {
+                status = otp.status,
+                message = otp.message,
+            });
+        }
+
+        /// <summary>
+        /// Valididate OTP for Forgot Password
+        /// </summary>
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(LoginRequest lData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var pwd = await _usersService.ChangePassword(lData);
+            _logger.LogInformation($"Change passwords {pwd}");
+            return Ok(new ServiceResponse
+            {
+                Status = pwd.Status,
+                Message = pwd.Message,
+                Result = null,
+            });
+        }
 
 
         [HttpGet]
