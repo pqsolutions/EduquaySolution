@@ -43,7 +43,7 @@ namespace EduquayAPI
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "Eduquay Api-V1");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "TSCOD Api-V1");
             });
             if (env.IsDevelopment())
             {

@@ -24,6 +24,9 @@ namespace EduquayAPI.DataLayer
         private const string ResetANMLogin = "SPC_ResetANMLogin";
         private const string LogoutUser = "SPC_Logout";
         private const string LoginUserDetail = "SPC_AddLoginDetails";
+        private const string AddNewOTP = "SPC_AddNewOTP";
+        private const string VerifyOTP = "SPC_VerifyOTP";
+        private const string passwordChange = "SPC_CreateNewPassword";
 
         public UsersData()
         {
@@ -250,6 +253,63 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@LoginFrom", loginFrom ?? loginFrom),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public MsgDetail SendOTP(string userName,string otp)
+        {
+            try
+            {
+                var stProc = AddNewOTP;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Username", userName ?? userName),
+                    new SqlParameter("@OTP", otp ?? otp),
+                };
+               var msgDet = UtilityDL.FillEntity<MsgDetail>(stProc, pList);
+                return msgDet;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public MsgDetail ValidateOTP(OTPRequest oData)
+        {
+            try
+            {
+                var stProc = VerifyOTP;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Username", oData.userName ?? oData.userName),
+                    new SqlParameter("@OTP", oData.otp ?? oData.otp),
+                };
+                var msgDet = UtilityDL.FillEntity<MsgDetail>(stProc, pList);
+                return msgDet;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public MsgDetail ChangePassword(string userName, string password)
+        {
+            try
+            {
+                var stProc = passwordChange;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Username", userName ?? userName),
+                    new SqlParameter("@Password", password ?? password),
+                };
+                var msgDet = UtilityDL.FillEntity<MsgDetail>(stProc, pList);
+                return msgDet;
             }
             catch (Exception ex)
             {

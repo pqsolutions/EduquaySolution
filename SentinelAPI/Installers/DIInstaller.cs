@@ -21,6 +21,8 @@ using SentinelAPI.DataLayer.Shipments;
 using SentinelAPI.Services.Shipments;
 using SentinelAPI.DataLayer.Baby;
 using SentinelAPI.Services.Baby;
+using SentinelAPI.DataLayer.MolecularLab;
+using SentinelAPI.Services.MolecularLab;
 
 namespace SentinelAPI.Installers
 {
@@ -51,6 +53,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IShipmentDataFactory, ShipmentDataFactory>();
             services.AddScoped<IShipmentService, ShipmentService>();
+
+            services.AddScoped<IMolecularLabDataFactory, MolecularLabDataFactory>();
+            services.AddScoped<IMolecularLabService, MolecularLabService>();
 
         }
     }

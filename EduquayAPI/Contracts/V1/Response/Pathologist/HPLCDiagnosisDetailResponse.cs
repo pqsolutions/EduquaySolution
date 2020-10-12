@@ -43,7 +43,7 @@ namespace EduquayAPI.Contracts.V1.Response.Pathologist
         public bool isNormal { get; set; }
         public int hplcTestResultId { get; set; }
         public string agingOfTest { get; set; }
-        public int clinicalDiagnosisId { get; set; }
+        public string clinicalDiagnosisId { get; set; }
         public bool isConsultSeniorPathologist { get; set; }
         public string seniorPathologistName { get; set; }
         public string seniorPathologistRemarks { get; set; }
