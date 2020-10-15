@@ -239,13 +239,9 @@ namespace EduquayAPI.DataLayer.CHCReceipt
                 var pList = new List<SqlParameter>()
                 {
                     new SqlParameter("@UniqueSubjectId", cbcData.subjectId ?? cbcData.subjectId),
-                    new SqlParameter("@Barcode", cbcData.barcodeNo ?? cbcData.barcodeNo),
-                    new SqlParameter("@TestingCHCId",Convert.ToInt32(cbcData.testingCHCId)),
-                    new SqlParameter("@MCV",Convert.ToDecimal(cbcData.mcv)),
-                    new SqlParameter("@RDW",Convert.ToDecimal(cbcData.rdw)),
-                    new SqlParameter("@TestCompleteOn", cbcData.testCompleteOn ?? cbcData.testCompleteOn),
-                    new SqlParameter("@SampleDateTime", cbcData.sampleDateTime ?? cbcData.sampleDateTime),
                     new SqlParameter("@ConfirmStatus", Convert.ToInt32(cbcData.confirmStatus)),
+                    new SqlParameter("@TestingCHCId",Convert.ToInt32(cbcData.testingCHCId)),
+                    new SqlParameter("@TestedId", Convert.ToInt32(cbcData.testedId)),
                     new SqlParameter("@CreatedBy", Convert.ToInt32(cbcData.userId)),
                 };
                var msg= UtilityDL.FillEntity<CBCResultMsg>(stProc, pList);
