@@ -123,5 +123,26 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used for get  reports for Pathologist result 
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePathologistReports")]
+        public PathoReportsResponse GetPathologistReports(PathoReportsRequest prData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for Pathologist diagnosis reports  - {JsonConvert.SerializeObject(prData)}");
+                var subjects = _pathologistService.RetrivePathologistReports(prData);
+                return subjects.Count == 0 ? new PathoReportsResponse { Status = "true", Message = "No subjects found", Subjects = new List<PathoReports>() }
+                : new PathoReportsResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new PathoReportsResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
     }
 }
