@@ -18,6 +18,80 @@ namespace SentinelAPI.Services.MolecularLab
         {
             _molecularLabReceiptData = new MolecularLabDataFactory().Create();
         }
+        public string CheckVal(AddMolecularResultRequest mrData)
+        {
+            string msg = "";
+            if (string.IsNullOrEmpty(mrData.babySubjectId))
+            {
+                msg = "Baby SubjectId is missing";
+            }
+            else if (string.IsNullOrEmpty(mrData.barcodeNo))
+            {
+                msg = "Barcode is missing";
+            }
+            else if (mrData.processSample == true)
+            {
+                if (mrData.diagnosisId <= 0)
+                {
+                    msg = "Invalid diagnosis Id";
+                }
+                else if (mrData.resultId <= 0)
+                {
+                    msg = "Invalid result Id";
+                }
+            }
+            else if (mrData.processSample == false)
+            {
+                if (string.IsNullOrEmpty(mrData.remarks))
+                {
+                    msg = "Remark is missing";
+                }
+            }
+            if (mrData.userId <= 0)
+            {
+                msg = "Invalid user Id";
+            }
+            return msg;
+
+        }
+
+
+        public async Task<AddMolecularResultResponse> AddMolecularResult(AddMolecularResultRequest mrData)
+        {
+            var sResponse = new AddMolecularResultResponse();
+            string message = CheckVal(mrData);
+            try
+            {
+                if (message == "")
+                {
+                    var result = _molecularLabReceiptData.AddMolecularResult(mrData);
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"Unable to update the molecular result for this uniquesubjectid - {mrData.babySubjectId}";
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result;
+                        return sResponse;
+                    }
+                }
+                else
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = message;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to update the molecular result - {e.Message}";
+                return sResponse;
+            }
+        }
 
         public async Task<MolecularReceiptResponse> AddReceivedShipment(AddMolecularLabReceiptRequest mlRequest)
         {

@@ -23,7 +23,8 @@ namespace SentinelAPI.Models.Masters.User
         public string contactNo { get; set; }
         public string address { get; set; }
         public string pincode { get; set; }
-
+        public int molecularLabId { get; set; }
+        public string molecularLabName { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
@@ -70,6 +71,12 @@ namespace SentinelAPI.Models.Masters.User
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Pincode"))
                 this.pincode = Convert.ToString(reader["Pincode"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "MolecularLabId"))
+                this.molecularLabId = Convert.ToInt32(reader["MolecularLabId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "MLabName"))
+                this.molecularLabName = Convert.ToString(reader["MLabName"]);
 
         }
     }
