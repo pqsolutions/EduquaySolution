@@ -346,10 +346,10 @@ namespace EduquayAPI.Services.CHCReceipt
                     cbcResponse.Status = "false";
                     cbcResponse.Message = "Invalid testing CHC id";
                 }
-                else if (cbcData.barcodeNo == "")
+                else if (cbcData.testedId <= 0)
                 {
                     cbcResponse.Status = "false";
-                    cbcResponse.Message = "Barcode is missing";
+                    cbcResponse.Message = "Invalid tested  id";
                 }
                 else if (cbcData.subjectId == "")
                 {

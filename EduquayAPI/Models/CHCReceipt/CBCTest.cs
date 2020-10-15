@@ -14,6 +14,9 @@ namespace EduquayAPI.Models.CHCReceipt
         public string barcodeNo { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string rbc { get; set; }
+        public int testedId { get; set; }
+
         public string sampleDateTime { get; set; }
         public string testedDateTime { get; set; }
         public bool timeoutStatus { get; set; }
@@ -41,6 +44,12 @@ namespace EduquayAPI.Models.CHCReceipt
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RDW"))
                 this.rdw = Convert.ToString(reader["RDW"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestedId"))
+                this.testedId = Convert.ToInt32(reader["TestedId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestedDateTime"))
                 this.testedDateTime = Convert.ToString(reader["TestedDateTime"]);
