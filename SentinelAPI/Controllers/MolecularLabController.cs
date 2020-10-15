@@ -83,5 +83,24 @@ namespace SentinelAPI.Controllers
                 return new MolecularLabSubjectResponse { Status = "false", Message = e.Message, Subjects = null };
             }
         }
+
+
+        /// <summary>
+        /// Used for add to update the molecular test result 
+        /// </summary>
+        [HttpPost]
+        [Route("AddMolecularResult")]
+        public async Task<IActionResult> AddMolecularResult(AddMolecularResultRequest mrRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Received samples to update molecular test result - {JsonConvert.SerializeObject(mrRequest)}");
+            var rsResponse = await _molecularLabService.AddMolecularResult(mrRequest);
+
+            return Ok(new AddMolecularResultResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace SentinelAPI.Services.MolecularLab
         Task<MolecularLabReceiptResponse> RetrieveMolecularLabReceipts(int MolecularLabId);
         Task<MolecularReceiptResponse> AddReceivedShipment(AddMolecularLabReceiptRequest mlRequest);
         List<SubjectDetailsForTest> RetriveSubjectForMolecularTest(int molecularLabId);
+        Task<AddMolecularResultResponse> AddMolecularResult(AddMolecularResultRequest mrData);
     }
 }
