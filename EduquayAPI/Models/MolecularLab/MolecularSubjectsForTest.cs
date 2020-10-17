@@ -25,6 +25,7 @@ namespace EduquayAPI.Models.MolecularLab
         public string cbcResult { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string rbc { get; set; }
         public string sstResult { get; set; }
         public string hplcResult { get; set; }
         public string hbA0 { get; set; }
@@ -34,10 +35,16 @@ namespace EduquayAPI.Models.MolecularLab
         public string hbF { get; set; }
         public string hbS { get; set; }
         public string hplcDiagnosis { get; set; }
+        public bool sampleDamaged { get; set; }
 
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleDamaged"))
+                this.sampleDamaged = Convert.ToBoolean(reader["SampleDamaged"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);

@@ -102,5 +102,48 @@ namespace SentinelAPI.Controllers
                 Message = rsResponse.Message,
             });
         }
+
+        /// <summary>
+        /// Used for get  received samples  for molecular test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMolecularResultsDetail/{molecularLabId}")]
+        public MolecularResultResponse RetrieveMolecularResultsDetail(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular test result  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _molecularLabService.RetriveMolecularTestResultsDetail(molecularLabId);
+                return subjects.Count == 0 ? new MolecularResultResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularResultsDetail>() }
+                : new MolecularResultResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularResultResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for get  subjects  for molecular reports 
+        /// </summary>
+        [HttpPost]
+        [Route("RetriveMolecularReports")]
+        public MolecularReportResponse RetriveMolecularReports(FetchMolecularReportsRequest mrData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular reports   - {JsonConvert.SerializeObject(mrData)}");
+                var subjects = _molecularLabService.RetriveMolecularReports(mrData);
+                return subjects.Count == 0 ? new MolecularReportResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularReportsDetail>() }
+                : new MolecularReportResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularReportResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
     }
 }

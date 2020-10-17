@@ -46,6 +46,12 @@ namespace SentinelAPI.Services.Master.LoadMaster
             return communitys;
         }
 
+        public List<LoadCommonMaster> RetrieveDiagnosis()
+        {
+            var allData = _loadMasterData.RetrieveDiagnosis();
+            return allData;
+        }
+
         public List<LoadDistricts> RetrieveDistrict(int userId)
         {
             var district = _loadMasterData.RetrieveDistrict(userId);
@@ -70,6 +76,12 @@ namespace SentinelAPI.Services.Master.LoadMaster
             return hospital;
         }
 
+        public List<LoadCommonMaster> RetrieveHospitalbyMolecularLab(int molecularLabId)
+        {
+            var hospital = _loadMasterData.RetrieveHospitalbyMolecularLab(molecularLabId);
+            return hospital;
+        }
+
         public List<LoadMolecularLab> RetrieveMolecularLab()
         {
             var allMLab = _loadMasterData.RetrieveMolecularLab();
@@ -80,6 +92,18 @@ namespace SentinelAPI.Services.Master.LoadMaster
         {
             var allReligions = _loadMasterData.RetrieveReligion();
             return allReligions;
+        }
+
+        public List<LoadCommonMaster> RetrieveResults()
+        {
+            var allData = _loadMasterData.RetrieveResults();
+            return allData;
+        }
+
+        public List<LoadCommonMaster> RetrieveSampleStatus()
+        {
+            var allData = _loadMasterData.RetrieveSampleStatus();
+            return allData;
         }
 
         public List<LoadCommonMaster> RetrieveStates()

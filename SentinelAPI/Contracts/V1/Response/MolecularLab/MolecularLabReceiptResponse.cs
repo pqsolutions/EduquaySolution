@@ -18,6 +18,8 @@ namespace SentinelAPI.Contracts.V1.Response.MolecularLab
         public string shipmentId { get; set; }
         public string labTechnicianName { get; set; }
         public string shipmentDateTime { get; set; }
+        public string dateOfShipment { get; set; }
+        public string timeOfShipment { get; set; }
         public string molecularLabName { get; set; }
         public string hospitalNameLocation { get; set; }
         public List<MolecularLabReceiptDetail> ReceiptDetail { get; set; }
