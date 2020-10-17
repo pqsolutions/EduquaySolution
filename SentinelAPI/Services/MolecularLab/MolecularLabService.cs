@@ -140,6 +140,8 @@ namespace SentinelAPI.Services.MolecularLab
                         rLog.id = receipt.id;
                         rLog.shipmentId = receipt.shipmentId;
                         rLog.shipmentDateTime = receipt.shipmentDateTime;
+                        rLog.dateOfShipment = receipt.dateOfShipment;
+                        rLog.timeOfShipment = receipt.timeOfShipment;
                         rLog.hospitalNameLocation = receipt.hospitalNameLocation;
                         rLog.labTechnicianName = receipt.labTechnicianName;
                         rLog.molecularLabName = receipt.molecularLabName;
@@ -163,6 +165,18 @@ namespace SentinelAPI.Services.MolecularLab
         public List<SubjectDetailsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
         {
             var allSubject = _molecularLabReceiptData.RetriveSubjectForMolecularTest(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularResultsDetail> RetriveMolecularTestResultsDetail(int molecularLabId)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveMolecularTestResultsDetail(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveMolecularReports(mrData);
             return allSubject;
         }
     }

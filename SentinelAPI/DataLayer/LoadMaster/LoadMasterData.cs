@@ -23,6 +23,10 @@ namespace SentinelAPI.DataLayer.LoadMaster
         private const string FetchMolecularLab = "SPC_FetchMolecularLab";
         private const string FetchAllCollectionSite = "SPC_FetchAllCollectionSite";
         private const string FetchAllState = "SPC_FetchAllState";
+        private const string FetchHospitalByMolecularLab = "SPC_FetchHospitalByMolecularLab";
+        private const string FetchMolecularSampleStatus = "SPC_FetchMolecularSampleStatus";
+        private const string FetchMolecularResultMaster = "SPC_FetchMolecularResultMaster";
+        private const string FetchDiagnosis = "SPC_FetchDiagnosis";
 
         public LoadMasterData()
         {
@@ -119,6 +123,38 @@ namespace SentinelAPI.DataLayer.LoadMaster
         public List<LoadCommonMaster> RetrieveStates()
         {
             string stProc = FetchAllState;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> RetrieveSampleStatus()
+        {
+            string stProc = FetchMolecularSampleStatus;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> RetrieveHospitalbyMolecularLab(int molecularLabId)
+        {
+            string stProc = FetchHospitalByMolecularLab;
+            var pList = new List<SqlParameter>(){ new SqlParameter("@MolecularLabId", molecularLabId) };
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> RetrieveDiagnosis()
+        {
+            string stProc = FetchDiagnosis;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> RetrieveResults()
+        {
+            string stProc = FetchMolecularResultMaster;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
             return allData;

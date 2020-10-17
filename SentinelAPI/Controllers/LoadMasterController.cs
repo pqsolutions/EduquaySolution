@@ -281,6 +281,91 @@ namespace SentinelAPI.Controllers
                 return new LoadMolecularLabResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+        
+
+        [HttpGet]
+        [Route("RetrieveSampleStatus")]
+        public CommonMasterResponse RetrieveSampleStatus()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var samples = _loadMasterService.RetrieveSampleStatus();
+
+                _logger.LogInformation($"Received sample status master data {samples}");
+                return samples.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = samples };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in sample status  data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveHospitalByMolecularLab/{MolecularLabId}")]
+        public CommonMasterResponse RetrieveHospitalByMolecularLab(int molecularLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var samples = _loadMasterService.RetrieveHospitalbyMolecularLab(molecularLabId);
+
+                _logger.LogInformation($"Received hospital  master data {samples}");
+                return samples.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = samples };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in hospital master  data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveDiagnosis")]
+        public CommonMasterResponse RetrieveDiagnosis()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var samples = _loadMasterService.RetrieveDiagnosis();
+
+                _logger.LogInformation($"Received diagnosis master data {samples}");
+                return samples.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = samples };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in diagnosis master  data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveResults")]
+        public CommonMasterResponse RetrieveResults()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var samples = _loadMasterService.RetrieveResults();
+
+                _logger.LogInformation($"Received result master data {samples}");
+                return samples.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = samples };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error inresults master  data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
 
     }
 }

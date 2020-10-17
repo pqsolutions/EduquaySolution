@@ -12,6 +12,8 @@ namespace SentinelAPI.Models.MolecularLab
         public string shipmentId { get; set; }
         public string labTechnicianName { get; set; }
         public string shipmentDateTime { get; set; }
+        public string dateOfShipment { get; set; }
+        public string timeOfShipment { get; set; }
         public string molecularLabName { get; set; }
         public string hospitalNameLocation { get; set; }
         public List<MolecularLabReceiptDetail> ReceiptDetail { get; set; }
@@ -35,6 +37,12 @@ namespace SentinelAPI.Models.MolecularLab
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentDateTime"))
                 this.shipmentDateTime = Convert.ToString(reader["ShipmentDateTime"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateOfShipment"))
+                this.dateOfShipment = Convert.ToString(reader["DateOfShipment"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TimeOfShipment"))
+                this.timeOfShipment = Convert.ToString(reader["TimeOfShipment"]);
         }
     }
 }

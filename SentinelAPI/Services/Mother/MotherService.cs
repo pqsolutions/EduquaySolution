@@ -160,7 +160,14 @@ namespace SentinelAPI.Services.Mother
                             mom.guardianFirstName = mother.guardianFirstName;
                             mom.guardianLastName = mother.guardianLastName;
                             mom.guardianContactNo = mother.guardianContactNo;
-                            mom.babyDetail = baby;
+                            if(baby[0].babySubjectId == null)
+                            {
+                                mom.babyDetail = null;
+                            }
+                            else
+                            {
+                                mom.babyDetail = baby;
+                            }
                             motherUniqueSubjectId = mother.motherSubjectId;
                             moms.Add(mom);
                         }

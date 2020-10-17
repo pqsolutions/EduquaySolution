@@ -32,6 +32,7 @@ namespace EduquayAPI.Models.CHCReceipt
         public string cbcResult { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string rbc { get; set; }
         public string sstResult { get; set; }
        
 
@@ -113,6 +114,9 @@ namespace EduquayAPI.Models.CHCReceipt
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RDW"))
                 this.rdw = Convert.ToString(reader["RDW"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
         }
     }
 

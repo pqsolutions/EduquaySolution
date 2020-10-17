@@ -15,6 +15,8 @@ namespace SentinelAPI.DataLayer.MolecularLab
         private const string AddMolecularLabReceipts = "SPC_AddMolecularLabReceipt";
         private const string FetchSubjectsForMolecularTest = "SPC_FetchSubjectsForMolecularTest";
         private const string AddMolecularTestResult = "SPC_AddMolecularTestResult";
+        private const string FetchrMolecularTestResultsDetail = "SPC_FetchrMolecularTestResultsDetail";
+        private const string FetchMolecularTestReports = "SPC_FetchMolecularTestReports";
         public MolecularLabData()
         {
 
@@ -81,6 +83,33 @@ namespace SentinelAPI.DataLayer.MolecularLab
             molecularLabReceipt.ReceiptLog = allMolecularLabReceiptLog;
             molecularLabReceipt.ReceiptDetail = allReceiptDetail;
             return molecularLabReceipt;
+        }
+
+        public List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData)
+        {
+            string stProc = FetchMolecularTestReports;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@SampleStatus", mrData.sampleStatus),
+                new SqlParameter("@MolecularLabId", mrData.molecularLabId),
+                new SqlParameter("@HospitalId", mrData.hospitalId),
+                new SqlParameter("@FromDate", mrData.fromDate.ToCheckNull()),
+                new SqlParameter("@ToDate", mrData.toDate.ToCheckNull()),
+
+            };
+            var allSubjects = UtilityDL.FillData<MolecularReportsDetail>(stProc, pList);
+            return allSubjects;
+        }
+
+        public List<MolecularResultsDetail> RetriveMolecularTestResultsDetail(int molecularLabId)
+        {
+            string stProc = FetchrMolecularTestResultsDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId)
+            };
+            var allSubjects = UtilityDL.FillData<MolecularResultsDetail>(stProc, pList);
+            return allSubjects;
         }
 
         public List<SubjectDetailsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
