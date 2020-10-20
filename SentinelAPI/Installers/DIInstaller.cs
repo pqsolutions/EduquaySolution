@@ -23,6 +23,8 @@ using SentinelAPI.DataLayer.Baby;
 using SentinelAPI.Services.Baby;
 using SentinelAPI.DataLayer.MolecularLab;
 using SentinelAPI.Services.MolecularLab;
+using SentinelAPI.DataLayer.Profile;
+using SentinelAPI.Services.Profile;
 
 namespace SentinelAPI.Installers
 {
@@ -56,6 +58,9 @@ namespace SentinelAPI.Installers
 
             services.AddScoped<IMolecularLabDataFactory, MolecularLabDataFactory>();
             services.AddScoped<IMolecularLabService, MolecularLabService>();
+
+            services.AddScoped<IProfileDataFactory, ProfileDataFactory>();
+            services.AddScoped<IProfileService, ProfileService>();
 
         }
     }

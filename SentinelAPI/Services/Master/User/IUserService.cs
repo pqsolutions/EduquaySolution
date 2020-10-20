@@ -1,5 +1,9 @@
 ﻿using SentinelAPI.Contracts.V1.Request.Login;
+using SentinelAPI.Contracts.V1.Request.Master;
+using SentinelAPI.Contracts.V1.Response;
+using SentinelAPI.Contracts.V1.Response.LoadMaster;
 using SentinelAPI.Models.Masters.User;
+using SentinelAPI.Models.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +17,8 @@ namespace SentinelAPI.Services.Master.User
         Task<Users> FindByUsernameAsync(string userName);
         Task<UserIdentityResult> AddNewUserAsync(AddUserRequest addUser, string password);
         Task<bool> CheckPasswordAsync(Users user, string password);
+        Task<OTPResponse> SendOTP(string userName);
+        Task<OTPResponse> ValidateOTP(OTPRequest oData);
+        Task<ServiceResponse> ChangePassword(LoginRequest lData);
     }
 }
