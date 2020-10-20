@@ -25,8 +25,8 @@ namespace SentinelAPI.Controllers
 
         /// <summary>
         /// Used for get shipment list of particular Hospital 
-        [HttpPost]
-        [Route("RetrieveShipmentLog")]
+        [HttpGet]
+        [Route("RetrieveShipmentLog/{userId}")]
         public async Task<IActionResult> GetShipmentList(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");

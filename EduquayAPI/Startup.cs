@@ -80,7 +80,6 @@ namespace EduquayAPI
 
             app.Run(async (context) =>
             {
-
                 await context.Response.WriteAsync("Could Not Find Anything");
             });
         }

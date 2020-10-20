@@ -12,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SentinelAPI.Installers;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http;
+using SentinelAPI.Models.Masters.User;
+using SentinelAPI.Models.Template;
+using SentinelAPI.Services.Mail;
 
 namespace SentinelAPI
 {
@@ -28,6 +32,10 @@ namespace SentinelAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.InstallServicesInAssembly(Configuration);
+            services.AddOptions();
+            services.Configure<ForgotPasswordMailTemplate>(Configuration.GetSection("ForgotPasswordSMTP"));
+            services.AddTransient<IMailService, MailService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,11 +46,15 @@ namespace SentinelAPI
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "SentinelEduquay Api-V1");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "SSOD Api-V1");
             });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
@@ -52,10 +64,14 @@ namespace SentinelAPI
 
             app.UseCors("corsPolicy");
             app.UseAuthorization();
-
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Could Not Find Anything");
             });
         }
     }

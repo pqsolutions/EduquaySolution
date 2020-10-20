@@ -54,7 +54,7 @@ namespace SentinelAPI.Installers
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sentinel EduquayApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SSOD API", Version = "v1" });
 
                 var security = new Dictionary<string, IEnumerable<string>> {
                     {"Bearer", new string[0]{ } }
