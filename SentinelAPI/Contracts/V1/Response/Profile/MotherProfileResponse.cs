@@ -22,6 +22,10 @@ namespace SentinelAPI.Contracts.V1.Response.Profile
         public string dob { get; set; }
         public int age { get; set; }
         public string rchId { get; set; }
+        public int g { get; set; }
+        public int p { get; set; }
+        public int l { get; set; }
+        public int a { get; set; }
         public int motherGovIdTypeId { get; set; }
         public string motherGovIdDetail { get; set; }
         public string motherContactNo { get; set; }

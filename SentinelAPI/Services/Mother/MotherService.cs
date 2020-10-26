@@ -74,18 +74,6 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid Last name";
             }
-            else if (mrData.address1 == "")
-            {
-                message = "Invalid address1 (House No or Plot No)";
-            }
-            else if (mrData.address2 == "")
-            {
-                message = "Invalid address2 (Street or Locality)";
-            }
-            else if (mrData.address3 == "")
-            {
-                message = "Invalid address3 (city or Village)";
-            }
             else if (mrData.pincode == "")
             {
                 message = "Invalid pincode";
