@@ -16,6 +16,10 @@ namespace SentinelAPI.Models.Profile
         public string dob { get; set; }
         public int age { get; set; }
         public string rchId { get; set; }
+        public int g { get; set; }
+        public int p { get; set; }
+        public int l { get; set; }
+        public int a { get; set; }
         public int motherGovIdTypeId { get; set; }
         public string motherGovIdDetail { get; set; }
         public string motherContactNo { get; set; }
@@ -85,9 +89,20 @@ namespace SentinelAPI.Models.Profile
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MotherContactNo"))
                 this.motherContactNo = Convert.ToString(reader["MotherContactNo"]);
 
-
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
                 this.rchId = Convert.ToString(reader["RCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "G"))
+                this.g = Convert.ToInt32(reader["G"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "P"))
+                this.p = Convert.ToInt32(reader["P"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "L"))
+                this.l = Convert.ToInt32(reader["L"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "A"))
+                this.a = Convert.ToInt32(reader["A"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ECNumber"))
                 this.ecNumber = Convert.ToString(reader["ECNumber"]);

@@ -17,7 +17,7 @@ namespace SentinelAPI.Services.Master.User
         Task<Users> FindByUsernameAsync(string userName);
         Task<UserIdentityResult> AddNewUserAsync(AddUserRequest addUser, string password);
         Task<bool> CheckPasswordAsync(Users user, string password);
-        Task<OTPResponse> SendOTP(string userName);
+        Task<OTPResponse> SendOTP(SendOTPRequest oData);
         Task<OTPResponse> ValidateOTP(OTPRequest oData);
         Task<ServiceResponse> ChangePassword(LoginRequest lData);
     }

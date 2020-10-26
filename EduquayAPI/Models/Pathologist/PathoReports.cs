@@ -30,6 +30,7 @@ namespace EduquayAPI.Models.Pathologist
         public string sampleStatus { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string rbc { get; set; }
         public string cbcTestResult { get; set; }
         public string sstResult { get; set; }
         public string hbA0 { get; set; }
@@ -110,6 +111,10 @@ namespace EduquayAPI.Models.Pathologist
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RDW"))
                 this.rdw = Convert.ToString(reader["RDW"]);
+
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CBCResult"))
                 this.cbcTestResult = Convert.ToString(reader["CBCResult"]);

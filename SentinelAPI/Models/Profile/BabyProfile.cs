@@ -56,9 +56,20 @@ namespace SentinelAPI.Models.Profile
         public string motherHospitalName { get; set; }
         public string motherHospitalAddress { get; set; }
         public string motherHospitalContactNo { get; set; }
-
+        public string babyFirstName { get; set; }
+        public string babyLastName { get; set; }
+        public int birthStatusId { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BirthStatusId"))
+                this.birthStatusId = Convert.ToInt32(reader["BirthStatusId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabyFirstName"))
+                this.babyFirstName = Convert.ToString(reader["BabyFirstName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabyLastName"))
+                this.babyLastName = Convert.ToString(reader["BabyLastName"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
 

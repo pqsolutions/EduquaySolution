@@ -70,13 +70,13 @@ namespace SentinelAPI.Controllers
         /// <summary>
         /// Send OTP for Forgot Password
         /// </summary>
-        [HttpGet]
-        [Route("SendOTP/{username}")]
-        public async Task<IActionResult> SendOTP(string username)
+        [HttpPost]
+        [Route("SendOTP")]
+        public async Task<IActionResult> SendOTP(SendOTPRequest oData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
 
-            var otp = await _userService.SendOTP(username);
+            var otp = await _userService.SendOTP(oData);
             _logger.LogInformation($"Send otp for forgot passwords {otp}");
             return Ok(new OTPResponse
             {

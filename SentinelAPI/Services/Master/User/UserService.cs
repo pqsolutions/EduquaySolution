@@ -127,13 +127,13 @@ namespace SentinelAPI.Services.Master.User
             }
         }
 
-        public async Task<OTPResponse> SendOTP(string userName)
+        public async Task<OTPResponse> SendOTP(SendOTPRequest oData)
         {
             OTPResponse sResponse = new OTPResponse();
 
             try
             {
-                var users = await _userData.FindByUsernameAsync(userName);
+                var users = await _userData.FindByUsernameAsync(oData.userName);
 
                 if (users.Count > 0)
                 {
@@ -148,7 +148,7 @@ namespace SentinelAPI.Services.Master.User
                     }
                     else
                     {
-                        var otpSend = _userData.SendOTP(userName, otp);
+                        var otpSend = _userData.SendOTP(oData.userName, otp);
                         if (otpSend.msgRespone == true)
                         {
                             var sent = _mailService.ForgotPasswordOTPMail(otp, userFullName, email);
@@ -162,8 +162,6 @@ namespace SentinelAPI.Services.Master.User
                                 sResponse.status = "false";
                                 sResponse.message = "Mail sent Failed";
                             }
-                           
-
                         }
                         else
                         {

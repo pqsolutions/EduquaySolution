@@ -142,7 +142,7 @@ namespace SentinelAPI.DataLayer.Profile
                     new SqlParameter("@FatherFirstName", mrData.fatherFirstName.ToCheckNull()),
                     new SqlParameter("@FatherLastName", mrData.fatherLastName.ToCheckNull()),
                     new SqlParameter("@FatherContactNo", mrData.fatherContactNo.ToCheckNull()),
-                    new SqlParameter("@GuardianrFirstName", mrData.guardianFirstName.ToCheckNull()),
+                    new SqlParameter("@GuardianFirstName", mrData.guardianFirstName.ToCheckNull()),
                     new SqlParameter("@GuardianLastName", mrData.guardianLastName.ToCheckNull()),
                     new SqlParameter("@GuardianContactNo", mrData.guardianContactNo.ToCheckNull()),
                     new SqlParameter("@UserId", mrData.userId),

@@ -57,6 +57,10 @@ namespace SentinelAPI.Services.Profile
                             mom.dob = mother.dob;
                             mom.age = mother.age;
                             mom.rchId = mother.rchId;
+                            mom.g = mother.g;
+                            mom.p = mother.p;
+                            mom.l = mother.l;
+                            mom.a = mother.a;
                             mom.motherGovIdTypeId = mother.motherGovIdTypeId;
                             mom.motherGovIdDetail = mother.motherGovIdDetail;
                             mom.motherContactNo = mother.motherContactNo;
@@ -207,6 +211,10 @@ namespace SentinelAPI.Services.Profile
                             mom.dob = mother.dob;
                             mom.age = mother.age;
                             mom.rchId = mother.rchId;
+                            mom.g = mother.g;
+                            mom.p = mother.p;
+                            mom.l = mother.l;
+                            mom.a = mother.a;
                             mom.motherGovIdTypeId = mother.motherGovIdTypeId;
                             mom.motherGovIdDetail = mother.motherGovIdDetail;
                             mom.motherContactNo = mother.motherContactNo;
