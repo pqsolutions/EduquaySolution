@@ -78,7 +78,7 @@ namespace SentinelAPI.Services.SampleCollection
             catch (Exception e)
             {
                 sResponse.Status = "false";
-                sResponse.Message = $"Unable to collect sampele for this baby subjectid - {scData.babySubjectId} - {e.Message}";
+                sResponse.Message = $"Unable to collect sample for this baby subjectid - {scData.babySubjectId} - {e.Message}";
                 return sResponse;
             }
         }

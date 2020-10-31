@@ -11,6 +11,7 @@ namespace SentinelAPI.Models.Mother
         public string motherSubjectId { get; set; }
         public string babySubjectId { get; set; }
         public string babyName { get; set; }
+        public string babyHospitalNo { get; set; }
         public string gender { get; set; }
         public string deliveryDateTime { get; set; }
         public bool allowCollect { get; set; }
@@ -27,6 +28,9 @@ namespace SentinelAPI.Models.Mother
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabyName"))
                 this.babyName = Convert.ToString(reader["BabyName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabyHospitalNo"))
+                this.babyHospitalNo = Convert.ToString(reader["BabyHospitalNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gender"))
                 this.gender = Convert.ToString(reader["Gender"]);

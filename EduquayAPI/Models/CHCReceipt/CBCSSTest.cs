@@ -14,6 +14,7 @@ namespace EduquayAPI.Models.CHCReceipt
         public string barcodeNo { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
+        public string rbc { get; set; }
         public string sampleDateTime { get; set; }
         public void Fill(SqlDataReader reader)
         {
@@ -38,6 +39,9 @@ namespace EduquayAPI.Models.CHCReceipt
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RDW"))
                 this.rdw  = Convert.ToString(reader["RDW"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
         }
     }
 

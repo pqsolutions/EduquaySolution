@@ -34,9 +34,6 @@ namespace EduquayAPI.Models.CHCReceipt
         public string rdw { get; set; }
         public string rbc { get; set; }
         public string sstResult { get; set; }
-       
-
-
         public void Fill(SqlDataReader reader)
         {
 
