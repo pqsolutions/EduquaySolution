@@ -100,7 +100,7 @@ namespace EduquayAPI.DataLayer.DistrictCoordinator
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@DistrictId", districtId),
-                new SqlParameter("@Notification", 3),
+                new SqlParameter("@Notification", 2),
             };
             var samplesData = UtilityDL.FillData<NotificationSamples>(stProc, pList);
             return samplesData;
