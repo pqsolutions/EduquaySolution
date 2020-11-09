@@ -37,7 +37,11 @@ namespace EduquayAPI.Models.CentralLab
         public string hbF { get; set; }
         public string hbS { get; set; }
         public string hplcDiagnosis { get; set; }
-
+        public string cbcResult { get; set; }
+        public string mcv { get; set; }
+        public string rdw { get; set; }
+        public string rbc { get; set; }
+        public string sstResult { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -128,6 +132,21 @@ namespace EduquayAPI.Models.CentralLab
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DiagnosisName"))
                 this.hplcDiagnosis = Convert.ToString(reader["DiagnosisName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "CBCResult"))
+                this.cbcResult = Convert.ToString(reader["CBCResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SSTResult"))
+                this.sstResult = Convert.ToString(reader["SSTResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "MCV"))
+                this.mcv = Convert.ToString(reader["MCV"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RDW"))
+                this.rdw = Convert.ToString(reader["RDW"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RBC"))
+                this.rbc = Convert.ToString(reader["RBC"]);
 
         }
     }

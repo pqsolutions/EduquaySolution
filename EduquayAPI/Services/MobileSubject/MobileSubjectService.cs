@@ -766,6 +766,37 @@ namespace EduquayAPI.Services.MobileSubject
             }
             return uResponse;
         }
+
+        public async  Task<RetriveTrackingResponse> RetrieveTrackingSubjects(MobileRetrieveRequest mrData)
+        {
+            var tResponse = new RetriveTrackingResponse();
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    tResponse.Valid = false;
+                    tResponse.Status = "false";
+                    tResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    var subjects = _mobileSubjectData.RetrieveTrackingSubjects(mrData.userId);
+                    tResponse.Valid = true;
+                    tResponse.Status = "true";
+                    tResponse.Subjects = subjects;
+                    tResponse.Message = string.Empty;
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.Valid = true;
+                tResponse.Status = "false";
+                tResponse.Message = e.Message;
+
+            }
+            return tResponse;
+        }
     }
 }
 

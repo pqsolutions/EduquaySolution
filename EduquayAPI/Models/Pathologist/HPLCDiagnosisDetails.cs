@@ -29,7 +29,6 @@ namespace EduquayAPI.Models.Pathologist
         public string cbcResult { get; set; }
         public string mcv { get; set; }
         public string rdw { get; set; }
-
         public string rbc { get; set; }
         public string hbF { get; set; }
         public string hbA0 { get; set; }

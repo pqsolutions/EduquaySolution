@@ -62,7 +62,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchANMNotificationPostMTPFollowUp = "SPC_FetchANMNotificationPostMTPFollowUp";
         private const string UpdateMobilePostMTPFollowUpStatus = "SPC_UpdateMobilePostMTPFollowUpStatus";
 
-
+        private const string FetchTrackingSubjectReportMobile = "SPC_FetchTrackingSubjectReportMobile";
         public MobileSubjectData()
         {
 
@@ -714,6 +714,15 @@ namespace EduquayAPI.DataLayer.MobileSubject
             {
                 throw e;
             }
+        }
+
+        public List<TrackingMobileSubjects> RetrieveTrackingSubjects(int userId)
+        {
+
+            string stProc = FetchTrackingSubjectReportMobile;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ANMId", userId) };
+            var allSampleData = UtilityDL.FillData<TrackingMobileSubjects>(stProc, pList);
+            return allSampleData;
         }
     }
 }

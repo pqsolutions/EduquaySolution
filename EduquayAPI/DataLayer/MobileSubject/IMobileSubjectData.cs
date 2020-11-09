@@ -53,6 +53,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void UpdatePrePostPNDTMTPAcknowledgement(AddPNDTMTPAckRequest aData);
         ANMMobileMTPFollowUp MobileMTPFollowUp(int userId);
         void UpdatePostMTPFollowupStatus(AddUpdateFollowupStatusRequest fData);
+
+        List<TrackingMobileSubjects> RetrieveTrackingSubjects(int userId);
     }
 
     public interface IMobileSubjectDataFactory

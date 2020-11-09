@@ -122,6 +122,7 @@ namespace EduquayAPI.Services.Pathologist
                     hplcDet.cbcResult = hplc.cbcResult;
                     hplcDet.mcv = hplc.mcv;
                     hplcDet.rdw = hplc.rdw;
+                    hplcDet.rbc = hplc.rbc;
                     hplcDet.hbF = hplc.hbF;
                     hplcDet.hbA0 = hplc.hbA0;
                     hplcDet.hbA2 = hplc.hbA2;
@@ -196,6 +197,7 @@ namespace EduquayAPI.Services.Pathologist
                     hplcDet.cbcResult = hplc.cbcResult;
                     hplcDet.mcv = hplc.mcv;
                     hplcDet.rdw = hplc.rdw;
+                    hplcDet.rbc = hplc.rbc;
                     hplcDet.hbF = hplc.hbF;
                     hplcDet.hbA0 = hplc.hbA0;
                     hplcDet.hbA2 = hplc.hbA2;

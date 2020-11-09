@@ -40,9 +40,17 @@ namespace EduquayAPI.Models.Pathologist
         public string hbS { get; set; }
         public string hplcResult { get; set; }
         public string diagnosis { get; set; }
+        public string seniorPathologistRemarks { get; set; }
+        public string diagnosisSummary { get; set; }
         public string graphFileName { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DiagnosisSummary"))
+                this.diagnosisSummary = Convert.ToString(reader["DiagnosisSummary"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SeniorPathologistRemarks"))
+                this.seniorPathologistRemarks = Convert.ToString(reader["SeniorPathologistRemarks"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PDFFileName"))
                 this.graphFileName = Convert.ToString(reader["PDFFileName"]);
 

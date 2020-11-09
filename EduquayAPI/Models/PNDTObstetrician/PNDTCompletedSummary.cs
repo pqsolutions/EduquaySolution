@@ -67,10 +67,15 @@ namespace EduquayAPI.Models.PNDTObstetrician
         public string spouseHbF { get; set; }
         public string spouseHbS { get; set; }
         public string spouseHbD { get; set; }
-
+        public string anwPathoRemarks { get; set; }
+        public string spousePathoRemarks { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWPathoRemarks"))
+                this.anwPathoRemarks = Convert.ToString(reader["ANWPathoRemarks"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpousePathoRemarks"))
+                this.spousePathoRemarks = Convert.ToString(reader["SpousePathoRemarks"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWSubjectId"))
                 this.anwSubjectId = Convert.ToString(reader["ANWSubjectId"]);
