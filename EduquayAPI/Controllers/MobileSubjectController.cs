@@ -452,5 +452,31 @@ namespace EduquayAPI.Controllers
                 ShipmentIds = sclResponse.ShipmentIds,
             });
         }
+
+        [HttpPost]
+        [Route("RetrieveTrackingSubjects")]
+        public async Task<IActionResult> RetrieveTrackingSubjects(MobileRetrieveRequest mrData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve tracking for subjects in mobile app- {JsonConvert.SerializeObject(mrData)}");
+            var rResponse = await _mobileSubjectService.RetrieveTrackingSubjects(mrData);
+            if (!rResponse.Valid)
+            {
+                return Unauthorized(new RetriveTrackingResponse
+                {
+                    Status = "false",
+                    Valid = rResponse.Valid,
+                    Message = rResponse.Message
+                });
+            }
+            return Ok(new RetriveTrackingResponse
+            {
+                Status =rResponse.Status,
+                Valid = rResponse.Valid,
+                Message =rResponse.Message,
+                Subjects = rResponse.Subjects,
+            });
+        }
+
     }
 }
