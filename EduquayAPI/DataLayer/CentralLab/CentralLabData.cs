@@ -18,11 +18,12 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string FetchSamplesCentralMolecularPickPack = "SPC_FetchSamplesCentralMolecularPickPack";
         private const string AddCentralLabShipments = "SPC_AddCentralLabShipments";
         private const string FetchCentralMolecularShipmentLog = "SPC_FetchCentralMolecularShipmentLog";
-        private const string FetchCentralLabSampleStatus = "SPC_FetchCentralLabSampleStatus"; 
+        private const string FetchCentralLabSampleStatus = "SPC_FetchCentralLabSampleStatus";
         private const string FetchCentralLabStatusReports = "SPC_FetchCentralLabStatusReports";
 
         private const string FetchReceivedSubjectforHPLCTest = "SPC_FetchReceivedSubjectforHPLCTest";
         private const string AddHPLCTestResults = "SPC_AddHPLCTestResults";
+        private const string UpdateStagingHPLCTestDetails = "SPC_UpdateStagingHPLCTestDetails";
 
         public CentralLabData()
         {
@@ -218,5 +219,30 @@ namespace EduquayAPI.DataLayer.CentralLab
                 throw ex;
             }
         }
+
+        public HPLCResultMsg UpdateHPLCTestResult(UpdateStagingRequest hplcData)
+        {
+            try
+            {
+                var stProc = UpdateStagingHPLCTestDetails;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@HbF",Convert.ToDecimal(hplcData.HbF)),
+                    new SqlParameter("@HbA0",Convert.ToDecimal(hplcData.HbA0)),
+                    new SqlParameter("@HbA2",Convert.ToDecimal(hplcData.HbA2)),
+                    new SqlParameter("@HbS",Convert.ToDecimal(hplcData.HbS)),
+                    new SqlParameter("@HbD",Convert.ToDecimal(hplcData.HbD)),
+                    new SqlParameter("@HPLCTestId", hplcData.testId),
+                    new SqlParameter("@UserId", Convert.ToInt32(hplcData.userId)),
+                };
+                var hplcResult = UtilityDL.FillEntity<HPLCResultMsg>(stProc, pList);
+                return hplcResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
+

@@ -90,7 +90,7 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("AddHPLCTest")]
-        public async Task<IActionResult> AddCBCTest(HPLCTestAddRequest hplcRequest)
+        public async Task<IActionResult> AddHPLCTest(HPLCTestAddRequest hplcRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"HPLC test for multiple samples - {JsonConvert.SerializeObject(hplcRequest)}");
@@ -131,11 +131,29 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("AddHPLCTestResult")]
-        public async Task<IActionResult> AddCBCTest(AddHPLCTestResultRequest hplcData)
+        public async Task<IActionResult> AddHPLCTestResult(AddHPLCTestResultRequest hplcData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
             var rsResponse = await _centralLabService.AddHPLCTestResult(hplcData);
+
+            return Ok(new AddHPLCResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update samples to HPLC Test  New
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateHPLCTestResult")]
+        public async Task<IActionResult> UpdateHPLCTestResult(UpdateStagingRequest hplcData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Update HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            var rsResponse = await _centralLabService.UpdateHPLCTestResult(hplcData);
 
             return Ok(new AddHPLCResponse
             {

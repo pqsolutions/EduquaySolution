@@ -30,5 +30,6 @@ namespace EduquayAPI.Services.MobileSubject
         Task<AcknowledgementResponse> UpdatePrePostPNDTMTPAcknowledgement(AddPrePostStatusRequest aData);
         Task<UpdateFollowupStatusResponse> UpdatePostMTPFollowupStatus(AddFollowUpRequest fData);
         Task<RetriveTrackingResponse> RetrieveTrackingSubjects(MobileRetrieveRequest mrData);
+        Task<DashboardAndChartsResponse> RetrieveDashboardandCharts(MobileRetrieveRequest mrData);
     }
 }

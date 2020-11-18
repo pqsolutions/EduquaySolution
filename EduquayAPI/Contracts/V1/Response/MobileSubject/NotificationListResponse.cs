@@ -25,7 +25,8 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<MobilePostPNDTCounselling> postPndtCounselling { get; set; }
         public List<MobileMTPService> mtpService { get; set; }
         public List<ANMMobileMTPFollowups> postMtpFollowUp { get; set; }
-
+        public List<MobileMenu> leftSideMenus { get; set; }
+        public MobileAlert alert { get; set; }
     }
 
 

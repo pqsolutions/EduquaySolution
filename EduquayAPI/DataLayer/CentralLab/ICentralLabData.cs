@@ -20,6 +20,7 @@ namespace EduquayAPI.DataLayer.CentralLab
         List<CentralLabReports> RetriveCentralLabReports(CentralLabReportRequest mrData);
         List<CentralLabSampleStatus> RetrieveSampleStatus();
         HPLCResultMsg AddHPLCTestResult(AddHPLCTestResultRequest hplcData);
+        HPLCResultMsg UpdateHPLCTestResult(UpdateStagingRequest hplcData);
     }
 
     public interface ICentralLabDataFactory

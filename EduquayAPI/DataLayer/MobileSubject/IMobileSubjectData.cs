@@ -45,7 +45,6 @@ namespace EduquayAPI.DataLayer.MobileSubject
         List<MobilePNDTesting> FetchPNDTesting(int userId);
         List<MobilePostPNDTCounselling> FetchPostPNDTCounselling(int userId);
         List<MobileMTPService> FetchMTPService(int userId);
-
         List<MobilePrePNDTCounselling> FetchPrePNDTCounsellingNotification(int userId);
         List<MobilePNDTesting> FetchPNDTestingNotification(int userId);
         List<MobilePostPNDTCounselling> FetchPostPNDTCounsellingNotification(int userId);
@@ -53,8 +52,12 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void UpdatePrePostPNDTMTPAcknowledgement(AddPNDTMTPAckRequest aData);
         ANMMobileMTPFollowUp MobileMTPFollowUp(int userId);
         void UpdatePostMTPFollowupStatus(AddUpdateFollowupStatusRequest fData);
-
         List<TrackingMobileSubjects> RetrieveTrackingSubjects(int userId);
+        MobileChartDetail FetchMobileChartDetail(int userId);
+        MobileMetricsDetail FetchMobileMetricsDetail(int userId);
+        List<MobileMenu> RetrieveMobileMenu();
+        MobileAlert RetrieveAlert();
+        MobileMetricSummaryMessage RetrieveResponseMsg();
     }
 
     public interface IMobileSubjectDataFactory

@@ -43,8 +43,28 @@ namespace EduquayAPI.Models.Pathologist
         public string seniorPathologistRemarks { get; set; }
         public string diagnosisSummary { get; set; }
         public string graphFileName { get; set; }
+        public string anmName { get; set; }
+        public string blockName { get; set; }
+        public string scName { get; set; }
+        public string phcName { get; set; }
+        public string diagnosisDateTime { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
+                this.anmName = Convert.ToString(reader["ANMName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BlockName"))
+                this.blockName = Convert.ToString(reader["BlockName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SCName"))
+                this.scName = Convert.ToString(reader["SCName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PHCName"))
+                this.phcName = Convert.ToString(reader["PHCName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DiagnosisDateTime"))
+                this.diagnosisDateTime = Convert.ToString(reader["DiagnosisDateTime"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DiagnosisSummary"))
                 this.diagnosisSummary = Convert.ToString(reader["DiagnosisSummary"]);
 

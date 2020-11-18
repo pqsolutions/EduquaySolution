@@ -42,9 +42,10 @@ namespace EduquayAPI.Models.MobileSubject
         public int createdBy { get; set; }
         public int updatedBy { get; set; }
         public string source { get; set; }
-
+        public bool spouseWillingness { get; set; }
         public void Fill(SqlDataReader reader)
         {
+           
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
                 this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);
@@ -148,6 +149,8 @@ namespace EduquayAPI.Models.MobileSubject
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RegSource"))
                 this.source = Convert.ToString(reader["RegSource"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseWillingness"))
+                this.spouseWillingness = Convert.ToBoolean(reader["SpouseWillingness"]);
 
         }
     }
