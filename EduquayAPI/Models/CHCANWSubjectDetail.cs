@@ -33,9 +33,13 @@ namespace EduquayAPI.Models
         public string stateName { get; set; }
         public string rchId { get; set; }
         public string ecNumber { get; set; }
+        public bool spouseWillingness { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseWillingness"))
+                this.spouseWillingness = Convert.ToBoolean(reader["SpouseWillingness"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
                 this.id = Convert.ToInt32(reader["ID"]);
 

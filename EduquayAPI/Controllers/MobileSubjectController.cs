@@ -104,6 +104,8 @@ namespace EduquayAPI.Controllers
                 postPndtCounselling = nlResponse.postPndtCounselling,
                 mtpService = nlResponse.mtpService,
                 postMtpFollowUp = nlResponse.postMtpFollowUp,
+                leftSideMenus = nlResponse.leftSideMenus,
+                alert = nlResponse.alert,
             });
         }
 
@@ -475,6 +477,33 @@ namespace EduquayAPI.Controllers
                 Valid = rResponse.Valid,
                 Message =rResponse.Message,
                 Subjects = rResponse.Subjects,
+            });
+        }
+
+        [HttpPost]
+        [Route("RetrieveDashboardAndCharts")]
+        public async Task<IActionResult> RetrieveDashboardandCharts(MobileRetrieveRequest mrData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve dashboard data and charts in mobile app- {JsonConvert.SerializeObject(mrData)}");
+            var rResponse = await _mobileSubjectService.RetrieveDashboardandCharts(mrData);
+            if (!rResponse.Valid)
+            {
+                return Unauthorized(new DashboardAndChartsResponse
+                {
+                    Status = "false",
+                    Valid = rResponse.Valid,
+                    Message = rResponse.Message
+                });
+            }
+            return Ok(new DashboardAndChartsResponse
+            {
+                Status = rResponse.Status,
+                Valid = rResponse.Valid,
+                Message = rResponse.Message,
+                lastSyncDate = rResponse.lastSyncDate,
+                summary = rResponse.summary,
+                chart = rResponse.chart,
             });
         }
 

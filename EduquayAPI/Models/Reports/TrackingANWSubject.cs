@@ -133,8 +133,8 @@ namespace EduquayAPI.Models.Reports
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PrePNDTCounsellingStatus"))
                 this.prePNDTCounsellingStatus = Convert.ToBoolean(reader["PrePNDTCounsellingStatus"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PostPNDTCounsellingDateTime"))
-                this.prePNDTCounsellingDateTime = Convert.ToString(reader["PostPNDTCounsellingDateTime"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PrePNDTCounsellingDateTime"))
+                this.prePNDTCounsellingDateTime = Convert.ToString(reader["PrePNDTCounsellingDateTime"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTestStatus"))
                 this.pndTestStatus = Convert.ToBoolean(reader["PNDTestStatus"]);

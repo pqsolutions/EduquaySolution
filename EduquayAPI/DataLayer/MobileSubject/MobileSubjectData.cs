@@ -63,6 +63,25 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string UpdateMobilePostMTPFollowUpStatus = "SPC_UpdateMobilePostMTPFollowUpStatus";
 
         private const string FetchTrackingSubjectReportMobile = "SPC_FetchTrackingSubjectReportMobile";
+
+        private const string FetchMobileChartSubjectCount = "SPC_FetchMobileChartSubjectCount";
+        private const string FetchMobileChartSampleCollectionCount = "SPC_FetchMobileChartSampleCollectionCount";
+        private const string FetchMobileChartCHCPositiveCount = "SPC_FetchMobileChartCHCPositiveCount";
+        private const string FetchMobileChartHPLCPositiveCount = "SPC_FetchMobileChartHPLCPositiveCount";
+        private const string FetchMobileChartPNDTAcceptedCount = "SPC_FetchMobileChartPNDTAcceptedCount";
+        private const string FetchMobileChartPNDTCompletedCount = "SPC_FetchMobileChartPNDTCompletedCount";
+        private const string FetchMobileChartMTPAcceptedCount = "SPC_FetchMobileChartMTPAcceptedCount";
+        private const string FetchMobileChartMTPCompletedCount = "SPC_FetchMobileChartMTPCompletedCount";
+
+        private const string FetchMobileFieldMetricsAndGA = "SPC_FetchMobileFieldMetricsAndGA";
+        private const string FetchMobilePNDTObsMetrics = "SPC_FetchMobilePNDTObsMetrics";
+        private const string FetchMobileMTPObsMetrics = "SPC_FetchMobileMTPObsMetrics";
+        private const string FetchMobilePostMTPMetrics = "SPC_FetchMobilePostMTPMetrics";
+        private const string FetchMobileHPLCTestMetrics = "SPC_FetchMobileHPLCTestMetrics";
+
+        private const string FetchMobileAppLeftSideMenu = "SPC_FetchMobileAppLeftSideMenu";
+        private const string FetchMobileAppAlert = "SPC_FetchMobileAppAlert";
+        private const string FetchMobileMetricsReportMessage = "SPC_FetchMobileMetricsReportMessage";
         public MobileSubjectData()
         {
 
@@ -142,6 +161,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@Createdby", Convert.ToInt32(sprData.createdBy)),
                     new SqlParameter("@Updatedby", Convert.ToInt32(sprData.updatedBy)),
                     new SqlParameter("@Source", sprData.source),
+                    new SqlParameter("@SpouseWillingness", sprData.spouseWillingness ?? true),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
 
@@ -723,6 +743,95 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var pList = new List<SqlParameter>() { new SqlParameter("@ANMId", userId) };
             var allSampleData = UtilityDL.FillData<TrackingMobileSubjects>(stProc, pList);
             return allSampleData;
+        }
+
+        public MobileChartDetail FetchMobileChartDetail(int userId)
+        {
+            string stProc = FetchMobileChartSubjectCount;
+            string stProc1 = FetchMobileChartSampleCollectionCount;
+            string stProc2 = FetchMobileChartCHCPositiveCount;
+            string stProc3 = FetchMobileChartHPLCPositiveCount;
+            string stProc4 = FetchMobileChartPNDTAcceptedCount;
+            string stProc5 = FetchMobileChartPNDTCompletedCount;
+            string stProc6 = FetchMobileChartMTPAcceptedCount;
+            string stProc7 = FetchMobileChartMTPCompletedCount;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var registrations = UtilityDL.FillData<MobileCharts>(stProc, pList);
+            var samples = UtilityDL.FillData<MobileCharts>(stProc1, pList);
+            var chc = UtilityDL.FillData<MobileCharts>(stProc2, pList);
+            var hplc = UtilityDL.FillData<MobileCharts>(stProc3, pList);
+            var pndtAccepted = UtilityDL.FillData<MobileCharts>(stProc4, pList);
+            var pndtCompleted = UtilityDL.FillData<MobileCharts>(stProc5, pList);
+            var mtpAccepted = UtilityDL.FillData<MobileCharts>(stProc6, pList);
+            var mtpCompleted = UtilityDL.FillData<MobileCharts>(stProc7, pList);
+            var allCharts = new MobileChartDetail();
+            allCharts.registration = registrations;
+            allCharts.sampleCollection = samples;
+            allCharts.chcsstPositive = chc;
+            allCharts.hplcPositive = hplc;
+            allCharts.pndtAccepted = pndtAccepted;
+            allCharts.pndtCompleted = pndtCompleted;
+            allCharts.mtpReffered = mtpAccepted;
+            allCharts.mtpCompleted = mtpCompleted;
+            return allCharts;
+        }
+
+        public MobileMetricsDetail FetchMobileMetricsDetail(int userId)
+        {
+            string stProc = FetchMobileFieldMetricsAndGA;
+            string stProcPNDT = FetchMobilePNDTObsMetrics;
+            string stProcMTP = FetchMobileMTPObsMetrics;
+            string stProcPostMTP = FetchMobilePostMTPMetrics;
+            string stProcHPLCTest = FetchMobileHPLCTestMetrics;
+            var pList = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList1 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList2 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList3 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList4 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList5 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+            var pList6 = new List<SqlParameter>() { new SqlParameter("@UserId", userId) };
+
+            var fieldMetrics = UtilityDL.FillEntity<MobileFieldMetrics>(stProc, pList);
+            var gaAtReg = UtilityDL.FillEntity<MobileGAatReg>(stProc, pList1);
+            var criticalGA = UtilityDL.FillEntity<MobileCurrentGA>(stProc, pList2);
+            var pndtObsMetrics = UtilityDL.FillEntity<MobilePNDTObsMetrics>(stProcPNDT, pList3);
+            var mtpObsMetrics = UtilityDL.FillEntity<MobileMTPObsMetrics>(stProcMTP, pList4);
+            var postMTPMetrics = UtilityDL.FillEntity<MobilePostMTPMetrics>(stProcPostMTP, pList5);
+            var testMetrics = UtilityDL.FillEntity<MobileTestMetrics>(stProcHPLCTest, pList6);
+
+            var allMetrics = new MobileMetricsDetail();
+            allMetrics.fieldMetrics = fieldMetrics;
+            allMetrics.gaAtReg = gaAtReg;
+            allMetrics.testMetrics = testMetrics;
+            allMetrics.criticalGA = criticalGA;
+            allMetrics.pndtObsMetrics = pndtObsMetrics;
+            allMetrics.mtpObsMetrics = mtpObsMetrics;
+            allMetrics.postMTPMetrics = postMTPMetrics;
+            return allMetrics;
+        }
+
+        public List<MobileMenu> RetrieveMobileMenu()
+        {
+            string stProc = FetchMobileAppLeftSideMenu;
+            var pList = new List<SqlParameter>();
+            var menus = UtilityDL.FillData<MobileMenu>(stProc, pList);
+            return menus;
+        }
+
+        public MobileAlert RetrieveAlert()
+        {
+            string stProc = FetchMobileAppAlert;
+            var pList = new List<SqlParameter>();
+            var msg = UtilityDL.FillEntity<MobileAlert>(stProc, pList);
+            return msg;
+        }
+
+        public MobileMetricSummaryMessage RetrieveResponseMsg()
+        {
+            string stProc = FetchMobileMetricsReportMessage;
+            var pList = new List<SqlParameter>();
+            var msg = UtilityDL.FillEntity<MobileMetricSummaryMessage>(stProc, pList);
+            return msg;
         }
     }
 }

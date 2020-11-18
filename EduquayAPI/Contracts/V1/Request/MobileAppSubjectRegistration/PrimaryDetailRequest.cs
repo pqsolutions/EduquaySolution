@@ -42,6 +42,6 @@ namespace EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration
         public int createdBy { get; set; }
         public int updatedBy { get; set; }
         public string source { get; set; }
-
+        public bool? spouseWillingness { get; set; }
     }
 }

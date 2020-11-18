@@ -314,6 +314,61 @@ namespace EduquayAPI.Services.CentralLab
             }
             return hplcResponse;
         }
+
+        public async Task<AddHPLCResponse> UpdateHPLCTestResult(UpdateStagingRequest hplcData)
+        {
+            var hplcResponse = new AddHPLCResponse();
+            try
+            {
+                if (hplcData.HbA0 == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "HbA0 is missing";
+                }
+                else if (hplcData.HbA2 == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "HbA2 is missing";
+                }
+                else if (hplcData.HbF == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "HbF is missing";
+                }
+                else if (hplcData.HbS == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "HbS is missing";
+                }
+                else if (hplcData.HbD == "")
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "HbD is missing";
+                }
+                else if (hplcData.testId <= 0)
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "Invalid tested Id";
+                }
+                else if (hplcData.userId <= 0)
+                {
+                    hplcResponse.Status = "false";
+                    hplcResponse.Message = "Invalid user Id";
+                }
+                else
+                {
+                    var msgs = _centralLabReceiptData.UpdateHPLCTestResult(hplcData);
+                    hplcResponse.Status = "true";
+                    hplcResponse.Message = msgs.msg;
+                }
+            }
+            catch (Exception e)
+            {
+                hplcResponse.Status = "false";
+                hplcResponse.Message = e.Message;
+            }
+            return hplcResponse;
+        }
     }
     
 }

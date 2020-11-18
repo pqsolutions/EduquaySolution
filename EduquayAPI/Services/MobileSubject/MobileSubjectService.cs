@@ -478,6 +478,10 @@ namespace EduquayAPI.Services.MobileSubject
                         }
                     }
 
+                    var menus = _mobileSubjectData.RetrieveMobileMenu();
+                    var alertMsg = _mobileSubjectData.RetrieveAlert();
+
+
                     total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count + 
                                 pndtDetail.subject.Count + mtpDetail.subject.Count  + mtpfollowUpDetail.postMtpFollowUp.Count;
                     nlResponse.Status = "true";
@@ -497,6 +501,8 @@ namespace EduquayAPI.Services.MobileSubject
                     nlResponse.postPndtCounselling = postPNDTCounsellingNotification;
                     nlResponse.mtpService = mtpServiceNotification;
                     nlResponse.postMtpFollowUp = mobileMTPFollowups;
+                    nlResponse.leftSideMenus = menus;
+                    nlResponse.alert = alertMsg;
                 }
             }
             catch (Exception ex)
@@ -796,6 +802,41 @@ namespace EduquayAPI.Services.MobileSubject
 
             }
             return tResponse;
+        }
+
+        public async Task<DashboardAndChartsResponse> RetrieveDashboardandCharts(MobileRetrieveRequest mrData)
+        {
+
+            var dcResponse = new DashboardAndChartsResponse();
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    dcResponse.Valid = false;
+                    dcResponse.Status = "false";
+                    dcResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    var chart = _mobileSubjectData.FetchMobileChartDetail(mrData.userId);
+                    var summary = _mobileSubjectData.FetchMobileMetricsDetail(mrData.userId);
+                    var responseMessage = _mobileSubjectData.RetrieveResponseMsg();
+                    dcResponse.Valid = true;
+                    dcResponse.Status = "true";
+                    dcResponse.lastSyncDate = DateTime.Now.ToString("dd/MM/yyyy");
+                    dcResponse.chart = chart;
+                    dcResponse.summary = summary;
+                    dcResponse.Message = responseMessage.responseMsg + dcResponse.lastSyncDate;
+                }
+            }
+            catch (Exception e)
+            {
+                dcResponse.Valid = true;
+                dcResponse.Status = "false";
+                dcResponse.Message = e.Message;
+            }
+            return dcResponse;
         }
     }
 }
