@@ -25,6 +25,9 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string AddHPLCTestResults = "SPC_AddHPLCTestResults";
         private const string UpdateStagingHPLCTestDetails = "SPC_UpdateStagingHPLCTestDetails";
 
+        private const string UpdateProcessedHPLCTestDetails = "SPC_UpdateProcessedHPLCTestDetails";
+
+
         public CentralLabData()
         {
 
@@ -233,6 +236,30 @@ namespace EduquayAPI.DataLayer.CentralLab
                     new SqlParameter("@HbS",Convert.ToDecimal(hplcData.HbS)),
                     new SqlParameter("@HbD",Convert.ToDecimal(hplcData.HbD)),
                     new SqlParameter("@HPLCTestId", hplcData.testId),
+                    new SqlParameter("@UserId", Convert.ToInt32(hplcData.userId)),
+                };
+                var hplcResult = UtilityDL.FillEntity<HPLCResultMsg>(stProc, pList);
+                return hplcResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public HPLCResultMsg UpdateProcessedHPLCTestResult(UpdateProcessedResultRequest hplcData)
+        {
+            try
+            {
+                var stProc = UpdateProcessedHPLCTestDetails;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@HbF",Convert.ToDecimal(hplcData.HbF)),
+                    new SqlParameter("@HbA0",Convert.ToDecimal(hplcData.HbA0)),
+                    new SqlParameter("@HbA2",Convert.ToDecimal(hplcData.HbA2)),
+                    new SqlParameter("@HbS",Convert.ToDecimal(hplcData.HbS)),
+                    new SqlParameter("@HbD",Convert.ToDecimal(hplcData.HbD)),
+                    new SqlParameter("@BarcodeNo", hplcData.barcodeNo),
                     new SqlParameter("@UserId", Convert.ToInt32(hplcData.userId)),
                 };
                 var hplcResult = UtilityDL.FillEntity<HPLCResultMsg>(stProc, pList);
