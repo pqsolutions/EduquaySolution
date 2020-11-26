@@ -42,9 +42,12 @@ namespace EduquayAPI.Models.CentralLab
         public string rdw { get; set; }
         public string rbc { get; set; }
         public string sstResult { get; set; }
+        public string graphFileName { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PdfFileName"))
+                this.graphFileName = Convert.ToString(reader["PdfFileName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);

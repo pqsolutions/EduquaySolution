@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1;
@@ -7,9 +8,12 @@ using EduquayAPI.Contracts.V1.Request.CentralLab;
 using EduquayAPI.Contracts.V1.Response.CentralLab;
 using EduquayAPI.Models.CentralLab;
 using EduquayAPI.Services.CentralLab;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -21,10 +25,14 @@ namespace EduquayAPI.Controllers
     {
         private readonly ICentralLabService _centralLabService;
         private readonly ILogger<CentralLabController> _logger;
-        public CentralLabController(ICentralLabService centralLabService, ILogger<CentralLabController> logger)
+        private readonly IConfiguration _config;
+        public readonly IHostingEnvironment _hostingEnvironment;
+        public CentralLabController(ICentralLabService centralLabService, ILogger<CentralLabController> logger, IHostingEnvironment hostingEnvironment, IConfiguration config)
         {
             _centralLabService = centralLabService;
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _config = config;
         }
 
         /// <summary>
@@ -257,6 +265,67 @@ namespace EduquayAPI.Controllers
             {
                 return new CentralLabSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
             }
+        }
+
+        /// <summary>
+        /// Used for update samples to HPLC Processed Test Results  
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateProcessedHPLCTestResult")]
+        public async Task<IActionResult> UpdateProcessedHPLCTestResult(UpdateProcessedResultRequest hplcData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Update processed HPLC test results for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            var rsResponse = await _centralLabService.UpdateProcessedHPLCTestResult(hplcData);
+
+            return Ok(new AddHPLCResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
+        }
+
+        /// <summary>
+        /// Download HPLC Graph  
+        /// </summary>
+
+        [HttpPost]
+        [Route("DownloadHPLCGraph")]
+        public async Task<IActionResult> Download(string file)
+        {
+            var uploads = "";
+            var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
+
+            if (file.ToUpper() == "" || file.ToUpper() == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                uploads = Path.Combine(_hostingEnvironment.WebRootPath + hplcGraphLocation);
+                var filePath = Path.Combine(uploads, file);
+                if (!System.IO.File.Exists(filePath))
+                    return NotFound();
+
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+                return File(memory, GetContentType(filePath), file);
+            }
+        }
+
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
     }
 }
