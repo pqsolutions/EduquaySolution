@@ -158,7 +158,7 @@ namespace EduquayAPI.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("DownloadFile")]
         public async Task<IActionResult> Download(string file, string counsellingType)
         {

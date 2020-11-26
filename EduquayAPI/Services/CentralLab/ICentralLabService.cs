@@ -22,5 +22,6 @@ namespace EduquayAPI.Services.CentralLab
         List<HPLCTestSamples> RetrieveSubjectForHPLCTest(int centralLabId);
         Task<AddHPLCResponse> AddHPLCTestResult(AddHPLCTestResultRequest hplcData);
         Task<AddHPLCResponse> UpdateHPLCTestResult(UpdateStagingRequest hplcData);
+        Task<AddHPLCResponse> UpdateProcessedHPLCTestResult(UpdateProcessedResultRequest hplcData);
     }
 }
