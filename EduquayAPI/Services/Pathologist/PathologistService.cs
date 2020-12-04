@@ -224,7 +224,7 @@ namespace EduquayAPI.Services.Pathologist
                 hplcResultResponse.Status = "true";
                 hplcResultResponse.Message = e.Message;
             }
-            return hplcResultResponse;
+            return hplcResultResponse; 
         }
 
         public List<PathologistSampleStatus> RetrieveSampleStatus()
