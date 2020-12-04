@@ -23,5 +23,6 @@ namespace EduquayAPI.Models.LoadMasters
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ContactNo"))
                 this.contactNo = Convert.ToString(reader["ContactNo"]);
         }
+        
     }
 }
