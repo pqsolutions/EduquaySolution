@@ -10,7 +10,7 @@ namespace EduquayAPI.Models.Pathologist
     public class HPLCTestDetails : IFill
     {
         public string uniqueSubjectId { get; set; }
-        public string subjectName { get; set; } 
+        public string subjectName { get; set; }
         public string barcodeNo { get; set; }
         public string rchId { get; set; }
         public string ga { get; set; }
@@ -36,12 +36,16 @@ namespace EduquayAPI.Models.Pathologist
         public string hbA2 { get; set; }
         public string hbC { get; set; }
         public string hbD { get; set; }
-        public string hbS{ get; set; }
+        public string hbS { get; set; }
         public bool isNormal { get; set; }
         public int hplcTestResultId { get; set; }
+        public string graphFileName { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PDFFileName"))
+                this.graphFileName = Convert.ToString(reader["PDFFileName"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
@@ -70,7 +74,7 @@ namespace EduquayAPI.Models.Pathologist
                 this.testingCHC = Convert.ToString(reader["TestingCHC"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "RIPoint"))
-                this.riPoint  = Convert.ToString(reader["RIPoint"]);
+                this.riPoint = Convert.ToString(reader["RIPoint"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Age"))
                 this.age = Convert.ToInt32(reader["Age"]);
@@ -85,7 +89,7 @@ namespace EduquayAPI.Models.Pathologist
                 this.spouseName = Convert.ToString(reader["SpouseName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseContact"))
-                this.spouseContact  = Convert.ToString(reader["SpouseContact"]);
+                this.spouseContact = Convert.ToString(reader["SpouseContact"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMPDate"))
                 this.lmpDate = Convert.ToString(reader["LMPDate"]);
@@ -133,7 +137,7 @@ namespace EduquayAPI.Models.Pathologist
                 this.isNormal = Convert.ToBoolean(reader["IsNormal"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "HPLCTestResultId"))
-                this.hplcTestResultId  = Convert.ToInt32(reader["HPLCTestResultId"]);
+                this.hplcTestResultId = Convert.ToInt32(reader["HPLCTestResultId"]);
         }
     }
 }

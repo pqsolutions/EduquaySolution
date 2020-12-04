@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -85,7 +86,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var hplcResult = _pathologistService.HPLCResult();
-                return hplcResult.Count == 0 ? new HPLCResultMasterResponse { Status = "true", Message = "No hplc result master data found", hplcResults = new List<HPLCResult>() } 
+                return hplcResult.Count == 0 ? new HPLCResultMasterResponse { Status = "true", Message = "No hplc result master data found", hplcResults = new List<HPLCResult>() }
                 : new HPLCResultMasterResponse { Status = "true", Message = string.Empty, hplcResults = hplcResult };
             }
             catch (Exception e)
@@ -156,45 +157,24 @@ namespace EduquayAPI.Controllers
         /// Download HPLC Graph  
         /// </summary>
 
-        [HttpPost]
+        [HttpGet]
         [Route("DownloadHPLCGraph")]
-        public async Task<IActionResult> Download(string file)
+        public async Task<ActionResult> Download([FromQuery]string fileName)
         {
-            var uploads = "";
-            var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
 
-            if (file.ToUpper() == "" || file.ToUpper() == null)
+            if (fileName.ToUpper() == "" || fileName.ToUpper() == null)
             {
                 return BadRequest();
             }
             else
             {
-                uploads = Path.Combine(_hostingEnvironment.WebRootPath + hplcGraphLocation);
-              
+                var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
+                IFileProvider provider = new PhysicalFileProvider(_hostingEnvironment.WebRootPath + hplcGraphLocation);
+                IFileInfo fileInfo = provider.GetFileInfo(fileName);
+                var readStream = fileInfo.CreateReadStream();
+                var mimeType = "application/pdf";
+                return File(readStream, mimeType, fileName);
             }
-            var filePath = Path.Combine(uploads, file);
-            if (!System.IO.File.Exists(filePath))
-                return NotFound();
-
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(filePath, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, GetContentType(filePath), file);
         }
-
-        private string GetContentType(string path)
-        {
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if (!provider.TryGetContentType(path, out contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-            return contentType;
-        }
-
     }
 }

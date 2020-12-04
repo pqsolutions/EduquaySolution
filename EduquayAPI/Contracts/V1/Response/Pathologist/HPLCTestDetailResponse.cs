@@ -45,6 +45,7 @@ namespace EduquayAPI.Contracts.V1.Response.Pathologist
         public bool isNormal { get; set; }
         public int hplcTestResultId { get; set; }
         public string agingOfTest { get; set; }
+        public string graphFileName { get; set; }
 
     }
 }

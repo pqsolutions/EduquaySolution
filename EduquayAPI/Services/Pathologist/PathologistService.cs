@@ -143,6 +143,7 @@ namespace EduquayAPI.Services.Pathologist
                     hplcDet.hplcResultMasterId = hplc.hplcResultMasterId;
                     hplcDet.othersResult = hplc.othersResult;
                     hplcDet.diagnosisSummary = hplc.diagnosisSummary;
+                    hplcDet.graphFileName = hplc.graphFileName;
                     hplcAllTestDetail.Add(hplcDet);
                 }
 
@@ -211,6 +212,7 @@ namespace EduquayAPI.Services.Pathologist
                     TimeSpan difference = myDate1.Subtract(myDate2);
                     double totalDays = Math.Round(difference.TotalDays);
                     hplcDet.agingOfTest = Convert.ToString(totalDays);
+                    hplcDet.graphFileName = hplc.graphFileName;
                     hplcAllTestDetail.Add(hplcDet);
                 }
                 hplcResultResponse.Status = "true";

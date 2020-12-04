@@ -14,7 +14,7 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public int totalNotifications { get; set; }
         public List<MobileNotificationSamples> damagedSamples { get; set; }
         public List<MobileNotificationSamples> timeoutExpirySamples { get; set; }
-        public List<MobilePositiveSubjects> positiveSubjects  { get; set; }
+        public List<MobilePositiveSubjects> positiveSubjects { get; set; }
         public List<CHCSubjectResigration> chcSubjectResigrations { get; set; }
         public List<SampleCollection> chcSampleCollections { get; set; }
         public List<TestResult> results { get; set; }
@@ -25,10 +25,17 @@ namespace EduquayAPI.Contracts.V1.Response.MobileSubject
         public List<MobilePostPNDTCounselling> postPndtCounselling { get; set; }
         public List<MobileMTPService> mtpService { get; set; }
         public List<ANMMobileMTPFollowups> postMtpFollowUp { get; set; }
-        public List<MobileMenu> leftSideMenus { get; set; }
+        public List<MobileMenus> leftSideMenus { get; set; }
         public MobileAlert alert { get; set; }
     }
 
+
+    public class MobileMenus
+    {
+        public string name { get; set; }
+        public string link { get; set; }
+        public string odiyaName { get; set; }
+    }
 
     public class ANMMobileMTPFollowups
     {
