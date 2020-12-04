@@ -48,8 +48,34 @@ namespace EduquayAPI.Models.Pathologist
         public string scName { get; set; }
         public string phcName { get; set; }
         public string diagnosisDateTime { get; set; }
+        public string dateOfRegister { get; set; }
+        public string sampleCollectionDate { get; set; }
+        public string referringDepartment { get; set; }
+        public string orderingPhysician { get; set; }
+        public string labTechnicianName { get; set; }
+        public string pathologistName { get; set; }
+
+
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PathologistName"))
+                this.pathologistName = Convert.ToString(reader["PathologistName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabTechnicianName"))
+                this.labTechnicianName = Convert.ToString(reader["LabTechnicianName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "OrderingPhysician"))
+                this.orderingPhysician = Convert.ToString(reader["OrderingPhysician"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ReferringDepartment"))
+                this.referringDepartment = Convert.ToString(reader["ReferringDepartment"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDate"))
+                this.sampleCollectionDate = Convert.ToString(reader["SampleCollectionDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateOfRegister"))
+                this.dateOfRegister = Convert.ToString(reader["DateOfRegister"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANMName"))
                 this.anmName = Convert.ToString(reader["ANMName"]);
 

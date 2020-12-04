@@ -68,7 +68,7 @@ namespace EduquayAPI.Services.MobileSubject
 
         public async Task<TimeoutResponse> AddMoveTimeout(AddTimeoutExpireMobileRequest eData)
         {
-            var tResponse =  new TimeoutResponse();
+            var tResponse = new TimeoutResponse();
             var barcodes = new List<BarcodeSampleDetail>();
             var barcodeNo = "";
             try
@@ -145,7 +145,7 @@ namespace EduquayAPI.Services.MobileSubject
             }
             return uResponse;
         }
-       
+
         public async Task<UpdateStatusResponse> UpdateNotificationStatus(AddUpdateStatusRequest usData)
         {
             var uResponse = new UpdateStatusResponse();
@@ -312,7 +312,7 @@ namespace EduquayAPI.Services.MobileSubject
                         subjectRegistration.PregnancyDetail = pregnancy;
                         subjectRegistration.ParentDetail = parent;
                         subjectRegistration.Results = results;
-                        subjectRegistration.prePndtCounselling  = prePndtCounselling;
+                        subjectRegistration.prePndtCounselling = prePndtCounselling;
                         subjectRegistration.pndtTesting = pndtTesting;
                         subjectRegistration.postPndtCounselling = postPndtCounselling;
                         subjectRegistration.mtpService = mtpService;
@@ -374,10 +374,11 @@ namespace EduquayAPI.Services.MobileSubject
             var mobilePNDTReferral = new List<MobilePNDTReferral>();
             var mobileMTPReferral = new List<MobileMTPReferral>();
             var mobileMTPFollowups = new List<ANMMobileMTPFollowups>();
+            var menu = new List<MobileMenus>();
             var total = 0;
             try
             {
-               
+
                 var checkdevice = _mobileSubjectData.CheckDevice(mrData.userId, mrData.deviceId);
                 if (checkdevice.valid == false)
                 {
@@ -454,7 +455,7 @@ namespace EduquayAPI.Services.MobileSubject
                     foreach (var postMTP in mtpfollowUpDetail.postMtpFollowUp)
                     {
                         var mtpFollowup = new ANMMobileMTPFollowups();
-                        if (subjId  != postMTP.uniqueSubjectId)
+                        if (subjId != postMTP.uniqueSubjectId)
                         {
                             var firstFollowup1 = mtpfollowUpDetail.firstFollowUp.Where(ff => ff.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
                             var secondFollowup1 = mtpfollowUpDetail.secondFollowUp.Where(sf => sf.uniqueSubjectId == postMTP.uniqueSubjectId).ToList();
@@ -479,11 +480,31 @@ namespace EduquayAPI.Services.MobileSubject
                     }
 
                     var menus = _mobileSubjectData.RetrieveMobileMenu();
+                    foreach (var leftMenu in menus)
+                    {
+                        var lMenu = new MobileMenus();
+                        lMenu.name = leftMenu.name;
+                        lMenu.link = leftMenu.link;
+                        if (leftMenu.name == "Home")
+                        {
+                            lMenu.odiyaName = "ମୂଳପୃଷ୍ଠା |";
+                        }
+                        else if (leftMenu.name == "Help")
+                        {
+                            lMenu.odiyaName = "ସହାୟତା";
+                        }
+                        else if (leftMenu.name == "Circular")
+                        {
+                            lMenu.odiyaName = "ବୃତ୍ତାକାର/ ନିର୍ଦେଶନାମା";
+                        }
+                        menu.Add(lMenu);
+                    }
+
                     var alertMsg = _mobileSubjectData.RetrieveAlert();
 
 
-                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count + 
-                                pndtDetail.subject.Count + mtpDetail.subject.Count  + mtpfollowUpDetail.postMtpFollowUp.Count;
+                    total = damagedSamples.Count + timeoutSamples.Count + hplcPositiveSubjects.Count + subjectDetails.PrimarySubjectList.Count +
+                                pndtDetail.subject.Count + mtpDetail.subject.Count + mtpfollowUpDetail.postMtpFollowUp.Count;
                     nlResponse.Status = "true";
                     nlResponse.Valid = true;
                     nlResponse.Message = string.Empty;
@@ -501,7 +522,7 @@ namespace EduquayAPI.Services.MobileSubject
                     nlResponse.postPndtCounselling = postPNDTCounsellingNotification;
                     nlResponse.mtpService = mtpServiceNotification;
                     nlResponse.postMtpFollowUp = mobileMTPFollowups;
-                    nlResponse.leftSideMenus = menus;
+                    nlResponse.leftSideMenus = menu;
                     nlResponse.alert = alertMsg;
                 }
             }
@@ -773,7 +794,7 @@ namespace EduquayAPI.Services.MobileSubject
             return uResponse;
         }
 
-        public async  Task<RetriveTrackingResponse> RetrieveTrackingSubjects(MobileRetrieveRequest mrData)
+        public async Task<RetriveTrackingResponse> RetrieveTrackingSubjects(MobileRetrieveRequest mrData)
         {
             var tResponse = new RetriveTrackingResponse();
             try

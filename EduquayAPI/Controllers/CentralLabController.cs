@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1;
 using EduquayAPI.Contracts.V1.Request.CentralLab;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -85,7 +87,7 @@ namespace EduquayAPI.Controllers
                 _logger.LogDebug($"Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
                 var hplc = _centralLabService.RetrieveHPLC(centralLabId);
                 return hplc.Count == 0 ? new HPLCResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTest>() }
-                : new HPLCResponse  { Status = "true", Message = string.Empty, HPLCDetail = hplc };
+                : new HPLCResponse { Status = "true", Message = string.Empty, HPLCDetail = hplc };
             }
             catch (Exception e)
             {
@@ -288,44 +290,24 @@ namespace EduquayAPI.Controllers
         /// <summary>
         /// Download HPLC Graph  
         /// </summary>
-
-        [HttpPost]
+        /// 
+        [HttpGet]
         [Route("DownloadHPLCGraph")]
-        public async Task<IActionResult> Download(string file)
+        public async Task<ActionResult> Download([FromQuery]string fileName)
         {
-            var uploads = "";
-            var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
-
-            if (file.ToUpper() == "" || file.ToUpper() == null)
+            if (fileName.ToUpper() == "" || fileName.ToUpper() == null)
             {
                 return BadRequest();
             }
             else
             {
-                uploads = Path.Combine(_hostingEnvironment.WebRootPath + hplcGraphLocation);
-                var filePath = Path.Combine(uploads, file);
-                if (!System.IO.File.Exists(filePath))
-                    return NotFound();
-
-                var memory = new MemoryStream();
-                using (var stream = new FileStream(filePath, FileMode.Open))
-                {
-                    await stream.CopyToAsync(memory);
-                }
-                memory.Position = 0;
-                return File(memory, GetContentType(filePath), file);
+                var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
+                IFileProvider provider = new PhysicalFileProvider(_hostingEnvironment.WebRootPath + hplcGraphLocation);
+                IFileInfo fileInfo = provider.GetFileInfo(fileName);
+                var readStream = fileInfo.CreateReadStream();
+                var mimeType = "application/pdf";
+                return File(readStream, mimeType, fileName);
             }
-        }
-
-        private string GetContentType(string path)
-        {
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if (!provider.TryGetContentType(path, out contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-            return contentType;
         }
     }
 }

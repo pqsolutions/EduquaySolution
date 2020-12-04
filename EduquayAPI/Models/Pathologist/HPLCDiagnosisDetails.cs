@@ -45,9 +45,13 @@ namespace EduquayAPI.Models.Pathologist
         public string hplcResultMasterId { get; set; }
         public string othersResult { get; set; }
         public string diagnosisSummary { get; set; }
+        public string graphFileName { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PDFFileName"))
+                this.graphFileName = Convert.ToString(reader["PDFFileName"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
@@ -142,7 +146,7 @@ namespace EduquayAPI.Models.Pathologist
                 this.hplcTestResultId = Convert.ToInt32(reader["HPLCTestResultId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ClinicalDiagnosisId"))
-                this.clinicalDiagnosisId  = Convert.ToString(reader["ClinicalDiagnosisId"]);
+                this.clinicalDiagnosisId = Convert.ToString(reader["ClinicalDiagnosisId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "IsConsultSeniorPathologist"))
                 this.isConsultSeniorPathologist = Convert.ToBoolean(reader["IsConsultSeniorPathologist"]);

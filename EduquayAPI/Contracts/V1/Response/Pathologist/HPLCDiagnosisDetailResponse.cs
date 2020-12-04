@@ -51,7 +51,7 @@ namespace EduquayAPI.Contracts.V1.Response.Pathologist
         public string hplcResultMasterId { get; set; }
         public string othersResult { get; set; }
         public string diagnosisSummary { get; set; }
-
+        public string graphFileName { get; set; }
 
     }
 }

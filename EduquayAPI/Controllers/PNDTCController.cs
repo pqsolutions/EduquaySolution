@@ -29,7 +29,7 @@ namespace EduquayAPI.Controllers
         private readonly IConfiguration _config;
         public readonly IHostingEnvironment _hostingEnvironment;
 
-       
+
         public PNDTCController(IPNDTService pndtService, ILogger<PNDTCController> logger, IHostingEnvironment hostingEnvironment, IConfiguration config)
         {
             _pndtService = pndtService;
@@ -123,14 +123,14 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("TestingPurpose")]
-       
+
         public async Task<IActionResult> TestingPurpose([FromForm]object formdata)
         {
-          
+
             try
             {
                 IFormFile file = HttpContext.Request.Form.Files[0];
-                if(file.Length > 0)
+                if (file.Length > 0)
                 {
                     var nameOfFile = DateTime.Now.Ticks + "_" + file.FileName;
                     if (!Directory.Exists(_hostingEnvironment.WebRootPath + "\\UPLOADSDATA\\"))
@@ -158,7 +158,7 @@ namespace EduquayAPI.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("DownloadFile")]
         public async Task<IActionResult> Download(string file, string counsellingType)
         {
@@ -172,11 +172,11 @@ namespace EduquayAPI.Controllers
             }
             else if (counsellingType.ToUpper() == "PREPNDT")
             {
-                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + prePNDTFileLocation);
-            } 
+                uploads = Path.Combine(_hostingEnvironment.WebRootPath + prePNDTFileLocation);
+            }
             else if (counsellingType.ToUpper() == "POSTPNDT")
             {
-                 uploads = Path.Combine(_hostingEnvironment.WebRootPath + postPNDTFileLocation);
+                uploads = Path.Combine(_hostingEnvironment.WebRootPath + postPNDTFileLocation);
             }
 
             var filePath = Path.Combine(uploads, file);
@@ -213,7 +213,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                 IFormFile file = HttpContext.Request.Form.Files[0];
+                IFormFile file = HttpContext.Request.Form.Files[0];
                 var counselling = await _pndtService.GetPrePNDTFileDetails(file);
                 _logger.LogInformation($"Add Consent form for who agreed PNDT  - {counselling}");
                 return Ok(new FileResponse
@@ -241,7 +241,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-               // IFormFile file = HttpContext.Request.Form.Files[0];
+                // IFormFile file = HttpContext.Request.Form.Files[0];
                 var counselling = await _pndtService.AddCounselling(acData);
                 _logger.LogInformation($"Add  counselling for positive subjects for PNDT - {counselling}");
                 return Ok(new AddCounsellingResponse
@@ -435,7 +435,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-             //   IFormFile file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
+                //   IFormFile file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
                 var counselling = await _pndtService.AddPostPNDTCounselling(acData);
                 _logger.LogInformation($"Add  counselling the positive subjects for MTP - {counselling}");
                 return Ok(new AddPostCounsellingResponse
