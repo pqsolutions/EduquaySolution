@@ -236,7 +236,7 @@ namespace EduquayAPI.Services.Pathologist
         public List<PathoReports> RetrivePathologistReports(PathoReportsRequest prData)
         {
             var allSubject = _pathologistData.RetrivePathologistReports(prData);
-            return allSubject;
+            return allSubject; 
         }
     }
 }
