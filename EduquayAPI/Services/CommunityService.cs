@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -18,24 +19,38 @@ namespace EduquayAPI.Services
             _communityData = new CommunityDataFactory().Create();
         }
 
-        public string Add(CommunityRequest cData)
+        public async Task<AddEditResponse> Add(CommunityRequest cData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (cData.isActive.ToLower() != "true")
                 {
                     cData.isActive = "false";
                 }
-                if (cData.casteId <= 0)
+                if (string.IsNullOrEmpty(cData.communityName))
                 {
-                    return "Invalid caste id";
+                    response.Status = "false";
+                    response.Message = "Please enter community name";
                 }
-                var result = _communityData.Add(cData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add community data" : result;
+                else if (cData.casteId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid caste id";
+                }
+                else
+                {
+                    var addEditResponse = _communityData.Add(cData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add community data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
 
         }

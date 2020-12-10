@@ -1,5 +1,7 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace EduquayAPI.Services
 {
    public interface IReligionService
     {
-        string Add(ReligionRequest rData);
+        Task<AddEditResponse> Add(ReligionRequest rData);
         List<Religion> Retrieve(int code);
         List<Religion> Retrieve();
     }

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 
 namespace EduquayAPI.DataLayer
 {
     public interface IReligionData
     {
-        string Add(ReligionRequest rData);
+        AddEditMasters Add(ReligionRequest rData);
         List<Religion> Retrieve(int code);
         List<Religion> Retrieve();
     }

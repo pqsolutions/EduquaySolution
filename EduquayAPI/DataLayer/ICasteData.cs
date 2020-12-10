@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 
 namespace EduquayAPI.DataLayer
 {
     public interface ICasteData
     {
-        string Add(CasteRequest cData);
+        AddEditMasters Add(CasteRequest cData);
         List<Caste> Retrieve(int code);
         List<Caste> Retrieve();
     }
