@@ -15,7 +15,7 @@ namespace EduquayAPI.Models.Reports
         public string gender { get; set; }
         public string lmpDate { get; set; }
         public string subjectId { get; set; }
-        public string childSubjectId { get; set; }
+        public int childSubjectTypeId { get; set; }
         public string spouseSubjectId { get; set; }
         public string dateofRegistration { get; set; }
         public bool samplingStatus { get; set; }
@@ -56,8 +56,8 @@ namespace EduquayAPI.Models.Reports
 
         public void Fill(SqlDataReader reader)
         {
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectId"))
-                this.childSubjectId = Convert.ToString(reader["ChildSubjectId"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectTypeId"))
+                this.childSubjectTypeId = Convert.ToInt32(reader["ChildSubjectTypeId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);

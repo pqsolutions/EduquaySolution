@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using EduquayAPI.Contracts.V1.Response.Masters;
 
 namespace EduquayAPI.Controllers
 {
@@ -27,17 +28,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(CommunityRequest cData)
+        public async Task<ActionResult> Add(CommunityRequest cData)
         {
-            try
+            var addEditResponse = await _communityService.Add(cData);
+            return Ok(new AddEditResponse
             {
-                var community = _communityService.Add(cData);
-                return string.IsNullOrEmpty(community) ? $"Unable to add community data" : community;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add community data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

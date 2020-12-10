@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -18,20 +19,33 @@ namespace EduquayAPI.Services
             _casteData = new CasteDataFactory().Create();
         }
 
-        public string Add(CasteRequest cData)
+        public async Task<AddEditResponse> Add(CasteRequest cData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (cData.isActive.ToLower() != "true")
                 {
                     cData.isActive = "false";
                 }
-                var result = _casteData.Add(cData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add caste data" : result;
+                if (string.IsNullOrEmpty(cData.casteName))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter caste name";
+                }
+                else
+                {
+                    var addEditResponse = _casteData.Add(cData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add caste data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

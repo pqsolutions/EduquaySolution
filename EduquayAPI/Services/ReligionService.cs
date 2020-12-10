@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,20 +18,33 @@ namespace EduquayAPI.Services
             _religionData = new ReligionDataFactory().Create();
         }
 
-        public string Add(ReligionRequest rData)
+        public async Task<AddEditResponse> Add(ReligionRequest rData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (rData .isActive.ToLower() != "true")
                 {
                     rData.isActive = "false";
                 }
-                var result = _religionData.Add(rData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add religion data" : result;
+                if (string.IsNullOrEmpty(rData.religionName))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter religion name";
+                }
+                else
+                {
+                    var addEditResponse = _religionData.Add(rData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add religion data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

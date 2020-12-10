@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EduquayAPI.DataLayer
 {
     public interface ICommunityData
     {
-        string Add(CommunityRequest cData);
+        AddEditMasters Add(CommunityRequest cData);
         List<Community> Retrieve(int code);
         List<Community> Retrieve();
     }
