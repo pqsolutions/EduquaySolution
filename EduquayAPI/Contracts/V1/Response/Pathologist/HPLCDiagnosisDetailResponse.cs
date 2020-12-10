@@ -52,6 +52,7 @@ namespace EduquayAPI.Contracts.V1.Response.Pathologist
         public string othersResult { get; set; }
         public string diagnosisSummary { get; set; }
         public string graphFileName { get; set; }
+        public string othersDiagnosis { get; set; }
 
     }
 }

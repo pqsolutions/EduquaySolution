@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,17 +25,15 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddSC(SCRequest sData)
+        public async Task<ActionResult> AddSC(SCRequest sData)
         {
-            try
-            { 
-                var sc = _scService.Add(sData);
-                return string.IsNullOrEmpty(sc) ? $"Unable to add SC data" : sc;
-            }
-            catch (Exception e)
+            var addEditResponse = await _scService.Add(sData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add SC data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
+           
         }
 
         [HttpGet]

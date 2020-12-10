@@ -5,12 +5,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 
 namespace EduquayAPI.DataLayer
 {
     public interface IStateData
     {
-        string Add(StateRequest sData);
+        AddEditMasters Add(StateRequest sData);
         List<State> Retrieve(int code);
         List<State> Retrieve();
     }

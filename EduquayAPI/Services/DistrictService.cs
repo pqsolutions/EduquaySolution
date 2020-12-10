@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -15,24 +16,34 @@ namespace EduquayAPI.Services
         {
             _districtData = new DistrictDataFactory().Create();
         }
-        public string AddDistrict(DistrictRequest dData)
+        public async Task<AddEditResponse> AddDistrict(DistrictRequest dData)
         {
+
+            var response = new AddEditResponse();
             try
             {
-                if (dData.stateId <= 0)
-                {
-                    return "Invalid state id";
-                }
                 if (dData.isActive.ToLower() != "true")
                 {
                     dData.isActive = "false";
                 }
-                var result = _districtData.Add(dData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add district data" : result;
+                if (dData.stateId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid state id";
+                }
+                else
+                {
+                    var addEditResponse = _districtData.Add(dData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add district data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
         public List<District> Retrieve(int code)

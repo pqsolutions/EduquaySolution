@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -25,17 +26,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddRI(RIRequest rData)
+        public async Task<ActionResult> AddRI(RIRequest rData)
         {
-            try 
-            { 
-                var ri = _riService.Add(rData);
-                return string.IsNullOrEmpty(ri) ? $"Unable to add RI data" : ri;
-            }
-            catch (Exception e)
+            var addEditResponse = await _riService.Add(rData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add RI data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

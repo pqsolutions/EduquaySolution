@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,11 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(GovIDTypeRequest gtData)
+        public AddEditMasters Add(GovIDTypeRequest gtData)
         {
             try
             {
                 string stProc = AddGovIDType;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@GovIDType", gtData.govIdTypeName ?? gtData.govIdTypeName),
@@ -33,11 +32,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments", gtData.comments ?? gtData.comments),
                     new SqlParameter("@Createdby", gtData.createdBy),
                     new SqlParameter("@Updatedby", gtData.updatedBy),
-
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Gov id type added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {

@@ -21,6 +21,7 @@ namespace EduquayAPI.Contracts.V1.Request.Pathologist
         public int userId { get; set; }
         public bool isDiagnosisComplete { get; set; }
         public string othersResult { get; set; }
+        public string othersDiagnosis { get; set; }
 
     }
 }

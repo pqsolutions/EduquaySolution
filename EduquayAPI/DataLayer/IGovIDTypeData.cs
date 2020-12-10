@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EduquayAPI.DataLayer
 {
     public interface IGovIDTypeData
     {
-        string Add(GovIDTypeRequest gtData);
+        AddEditMasters Add(GovIDTypeRequest gtData);
         List<GovIDType> Retrieve(int code);
         List<GovIDType> Retrieve();
     }

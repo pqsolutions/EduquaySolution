@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,17 +25,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(GovIDTypeRequest gtData)
+        public async Task<ActionResult> Add(GovIDTypeRequest gtData)
         {
-            try 
-            { 
-                var govidType = _govidTypeService.Add(gtData);
-                return string.IsNullOrEmpty(govidType) ? $"Unable to add gov id type data" : govidType;
-            }
-            catch (Exception e)
+            var addEditResponse = await _govidTypeService.Add(gtData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add gov id type data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

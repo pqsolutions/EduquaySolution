@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,18 +18,11 @@ namespace EduquayAPI.Services
         {
             _chcData = new CHCDataFactory().Create();
         }
-        public string Add(CHCRequest cData)
+        public async Task<AddEditResponse> Add(CHCRequest cData)
         {
+            var response = new AddEditResponse();
             try
             {
-                if (cData.districtId <= 0)
-                {
-                    return "Invalid district id";
-                }
-                if (cData.blockId <= 0)
-                {
-                    return "Invalid block id";
-                }              
                 if (cData.isActive.ToLower() != "true")
                 {
                     cData.isActive = "false";
@@ -37,12 +31,35 @@ namespace EduquayAPI.Services
                 {
                     cData.isTestingFacility = "false";
                 }
-                var result = _chcData.Add(cData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add CHC data" : result;
+
+                if (string.IsNullOrEmpty(cData.chcGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter chc gov code";
+                }
+                else if (cData.districtId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid district id";
+                }
+                else if (cData.blockId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid block id";
+                }               
+                else
+                {
+                    var addEditResponse = _chcData.Add(cData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add CHC data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

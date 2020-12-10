@@ -176,5 +176,24 @@ namespace EduquayAPI.Controllers
                 return File(readStream, mimeType, fileName);
             }
         }
+
+        /// <summary>
+        /// Used for get for Sr.Patho refered hplc diagnosis data which are not update their result
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSrPathoHPLCDiagnosisDetail/{centralLabId}")]
+        public async Task<IActionResult> GetSrPathoDiagnosisList(int centralLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var subjectList = await _pathologistService.FetchSrPathoHPLCDiagnosisDetail(centralLabId);
+            _logger.LogInformation($"Received sr Patho refered hplc diagnosis  details {subjectList}");
+            return Ok(new HPLCDiagnosisDetailResponse
+            {
+                Status = subjectList.Status,
+                Message = subjectList.Message,
+                SubjectDetails = subjectList.SubjectDetails,
+            });
+        }
     }
 }

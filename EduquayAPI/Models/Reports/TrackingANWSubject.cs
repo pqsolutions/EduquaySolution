@@ -8,7 +8,14 @@ namespace EduquayAPI.Models.Reports
 {
     public class TrackingANWSubject : IFill
     {
+        public string subjectName { get; set; }
+        public string spouseName { get; set; }
+        public int age { get; set; }
+        public string ga { get; set; }
+        public string gender { get; set; }
+        public string lmpDate { get; set; }
         public string subjectId { get; set; }
+        public string childSubjectId { get; set; }
         public string spouseSubjectId { get; set; }
         public string dateofRegistration { get; set; }
         public bool samplingStatus { get; set; }
@@ -49,6 +56,27 @@ namespace EduquayAPI.Models.Reports
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ChildSubjectId"))
+                this.childSubjectId = Convert.ToString(reader["ChildSubjectId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
+                this.subjectName = Convert.ToString(reader["SubjectName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseName"))
+                this.spouseName = Convert.ToString(reader["SpouseName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gestational_period"))
+                this.ga = Convert.ToString(reader["Gestational_period"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Age"))
+                this.age = Convert.ToInt32(reader["Age"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMPDate"))
+                this.lmpDate = Convert.ToString(reader["LMPDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Gender"))
+                this.gender = Convert.ToString(reader["Gender"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UniqueSubjectID"))
                 this.subjectId = Convert.ToString(reader["UniqueSubjectID"]);
 

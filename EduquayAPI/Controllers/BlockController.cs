@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using EduquayAPI.Contracts.V1.Response.Masters;
 
 namespace EduquayAPI.Controllers
 {
@@ -28,17 +29,15 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddBlock(BlockRequest bData)
+        public async Task<IActionResult> AddBlock(BlockRequest bData)
         {
-            try
+            var addEditResponse = await _blockService.AddBlock(bData);
+            return Ok(new AddEditResponse
             {
-                var block = _blockService.AddBlock(bData);
-                return string.IsNullOrEmpty(block) ? $"Unable to add block data" : block;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add block data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
+           
         }
 
         [HttpGet]

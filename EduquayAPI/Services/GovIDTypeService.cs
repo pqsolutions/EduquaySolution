@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 using System;
@@ -16,20 +17,33 @@ namespace EduquayAPI.Services
         {
             _govidTypeData = new GovIDTypeDataFactory().Create();
         }
-        public string Add(GovIDTypeRequest gtData)
+        public async Task<AddEditResponse> Add(GovIDTypeRequest gtData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (gtData.isActive.ToLower() != "true")
                 {
                     gtData.isActive = "false";
                 }
-                var result = _govidTypeData.Add(gtData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add gov id type data" : result;
+                if (string.IsNullOrEmpty(gtData.govIdTypeName))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter gov id type";
+                }
+                else
+                {
+                    var addEditResponse = _govidTypeData.Add(gtData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add gov id type data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

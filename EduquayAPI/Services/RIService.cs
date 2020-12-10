@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,33 +18,49 @@ namespace EduquayAPI.Services
         {
             _riData = new RIDataFactory().Create();
         }
-        public string Add(RIRequest rData)
+        public async Task<AddEditResponse> Add(RIRequest rData)
         {
+            var response = new AddEditResponse();
             try
             {
-
                 if (rData.isActive.ToLower() != "true")
                 {
                     rData.isActive = "false";
                 }
-                if (rData.phcId <= 0)
+                if (string.IsNullOrEmpty(rData.riGovCode))
                 {
-                    return "Invalid PHC id";
+                    response.Status = "false";
+                    response.Message = "Please enter ri gov code";
                 }
-                if (rData.scId <= 0)
+                else if (rData.phcId <= 0)
                 {
-                    return "Invalid SC id";
+                    response.Status = "false";
+                    response.Message = "Invalid PHC id";
                 }
-                if (rData.ilrId <= 0)
+                else if (rData.scId <= 0)
                 {
-                    return "Invalid ILR id";
+                    response.Status = "false";
+                    response.Message = "Invalid SC id";
                 }
-                var result = _riData.Add(rData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add RI data" : result;
+                else if (rData.ilrId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid ILR id";
+                }
+                else
+                {
+                    var addEditResponse = _riData.Add(rData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add RI data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

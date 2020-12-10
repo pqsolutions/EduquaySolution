@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -25,17 +26,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddState(StateRequest sData)
+        public async Task<IActionResult> AddState(StateRequest sData)
         {
-            try
+            var addEditResponse = await _stateService.AddState(sData);
+            return Ok(new AddEditResponse
             {
-                var state = _stateService.AddState(sData);
-                return string.IsNullOrEmpty(state) ? $"Unable to add state data" : state;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add state data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

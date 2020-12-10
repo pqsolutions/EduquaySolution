@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,11 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(SCRequest sData)
+        public AddEditMasters Add(SCRequest sData)
         {
             try
             {
                 string stProc = AddSC;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@CHCID", sData.chcId),
@@ -41,10 +40,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments", sData.comments ?? sData.comments),
                     new SqlParameter("@Createdby", sData.createdBy),
                     new SqlParameter("@Updatedby", sData.updatedBy),
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "SC added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {
