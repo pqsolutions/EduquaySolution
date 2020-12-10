@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,11 @@ namespace EduquayAPI.DataLayer
 
         }
 
-        public string AddBlock(BlockRequest bData)
+        public AddEditMasters AddBlock(BlockRequest bData)
         {
             try
             {
                 string stProc = AddBlocks;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@Block_gov_code", bData.blockGovCode),
@@ -35,10 +34,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments", bData.comments ?? bData.comments),
                     new SqlParameter("@Createdby", bData.createdBy),
                     new SqlParameter("@Updatedby", bData.updatedBy),
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Block added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {

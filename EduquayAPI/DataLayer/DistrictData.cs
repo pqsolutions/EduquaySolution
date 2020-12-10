@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,11 @@ namespace EduquayAPI.DataLayer
 
         }
 
-        public string Add(DistrictRequest dData)
+        public AddEditMasters Add(DistrictRequest dData)
         {
             try
             {
                 string stProc = AddDistrict;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                     new SqlParameter("@District_gov_code", dData.districtGovCode),
@@ -35,11 +34,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments", dData.comments ?? dData.comments),
                     new SqlParameter("@Createdby", dData.createdBy),
                     new SqlParameter("@Updatedby", dData.updatedBy),
-
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "District added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {

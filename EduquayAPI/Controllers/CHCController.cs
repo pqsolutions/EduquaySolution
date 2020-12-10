@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,18 +24,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddCHC(CHCRequest cData)
+        public async Task<IActionResult> AddCHC(CHCRequest cData)
         {
-            try
+            var addEditResponse = await _chcService.Add(cData);
+            return Ok(new AddEditResponse
             {
-                var chc = _chcService.Add(cData);
-                return string.IsNullOrEmpty(chc) ? $"Unable to add CHC data" : chc;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add CHC data - {e.Message}";
-            }
-
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

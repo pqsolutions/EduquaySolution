@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,17 +25,15 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddDistrict(DistrictRequest dData)
+        public async Task<ActionResult> AddDistrict(DistrictRequest dData)
         {
-            try
+            var addEditResponse = await _districtService.AddDistrict(dData);
+            return Ok(new AddEditResponse
             {
-                var district = _districtService.AddDistrict(dData);
-                return string.IsNullOrEmpty(district) ? $"Unable to add district data" : district;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add district data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
+           
         }
 
         [HttpGet]

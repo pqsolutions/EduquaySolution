@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -16,25 +17,39 @@ namespace EduquayAPI.Services
         {
             _phcData = new PHCDataFactory().Create();
         }
-        public string Add(PHCRequest pData)
+        public async Task<AddEditResponse> Add(PHCRequest pData)
         {
+
+            var response = new AddEditResponse();
             try
             {
                 if (pData.isActive.ToLower() != "true")
                 {
                     pData.isActive = "false";
                 }
-                if (pData.chcId <= 0)
+                if (string.IsNullOrEmpty(pData.phcGovCode))
                 {
-                    return "Invalid CHC id";
+                    response.Status = "false";
+                    response.Message = "Please enter phc gov code";
                 }
-               
-                var result = _phcData.Add(pData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add PHC data" : result;
+                else if (pData.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid CHC id";
+                }
+                else
+                {
+                    var addEditResponse = _phcData.Add(pData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add PHC data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

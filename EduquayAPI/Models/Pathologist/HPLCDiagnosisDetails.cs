@@ -46,9 +46,13 @@ namespace EduquayAPI.Models.Pathologist
         public string othersResult { get; set; }
         public string diagnosisSummary { get; set; }
         public string graphFileName { get; set; }
+        public string othersDiagnosis { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "OthersDiagnosis"))
+                this.othersDiagnosis = Convert.ToString(reader["OthersDiagnosis"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PDFFileName"))
                 this.graphFileName = Convert.ToString(reader["PDFFileName"]);
 

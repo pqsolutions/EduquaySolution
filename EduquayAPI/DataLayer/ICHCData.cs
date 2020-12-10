@@ -5,12 +5,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 
 namespace EduquayAPI.DataLayer
 {
     public interface ICHCData
     {
-        string Add(CHCRequest cData);
+        AddEditMasters Add(CHCRequest cData);
         List<CHC> Retrieve(int code);
         List<CHC> Retrieve();
     }

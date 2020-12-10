@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -21,21 +22,16 @@ namespace EduquayAPI.Controllers
             _phcService = phcService;
         }
 
-
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddPHC(PHCRequest pData)
+        public async Task<IActionResult> AddPHC(PHCRequest pData)
         {
-
-            try
-            { 
-                var phc = _phcService.Add(pData);
-                return string.IsNullOrEmpty(phc) ? $"Unable to add PHC data" : phc;
-            }
-            catch (Exception e)
+            var addEditResponse = await _phcService.Add(pData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add PHC data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

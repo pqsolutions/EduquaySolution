@@ -5,12 +5,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 
 namespace EduquayAPI.DataLayer
 {
     public interface IDistrictData
     {
-        string Add(DistrictRequest dData);
+        AddEditMasters Add(DistrictRequest dData);
         List<District> Retrieve(int code);
         List<District> Retrieve();
     }

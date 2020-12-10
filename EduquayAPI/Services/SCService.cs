@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -18,29 +19,44 @@ namespace EduquayAPI.Services
             _scData = new SCDataFactory().Create();
         }
 
-        public string Add(SCRequest sData)
+        public async Task<AddEditResponse> Add(SCRequest sData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (sData.isActive.ToLower() != "true")
                 {
                     sData.isActive = "false";
                 }
-                if (sData.chcId <= 0)
+                if (string.IsNullOrEmpty(sData.scGovCode))
                 {
-                    return "Invalid CHC id";
+                    response.Status = "false";
+                    response.Message = "Please enter sc gov code";
                 }
-                if (sData.phcId <= 0)
+                else if (sData.chcId <= 0)
                 {
-                    return "Invalid PHC id";
+                    response.Status = "false";
+                    response.Message = "Invalid CHC id";
                 }
-               
-                var result = _scData.Add(sData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add SC data" : result;
+                else if (sData.phcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid PHC id";
+                }
+                else
+                {
+                    var addEditResponse =  _scData.Add(sData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+
             }
             catch (Exception e)
             {
-                return $"Unable to add SC data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

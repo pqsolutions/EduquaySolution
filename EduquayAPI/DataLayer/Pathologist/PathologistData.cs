@@ -19,6 +19,7 @@ namespace EduquayAPI.DataLayer.Pathologist
         private const string FetchPathologistSampleStatus = "SPC_FetchPathologistSampleStatus";
         private const string FetchPathoDiagnosisReports = "SPC_FetchPathoDiagnosisReports";
 
+        private const string FetchSrPathoReferedSubjectsList = "SPC_FetchSrPathoReferedSubjectsList";
 
         public PathologistData()
         {
@@ -46,6 +47,7 @@ namespace EduquayAPI.DataLayer.Pathologist
                     new SqlParameter("@CreatedBy", aData.userId ),
                     new SqlParameter("@IsDiagnosisComplete", aData.isDiagnosisComplete),
                     new SqlParameter("@OthersResult", aData.othersResult.ToCheckNull()),
+                    new SqlParameter("@OthersDiagnosis", aData.othersDiagnosis.ToCheckNull()),
 
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
@@ -77,6 +79,14 @@ namespace EduquayAPI.DataLayer.Pathologist
         public List<HPLCDiagnosisDetails> EditHPLCDiagnosisDetail(int centralLabId)
         {
             string stProc = FetchPathoEditDiognosisSubjectsList;
+            var pList = new List<SqlParameter>() { new SqlParameter("@CentralLabId", centralLabId) };
+            var allSampleData = UtilityDL.FillData<HPLCDiagnosisDetails>(stProc, pList);
+            return allSampleData;
+        }
+
+        public List<HPLCDiagnosisDetails> FetchSrPathoHPLCDiagnosisDetail(int centralLabId)
+        {
+            string stProc = FetchSrPathoReferedSubjectsList;
             var pList = new List<SqlParameter>() { new SqlParameter("@CentralLabId", centralLabId) };
             var allSampleData = UtilityDL.FillData<HPLCDiagnosisDetails>(stProc, pList);
             return allSampleData;
