@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,20 +18,33 @@ namespace EduquayAPI.Services
             _clinicalDiagnosisData = new ClinicalDiagnosisDataFactory().Create();
         }
 
-        public string Add(ClinicalDiagnosisRequest cdData)
+        public async Task<AddEditResponse> Add(ClinicalDiagnosisRequest cdData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (cdData.isActive.ToLower() != "true")
                 {
                     cdData.isActive = "false";
                 }
-                var result = _clinicalDiagnosisData.Add(cdData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add clinical diagnosis data" : result;
+                if (string.IsNullOrEmpty(cdData.diagnosisName))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter diagnosis name";
+                }
+                else
+                {
+                    var addEditResponse = _clinicalDiagnosisData.Add(cdData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add clinical diagnosis data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 

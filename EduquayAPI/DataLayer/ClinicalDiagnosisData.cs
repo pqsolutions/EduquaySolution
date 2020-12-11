@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,13 +23,11 @@ namespace EduquayAPI.DataLayer
 
         }
 
-        public string Add(ClinicalDiagnosisRequest cdData)
+        public AddEditMasters Add(ClinicalDiagnosisRequest cdData)
         {
             try
             {
                 string stProc = AddClinicalDiagnosis;
-                var retVal = new SqlParameter("@Scope_output", 1);
-                retVal.Direction = ParameterDirection.Output;
                 var pList = new List<SqlParameter>
                 {
                    
@@ -37,11 +36,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments",  cdData.comments ??  cdData.comments),
                     new SqlParameter("@Createdby",  cdData.createdBy),
                     new SqlParameter("@Updatedby",  cdData.updatedBy),
-
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Clinical diagnosis data added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {

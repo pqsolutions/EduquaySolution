@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -25,18 +26,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddUserRole(UserRoleRequest urData)
+        public async Task<ActionResult> AddUserRole(UserRoleRequest urData)
         {
-            try
-            { 
-            
-                var userRole = _userRoleService.Add(urData);
-                return string.IsNullOrEmpty(userRole) ? $"Unable to add user role data" : userRole;
-            }
-            catch (Exception e)
+            var addEditResponse = await _userRoleService.Add(urData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add user role data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using EduquayAPI.Contracts.V1.Response.Masters;
 
 namespace EduquayAPI.Controllers
 {
@@ -27,17 +28,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(ClinicalDiagnosisRequest cdData)
+        public async Task<ActionResult> Add(ClinicalDiagnosisRequest cdData)
         {
-            try
+            var addEditResponse = await _clinicalDiagnosisService.Add(cdData);
+            return Ok(new AddEditResponse
             {
-                var clinicalDiagnosis = _clinicalDiagnosisService.Add(cdData);
-                return string.IsNullOrEmpty(clinicalDiagnosis) ? $"Unable to add clinical diagnosis data" : clinicalDiagnosis;
-            }
-            catch (Exception e)
-            {
-                return $"Unable to add clinical diagnosis data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
 

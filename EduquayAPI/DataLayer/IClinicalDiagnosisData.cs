@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EduquayAPI.DataLayer
 {
     public interface IClinicalDiagnosisData
     {
-        string Add(ClinicalDiagnosisRequest cdData);
+        AddEditMasters Add(ClinicalDiagnosisRequest cdData);
         List<ClinicalDiagnosis> Retrieve(int code);
         List<ClinicalDiagnosis> Retrieve();
     }

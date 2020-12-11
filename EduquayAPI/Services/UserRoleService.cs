@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.DataLayer;
 using EduquayAPI.Models;
 
@@ -17,8 +18,9 @@ namespace EduquayAPI.Services
         {
             _userRoleData = new UserRoleDataFactory().Create();
         }
-        public string Add(UserRoleRequest urData)
+        public async Task<AddEditResponse> Add(UserRoleRequest urData)
         {
+            var response = new AddEditResponse();
             try
             {
                 if (urData.isActive.ToLower() != "true")
@@ -27,14 +29,27 @@ namespace EduquayAPI.Services
                 }
                 if (urData.userTypeId <= 0)
                 {
-                    return "Invalid UserType Id";
+                    response.Status = "false";
+                    response.Message = "Invalid UserType Id";
                 }
-                var result = _userRoleData.Add(urData);
-                return string.IsNullOrEmpty(result) ? $"Unable to add user role data" : result;
+                else if (string.IsNullOrEmpty(urData.userRoleName))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter user role name";
+                }
+                else
+                {
+                    var addEditResponse = _userRoleData.Add(urData);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
             }
             catch (Exception e)
             {
-                return $"Unable to add user role data - {e.Message}";
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
             }
         }
 
