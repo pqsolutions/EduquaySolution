@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,18 +25,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> AddUserType(UserTypeRequest utData)
+        public async Task<ActionResult> AddUserType(UserTypeRequest utData)
         {
-
-            try
-            { 
-                var userType = _userTypeService.Add(utData);
-                return string.IsNullOrEmpty(userType) ? $"Unable to add user type data" : userType;
-            }
-            catch (Exception e)
+            var addEditResponse = await _userTypeService.Add(utData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add user type data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
 
