@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EduquayAPI.DataLayer
 {
     public interface ISubjectTypeData
     {
-        string Add(SubjectTypeRequest stData);
+        AddEditMasters Add(SubjectTypeRequest stData);
         List<SubjectType> Retrieve(int code);
         List<SubjectType> Retrieve();
     }
