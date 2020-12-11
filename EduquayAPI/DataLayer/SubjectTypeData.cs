@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.Masters;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,7 +19,7 @@ namespace EduquayAPI.DataLayer
         {
 
         }
-        public string Add(SubjectTypeRequest stData)
+        public AddEditMasters Add(SubjectTypeRequest stData)
         {
             try
             {
@@ -32,11 +33,9 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@Comments", stData.comments ?? stData.comments),
                     new SqlParameter("@Createdby", stData.createdBy),
                     new SqlParameter("@Updatedby", stData.updatedBy),
-
-                    retVal
                 };
-                UtilityDL.ExecuteNonQuery(stProc, pList);
-                return "Subject type added successfully";
+                var returnData = UtilityDL.FillEntity<AddEditMasters>(stProc, pList);
+                return returnData;
             }
             catch (Exception e)
             {

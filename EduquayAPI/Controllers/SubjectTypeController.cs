@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Models;
 using EduquayAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -24,17 +25,14 @@ namespace EduquayAPI.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult<string> Add(SubjectTypeRequest stData)
+        public async Task<ActionResult> Add(SubjectTypeRequest stData)
         {
-            try
-            { 
-                var subjectType = _subjectTypeService.Add(stData);
-                return string.IsNullOrEmpty(subjectType) ? $"Unable to add subject type data" : subjectType;
-            }
-            catch (Exception e)
+            var addEditResponse = await _subjectTypeService.Add(stData);
+            return Ok(new AddEditResponse
             {
-                return $"Unable to add subject type data - {e.Message}";
-            }
+                Status = addEditResponse.Status,
+                Message = addEditResponse.Message,
+            });
         }
 
         [HttpGet]
