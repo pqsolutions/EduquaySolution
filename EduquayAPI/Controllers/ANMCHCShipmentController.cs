@@ -42,6 +42,8 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Adding ANM shipment data - {JsonConvert.SerializeObject(asData)}");
             var sampleShipment = await _anmchcShipmentService.AddANMCHCShipment(asData);
+            _logger.LogInformation($"add samples to shipment for ANM user {sampleShipment}");
+
             return Ok(new AddShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -57,7 +59,9 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetShipmentList(ANMCHCShipmentLogRequest asData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(asData)}");
             var shipmentLogResponse = await _anmchcShipmentService.RetrieveShipmentLogs(asData);
+            _logger.LogInformation($"get shipment list of particular ANM user {shipmentLogResponse}");
 
             return Ok(new ANMCHCShipmentLogsResponse
             {
@@ -77,6 +81,7 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
             var sampleShipment = await _anmchcShipmentService.AddCHCCHCShipment(csData);
+            _logger.LogInformation($"add samples to shipment for CHC {sampleShipment}");
             return Ok(new AddShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -92,7 +97,9 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetCHCShipmentList(ANMCHCShipmentLogRequest asData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(asData)}");
             var shipmentLogResponse = await _anmchcShipmentService.RetrieveCHCShipmentLogs(asData);
+            _logger.LogInformation($"get shipment list of particular CHC {shipmentLogResponse}");
 
             return Ok(new CHCCHCShipmentLogsResponse
             {

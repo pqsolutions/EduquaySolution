@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace EduquayAPI.Controllers
 {
@@ -33,7 +34,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> RetrieveANWSubjects(TrackingSubjectRequest tData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
+            _logger.LogDebug($"Fetch Subjects for Tracking purpose- {JsonConvert.SerializeObject(tData)}");
             var tracking = await _reportsService.RetrieveANWSubjects(tData.uniqueSubjectId);
             _logger.LogInformation($"Fetch ANW Subjects for Tracking purpose {tracking}");
             return Ok(new TrackingANWSubjectResponse
@@ -52,7 +53,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> RetrieveSubjectsForTracking(TrackingSubjectRequest tData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
+            _logger.LogDebug($"Fetch Subjects for Tracking purpose- {JsonConvert.SerializeObject(tData)}");
             var tracking = await _reportsService.RetrieveSubjectsForTracking(tData.uniqueSubjectId);
             _logger.LogInformation($"Fetch Subjects for Tracking purpose {tracking}");
             return Ok(new TrackingSubjectResponse
@@ -60,6 +61,25 @@ namespace EduquayAPI.Controllers
                 status = tracking.status,
                 message = tracking.message,
                 data = tracking.data,
+            });
+        }
+
+        /// <summary>
+        /// Used to fetch subjects detail for nhm reports
+        /// </summary>
+        [HttpPost]
+        [Route("NHMReports")]
+        public async Task<IActionResult> RetrieveSubjectsForNHMReports(NHMRequest nhmData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve subject detail for nhm report- {JsonConvert.SerializeObject(nhmData)}");
+            var nhmReports = await _reportsService.RetriveNHMReportsDetail(nhmData);
+            _logger.LogInformation($"Fetch Subjects for nhm reports {nhmReports}");
+            return Ok(new NHMReportResponse
+            {
+                status = nhmReports.status,
+                message = nhmReports.message,
+                data = nhmReports.data,
             });
         }
 

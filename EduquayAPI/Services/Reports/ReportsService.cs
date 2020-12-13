@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Response.Reports;
+﻿using EduquayAPI.Contracts.V1.Request.Reports;
+using EduquayAPI.Contracts.V1.Response.Reports;
 using EduquayAPI.DataLayer.Reports;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,43 @@ namespace EduquayAPI.Services.Reports
                 tResponse.message = e.Message;
             }
             return tResponse;
+        }
+
+        public async Task<NHMReportResponse> RetriveNHMReportsDetail(NHMRequest nhmData)
+        {
+            var tResponse = new NHMReportResponse();
+            try
+            {
+                if(nhmData.searchType == 1)
+                {
+                    var result = _reportsData.RetrieveNHMReports(nhmData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (nhmData.searchType == 2)
+                {
+                    if (string.IsNullOrEmpty(nhmData.userInput))
+                    {
+                        tResponse.status = "false";
+                        tResponse.message = "Please give some input for search";
+                    }
+                    else
+                    {
+                        var result = _reportsData.RetrieveParticularNHMReports(nhmData);
+                        tResponse.status = "true";
+                        tResponse.message = "";
+                        tResponse.data = result;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.status = "false";
+                tResponse.message = e.Message;
+            }
+            return tResponse;
+
         }
     }
 }

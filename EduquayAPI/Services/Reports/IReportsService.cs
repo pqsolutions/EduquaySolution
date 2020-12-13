@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Contracts.V1.Response.Reports;
+﻿using EduquayAPI.Contracts.V1.Request.Reports;
+using EduquayAPI.Contracts.V1.Response.Reports;
 using EduquayAPI.Models.Reports;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace EduquayAPI.Services.Reports
     {
         Task<TrackingANWSubjectResponse> RetrieveANWSubjects(string uniqueSubjectId);
         Task<TrackingSubjectResponse> RetrieveSubjectsForTracking(string uniqueSubjectId);
+        Task<NHMReportResponse> RetriveNHMReportsDetail(NHMRequest nhmData);
     }
 }
