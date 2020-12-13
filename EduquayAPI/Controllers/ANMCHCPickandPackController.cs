@@ -38,7 +38,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetSampleList(ANMCHCPickandPackRequest acppData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
+            _logger.LogDebug($"Request- {JsonConvert.SerializeObject(acppData)}");
             var sampleList = await _anmchcPickandPackService.Retrieve(acppData);
             _logger.LogInformation($"Received sample Data {sampleList}");
             return Ok(new ANMCHCPickandPackResponse

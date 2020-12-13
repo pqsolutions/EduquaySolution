@@ -45,6 +45,8 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
             var sampleRecollection = await _anmNotificationsService.AddSampleRecollection(srData);
+            _logger.LogInformation($" Add the new sample recollection of subject which are damaged sample or timout expiry sample {sampleRecollection}");
+
             return Ok(new ServiceResponse
             {
                 Status = sampleRecollection.Status,
@@ -65,7 +67,7 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Updating sample status data - {JsonConvert.SerializeObject(usData)}");
                 var sampleStatus = _anmNotificationsService.UpdateSampleStatus(usData);
-                _logger.LogInformation($"Sample status updated successfully - {usData}");
+                _logger.LogInformation($"Sample status updated successfully - {sampleStatus}");
                 return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
             }
             catch (Exception ex)
@@ -106,6 +108,8 @@ namespace EduquayAPI.Controllers
         public NotificationSamplesResponse GetANMNotificationSamples(NotificationSamplesRequest nsData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(nsData)}");
+
             try
             {
                 var notificationSamples = _anmNotificationsService.GetANMNotificationSamples(nsData);
@@ -127,6 +131,7 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetANMUnsentSamples(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(userId)}");
 
             var unsentSamples = await _anmNotificationsService.RetrieveUnsentSamples(userId);
             _logger.LogInformation($"Received unsent sample data {unsentSamples}");
@@ -146,6 +151,8 @@ namespace EduquayAPI.Controllers
         public PositiveSubjectsResponse GetHPLCPositiveSubjects(int userId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(userId)}");
+
             try
             {
                 var positiveSubjects = _anmNotificationsService.GetPositiveDetails(userId);
@@ -190,16 +197,19 @@ namespace EduquayAPI.Controllers
         [Route("RetrievePNDTReferal/{userId}")]
         public ANMPNDTResponse GetPNDTReferal(int userId)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve pndt referals for ANM  - {JsonConvert.SerializeObject(userId)}");
             try
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Retrieve pndt referals for ANM  - {JsonConvert.SerializeObject(userId)}");
                 var notificationSamples = _anmNotificationsService.GetPNDTReferal(userId);
+                _logger.LogInformation($"Return PNDT Referrel - {notificationSamples}");
+
                 return notificationSamples.Count == 0 ? new ANMPNDTResponse { Status = "true", Message = "No subjects found", Samples = new List<ANMPNDTReferal>() }
                 : new ANMPNDTResponse { Status = "true", Message = string.Empty, Samples = notificationSamples };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to fetch pndt referal status  - {e.StackTrace}");
                 return new ANMPNDTResponse { Status = "false", Message = e.Message, Samples = null };
             }
         }
@@ -217,7 +227,7 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Updating pndt referal status data - {JsonConvert.SerializeObject(rData)}");
                 var sampleStatus = _anmNotificationsService.UpdatePNDTReferalStatus(rData);
-                _logger.LogInformation($"pndt referal status updated successfully - {rData}");
+                _logger.LogInformation($"pndt referal status updated successfully - {sampleStatus}");
                 return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
             }
             catch (Exception ex)
@@ -234,16 +244,19 @@ namespace EduquayAPI.Controllers
         [Route("RetrieveMTPReferal/{userId}")]
         public ANMMTPResponse GetMTPReferal(int userId)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve mtp referals for ANM  - {JsonConvert.SerializeObject(userId)}");
             try
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Retrieve mtp referals for ANM  - {JsonConvert.SerializeObject(userId)}");
                 var notificationSamples = _anmNotificationsService.GetMTPReferal(userId);
+                _logger.LogInformation($"Retrive MTP referral - {notificationSamples}");
+
                 return notificationSamples.Count == 0 ? new ANMMTPResponse { Status = "true", Message = "No subjects found", Samples = new List<ANMMTPReferal>() }
                 : new ANMMTPResponse { Status = "true", Message = string.Empty, Samples = notificationSamples };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to fetch the mtp referral  - {e.StackTrace}");
                 return new ANMMTPResponse { Status = "false", Message = e.Message, Samples = null };
             }
         }
@@ -255,13 +268,12 @@ namespace EduquayAPI.Controllers
         [Route("UpdateMTPReferalStatus")]
         public ActionResult<ServiceResponse> UpdateMTPReferalStatus(ANMReferalRequest rData)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Updating mtp referal status data - {JsonConvert.SerializeObject(rData)}");
             try
             {
-
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Updating mtp referal status data - {JsonConvert.SerializeObject(rData)}");
                 var sampleStatus = _anmNotificationsService.UpdateMTPReferalStatus(rData);
-                _logger.LogInformation($"mtp referal status updated successfully - {rData}");
+                _logger.LogInformation($"mtp referal status updated successfully - {sampleStatus}");
                 return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
             }
             catch (Exception ex)
@@ -278,16 +290,18 @@ namespace EduquayAPI.Controllers
         [Route("RetrievePostMTPFollowUp/{userId}")]
         public ANMFollowUpResponse GETMTPFollowUp(int userId)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve post mtp followup for ANM  - {JsonConvert.SerializeObject(userId)}");
             try
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Retrieve post mtp followup for ANM  - {JsonConvert.SerializeObject(userId)}");
                 var notificationSamples = _anmNotificationsService.FetchMTPFollowUp(userId);
+                _logger.LogInformation($"retrive MTP Followup - {notificationSamples}");
                 return notificationSamples.Count == 0 ? new ANMFollowUpResponse { Status = "true", Message = "No subjects found", subjects = new List<ANMPostMTPFollowUp>() }
                 : new ANMFollowUpResponse { Status = "true", Message = string.Empty, subjects = notificationSamples };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to fetch the mtp followup status  - {e.StackTrace}");
                 return new ANMFollowUpResponse { Status = "false", Message = e.Message, subjects = null };
             }
         }
@@ -299,13 +313,12 @@ namespace EduquayAPI.Controllers
         [Route("UpdateMTPFollowUpStatus")]
         public ActionResult<ServiceResponse> UpdateMTPFollowUpStatus(AddFollowUpStatus fData)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Updating mtp followup status data - {JsonConvert.SerializeObject(fData)}");
             try
             {
-
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Updating mtp followup status data - {JsonConvert.SerializeObject(fData)}");
                 var sampleStatus = _anmNotificationsService.UpdateMTPFollowUpStatus(fData);
-                _logger.LogInformation($"mtp followup status updated successfully - {fData}");
+                _logger.LogInformation($"mtp followup status updated successfully - {sampleStatus}");
                 return new ServiceResponse { Status = sampleStatus.Status, Message = sampleStatus.Message, Result = null };
             }
             catch (Exception ex)

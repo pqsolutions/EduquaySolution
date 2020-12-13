@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Models.Reports;
+﻿using EduquayAPI.Contracts.V1.Request.Reports;
+using EduquayAPI.Models.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace EduquayAPI.DataLayer.Reports
     {
         TrackingANWSubject RetrieveANWSubjects(string uniqueSubjectId);
         TrackingSubjects RetrieveSubjectsForTracking(string uniqueSubjectId);
+        List<NHMReports> RetrieveNHMReports(NHMRequest nhmData);
+        List<NHMReports> RetrieveParticularNHMReports(NHMRequest nhmData);
     }
     public interface IReportsDataFactory
     {
