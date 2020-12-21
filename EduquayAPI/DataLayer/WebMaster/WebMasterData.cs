@@ -33,7 +33,9 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchAllMolecularResultMaster = "SPC_FetchAllMolecularResultMaster";
         private const string FetchAllCHCByTestingCHC = "SPC_FetchAllCHCByTestingCHC";
         private const string FetchAllCHCByCentralLab = "SPC_FetchAllCHCByCentralLab";
-
+        private const string FetchBlockByDistrict = "SPC_FetchBlockByDistrict";
+        private const string FetchCHCByBlock = "SPC_FetchCHCByBlock";
+        private const string FetchANMByCHC = "SPC_FetchANMByCHC";
 
         public WebMasterData()
         {
@@ -226,6 +228,31 @@ namespace EduquayAPI.DataLayer.WebMaster
             string stProc = FetchAllCHCByCentralLab;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", centralLabId) };
             var allData = UtilityDL.FillData<LoadCHCs>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveBlocksByDistrict(int id)
+        {
+
+            string stProc = FetchBlockByDistrict;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveCHCByBlock(int id)
+        {
+            string stProc = FetchCHCByBlock;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveANMByCHC(int id)
+        {
+            string stProc = FetchANMByCHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
             return allData;
         }
     }

@@ -39,5 +39,6 @@ namespace EduquayAPI.Contracts.V1.Request
         public int registeredFrom { get; set; }
         public int createdBy { get; set; }
         public string source { get; set; }
+        //public bool? spouseWillingness { get; set; }
     }
 }
