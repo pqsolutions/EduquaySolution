@@ -32,7 +32,9 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadMolecularResult> RetrieveMolecularResult();
         List<LoadCHCs> RetrieveCHCbyTestingCHC(int testingCHCId);
         List<LoadCHCs> RetrieveCHCbyCentralLab(int centralLabId);
-
+        List<LoadCommon> RetrieveBlocksByDistrict(int id);
+        List<LoadCommon> RetrieveCHCByBlock(int id);
+        List<LoadCommon> RetrieveANMByCHC(int id);
     }
     public interface IWebMasterDataFactory
     {

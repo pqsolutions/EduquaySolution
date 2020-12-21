@@ -129,6 +129,8 @@ namespace EduquayAPI.DataLayer
                     new SqlParameter("@RegisteredFrom", Convert.ToInt32(sprData.registeredFrom)),
                     new SqlParameter("@Createdby", Convert.ToInt32(sprData.createdBy)),
                     new SqlParameter("@Source", sprData.source),
+                   // new SqlParameter("@SpouseWillingness", sprData.spouseWillingness ?? true),
+
                 };
                 var subPrimary = UtilityDL.FillEntity<SubjectPrimaryDetail>(stProc, pList);
                 return subPrimary;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using EduquayAPI.Contracts.V1;
+using EduquayAPI.Contracts.V1.Response.Masters;
 using EduquayAPI.Contracts.V1.Response.WebMaster;
 using EduquayAPI.Models.LoadMasters;
 using EduquayAPI.Services.WebMaster;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace EduquayAPI.Controllers
 {
@@ -538,6 +540,72 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogError($"Error in receiving chc data {e.StackTrace}");
                 return new LoadCHCResponse { Status = "false", Message = e.Message, CHC = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveBlockByDistrict/{id}")]
+        public LoadCommonResponse RetrieveBlockByDistrict(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch block by district - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveBlocksByDistrict(id);
+
+                _logger.LogInformation($"Received block master data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving block data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveCHCByBlock/{id}")]
+        public LoadCommonResponse RetrieveCHCByBlock(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch chc by block - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveCHCByBlock(id); 
+
+                _logger.LogInformation($"Received chc master data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveANMByCHC/{id}")]
+        public LoadCommonResponse RetrieveANMByCHC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch anm by chc - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveANMByCHC(id);
+
+                _logger.LogInformation($"Received anm user data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving anm user data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
             }
         }
     }
