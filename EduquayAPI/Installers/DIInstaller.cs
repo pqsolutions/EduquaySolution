@@ -14,6 +14,7 @@ using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.DataLayer.MolecularLab;
 using EduquayAPI.DataLayer.MTPObstetrician;
+using EduquayAPI.DataLayer.NHMReport;
 using EduquayAPI.DataLayer.Pathologist;
 using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.DataLayer.PNDTandMTPMaster;
@@ -32,6 +33,7 @@ using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Services.MolecularLab;
 using EduquayAPI.Services.MTPObstetrician;
+using EduquayAPI.Services.NHMReport;
 using EduquayAPI.Services.Pathologist;
 using EduquayAPI.Services.PNDT;
 using EduquayAPI.Services.PNDTandMTPMaster;
@@ -171,6 +173,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IReportsDataFactory, ReportsDataFactory>();
             services.AddScoped<IReportsService, ReportsService>();
+
+            services.AddScoped<INHMReportDataFactory, NHMReportDataFactory>();
+            services.AddScoped<INHMReportService, NHMReportService>();
 
             services.AddSingleton<DbConnect>();
         }
