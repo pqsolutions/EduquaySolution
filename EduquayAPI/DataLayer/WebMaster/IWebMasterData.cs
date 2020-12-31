@@ -35,6 +35,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCommon> RetrieveBlocksByDistrict(int id);
         List<LoadCommon> RetrieveCHCByBlock(int id);
         List<LoadCommon> RetrieveANMByCHC(int id);
+        List<LoadCommon> RetrieveRIByCHC(int id);
     }
     public interface IWebMasterDataFactory
     {

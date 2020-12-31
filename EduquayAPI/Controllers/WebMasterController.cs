@@ -608,5 +608,27 @@ namespace EduquayAPI.Controllers
                 return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+
+        [HttpGet]
+        [Route("RetrieveRIByCHC/{id}")]
+        public LoadCommonResponse RetrieveRIByCHC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch ri by chc - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveRIByCHC(id);
+
+                _logger.LogInformation($"Received ri data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving ri data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
     }
 }

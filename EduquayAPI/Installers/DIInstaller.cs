@@ -10,6 +10,7 @@ using EduquayAPI.DataLayer.ANMReport;
 using EduquayAPI.DataLayer.CentralLab;
 using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.DataLayer.CHCReceipt;
+using EduquayAPI.DataLayer.CHCReport;
 using EduquayAPI.DataLayer.DistrictCoordinator;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
@@ -31,6 +32,7 @@ using EduquayAPI.Services.ANMReport;
 using EduquayAPI.Services.CentralLab;
 using EduquayAPI.Services.CHCNotifications;
 using EduquayAPI.Services.CHCReceipt;
+using EduquayAPI.Services.CHCReport;
 using EduquayAPI.Services.DistrictCoordinator;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
@@ -186,6 +188,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IANMReportDataFactory, ANMReportDataFactory>();
             services.AddScoped<IANMReportService, ANMReportService>();
+
+            services.AddScoped<ICHCReportDataFactory, CHCReportDataFactory>();
+            services.AddScoped<ICHCReportService, CHCReportService>();
 
             services.AddSingleton<DbConnect>();
         }
