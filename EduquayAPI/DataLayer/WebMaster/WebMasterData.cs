@@ -37,7 +37,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchCHCByBlock = "SPC_FetchCHCByBlock";
         private const string FetchANMByCHC = "SPC_FetchANMByCHC";
         private const string FetchRIByCHC = "SPC_FetchRIByCHC";
-
+        private const string FetchPHCByCHC = "SPC_FetchPHCByCHC";
         public WebMasterData()
         {
 
@@ -260,6 +260,14 @@ namespace EduquayAPI.DataLayer.WebMaster
         public List<LoadCommon> RetrieveRIByCHC(int id)
         {
             string stProc = FetchRIByCHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrievePHCByCHC(int id)
+        {
+            string stProc = FetchPHCByCHC;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
             var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
             return allData;
