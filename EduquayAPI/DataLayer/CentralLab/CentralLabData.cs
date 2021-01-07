@@ -20,11 +20,9 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string FetchCentralMolecularShipmentLog = "SPC_FetchCentralMolecularShipmentLog";
         private const string FetchCentralLabSampleStatus = "SPC_FetchCentralLabSampleStatus";
         private const string FetchCentralLabStatusReports = "SPC_FetchCentralLabStatusReports";
-
         private const string FetchReceivedSubjectforHPLCTest = "SPC_FetchReceivedSubjectforHPLCTest";
         private const string AddHPLCTestResults = "SPC_AddHPLCTestResults";
         private const string UpdateStagingHPLCTestDetails = "SPC_UpdateStagingHPLCTestDetails";
-
         private const string UpdateProcessedHPLCTestDetails = "SPC_UpdateProcessedHPLCTestDetails";
 
 

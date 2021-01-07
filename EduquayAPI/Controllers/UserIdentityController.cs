@@ -259,7 +259,8 @@ namespace EduquayAPI.Controllers
             try
             {
                 var users = _usersService.FindByUserRole(roleId);
-                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } : new UserResponse { Status = "true", Message = string.Empty, Users = users };
+                return users.Count == 0 ? new UserResponse { Status = "true", Message = "No users found", Users = new List<User>() } 
+                : new UserResponse { Status = "true", Message = string.Empty, Users = users };
             }
             catch (Exception e)
             {
