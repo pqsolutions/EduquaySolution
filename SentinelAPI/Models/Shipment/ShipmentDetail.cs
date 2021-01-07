@@ -11,6 +11,7 @@ namespace SentinelAPI.Models.Shipment
         public int shipmentId { get; set; }
         public string babyName { get; set; }
         public string babySubjectId { get; set; }
+        public string babyHospitalNo { get; set; }
         public string babyDOB { get; set; }
         public string gender { get; set; }
         public string motherRCHID { get; set; }
@@ -32,6 +33,9 @@ namespace SentinelAPI.Models.Shipment
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabySubjectId"))
                 this.babySubjectId = Convert.ToString(reader["BabySubjectId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BabyHospitalNo"))
+                this.babyHospitalNo = Convert.ToString(reader["BabyHospitalNo"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DateOfBirth"))
                 this.babyDOB = Convert.ToString(reader["DateOfBirth"]);

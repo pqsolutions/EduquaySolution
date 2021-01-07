@@ -23,7 +23,6 @@ namespace SentinelAPI.Models.Profile
         public string babyHospitalContactNo { get; set; }
         public string babyHospital { get; set; }
         public string barcodeNo { get; set; }
-
         public string dateofRegistration { get; set; }
         public string hospitalNo { get; set; }
         public string motherFirstName { get; set; }
