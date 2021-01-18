@@ -18,7 +18,6 @@ namespace EduquayAPI.DataLayer.Pathologist
         private const string AddHPLCDiagnosisResultByAutomatic = "SPC_AddHPLCDiagnosisResultByAutomatic";
         private const string FetchPathologistSampleStatus = "SPC_FetchPathologistSampleStatus";
         private const string FetchPathoDiagnosisReports = "SPC_FetchPathoDiagnosisReports";
-
         private const string FetchSrPathoReferedSubjectsList = "SPC_FetchSrPathoReferedSubjectsList";
 
         public PathologistData()

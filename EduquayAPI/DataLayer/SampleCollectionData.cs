@@ -1,5 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1.Request;
 using EduquayAPI.Models;
+using EduquayAPI.Models.SMS;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +15,7 @@ namespace EduquayAPI.DataLayer
         private const string FetchSubjectNotSampleCollected = "SPC_FetchSubjectNotSampleCollected";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
-
+        private const string FetchSMSSample = "SPC_FetchSMSBarcodeSampleDetails";
 
         public SampleCollectionData()
         {
@@ -72,6 +73,18 @@ namespace EduquayAPI.DataLayer
                 new SqlParameter("@RegisteredFrom", ssData.registeredFrom),
             };
             var allData = UtilityDL.FillData<SubjectSamples>(stProc, pList);
+            return allData;
+        }
+
+        public SMSSamplesDetails FetchSMSSamples(string barcodeNo, string subjectId)
+        {
+            string stProc = FetchSMSSample;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@Barcode", barcodeNo),
+                new SqlParameter("@SubjectId", subjectId ),
+            };
+            var allData = UtilityDL.FillEntity<SMSSamplesDetails>(stProc, pList);
             return allData;
         }
     }
