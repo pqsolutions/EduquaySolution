@@ -274,7 +274,6 @@ namespace EduquayAPI.Services
                     }
                     else
                     {
-
                         mailBody = "";
                         mailBody = mailBody + mailTemplateBody.Replace("#OTP", otp).Replace("#RecipientName",userFullName);
                         var mailMessage = new MailMessage(from, recipients, mailTemplateSubject, mailBody);
