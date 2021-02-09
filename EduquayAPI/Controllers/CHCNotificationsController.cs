@@ -36,11 +36,11 @@ namespace EduquayAPI.Controllers
         [Route("AddSampleRecollection")]
         public async Task<IActionResult> AddSampleRecollection(SampleRecollectionRequest srData)
         {
-
-
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
+            _logger.LogDebug($"Request - Adding sample recollection data - {JsonConvert.SerializeObject(srData)}");
             var sampleRecollection = await _chcNotificationsService.AddSampleRecollection(srData);
+            _logger.LogInformation($" Adding sample recollection data  {sampleRecollection}");
+            _logger.LogDebug($"Response - Adding sample recollection data   - {JsonConvert.SerializeObject(sampleRecollection)}");
             return Ok(new ServiceResponse
             {
                 Status = sampleRecollection.Status,
@@ -59,8 +59,10 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
+                _logger.LogDebug($"Request - Received sample data - {JsonConvert.SerializeObject(cnData)}");
                 var notificationSamples = _chcNotificationsService.GetCHCNotificationSamples(cnData);
                 _logger.LogInformation($"Received sample data {notificationSamples}");
+                _logger.LogDebug($"Response - Received sample data   - {JsonConvert.SerializeObject(notificationSamples)}");
                 return notificationSamples.Count == 0 ? new CHCNotificationsSampleResponse { Status = "true", Message = "No sample data  found", SampleList = new List<CHCNotificationSample>() }
                 : new CHCNotificationsSampleResponse { Status = "true", Message = string.Empty, SampleList = notificationSamples };
             }
@@ -79,9 +81,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetCHCUnsentSamples(CHCNotificationSamplesRequest cnData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-
+            _logger.LogDebug($"Request - Received unsent data - {JsonConvert.SerializeObject(cnData)}");
             var unsentSamples = await _chcNotificationsService.RetrieveUnsentSamples(cnData);
             _logger.LogInformation($"Received unsent sample data {unsentSamples}");
+            _logger.LogDebug($"Response - Received unsent data   - {JsonConvert.SerializeObject(unsentSamples)}");
             return Ok(new CHCUnsentSamplesResponse
             {
                 Status = unsentSamples.Status,
@@ -100,9 +103,10 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"moving samples to timeout expiry - {JsonConvert.SerializeObject(cnData)}");
+                _logger.LogDebug($"Request - moving samples to timeout expiry - {JsonConvert.SerializeObject(cnData)}");
                 var sampleStatus = _chcNotificationsService.MoveTimeout(cnData);
-                _logger.LogInformation($"Sample successfully moved to sample timout expiry - {cnData}");
+                _logger.LogInformation($"Sample successfully moved to sample timout expiry - {sampleStatus}");
+                _logger.LogDebug($"Response - moving samples to timeout expiry - {JsonConvert.SerializeObject(sampleStatus)}");
                 return new CHCTimeoutResponse { Status = sampleStatus.Status, Message = sampleStatus.Message };
             }
             catch (Exception ex)
@@ -122,8 +126,10 @@ namespace EduquayAPI.Controllers
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
+                _logger.LogDebug($"Request - Received hplc positive subject data - {JsonConvert.SerializeObject(cpData)}");
                 var positiveSubjects = _chcNotificationsService.GetPositiveDetails(cpData);
                 _logger.LogInformation($"Received hplc positive subject data {positiveSubjects}");
+                _logger.LogDebug($"Respone - Received hplc positive subject data - {JsonConvert.SerializeObject(positiveSubjects)}");
                 return positiveSubjects.Count == 0 ? new HPLCPositiveSubjectsResponse { Status = "true", Message = "No positive subjects data found", positiveSubjects = new List<CHCHPLCPositiveSamples>() }
                 : new HPLCPositiveSubjectsResponse { Status = "true", Message = string.Empty, positiveSubjects = positiveSubjects };
             }

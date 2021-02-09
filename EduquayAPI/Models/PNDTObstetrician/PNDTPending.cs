@@ -28,7 +28,6 @@ namespace EduquayAPI.Models.PNDTObstetrician
         public string spouseSSTestResult { get; set; }
         public string spouseHPLCTestResult { get; set; }
         public string spouseHPLCDiagnosis { get; set; }
-       
         public int prePNDTCounsellingId { get; set; }
         public int schedulingId { get; set; }
         public string counsellingDateTime { get; set; }
@@ -58,8 +57,16 @@ namespace EduquayAPI.Models.PNDTObstetrician
         public string spouseHbD { get; set; }
         public string anwPathoRemarks { get; set; }
         public string spousePathoRemarks { get; set; }
+        public string anwBarcodeNo { get; set; }
+        public string spouseBarcodeNo { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWBarcodeNo"))
+                this.anwBarcodeNo = Convert.ToString(reader["ANWBarcodeNo"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseBarcodeNo"))
+                this.spouseBarcodeNo = Convert.ToString(reader["SpouseBarcodeNo"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWPathoRemarks"))
                 this.anwPathoRemarks = Convert.ToString(reader["ANWPathoRemarks"]);
 

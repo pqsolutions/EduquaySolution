@@ -41,6 +41,7 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Request- {JsonConvert.SerializeObject(acppData)}");
             var sampleList = await _anmchcPickandPackService.Retrieve(acppData);
             _logger.LogInformation($"Received sample Data {sampleList}");
+            _logger.LogDebug($"Response- {JsonConvert.SerializeObject(sampleList)}");
             return Ok(new ANMCHCPickandPackResponse
             {
                 Status = sampleList.Status,

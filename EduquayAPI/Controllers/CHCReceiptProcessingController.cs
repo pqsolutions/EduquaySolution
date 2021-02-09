@@ -35,8 +35,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetShipmentList(int testingCHCId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request -  Retrieve shipment list receipt  for processing  - {JsonConvert.SerializeObject(testingCHCId)}");
             var chcReceiptResponse = await _chcReceiptService.RetrieveCHCReceipts(testingCHCId);
-
+            _logger.LogInformation($"Retrieve shipment list receipt  for processing {chcReceiptResponse}");
+            _logger.LogDebug($"Respone - Retrieve shipment list receipt  for processing - {JsonConvert.SerializeObject(chcReceiptResponse)}");
             return Ok(new CHCReceiptResponse
             {
                 Status = chcReceiptResponse.Status,
@@ -53,9 +55,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddMultipleSamples(AddCHCShipmentReceiptRequest chcSRRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Received shipments to add samples for verification  - {JsonConvert.SerializeObject(chcSRRequest)}");
+            _logger.LogDebug($"Request - Add Received shipments to add samples for verification  - {JsonConvert.SerializeObject(chcSRRequest)}");
             var rsResponse = await _chcReceiptService.AddReceivedShipment(chcSRRequest);
-
+            _logger.LogInformation($" Add Received shipments to add samples for verification{rsResponse}");
+            _logger.LogDebug($"Respone -Add Received shipments to add samples for verification- {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new CHCReceivedShipmentResponse
             {
                 Status = rsResponse.Status,
@@ -74,12 +77,15 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Test CBC for received samples- {JsonConvert.SerializeObject(testingCHCId)}");
+                _logger.LogDebug($"Request - Retrieve received samples for CBC Test - {JsonConvert.SerializeObject(testingCHCId)}");
                 var cbc = _chcReceiptService.RetrieveCBC(testingCHCId);
+                _logger.LogInformation($"Retrieve received samples for CBC Test{cbc}");
+                _logger.LogDebug($"Respone - Retrieve received samples for CBC Test - {JsonConvert.SerializeObject(cbc)}");
                 return cbc.Count == 0 ? new CBCResponse { Status = "true", Message = "No sample found", CBCDetail = new List<CBCSSTest>() } : new CBCResponse { Status = "true", Message = string.Empty, CBCDetail = cbc };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in Retrieve received samples for CBC Test -  {e.StackTrace}");
                 return new CBCResponse { Status = "false", Message = e.Message, CBCDetail = null };
             }
         }
@@ -94,9 +100,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddCBCTest(CBCTestAddRequest cbcRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"CBC test for multiple samples - {JsonConvert.SerializeObject(cbcRequest)}");
+            _logger.LogDebug($"Request - Add CBC test for multiple samples - {JsonConvert.SerializeObject(cbcRequest)}");
             var rsResponse = await _chcReceiptService.AddCBCTest(cbcRequest);
-
+            _logger.LogInformation($"Add CBC test for multiple samples - {rsResponse}");
+            _logger.LogDebug($"Respone - Add CBC test for multiple samples  - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new CBCSSTAddResponse
             {
                 Status = rsResponse.Status,
@@ -115,12 +122,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Test CBC for received samples- {JsonConvert.SerializeObject(testingCHCId)}");
+                _logger.LogDebug($"Request - Retrieve received samples for CBC Test- {JsonConvert.SerializeObject(testingCHCId)}");
                 var cbc = _chcReceiptService.RetrieveCBCTest(testingCHCId);
-                return cbc.Count == 0 ? new CBCTestResponse { Status = "true", Message = "No sample found", CBCDetail = new List<CBCTest>() } : new CBCTestResponse { Status = "true", Message = string.Empty, CBCDetail = cbc };
+                _logger.LogInformation($" Retrieve received samples for CBC Test - {cbc}");
+                _logger.LogDebug($"Respone -  Retrieve received samples for CBC Test  - {JsonConvert.SerializeObject(cbc)}");
+                return cbc.Count == 0 ? new CBCTestResponse { Status = "true", Message = "No sample found", CBCDetail = new List<CBCTest>() } 
+                : new CBCTestResponse { Status = "true", Message = string.Empty, CBCDetail = cbc };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in Retrieve received samples for CBC Test -  {e.StackTrace}");
                 return new CBCTestResponse { Status = "false", Message = e.Message, CBCDetail = null };
             }
         }
@@ -133,9 +144,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddCBC(AddCBCTestResultRequest cbcData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"CBC test for individual sample - {JsonConvert.SerializeObject(cbcData)}");
+            _logger.LogDebug($"Request - Add CBC test for individual sample - {JsonConvert.SerializeObject(cbcData)}");
             var rsResponse = await _chcReceiptService.AddCBC(cbcData);
-
+            _logger.LogInformation($"Add CBC test for individual sample - {rsResponse}");
+            _logger.LogDebug($"Respone -  Add CBC test for individual sample  - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new AddCBCResponse
             {
                 Status = rsResponse.Status,
@@ -153,12 +165,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Test SST for received samples- {JsonConvert.SerializeObject(testingCHCId)}");
+                _logger.LogDebug($"Request - received samples for SST Test- {JsonConvert.SerializeObject(testingCHCId)}");
                 var sst = _chcReceiptService.RetrieveSST(testingCHCId);
-                return sst.Count == 0 ? new SSTResponse { Status = "true", Message = "No sample found", SSTDetail = new List<CBCSSTest>() } : new SSTResponse { Status = "true", Message = string.Empty, SSTDetail = sst };
+                _logger.LogInformation($" Retrieve received samples for SST Test - {sst}");
+                _logger.LogDebug($"Respone -  Retrieve received samples for SST Test  - {JsonConvert.SerializeObject(sst)}");
+                return sst.Count == 0 ? new SSTResponse { Status = "true", Message = "No sample found", SSTDetail = new List<CBCSSTest>() } 
+                : new SSTResponse { Status = "true", Message = string.Empty, SSTDetail = sst };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in Retrieve received samples for SST Test -  {e.StackTrace}");
                 return new SSTResponse { Status = "false", Message = e.Message, SSTDetail = null };
             }
         }
@@ -171,9 +187,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddSSTest(SSTestAddRequest ssRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"SS test for multiple samples - {JsonConvert.SerializeObject(ssRequest)}");
+            _logger.LogDebug($"Request - Add SST test for multiple samples - {JsonConvert.SerializeObject(ssRequest)}");
             var rsResponse = await _chcReceiptService.AddSSTest(ssRequest);
-
+            _logger.LogInformation($"Add SST test for multiple samples - {rsResponse}");
+            _logger.LogDebug($"Respone -  Add SST test for multiple samples  - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new CBCSSTAddResponse
             {
                 Status = rsResponse.Status,
@@ -192,12 +209,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received positive samples for pick and pack- {JsonConvert.SerializeObject(testingCHCId)}");
+                _logger.LogDebug($"Request - Received positive samples for pick and pack- {JsonConvert.SerializeObject(testingCHCId)}");
                 var pickpack = _chcReceiptService.RetrievePickandPack(testingCHCId);
-                return pickpack.Count == 0 ? new CHCCentralPickandPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CHCCentralPickandPackSample>() } : new CHCCentralPickandPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
+                _logger.LogInformation($"Received positive samples for pick and pack - {pickpack}");
+                _logger.LogDebug($"Respone - Received positive samples for pick and pack - {JsonConvert.SerializeObject(pickpack)}");
+                return pickpack.Count == 0 ? new CHCCentralPickandPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CHCCentralPickandPackSample>() } 
+                : new CHCCentralPickandPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in Received positive samples for pick and pack -  {e.StackTrace}");
                 return new CHCCentralPickandPackResponse { Status = "false", Message = e.Message, PickandPack = null };
             }
         }
@@ -210,8 +231,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddCHCShipment(AddCHCShipmentRequest csData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
+            _logger.LogDebug($"Request - Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
             var sampleShipment = await _chcReceiptService.AddCHCShipment (csData);
+            _logger.LogInformation($"Adding CHC shipment data - {sampleShipment}");
+            _logger.LogDebug($"Respone - Adding CHC shipment data - {JsonConvert.SerializeObject(sampleShipment)}");
             return Ok(new CHCShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -227,8 +250,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetCHCShipmentList(int testingCHCId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - Retrieve shipment list of particular Testing CHC   - {JsonConvert.SerializeObject(testingCHCId)}");
             var shipmentLogResponse = await _chcReceiptService.RetrieveCHCShipmentLogs(testingCHCId);
-
+            _logger.LogInformation($"Retrieve shipment list of particular Testing CHC  - {shipmentLogResponse}");
+            _logger.LogDebug($"Respone - Retrieve shipment list of particular Testing CHC  - {JsonConvert.SerializeObject(shipmentLogResponse)}");
             return Ok(new CHCShipmentLogsResponse
             {
                 Status = shipmentLogResponse.Status,
@@ -247,13 +272,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received subject for chc test reports  - {JsonConvert.SerializeObject(mrData)}");
+                _logger.LogDebug($"Request - Retrieve subject for chc test reports  - {JsonConvert.SerializeObject(mrData)}");
                 var subjects = _chcReceiptService.RetriveCHCReports(mrData);
+                _logger.LogInformation($"Retrieve subject for chc test reports  - {subjects}");
+                _logger.LogDebug($"Respone - Retrieve subject for chc test reports  - {JsonConvert.SerializeObject(subjects)}");
                 return subjects.Count == 0 ? new CHCReportResponse { Status = "true", Message = "No subjects found", Subjects = new List<CHCSampleStatusReports>() }
                 : new CHCReportResponse { Status = "true", Message = string.Empty, Subjects = subjects };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error in Retrieve subject for chc test reports -  {e.StackTrace}");
                 return new CHCReportResponse { Status = "false", Message = e.Message, Subjects = null };
             }
         }
@@ -269,11 +297,14 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 var sampleStatus = _chcReceiptService.RetrieveSampleStatus();
+                _logger.LogInformation($" Fetch sample status in chc Lab  {sampleStatus}");
+                _logger.LogDebug($"Response - Fetch sample status in chc Lab   - {JsonConvert.SerializeObject(sampleStatus)}");
                 return sampleStatus.Count == 0 ? new CHCSampleStatusResponse { Status = "true", Message = "No subjects found", sampleStatus = new List<CHCSampleStatus>() }
                 : new CHCSampleStatusResponse { Status = "true", Message = string.Empty, sampleStatus = sampleStatus };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to retrieve sample status in chc Lab  - {e.StackTrace}");
                 return new CHCSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
             }
         }

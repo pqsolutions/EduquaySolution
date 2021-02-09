@@ -40,10 +40,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddShipment(AddShipmentANMCHCRequest asData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding ANM shipment data - {JsonConvert.SerializeObject(asData)}");
+            _logger.LogDebug($"Request - Adding ANM shipment data - {JsonConvert.SerializeObject(asData)}");
             var sampleShipment = await _anmchcShipmentService.AddANMCHCShipment(asData);
             _logger.LogInformation($"add samples to shipment for ANM user {sampleShipment}");
-
+            _logger.LogDebug($"Response - Adding ANM shipment data - {JsonConvert.SerializeObject(sampleShipment)}");
             return Ok(new AddShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -62,6 +62,7 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Request - {JsonConvert.SerializeObject(asData)}");
             var shipmentLogResponse = await _anmchcShipmentService.RetrieveShipmentLogs(asData);
             _logger.LogInformation($"get shipment list of particular ANM user {shipmentLogResponse}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(shipmentLogResponse)}");
 
             return Ok(new ANMCHCShipmentLogsResponse
             {
@@ -79,9 +80,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddCHCShipment(AddShipmentCHCCHCRequest csData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
+            _logger.LogDebug($"Request - Adding CHC shipment data - {JsonConvert.SerializeObject(csData)}");
             var sampleShipment = await _anmchcShipmentService.AddCHCCHCShipment(csData);
             _logger.LogInformation($"add samples to shipment for CHC {sampleShipment}");
+            _logger.LogDebug($"Response - Adding CHC shipment data - {JsonConvert.SerializeObject(sampleShipment)}");
             return Ok(new AddShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -100,7 +102,7 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Request - {JsonConvert.SerializeObject(asData)}");
             var shipmentLogResponse = await _anmchcShipmentService.RetrieveCHCShipmentLogs(asData);
             _logger.LogInformation($"get shipment list of particular CHC {shipmentLogResponse}");
-
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(shipmentLogResponse)}");
             return Ok(new CHCCHCShipmentLogsResponse
             {
                 Status = shipmentLogResponse.Status,

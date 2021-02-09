@@ -35,10 +35,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddBlock(BlockRequest bData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(bData)}");
+            _logger.LogDebug($"Request - Adding Blocks data - {JsonConvert.SerializeObject(bData)}");
             var addEditResponse = await _blockService.AddBlock(bData);
             _logger.LogInformation($" Add Block {addEditResponse}");
-
+            _logger.LogDebug($"Response - Adding Blocks data - {JsonConvert.SerializeObject(addEditResponse)}");
             return Ok(new AddEditResponse
             {
                 Status = addEditResponse.Status,
@@ -55,8 +55,10 @@ namespace EduquayAPI.Controllers
             try
             {
                 var blocks = _blockService.Retrieve();
-                _logger.LogInformation($" retirve Blocks {blocks}");
-                return blocks.Count == 0 ? new BlockResponse { Status = "true", Message = "No blocks found", Blocks = new List<Block>() } : new BlockResponse { Status = "true", Message = string.Empty, Blocks = blocks };
+                _logger.LogInformation($" retierve Blocks {blocks}");
+                _logger.LogDebug($"Response -  retrieve block {JsonConvert.SerializeObject(blocks)}");
+                return blocks.Count == 0 ? new BlockResponse { Status = "true", Message = "No blocks found", Blocks = new List<Block>() } 
+                : new BlockResponse { Status = "true", Message = string.Empty, Blocks = blocks };
             }
             catch (Exception e)
             {
@@ -70,13 +72,15 @@ namespace EduquayAPI.Controllers
         public BlockResponse GetBlock(int code)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding sample recollection data - {JsonConvert.SerializeObject(code)}");
+            _logger.LogDebug($"Resuest - {JsonConvert.SerializeObject(code)}");
 
             try
             {
                 var blocks = _blockService.Retrieve(code);
-                _logger.LogInformation($" retirve Blocks {blocks}");
-                return blocks .Count == 0 ? new BlockResponse { Status = "true", Message = "No block found", Blocks = new List<Block>() } : new BlockResponse { Status = "true", Message = string.Empty, Blocks = blocks };
+                _logger.LogInformation($" retierve Blocks {blocks}");
+                _logger.LogDebug($"Response -  retrieve block {JsonConvert.SerializeObject(blocks)}");
+                return blocks .Count == 0 ? new BlockResponse { Status = "true", Message = "No block found", Blocks = new List<Block>() } 
+                : new BlockResponse { Status = "true", Message = string.Empty, Blocks = blocks };
             }
             catch (Exception e)
             {
