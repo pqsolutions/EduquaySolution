@@ -39,7 +39,8 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Retrieve subjects for pending PNDT who agree the test - {JsonConvert.SerializeObject(oData)}");
                 var pndtPending = _pndtObstetricianService.GetPNDTPending(oData);
-                return pndtPending.Count == 0 ? new PNDTPendingListResponse { Status = "true", Message = "No subjects found", data = new List<PNDTPending>() } : new PNDTPendingListResponse { Status = "true", Message = string.Empty, data = pndtPending };
+                return pndtPending.Count == 0 ? new PNDTPendingListResponse { Status = "true", Message = "No subjects found", data = new List<PNDTPending>() } 
+                : new PNDTPendingListResponse { Status = "true", Message = string.Empty, data = pndtPending };
             }
             catch (Exception e)
             {
@@ -106,6 +107,26 @@ namespace EduquayAPI.Controllers
             {
                 return new PNDTCompletedSummaryResponse { Status = "false", Message = e.Message, data = null };
             }
+        }
+
+
+        /// <summary>
+        /// Used to add PND test for the counselled couples
+        /// </summary>
+        [HttpPost]
+        [Route("ADDPNDT")]
+        public async Task<IActionResult> AddPNDT(AddPNDTRequest aData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var pndTest = await _pndtObstetricianService.AddPNDTestNew(aData);
+            _logger.LogInformation($"Add PNDTest for the counselled positive subjects {pndTest}");
+            return Ok(new AddPNDTResponse
+            {
+                Status = pndTest.Status,
+                Message = pndTest.Message,
+                data = pndTest.data,
+            });
         }
 
     }

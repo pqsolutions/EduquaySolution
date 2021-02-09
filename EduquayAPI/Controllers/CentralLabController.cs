@@ -45,8 +45,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetShipmentList(int centralLabId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - Fetch shipment list receipt  for processing- {JsonConvert.SerializeObject(centralLabId)}");
             var centralLabReceiptResponse = await _centralLabService.RetrieveCentralLabReceipts(centralLabId);
-
+            _logger.LogInformation($"Fetch shipment list receipt  for processing {centralLabReceiptResponse}");
+            _logger.LogDebug($"Response - Fetch shipment list receipt  for processing- {JsonConvert.SerializeObject(centralLabReceiptResponse)}");
             return Ok(new CentralLabReceiptResponse
             {
                 Status = centralLabReceiptResponse.Status,
@@ -63,9 +65,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddMultipleSamples(AddCentralLabShipmentReceiptRequest clRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Received shipments to add samples for verification  - {JsonConvert.SerializeObject(clRequest)}");
+            _logger.LogDebug($"Request - Received shipments to add samples for verification  - {JsonConvert.SerializeObject(clRequest)}");
             var rsResponse = await _centralLabService.AddReceivedShipment(clRequest);
-
+            _logger.LogInformation($"Received shipments to add samples for verification {rsResponse}");
+            _logger.LogDebug($"Response - Received shipments to add samples for verification - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new CentralLabReceivedShipmentResponse
             {
                 Status = rsResponse.Status,
@@ -84,13 +87,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
+                _logger.LogDebug($"Request - Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
                 var hplc = _centralLabService.RetrieveHPLC(centralLabId);
+                _logger.LogInformation($"Test HPLC for received samples {hplc}");
+                _logger.LogDebug($"Response - Test HPLC for received samples - {JsonConvert.SerializeObject(hplc)}");
                 return hplc.Count == 0 ? new HPLCResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTest>() }
                 : new HPLCResponse { Status = "true", Message = string.Empty, HPLCDetail = hplc };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to Test HPLC for received samples - {e.StackTrace}");
                 return new HPLCResponse { Status = "false", Message = e.Message, HPLCDetail = null };
             }
         }
@@ -103,9 +109,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddHPLCTest(HPLCTestAddRequest hplcRequest)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"HPLC test for multiple samples - {JsonConvert.SerializeObject(hplcRequest)}");
+            _logger.LogDebug($"Request - Add HPLC test for multiple samples - {JsonConvert.SerializeObject(hplcRequest)}");
             var rsResponse = await _centralLabService.AddHPLCTest(hplcRequest);
-
+            _logger.LogInformation($"HPLC test for multiple samples {rsResponse}");
+            _logger.LogDebug($"Response - Add Test HPLC test for multiple samples - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new HPLCAddResponse
             {
                 Status = rsResponse.Status,
@@ -124,13 +131,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
+                _logger.LogDebug($"Request - Test HPLC for received samples- {JsonConvert.SerializeObject(centralLabId)}");
                 var hplc = _centralLabService.RetrieveSubjectForHPLCTest(centralLabId);
+                _logger.LogInformation($"Fetch sample  for  HPLC Test {hplc}");
+                _logger.LogDebug($"Response - fetch sample  for  HPLC Test - {JsonConvert.SerializeObject(hplc)}");
                 return hplc.Count == 0 ? new HPLCTestResponse { Status = "true", Message = "No sample found", HPLCDetail = new List<HPLCTestSamples>() }
                 : new HPLCTestResponse { Status = "true", Message = string.Empty, HPLCDetail = hplc };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to fetch sample  for  HPLC Test  - {e.StackTrace}");
                 return new HPLCTestResponse { Status = "false", Message = e.Message, HPLCDetail = null };
             }
         }
@@ -144,9 +154,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddHPLCTestResult(AddHPLCTestResultRequest hplcData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            _logger.LogDebug($"Request - Add HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
             var rsResponse = await _centralLabService.AddHPLCTestResult(hplcData);
-
+            _logger.LogInformation($"Add HPLC test for particular samples {rsResponse}");
+            _logger.LogDebug($"Response - Add HPLC test for particular samples - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new AddHPLCResponse
             {
                 Status = rsResponse.Status,
@@ -162,9 +173,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> UpdateHPLCTestResult(UpdateStagingRequest hplcData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Update HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            _logger.LogDebug($"Request - Update HPLC test for particular samples - {JsonConvert.SerializeObject(hplcData)}");
             var rsResponse = await _centralLabService.UpdateHPLCTestResult(hplcData);
-
+            _logger.LogInformation($" Update HPLC test for particular samples {rsResponse}");
+            _logger.LogDebug($"Response -  Update HPLC test for particular samples - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new AddHPLCResponse
             {
                 Status = rsResponse.Status,
@@ -182,13 +194,16 @@ namespace EduquayAPI.Controllers
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received hplc positive samples for pick and pack- {JsonConvert.SerializeObject(centralLabId)}");
+                _logger.LogDebug($"Request - Received hplc positive samples for pick and pack- {JsonConvert.SerializeObject(centralLabId)}");
                 var pickpack = _centralLabService.RetrievePickandPack(centralLabId);
+                _logger.LogInformation($" Received hplc positive samples for pick and pack {pickpack}");
+                _logger.LogDebug($"Response - Received hplc positive samples for pick and pack - {JsonConvert.SerializeObject(pickpack)}");
                 return pickpack.Count == 0 ? new CentralLabPickPackResponse { Status = "true", Message = "No sample found", PickandPack = new List<CentralLabPickandPack>() }
                 : new CentralLabPickPackResponse { Status = "true", Message = string.Empty, PickandPack = pickpack };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to retrieve hplc positive samples for pick and pack - {e.StackTrace}");
                 return new CentralLabPickPackResponse { Status = "false", Message = e.Message, PickandPack = null };
             }
         }
@@ -201,8 +216,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> AddCHCShipment(AddCentralLabShipmentRequest csData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Adding central lab shipment data - {JsonConvert.SerializeObject(csData)}");
+            _logger.LogDebug($"Request - Adding central lab shipment data - {JsonConvert.SerializeObject(csData)}");
             var sampleShipment = await _centralLabService.AddCentralLabShipment(csData);
+            _logger.LogInformation($"Adding central lab shipment data  {sampleShipment}");
+            _logger.LogDebug($"Response - Adding central lab shipment data  - {JsonConvert.SerializeObject(sampleShipment)}");
             return Ok(new CentralLabShipmentResponse
             {
                 Status = sampleShipment.Status,
@@ -218,8 +235,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> GetCHCShipmentList(int centralLabId)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - retrieve shipment list of particular Central Lab  - {JsonConvert.SerializeObject(centralLabId)}");
             var shipmentLogResponse = await _centralLabService.RetrieveCentralLabShipmentLog(centralLabId);
-
+            _logger.LogInformation($" Retrieve shipment list of particular Central Lab  {shipmentLogResponse}");
+            _logger.LogDebug($"Response - Retrieve shipment list of particular Central Lab  - {JsonConvert.SerializeObject(shipmentLogResponse)}");
             return Ok(new CentralLabShipmentLogsResponse
             {
                 Status = shipmentLogResponse.Status,
@@ -235,16 +254,19 @@ namespace EduquayAPI.Controllers
         [Route("RetrieveCentralLabReports")]
         public CentralLabReportResponse GetCentralLabReports(CentralLabReportRequest mrData)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received subject for central lab test reports  - {JsonConvert.SerializeObject(mrData)}");
+                _logger.LogDebug($"Request - Received subject for central lab test reports  - {JsonConvert.SerializeObject(mrData)}");
                 var subjects = _centralLabService.RetriveCentralLabReports(mrData);
+                _logger.LogInformation($" Received subject for central lab test reports  {subjects}");
+                _logger.LogDebug($"Response - Received subject for central lab test reports   - {JsonConvert.SerializeObject(subjects)}");
                 return subjects.Count == 0 ? new CentralLabReportResponse { Status = "true", Message = "No subjects found", Subjects = new List<CentralLabReports>() }
                 : new CentralLabReportResponse { Status = "true", Message = string.Empty, Subjects = subjects };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to retrieve subject for central lab test reports  - {e.StackTrace}");
                 return new CentralLabReportResponse { Status = "false", Message = e.Message, Subjects = null };
             }
         }
@@ -256,15 +278,18 @@ namespace EduquayAPI.Controllers
         [Route("RetrieveCentralLabSampleStatus")]
         public CentralLabSampleStatusResponse GetSampleStatus()
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 var sampleStatus = _centralLabService.RetrieveSampleStatus();
+                _logger.LogInformation($" Fetch sample status in Central Lab  {sampleStatus}");
+                _logger.LogDebug($"Response - Fetch sample status in Central Lab   - {JsonConvert.SerializeObject(sampleStatus)}");
                 return sampleStatus.Count == 0 ? new CentralLabSampleStatusResponse { Status = "true", Message = "No subjects found", sampleStatus = new List<CentralLabSampleStatus>() }
                 : new CentralLabSampleStatusResponse { Status = "true", Message = string.Empty, sampleStatus = sampleStatus };
             }
             catch (Exception e)
             {
+                _logger.LogError($"Failed to retrieve sample status in Central Lab  - {e.StackTrace}");
                 return new CentralLabSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
             }
         }
@@ -277,9 +302,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> UpdateProcessedHPLCTestResult(UpdateProcessedResultRequest hplcData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Update processed HPLC test results for particular samples - {JsonConvert.SerializeObject(hplcData)}");
+            _logger.LogDebug($"Request - Update processed HPLC test results for particular samples - {JsonConvert.SerializeObject(hplcData)}");
             var rsResponse = await _centralLabService.UpdateProcessedHPLCTestResult(hplcData);
-
+            _logger.LogInformation($" Update processed HPLC test results for particular samples  {rsResponse}");
+            _logger.LogDebug($"Response - Update processed HPLC test results for particular samples   - {JsonConvert.SerializeObject(rsResponse)}");
             return Ok(new AddHPLCResponse
             {
                 Status = rsResponse.Status,
@@ -295,12 +321,15 @@ namespace EduquayAPI.Controllers
         [Route("DownloadHPLCGraph")]
         public async Task<ActionResult> Download([FromQuery]string fileName)
         {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - Download the HPLC graph - {JsonConvert.SerializeObject(fileName)}");
             if (fileName.ToUpper() == "" || fileName.ToUpper() == null)
             {
                 return BadRequest();
             }
             else
             {
+                _logger.LogDebug($"Response  - Download the HPLC graph - {JsonConvert.SerializeObject(fileName)}");
                 var hplcGraphLocation = _config.GetSection("Graph").GetSection("HPLCGraphFolder").Value;
                 IFileProvider provider = new PhysicalFileProvider(_hostingEnvironment.WebRootPath + hplcGraphLocation);
                 IFileInfo fileInfo = provider.GetFileInfo(fileName);

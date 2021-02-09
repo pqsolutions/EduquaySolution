@@ -34,9 +34,10 @@ namespace EduquayAPI.Controllers
         public async Task<IActionResult> RetrieveSubjectsForANMReports(ANMReportRequest anmData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Retrieve subject detail for anm report- {JsonConvert.SerializeObject(anmData)}");
+            _logger.LogDebug($"Request - Retrieve subject detail for anm report- {JsonConvert.SerializeObject(anmData)}");
             var anmReports = await _anmReportsService.RetriveANMReportsDetail(anmData);
             _logger.LogInformation($"Fetch Subjects for anm reports {anmReports}");
+            _logger.LogDebug($"Response - Retrieve subject detail for anm report- {JsonConvert.SerializeObject(anmReports)}");
             return Ok(new ANMReportResponse
             {
                 status = anmReports.status,

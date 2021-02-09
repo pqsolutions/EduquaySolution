@@ -15,6 +15,11 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
         private const string FetchSubjectsPNDTNotCompleted = "SPC_FetchSubjectsPNDTNotCompleted";
         private const string FetchSubjectsPNDTCompleted = "SPC_FetchSubjectsPNDTCompleted";
 
+        #region New Changes in PNDT Obstetrician
+        private const string AddPNDT = "SPC_AddPNDT";
+
+        #endregion
+
         public PNDTObstetricianData()
         {
 
@@ -48,6 +53,37 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
             };
             var schedulingData = UtilityDL.FillEntity<PNDTMsg>(stProc, pList);
             return schedulingData;
+        }
+
+        public PNDTMsg AddPNDTestNew(AddPNDTRequest aData)
+        {
+            string stProc = AddPNDT;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@PrePNDTCounsellingId", aData.prePNDTCounsellingId),
+                new SqlParameter("@ANWSubjectId", aData.anwsubjectId ?? aData.anwsubjectId),
+                new SqlParameter("@SpouseSubjectId", aData.spouseSubjectId ?? aData.spouseSubjectId),
+                new SqlParameter("@PNDTDateTime", aData.pndtDateTime ?? aData.pndtDateTime),
+                new SqlParameter("@CounsellorId", aData.counsellorId),
+                new SqlParameter("@ObstetricianId", aData.obstetricianId),
+                new SqlParameter("@ClinicalHistory", aData.clinicalHistory ?? aData.clinicalHistory),
+                new SqlParameter("@Examination", aData.examination ?? aData.examination),
+                new SqlParameter("@ProcedureOfTestingId", aData.procedureOfTestingId),
+                new SqlParameter("@OthersPOT", aData.othersProcedureofTesting ?? aData.othersProcedureofTesting),
+                new SqlParameter("@PNDTComplecationsId", aData.pndtComplecationsId ?? aData.pndtComplecationsId),
+                new SqlParameter("@OthersComplecations", aData.othersComplecations ?? aData.othersComplecations),
+                new SqlParameter("@MotherVoided", aData.motherVoided),
+                new SqlParameter("@MotherVitalStable", aData.motherVitalStable),
+                new SqlParameter("@FoetalHeartRateDocumentScan", aData.foetalHeartRateDocumentScan),
+                new SqlParameter("@UserId", aData.userId),
+                new SqlParameter("@PregnancyType", aData.pregnancyType),
+                new SqlParameter("@SampleRefId", aData.sampleRefId ?? aData.sampleRefId),
+                new SqlParameter("@FoetusName", aData.foetusName ?? aData.foetusName),
+                new SqlParameter("@CVSSampleRefId", aData.cvsSampleRefId ?? aData.cvsSampleRefId),
+
+            };
+            var pndtTest = UtilityDL.FillEntity<PNDTMsg>(stProc, pList);
+            return pndtTest;
         }
 
         public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
