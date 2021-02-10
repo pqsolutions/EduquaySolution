@@ -129,7 +129,11 @@ namespace EduquayAPI.Services.PNDTObstetrician
             {
                 msg = "CVS sample id is missing";
             }
-            if(sr != cv || sr != fn || cv != fn)
+            else if (string.IsNullOrEmpty(aData.assistedBy))
+            {
+                msg = "Assisted by is missing";
+            }
+            if (sr != cv || sr != fn || cv != fn)
             {
                 msg = "samplerefid , foetusname , cvssamplerefid counts are not equal.";
             }

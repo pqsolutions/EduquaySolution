@@ -43,12 +43,16 @@ namespace EduquayAPI.Models
         public int registeredFrom { get; set; }
         public int sampleCollectionFrom { get; set; }
         public int shipmentFrom { get; set; }
+        public int pndtLocationId { get; set; }
 
         //public string DigitalSignature { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
                 this.id = Convert.ToInt32(reader["ID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTLocationId"))
+                this.pndtLocationId = Convert.ToInt32(reader["PNDTLocationId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "UserType_ID"))
                 this.userTypeId = Convert.ToInt32(reader["UserType_ID"]);
@@ -148,6 +152,9 @@ namespace EduquayAPI.Models
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentFrom"))
                 this.shipmentFrom = Convert.ToInt32(reader["ShipmentFrom"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTLocationId"))
+                this.pndtLocationId = Convert.ToInt32(reader["PNDTLocationId"]);
 
         }
     }

@@ -29,11 +29,41 @@ namespace EduquayAPI.DataLayer.PNDT
         private const string FetchSubjectsPostPNDTCounselledNo = "SPC_FetchSubjectsPostPNDTCounselledNo";
         private const string FetchSubjectsPostPNDTCounselledPending = "SPC_FetchSubjectsPostPNDTCounselledPending";
         private const string UpdatePostPNDTCounsellingByAutomatic = "SPC_UpdatePostPNDTCounsellingByAutomatic";
+        private const string FetchPNDTPickAndPack = "SPC_FetchPNDTPickAndPack";
+        private const string AddPNDTShipments = "SPC_AddPNDTShipments";
 
 
         public PNDTData()
         {
 
+        }
+
+        public List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId)
+        {
+            string stProc = FetchPNDTPickAndPack;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@PNDTLocationId", pndtLocationId),
+            };
+            var allData = UtilityDL.FillData<PNDTPickAndPack>(stProc, pList);
+            return allData;
+        }
+        public List<PNDTShipments> AddPNDTShipment(AddPNDTShipmentRequest sData)
+        {
+            string stProc = AddPNDTShipments;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@PNDTFoetusId", sData.pndtFoetusId ?? sData.pndtFoetusId),
+                new SqlParameter("@SenderName", sData.senderName ?? sData.senderName),
+                new SqlParameter("@SenderContact", sData.senderContact ?? sData.senderContact),
+                new SqlParameter("@SendingLocation", sData.sendingLocation ?? sData.sendingLocation),
+                new SqlParameter("@ReceivingMolecularLabId", sData.receivingMolecularLabId),
+                new SqlParameter("@ShipmentDateTime", sData.shipmentDateTime ?? sData.shipmentDateTime),
+                new SqlParameter("@PDNTLocationId", sData.pndtLocationId),
+                new SqlParameter("@UserId", sData.userId),
+            };
+            var shipmentData = UtilityDL.FillData<PNDTShipments>(stProc, pList);
+            return shipmentData;
         }
 
         public PrePNDTScheduleDateTime AddCounselling(AddPrePNDTCounsellingRequest acData)
@@ -322,5 +352,7 @@ namespace EduquayAPI.DataLayer.PNDT
                 throw ex;
             }
         }
+
+       
     }
 }

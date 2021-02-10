@@ -27,6 +27,8 @@ namespace EduquayAPI.DataLayer.PNDT
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
         void AutomaticPostPNDTCousellingUpdate();
+        List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId);
+        List<PNDTShipments> AddPNDTShipment(AddPNDTShipmentRequest sData);
     }
 
     public interface IPNDTDataFactory
