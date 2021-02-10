@@ -25,7 +25,7 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
         private const string FetchAllMTPComplecations = "SPC_FetchAllMTPComplecations";
         private const string FetchAllMTPDischarge = "SPC_FetchAllMTPDischarge";
         private const string FetchAllPostMTPFollowup = "SPC_FetchAllPostMTPFollowup";
-
+        private const string FetchDistrictByPNDTLocation = "SPC_FetchDistrictsByPNDTLocation";
 
         public PMMasterData()
         {
@@ -104,6 +104,14 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
             return chcData;
         }
 
+        public List<PMMaster> GetDistrictByPNDTLocation(int pndtLocationId)
+        {
+            string stProc = FetchDistrictByPNDTLocation;
+            var pList = new List<SqlParameter>() { new SqlParameter("@PNDTLocationId", pndtLocationId) };
+            var chcData = UtilityDL.FillData<PMMaster>(stProc, pList);
+            return chcData;
+        }
+
         public List<PMMaster> GetCounsellor()
         {
             string stProc = FetchAllCounsellor;
@@ -151,5 +159,7 @@ namespace EduquayAPI.DataLayer.PNDTandMTPMaster
             var pndtObsData = UtilityDL.FillData<PMMaster>(stProc, pList);
             return pndtObsData;
         }
+
+      
     }
 }

@@ -38,7 +38,8 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Retrieve district by user- {JsonConvert.SerializeObject(userId)}");
                 var pmMaster = _pmMasterService.GetUserDistrict(userId);
-                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() } 
+                : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
             }
             catch (Exception e)
             {
@@ -46,7 +47,28 @@ namespace EduquayAPI.Controllers
             }
         }
 
-       
+        /// <summary>
+        /// Used to fetch  District by PNDTLocation
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveDistrictByPNDTLocation/{pndtLocationId}")]
+        public PMMasterResponse GetDistrictbyPNDTLocation(int pndtLocationId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve district by pndt location- {JsonConvert.SerializeObject(pndtLocationId)}");
+                var pmMaster = _pmMasterService.GetDistrictByPNDTLocation(pndtLocationId);
+                return pmMaster.Count == 0 ? new PMMasterResponse { Status = "true", Message = "No district found", data = new List<PMMaster>() }
+                : new PMMasterResponse { Status = "true", Message = string.Empty, data = pmMaster };
+            }
+            catch (Exception e)
+            {
+                return new PMMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+
         /// <summary>
         /// Used to fetch user CHC by District
         /// </summary>

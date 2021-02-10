@@ -80,7 +80,8 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
                 new SqlParameter("@SampleRefId", aData.sampleRefId ?? aData.sampleRefId),
                 new SqlParameter("@FoetusName", aData.foetusName ?? aData.foetusName),
                 new SqlParameter("@CVSSampleRefId", aData.cvsSampleRefId ?? aData.cvsSampleRefId),
-
+                new SqlParameter("@PNDTLocationId", aData.pndtLocationId),
+                new SqlParameter("@AssistedBy", aData.assistedBy ?? aData.assistedBy),
             };
             var pndtTest = UtilityDL.FillEntity<PNDTMsg>(stProc, pList);
             return pndtTest;

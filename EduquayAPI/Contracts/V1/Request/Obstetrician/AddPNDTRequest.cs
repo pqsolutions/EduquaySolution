@@ -27,5 +27,7 @@ namespace EduquayAPI.Contracts.V1.Request.Obstetrician
         public string sampleRefId { get; set; }
         public string foetusName { get; set; }
         public string cvsSampleRefId { get; set; }
+        public int pndtLocationId { get; set; }
+        public string assistedBy { get; set; }
     }
 }

@@ -388,5 +388,87 @@ namespace EduquayAPI.Services.PNDT
             return scheduledData;
         }
 
+        public List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId)
+        {
+            var allData = _pndtData.RetrievePickAndPack(pndtLocationId);
+            return allData;
+        }
+
+        public async Task<AddPNDTShipmentResponse> AddPNDTShipment(AddPNDTShipmentRequest sData)
+        {
+            var shipmentResponse = new AddPNDTShipmentResponse();
+            try
+            {
+                var msg = CheckShipmentValidation(sData);
+                if (msg == "")
+                {
+                    var shipmentDetails = _pndtData.AddPNDTShipment(sData);
+                    foreach (var shipment in shipmentDetails)
+                    {
+                        shipmentResponse.Shipment = shipment;
+
+                        if (!string.IsNullOrEmpty(shipmentResponse.Shipment.shipmentId))
+                        {
+                            shipmentResponse.Status = "true";
+                            shipmentResponse.Message = "";
+                        }
+                        else
+                        {
+                            shipmentResponse.Status = "false";
+                            shipmentResponse.Message = shipmentResponse.Shipment.errorMessage;
+                        }
+                    }
+                }
+                else
+                {
+                    shipmentResponse.Status = "false";
+                    shipmentResponse.Message = msg;
+                }
+            }
+            catch (Exception e)
+            {
+                shipmentResponse.Status = "false";
+                shipmentResponse.Message = e.Message;
+            }
+            return shipmentResponse;
+        }
+
+        public string CheckShipmentValidation(AddPNDTShipmentRequest sData)
+        {
+            var message = "";
+            if (sData.pndtFoetusId == "")
+            {
+                message = "Foetus data is missing";
+            }
+            else if (sData.senderName == "")
+            {
+                message = "Sender Name is missing";
+            }
+            else if (sData.senderContact == "")
+            {
+                message = "Sender contact is missing";
+            }
+            else if (sData.sendingLocation == "")
+            {
+                message = "Sender location is missing";
+            }
+            else if (sData.receivingMolecularLabId <=0)
+            {
+                message = "Invalid receiving MolecularLab";
+            }
+            else if (sData.shipmentDateTime == "")
+            {
+                message = "Shipment date and time is missing";
+            }
+            else if (sData.pndtLocationId <= 0)
+            {
+                message = "Invalid PNDT location";
+            }
+            else if (sData.userId <= 0)
+            {
+                message = "Invalid User Id";
+            }
+            return message;
+        }
     }
 }

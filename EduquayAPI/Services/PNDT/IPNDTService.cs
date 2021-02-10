@@ -29,10 +29,11 @@ namespace EduquayAPI.Services.PNDT
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
         List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
-
-       Task<FileResponse> GetPrePNDTFileDetails(IFormFile formData);
+        Task<FileResponse> GetPrePNDTFileDetails(IFormFile formData);
         Task<FileResponse> GetPostPNDTFileDetails(IFormFile formData);
         //Task<DownloadFileResponse> GetPrePNDTDownloadFileDetails(string fileName);
         //Task<DownloadFileResponse> GetPostPNDTDownloadFileDetails(string fileName);
+        List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId);
+        Task<AddPNDTShipmentResponse> AddPNDTShipment(AddPNDTShipmentRequest sData);
     }
 }

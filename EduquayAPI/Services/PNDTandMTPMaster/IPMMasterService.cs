@@ -24,5 +24,6 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
         List<PMMaster> GetAllMTPComplications();
         List<PMMaster> GetAllMTPDischargeCondition();
         List<PMMaster> GetAllPostMTPFollowUp();
+        List<PMMaster> GetDistrictByPNDTLocation(int pndtLocationId);
     }
 }

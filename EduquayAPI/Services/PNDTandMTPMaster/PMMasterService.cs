@@ -83,6 +83,12 @@ namespace EduquayAPI.Services.PNDTandMTPMaster
             return pmMaster;
         }
 
+        public List<PMMaster> GetDistrictByPNDTLocation(int pndtLocationId)
+        {
+            var pmMaster = _pmMasterData.GetDistrictByPNDTLocation(pndtLocationId);
+            return pmMaster;
+        }
+
         public List<PMMaster> GetMTPObstetrician()
         {
             var pmMaster = _pmMasterData.GetMTPObstetrician();

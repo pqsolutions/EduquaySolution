@@ -503,12 +503,54 @@ namespace EduquayAPI.Controllers
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Retrieve subjects for the counselled MTP agree pending - {JsonConvert.SerializeObject(pcData)}");
                 var postPNDTCounselling = _pndtService.GetSubjectsPostPNDTCounselledPending(pcData);
-                return postPNDTCounselling.Count == 0 ? new PostPNDTCounselledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselled>() } : new PostPNDTCounselledResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
+                return postPNDTCounselling.Count == 0 ? new PostPNDTCounselledResponse { Status = "true", Message = "No subjects found", data = new List<PostPNDTCounselled>() } 
+                : new PostPNDTCounselledResponse { Status = "true", Message = string.Empty, data = postPNDTCounselling };
             }
             catch (Exception e)
             {
                 return new PostPNDTCounselledResponse { Status = "false", Message = e.Message, data = null };
             }
+        }
+
+        /// <summary>
+        /// Used to retrieve PNDT Pick and Pack details
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePNDTPickAndPack/{pndtLocationId}")]
+        public PNDTPickandPackResponse RetrievePNDTPickAndPack(int pndtLocationId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Retrieve PNDT Specimen samples for pick and pack - {JsonConvert.SerializeObject(pndtLocationId)}");
+                var pndtPickandPack = _pndtService.RetrievePickAndPack(pndtLocationId);
+                return pndtPickandPack.Count == 0 ? new PNDTPickandPackResponse { Status = "true", Message = "No subjects found", data = new List<PNDTPickAndPack>() } 
+                : new PNDTPickandPackResponse { Status = "true", Message = string.Empty, data = pndtPickandPack };
+            }
+            catch (Exception e)
+            {
+                return new PNDTPickandPackResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add samples to shipment for PNDT Speciment 
+        /// </summary>
+        [HttpPost]
+        [Route("AddPNDTShipment")]
+        public async Task<IActionResult> AddShipment(AddPNDTShipmentRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - Adding PNDT shipment data - {JsonConvert.SerializeObject(sData)}");
+            var sampleShipment = await _pndtService.AddPNDTShipment(sData);
+            _logger.LogInformation($"add samples to shipment for PNDT Specimen {sampleShipment}");
+            _logger.LogDebug($"Response - Adding PNDT shipment data - {JsonConvert.SerializeObject(sampleShipment)}");
+            return Ok(new AddPNDTShipmentResponse
+            {
+                Status = sampleShipment.Status,
+                Message = sampleShipment.Message,
+                Shipment = sampleShipment.Shipment,
+            });
         }
     }
 }
