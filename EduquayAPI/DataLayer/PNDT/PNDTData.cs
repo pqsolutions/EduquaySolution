@@ -31,11 +31,26 @@ namespace EduquayAPI.DataLayer.PNDT
         private const string UpdatePostPNDTCounsellingByAutomatic = "SPC_UpdatePostPNDTCounsellingByAutomatic";
         private const string FetchPNDTPickAndPack = "SPC_FetchPNDTPickAndPack";
         private const string AddPNDTShipments = "SPC_AddPNDTShipments";
-
+        private const string FetchPNDTShipmentLog = "SPC_FetchPNDTShipmentLog";
 
         public PNDTData()
         {
 
+        }
+        public PNDTShipmentList RetrieveShipmentLog(int pndtLocationId)
+        {
+            string stProc = FetchPNDTShipmentLog;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@pPNDTLocationId", pndtLocationId),
+               
+            };
+            var allShipmentLogs = UtilityDL.FillData<PNDTShipmentLogs>(stProc, pList);
+            var allShipmentSubjects = UtilityDL.FillData<PNDTShipmentLogsDetail>(stProc, pList);
+            var shiplogDetail = new PNDTShipmentList();
+            shiplogDetail.ShipmentLog = allShipmentLogs;
+            shiplogDetail.ShipmentSubjectDetail = allShipmentSubjects;
+            return shiplogDetail;
         }
 
         public List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId)
@@ -353,6 +368,6 @@ namespace EduquayAPI.DataLayer.PNDT
             }
         }
 
-       
+      
     }
 }

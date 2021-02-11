@@ -515,7 +515,7 @@ namespace EduquayAPI.Controllers
         /// <summary>
         /// Used to retrieve PNDT Pick and Pack details
         /// </summary>
-        [HttpPost]
+        [HttpGet]
         [Route("RetrievePNDTPickAndPack/{pndtLocationId}")]
         public PNDTPickandPackResponse RetrievePNDTPickAndPack(int pndtLocationId)
         {
@@ -534,7 +534,7 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used for add samples to shipment for PNDT Speciment 
+        /// Used for add samples to shipment for PNDT Specimen
         /// </summary>
         [HttpPost]
         [Route("AddPNDTShipment")]
@@ -550,6 +550,26 @@ namespace EduquayAPI.Controllers
                 Status = sampleShipment.Status,
                 Message = sampleShipment.Message,
                 Shipment = sampleShipment.Shipment,
+            });
+        }
+
+        /// <summary>
+        /// Used for get shipment list of particular PNDT Location 
+        [HttpGet]
+        [Route("RetrievePNDTShipmentLog/{pndtLocationId}")]
+        public async Task<IActionResult> GetShipmentList(int pndtLocationId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(pndtLocationId)}");
+            var shipmentLogResponse = await _pndtService.RetrieveShipmentLogs(pndtLocationId);
+            _logger.LogInformation($"get shipment list of particular PNDT location {shipmentLogResponse}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(shipmentLogResponse)}");
+
+            return Ok(new PNDTShipmentLogsResponse
+            {
+                Status = shipmentLogResponse.Status,
+                Message = shipmentLogResponse.Message,
+                ShipmentLogs = shipmentLogResponse.ShipmentLogs,
             });
         }
     }

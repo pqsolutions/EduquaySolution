@@ -29,6 +29,7 @@ namespace EduquayAPI.DataLayer.PNDT
         void AutomaticPostPNDTCousellingUpdate();
         List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId);
         List<PNDTShipments> AddPNDTShipment(AddPNDTShipmentRequest sData);
+        PNDTShipmentList RetrieveShipmentLog(int pndtLocationId);
     }
 
     public interface IPNDTDataFactory

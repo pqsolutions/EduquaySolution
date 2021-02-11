@@ -35,5 +35,6 @@ namespace EduquayAPI.Services.PNDT
         //Task<DownloadFileResponse> GetPostPNDTDownloadFileDetails(string fileName);
         List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId);
         Task<AddPNDTShipmentResponse> AddPNDTShipment(AddPNDTShipmentRequest sData);
+        Task<PNDTShipmentLogsResponse> RetrieveShipmentLogs(int pndtLocationId);
     }
 }

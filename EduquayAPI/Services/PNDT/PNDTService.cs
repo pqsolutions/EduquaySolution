@@ -470,5 +470,46 @@ namespace EduquayAPI.Services.PNDT
             }
             return message;
         }
+
+        public async Task<PNDTShipmentLogsResponse> RetrieveShipmentLogs(int pndtLocationId)
+        {
+            var shipmentDetails = _pndtData.RetrieveShipmentLog(pndtLocationId);
+            var shipmentLogResponse = new PNDTShipmentLogsResponse();
+            var shipmentLogs = new List<PNDTShipmentLog>();
+            try
+            {
+                var shipmentId = "";
+                foreach (var shipment in shipmentDetails.ShipmentLog)
+                {
+
+                    if (shipmentId != shipment.shipmentId)
+                    {
+                        var shipmentLog = new PNDTShipmentLog();
+                        var shipmentDetail = shipmentDetails.ShipmentSubjectDetail.Where(sd => sd.shipmentId == shipment.id).ToList();
+                        shipmentLog.id = shipment.id;
+                        shipmentLog.shipmentId = shipment.shipmentId;
+                        shipmentLog.senderContact = shipment.senderContact;
+                        shipmentLog.senderLocation = shipment.senderLocation;
+                        shipmentLog.senderName = shipment.senderName;
+                        shipmentLog.shipmentDateTime = shipment.shipmentDateTime;
+                        shipmentLog.receivingMolecularLab = shipment.receivingMolecularLab;
+                        shipmentLog.pndtLocation = shipment.pndtLocation;
+                        shipmentLog.SamplesDetail = shipmentDetail;
+                        shipmentId = shipment.shipmentId;
+                        shipmentLogs.Add(shipmentLog);
+                    }
+
+                }
+                shipmentLogResponse.ShipmentLogs = shipmentLogs;
+                shipmentLogResponse.Status = "true";
+                shipmentLogResponse.Message = string.Empty;
+            }
+            catch (Exception e)
+            {
+                shipmentLogResponse.Status = "false";
+                shipmentLogResponse.Message = e.Message;
+            }
+            return shipmentLogResponse;
+        }
     }
 }
