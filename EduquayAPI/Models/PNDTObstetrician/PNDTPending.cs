@@ -76,6 +76,10 @@ namespace EduquayAPI.Models.PNDTObstetrician
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectName"))
                 this.subjectName = Convert.ToString(reader["SubjectName"]);
 
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWSubjectId"))
+                this.anwSubjectId = Convert.ToString(reader["ANWSubjectId"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseSubjectID"))
                 this.spouseSubjectId = Convert.ToString(reader["SpouseSubjectID"]);
 
