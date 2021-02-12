@@ -199,38 +199,6 @@ namespace EduquayAPI.Services.PNDT
             var sResponse = new AddPostCounsellingResponse();
             try
             {
-                //var extension = "";
-                //var fileNames = "";
-                //var fullPath = "";
-                //if (acData.isMTPAgreeYes == true)
-                //{
-                //    if (formFile.FileName != null || formFile.FileName != "")
-                //    {
-                //        extension = "." + formFile.FileName.Split('.')[formFile.FileName.Split('.').Length - 1];
-                //        fileNames = DateTime.Now.Ticks + "_" + formFile.FileName; //Create a new Name for the file due to security reasons.                      
-                //        if (formFile.Length > 0)
-                //        {
-                //            // full path to file in location
-                //            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "MTPForm");
-                //            if (!Directory.Exists(filePath))
-                //            {
-                //                Directory.CreateDirectory(filePath);
-                //            }
-                //            fullPath = Path.Combine(filePath, fileNames);
-                //            using (var stream = new FileStream(fullPath, FileMode.Create))
-                //            {
-                //                formFile.CopyTo(stream);
-                //            }
-                //        }
-                //    }
-                //    else
-                //    {
-                //        sResponse.Status = "false";
-                //        sResponse.Message = $"File is missing";
-                //        return sResponse;
-                //    }
-                //}
-
                 var schedulingDateTime = _pndtData.AddPostPNDTCounselling(acData);
                 sResponse.Status = "true";
                 sResponse.Message = string.Empty;
@@ -452,7 +420,7 @@ namespace EduquayAPI.Services.PNDT
             {
                 message = "Sender location is missing";
             }
-            else if (sData.receivingMolecularLabId <=0)
+            else if (sData.receivingMolecularLabId <= 0)
             {
                 message = "Invalid receiving MolecularLab";
             }

@@ -16,6 +16,8 @@ namespace EduquayAPI.DataLayer.MolecularLab
         List<MolecularReports> RetriveMolecularReports(MolecularReportRequest mrData);
         List<MolecularSampleStatus> RetrieveSampleStatus();
 
+        MolPNDTReceipts RetrieveMolPNDTReceipts(int molecularLabId);
+
     }
 
     public interface IMolecularLabDataFactory

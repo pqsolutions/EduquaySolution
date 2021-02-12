@@ -123,6 +123,7 @@ namespace EduquayAPI.Controllers
             catch (Exception e)
             {
                 return new MolecularReportResponse { Status = "false", Message = e.Message, Subjects = null };
+
             }
         }
 
@@ -144,6 +145,24 @@ namespace EduquayAPI.Controllers
             {
                 return new MolecularSampleStatusResponse { Status = "false", Message = e.Message, sampleStatus = null };
             }
+        }
+
+        /// <summary>
+        /// Used for get shipment list receipt from PNDT for processing 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveMolPNDTReceipt/{molecularLabId}")]
+        public async Task<IActionResult> GetMolPNDTShipmentList(int molecularLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var molecularLabReceiptResponse = await _molecularLabService.RetrieveMolPNDTReceipts(molecularLabId);
+
+            return Ok(new MolPNDTReceiptResponse
+            {
+                Status = molecularLabReceiptResponse.Status,
+                Message = molecularLabReceiptResponse.Message,
+                MolecularLabReceipts = molecularLabReceiptResponse.MolecularLabReceipts,
+            }); 
         }
     }
 }

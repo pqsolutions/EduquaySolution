@@ -18,6 +18,8 @@ namespace EduquayAPI.DataLayer.MolecularLab
         private const string FetchMolecularTestReports = "SPC_FetchMolecularTestReports";
         private const string FetchMolecularSampleStatus = "SPC_FetchMolecularSampleStatus";
 
+        private const string FetchPNDTShipmentReceiptInMolLab = "SPC_FetchPNDTShipmentReceiptInMolLab";
+
 
         public MolecularLabData()
         {
@@ -82,6 +84,21 @@ namespace EduquayAPI.DataLayer.MolecularLab
             var allMolecularLabReceiptLog = UtilityDL.FillData<MolecularLabReceiptsLog>(stProc, pList);
             var allReceiptDetail = UtilityDL.FillData<MolecularLabReceiptDetail>(stProc, pList);
             var molecularLabReceipt = new MolecularLabReceipts();
+            molecularLabReceipt.ReceiptLog = allMolecularLabReceiptLog;
+            molecularLabReceipt.ReceiptDetail = allReceiptDetail;
+            return molecularLabReceipt;
+        }
+
+        public MolPNDTReceipts RetrieveMolPNDTReceipts(int molecularLabId)
+        {
+            string stProc = FetchPNDTShipmentReceiptInMolLab;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allMolecularLabReceiptLog = UtilityDL.FillData<MolPNDTReceiptsLog>(stProc, pList);
+            var allReceiptDetail = UtilityDL.FillData<MolPNDTReceiptDetail>(stProc, pList);
+            var molecularLabReceipt = new MolPNDTReceipts();
             molecularLabReceipt.ReceiptLog = allMolecularLabReceiptLog;
             molecularLabReceipt.ReceiptDetail = allReceiptDetail;
             return molecularLabReceipt;
