@@ -178,5 +178,45 @@ namespace EduquayAPI.Services.MolecularLab
             var allData = _molecularLabReceiptData.RetrieveSampleStatus();
             return allData;
         }
+
+        public async Task<MolPNDTReceiptResponse> RetrieveMolPNDTReceipts(int MolecularLabId)
+        {
+            var molecularLabReceiptDetails = _molecularLabReceiptData.RetrieveMolPNDTReceipts(MolecularLabId);
+            var molecularLabReceiptsResponse = new MolPNDTReceiptResponse();
+            var molecularLabReceiptLog = new List<MolPNDTLabReceiptLogs>();
+            try
+            {
+                var shipmentId = "";
+                foreach (var receipt in molecularLabReceiptDetails.ReceiptLog)
+                {
+                    var rLog = new MolPNDTLabReceiptLogs();
+                    if (shipmentId != receipt.shipmentId)
+                    {
+                        var receiptDetail = molecularLabReceiptDetails.ReceiptDetail.Where(sd => sd.shipmentId == receipt.id).ToList();
+                        rLog.id = receipt.id;
+                        rLog.shipmentId = receipt.shipmentId;
+                        rLog.senderContact = receipt.senderContact;
+                        rLog.senderLocation = receipt.senderLocation;
+                        rLog.senderName = receipt.senderName;
+                        rLog.shipmentDateTime = receipt.shipmentDateTime;
+                        rLog.receivingMolecularLab = receipt.receivingMolecularLab;
+                        rLog.pndtLocation = receipt.pndtLocation;
+                        rLog.ReceiptDetail = receiptDetail;
+                        shipmentId = receipt.shipmentId;
+                        shipmentId = receipt.shipmentId;
+                        molecularLabReceiptLog.Add(rLog);
+                    }
+                }
+                molecularLabReceiptsResponse.MolecularLabReceipts = molecularLabReceiptLog;
+                molecularLabReceiptsResponse.Status = "true";
+                molecularLabReceiptsResponse.Message = string.Empty;
+            }
+            catch (Exception e)
+            {
+                molecularLabReceiptsResponse.Status = "false";
+                molecularLabReceiptsResponse.Message = e.Message;
+            }
+            return molecularLabReceiptsResponse;
+        }
     }
 }

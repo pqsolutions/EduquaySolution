@@ -27,7 +27,7 @@ namespace EduquayAPI.Models.CentralLab
                 this.uniqueSubjectId = Convert.ToString(reader["UniqueSubjectID"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseSubjectId"))
-                this.uniqueSubjectId = Convert.ToString(reader["SpouseSubjectId"]);
+                this.spouseSubjectId = Convert.ToString(reader["SpouseSubjectId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionID"))
                 this.sampleCollectionId = Convert.ToInt32(reader["SampleCollectionID"]);
