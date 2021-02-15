@@ -19,6 +19,7 @@ namespace EduquayAPI.DataLayer.MolecularLab
         private const string FetchMolecularSampleStatus = "SPC_FetchMolecularSampleStatus";
 
         private const string FetchPNDTShipmentReceiptInMolLab = "SPC_FetchPNDTShipmentReceiptInMolLab";
+        private const string AddMolecularLabSpecimenReceipt = "SPC_AddMolecularLabSpecimenReceipt";
 
 
         public MolecularLabData()
@@ -64,6 +65,29 @@ namespace EduquayAPI.DataLayer.MolecularLab
                     new SqlParameter("@BarcodeDamaged", mrData.barcodeDamaged),
                     new SqlParameter("@IsAccept", mrData.isAccept),
                     new SqlParameter("@Barcode", mrData.barcodeNo ?? mrData.barcodeNo),
+                    new SqlParameter("@UpdatedBy", mrData.userId),
+                };
+                UtilityDL.ExecuteNonQuery(stProc, pList);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void AddReceivedSpecimenShipment(AddMolLabSpecimenReceiptRequest mrData)
+        {
+            try
+            {
+                var stProc = AddMolecularLabSpecimenReceipt;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ShipmentId", mrData.shipmentId ?? mrData.shipmentId),
+                    new SqlParameter("@ReceivedDate", mrData.receivedDateTime ?? mrData.receivedDateTime),
+                    new SqlParameter("@SampleDamaged", mrData.sampleDamaged),
+                    new SqlParameter("@BarcodeDamaged", mrData.barcodeDamaged),
+                    new SqlParameter("@IsAccept", mrData.isAccept),
+                    new SqlParameter("@PNDTFoetusId", mrData.pndtFoetusId),
                     new SqlParameter("@UpdatedBy", mrData.userId),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
