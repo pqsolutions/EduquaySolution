@@ -17,11 +17,19 @@ namespace EduquayAPI.Models.MolecularLab
         public string sampleRefId { get; set; }
         public string cvsSampleRefId { get; set; }
         public int pregnancyType { get; set; }
+        public int pndTestId { get; set; }
+        public int pndtFoetusId { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ID"))
                 this.shipmentId = Convert.ToInt32(reader["ID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTestId"))
+                this.pndTestId = Convert.ToInt32(reader["PNDTestId"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTFoetusId"))
+                this.pndtFoetusId = Convert.ToInt32(reader["PNDTFoetusId"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PregnancyType"))
                 this.pregnancyType = Convert.ToInt32(reader["PregnancyType"]);

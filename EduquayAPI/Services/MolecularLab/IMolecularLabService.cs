@@ -19,6 +19,7 @@ namespace EduquayAPI.Services.MolecularLab
         List<MolecularSampleStatus> RetrieveSampleStatus();
 
         Task<MolPNDTReceiptResponse> RetrieveMolPNDTReceipts(int MolecularLabId);
+        Task<MolecularReceiptResponse> AddReceivedSpecimenShipment(AddSpecimenReceiptRequest mlRequest);
 
     }
 }

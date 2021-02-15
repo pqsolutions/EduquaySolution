@@ -124,6 +124,36 @@ namespace EduquayAPI.Services.MolecularLab
             return rsResponse;
         }
 
+        public async Task<MolecularReceiptResponse> AddReceivedSpecimenShipment(AddSpecimenReceiptRequest mlRequest)
+        {
+            var rsResponse = new MolecularReceiptResponse();
+            List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
+            var barcodeNo = "";
+            var shipmentId = "";
+            try
+            {
+                foreach (var sample in mlRequest.shipmentReceivedRequest)
+                {
+                    var slist = new BarcodeSampleDetail();
+                    barcodeNo = sample.sampleRefId;
+                    shipmentId = sample.shipmentId;
+                    _molecularLabReceiptData.AddReceivedSpecimenShipment(sample);
+                    slist.barcodeNo = sample.sampleRefId;
+                    barcodes.Add(slist);
+                }
+                rsResponse.Status = "true";
+                rsResponse.Message = barcodes.Count + " Samples received successfully in shipment id: " + shipmentId;
+                rsResponse.Barcodes = barcodes;
+            }
+            catch (Exception e)
+            {
+                rsResponse.Status = "false";
+                rsResponse.Message = "Partially " + barcodes.Count + " samples received successfully, From this (" + barcodeNo + ") onwards not received. " + e.Message;
+                rsResponse.Barcodes = barcodes;
+            }
+            return rsResponse;
+        }
+
         public async Task<MolecularLabReceiptResponse> RetrieveMolecularLabReceipts(int MolecularLabId)
         {
             var molecularLabReceiptDetails = _molecularLabReceiptData.RetrieveMolecularLabReceipts(MolecularLabId);
@@ -218,5 +248,7 @@ namespace EduquayAPI.Services.MolecularLab
             }
             return molecularLabReceiptsResponse;
         }
+
+      
     }
 }

@@ -164,5 +164,25 @@ namespace EduquayAPI.Controllers
                 MolecularLabReceipts = molecularLabReceiptResponse.MolecularLabReceipts,
             }); 
         }
+
+
+        /// <summary>
+        /// Used for add Specimen receipt  for processing 
+        /// </summary>
+        [HttpPost]
+        [Route("AddReceivedSpecimenShipments")]
+        public async Task<IActionResult> AddMultipleSpecimenSamples(AddSpecimenReceiptRequest mlRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Received specimen shipments to add samples for verification  - {JsonConvert.SerializeObject(mlRequest)}");
+            var rsResponse = await _molecularLabService.AddReceivedSpecimenShipment(mlRequest);
+
+            return Ok(new MolecularReceiptResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+                Barcodes = rsResponse.Barcodes,
+            });
+        }
     }
 }

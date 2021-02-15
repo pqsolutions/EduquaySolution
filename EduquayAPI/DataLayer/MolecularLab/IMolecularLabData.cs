@@ -17,6 +17,7 @@ namespace EduquayAPI.DataLayer.MolecularLab
         List<MolecularSampleStatus> RetrieveSampleStatus();
 
         MolPNDTReceipts RetrieveMolPNDTReceipts(int molecularLabId);
+        void AddReceivedSpecimenShipment(AddMolLabSpecimenReceiptRequest mrData);
 
     }
 
