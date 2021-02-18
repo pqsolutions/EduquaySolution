@@ -190,5 +190,11 @@ namespace EduquayAPI.Services.WebMaster
             var phc = _webMasterData.RetrievePHCByCHC(id);
             return phc;
         }
+
+        public List<LoadCommon> GetAllPNDTLocation()
+        {
+            var pndtLocation = _webMasterData.GetAllPNDTLocation();
+            return pndtLocation;
+        }
     }
 }

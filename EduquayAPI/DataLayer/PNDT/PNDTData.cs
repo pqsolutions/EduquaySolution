@@ -42,7 +42,7 @@ namespace EduquayAPI.DataLayer.PNDT
             string stProc = FetchPNDTShipmentLog;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@pPNDTLocationId", pndtLocationId),
+                new SqlParameter("@PNDTLocationId", pndtLocationId),
                
             };
             var allShipmentLogs = UtilityDL.FillData<PNDTShipmentLogs>(stProc, pList);
