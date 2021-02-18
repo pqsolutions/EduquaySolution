@@ -1,0 +1,116 @@
+﻿using EduquayAPI.Contracts.V1;
+using EduquayAPI.Contracts.V1.Response.MolecularLab;
+using EduquayAPI.Models.MolecularLab;
+using EduquayAPI.Services.MolLabResultProcess;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace EduquayAPI.Controllers
+{
+    [Route(ApiRoutes.Base + "/[controller]")]
+    [ApiController]
+    public class MLResultProcessController : ControllerBase
+    {
+        private readonly IMLResultProcessService _mlResultProcessService;
+        private readonly ILogger<MLResultProcessController> _logger;
+
+        public MLResultProcessController(IMLResultProcessService mlResultProcessService, ILogger<MLResultProcessController> logger)
+        {
+            _mlResultProcessService = mlResultProcessService;
+            _logger = logger;
+        }
+
+        /// <summary>
+        /// Used for get  received samples  for molecular test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveBloodSamples/{molecularLabId}")]
+        public MolecularLabSubjectResponse RetrieveReceivedSubjects(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular blood test  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _mlResultProcessService.RetriveSubjectForMolecularTest(molecularLabId);
+                return subjects.Count == 0 ? new MolecularLabSubjectResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularSubjectsForTest>() }
+                : new MolecularLabSubjectResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularLabSubjectResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for get  received specimen samples for molecular test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSpecimenSamples/{molecularLabId}")]
+        public FetchMLabSpecimenSubjectResponse RetrieveSpecimenSubjects(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular specimen test  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _mlResultProcessService.RetriveSpecimenSubjectForMolecularTest(molecularLabId);
+                return subjects.Count == 0 ? new FetchMLabSpecimenSubjectResponse { Status = "true", Message = "No subjects found", Subjects = new List<MLabSpecimenForTest>() }
+                : new FetchMLabSpecimenSubjectResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new FetchMLabSpecimenSubjectResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for get  specimen samples for molecular Edit test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSpecimenTestEdit/{molecularLabId}")]
+        public FetchMLSpecimenEditCompleteResponse RetrieveSpecimenSubjectsEdit(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular specimen test edit  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _mlResultProcessService.RetriveSpecimenForMolecularEditTest(molecularLabId);
+                return subjects.Count == 0 ? new FetchMLSpecimenEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MLabSpecimenForTestStatus>() }
+                : new FetchMLSpecimenEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new FetchMLSpecimenEditCompleteResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for get  specimen samples for molecular Complete test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSpecimenTestCompleted/{molecularLabId}")]
+        public FetchMLSpecimenEditCompleteResponse RetrieveSpecimenSubjectsCompleted(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular specimen test Complete  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _mlResultProcessService.RetriveSpecimenForMolecularTestComplete(molecularLabId);
+                return subjects.Count == 0 ? new FetchMLSpecimenEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MLabSpecimenForTestStatus>() }
+                : new FetchMLSpecimenEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new FetchMLSpecimenEditCompleteResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+    }
+}

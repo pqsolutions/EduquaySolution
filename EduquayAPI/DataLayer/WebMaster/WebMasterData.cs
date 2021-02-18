@@ -38,9 +38,17 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchANMByCHC = "SPC_FetchANMByCHC";
         private const string FetchRIByCHC = "SPC_FetchRIByCHC";
         private const string FetchPHCByCHC = "SPC_FetchPHCByCHC";
+        private const string FetchAllPNDTLocation = "SPC_FetchAllPNDTLocation";
         public WebMasterData()
         {
 
+        }
+        public List<LoadCommon> GetAllPNDTLocation()
+        {
+            string stProc = FetchAllPNDTLocation;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
         }
 
         public List<LoadAssociatedANM> RetrieveAssociatedANM(int riId)
@@ -272,5 +280,7 @@ namespace EduquayAPI.DataLayer.WebMaster
             var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
             return allData;
         }
+
+       
     }
 }
