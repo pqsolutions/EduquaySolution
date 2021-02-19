@@ -35,9 +35,21 @@ namespace EduquayAPI.Services.MolLabResultProcess
             return allSubject;
         }
 
-        public List<MolecularSubjectsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId)
         {
-            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularTest(molecularLabId);
+            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId)
+        {
+            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularBloodTestEdit(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularSubjectsForTest> RetriveSubjectForMolecularBloodTest(int molecularLabId)
+        {
+            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularBloodTest(molecularLabId);
             return allSubject;
         }
     }

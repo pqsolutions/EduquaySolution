@@ -23,6 +23,7 @@ namespace EduquayAPI.Models.MolecularLab
         public string mutation3 { get; set; }
         public string testResult { get; set; }
         public string reasonForClose { get; set; }
+        public string testDate { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -70,6 +71,9 @@ namespace EduquayAPI.Models.MolecularLab
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ReasonForClose"))
                 this.reasonForClose = Convert.ToString(reader["ReasonForClose"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestDate"))
+                this.testDate = Convert.ToString(reader["TestDate"]);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EduquayAPI.Models.MolecularLab;
+﻿using EduquayAPI.Contracts.V1.Request.MolecularLab;
+using EduquayAPI.Models.MolecularLab;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,14 +11,64 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
     public class MLResultProcessData : IMLResultProcessData
     {
 
-        private const string FetchSubjectsForMolecularTest = "SPC_FetchSubjectsForMolecularTest";
+        private const string FetchSubjectsForMolecularBloodTest = "SPC_FetchSubjectsForMolecularBloodTest";
+        private const string FetchSubjectsForMolecularBloodTestEdit = "SPC_FetchSubjectsForMolecularBloodTestEdit";
+        private const string FetchSubjectsForMolecularBloodTestComplete = "SPC_FetchSubjectsForMolecularBloodTestComplete";
         private const string FetchSubjectsForMolecularSpecimenTest = "SPC_FetchSubjectsForMolecularSpecimenTest";
         private const string FetchSubjectsForMolecularSpecimenEditTest = "SPC_FetchSubjectsForMolecularSpecimenEditTest";
         private const string FetchSubjectsForMolecularSpecimenTestComplete = "SPC_FetchSubjectsForMolecularSpecimenTestComplete";
+        private const string AddMolecularBloodTestResult = "SPC_AddMolecularBloodTestResult";
+        private const string AddMolecularSpecimenTestResult = "SPC_AddMolecularSpecimenTestResult";
 
         public MLResultProcessData()
         {
 
+        }
+
+        public MolecularMsg AddBloodSamplesTestResult(AddBloodSampleTestRequest rData)
+        {
+            string stProc = AddMolecularBloodTestResult;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UniqueSubjectId", rData.uniqueSubjectId),
+                new SqlParameter("@Barcode", rData.barcodeNo),
+                new SqlParameter("@ZygosityId", rData.zygosityId),
+                new SqlParameter("@Mutation1Id", rData.mutation1Id),
+                new SqlParameter("@Mutation2Id", rData.mutation2Id),
+                new SqlParameter("@Mutation3", rData.mutation3),
+                new SqlParameter("@TestResult", rData.testResult),
+                new SqlParameter("@IsDamaged", rData.sampleDamaged),
+                new SqlParameter("@IsProcessed", rData.sampleProcessed),
+                new SqlParameter("@IsComplete", rData.completeStatus),
+                new SqlParameter("@ReasonForClose", rData.reasonForClose),
+                new SqlParameter("@TestDate", rData.testDate),
+                new SqlParameter("@UserId", rData.userId),
+            };
+            var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
+            return allReceivedSubject;
+        }
+
+        public MolecularMsg AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest rData)
+        {
+            string stProc = AddMolecularBloodTestResult;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@UniqueSubjectId", rData.uniqueSubjectId),
+                new SqlParameter("@PNDTFoetusId", rData.pndtFoetusId),
+                new SqlParameter("@ZygosityId", rData.zygosityId),
+                new SqlParameter("@Mutation1Id", rData.mutation1Id),
+                new SqlParameter("@Mutation2Id", rData.mutation2Id),
+                new SqlParameter("@Mutation3", rData.mutation3),
+                new SqlParameter("@TestResult", rData.testResult),
+                new SqlParameter("@IsDamaged", rData.sampleDamaged),
+                new SqlParameter("@IsProcessed", rData.sampleProcessed),
+                new SqlParameter("@IsComplete", rData.completeStatus),
+                new SqlParameter("@ReasonForClose", rData.reasonForClose),
+                new SqlParameter("@TestDate", rData.testDate),
+                new SqlParameter("@UserId", rData.userId),
+            };
+            var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
+            return allReceivedSubject;
         }
 
         public List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularEditTest(int molecularLabId)
@@ -53,14 +104,36 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
             return allReceivedSubject;
         }
 
-        public List<MolecularSubjectsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
+        public List<MolecularSubjectsForTest> RetriveSubjectForMolecularBloodTest(int molecularLabId)
         {
-            string stProc = FetchSubjectsForMolecularTest;
+            string stProc = FetchSubjectsForMolecularBloodTest;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@MolecularLabId", molecularLabId),
             };
             var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForTest>(stProc, pList);
+            return allReceivedSubject;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId)
+        {
+            string stProc = FetchSubjectsForMolecularBloodTestComplete;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForBloodTestStatus>(stProc, pList);
+            return allReceivedSubject;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId)
+        {
+            string stProc = FetchSubjectsForMolecularBloodTestEdit;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForBloodTestStatus>(stProc, pList);
             return allReceivedSubject;
         }
     }
