@@ -1,4 +1,6 @@
 ﻿using EduquayAPI.Contracts.V1;
+using EduquayAPI.Contracts.V1.Request.MolecularLab;
+using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.MolecularLab;
 using EduquayAPI.Models.MolecularLab;
 using EduquayAPI.Services.MolLabResultProcess;
@@ -91,6 +93,24 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used for add to update the molecular blood test result 
+        /// </summary>
+        [HttpPost]
+        [Route("AddMolecularBloodTestResult")]
+        public async Task<IActionResult> AddMolecularBloodTestResult(AddBloodSampleTestRequest mrRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Blood samples to update molecular test result - {JsonConvert.SerializeObject(mrRequest)}");
+            var rsResponse = await _mlResultProcessService.AddMolecularBloodResult(mrRequest);
+
+            return Ok(new ServiceResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
+        }
+
+        /// <summary>
         /// Used for get  received specimen samples for molecular test 
         /// </summary>
         [HttpGet]
@@ -153,5 +173,24 @@ namespace EduquayAPI.Controllers
                 return new FetchMLSpecimenEditCompleteResponse { Status = "false", Message = e.Message, Subjects = null };
             }
         }
+
+        /// <summary>
+        /// Used for add to update the molecular Specimen test result 
+        /// </summary>
+        [HttpPost]
+        [Route("AddMolecularSpecimenTestResult")]
+        public async Task<IActionResult> AddMolecularSpecimenResult(AddSpecimenSampleTestRequest mrRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Specimen samples to update molecular test result - {JsonConvert.SerializeObject(mrRequest)}");
+            var rsResponse = await _mlResultProcessService.AddSpecimenSamplesTestResult(mrRequest);
+
+            return Ok(new ServiceResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
+        }
+
     }
 }
