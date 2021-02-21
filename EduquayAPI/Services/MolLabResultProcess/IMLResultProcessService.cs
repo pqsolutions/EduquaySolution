@@ -1,4 +1,6 @@
-﻿using EduquayAPI.Models.MolecularLab;
+﻿using EduquayAPI.Contracts.V1.Request.MolecularLab;
+using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Models.MolecularLab;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,10 @@ namespace EduquayAPI.Services.MolLabResultProcess
         List<MolecularSubjectsForTest> RetriveSubjectForMolecularBloodTest(int molecularLabId);
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId);
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId);
+        Task<ServiceResponse> AddMolecularBloodResult(AddBloodSampleTestRequest mrData);
         List<MLabSpecimenForTest> RetriveSpecimenSubjectForMolecularTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularEditTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularTestComplete(int molecularLabId);
+        Task<ServiceResponse> AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest mrData);
     }
 }

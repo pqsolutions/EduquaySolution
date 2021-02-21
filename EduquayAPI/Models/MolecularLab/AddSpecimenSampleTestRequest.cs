@@ -8,7 +8,7 @@ namespace EduquayAPI.Models.MolecularLab
     public class AddSpecimenSampleTestRequest
     {
         public string uniqueSubjectId { get; set; }
-        public string pndtFoetusId { get; set; }
+        public int pndtFoetusId { get; set; }
         public int zygosityId { get; set; }
         public int mutation1Id { get; set; }
         public int mutation2Id { get; set; }
