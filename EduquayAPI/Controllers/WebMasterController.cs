@@ -673,5 +673,48 @@ namespace EduquayAPI.Controllers
                 return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+
+        [HttpGet]
+        [Route("RetrieveAllZygosity")]
+        public LoadCommonResponse RetrieveAllZygosity()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _webMasterService.GetAllZygosity();
+
+                _logger.LogInformation($"Received Zygosity master data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving zygosity data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("RetrieveAllMutuation")]
+        public LoadCommonResponse RetrieveAllMutuation()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _webMasterService.GetAllMutuation();
+
+                _logger.LogInformation($"Received mutuation master data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving mutuation data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
     }
 }
