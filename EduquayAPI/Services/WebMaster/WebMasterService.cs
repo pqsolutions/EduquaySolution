@@ -196,5 +196,17 @@ namespace EduquayAPI.Services.WebMaster
             var pndtLocation = _webMasterData.GetAllPNDTLocation();
             return pndtLocation;
         }
+
+        public List<LoadCommon> GetAllZygosity()
+        {
+            var zygosity = _webMasterData.GetAllZygosity();
+            return zygosity;
+        }
+
+        public List<LoadCommon> GetAllMutuation()
+        {
+            var mutuation = _webMasterData.GetAllMutuation();
+            return mutuation;
+        }
     }
 }

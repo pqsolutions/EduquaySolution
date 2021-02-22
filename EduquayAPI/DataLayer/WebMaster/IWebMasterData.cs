@@ -38,6 +38,8 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCommon> RetrieveRIByCHC(int id);
         List<LoadCommon> RetrievePHCByCHC(int id);
         List<LoadCommon> GetAllPNDTLocation();
+        List<LoadCommon> GetAllZygosity();
+        List<LoadCommon> GetAllMutuation();
     }
     public interface IWebMasterDataFactory
     {

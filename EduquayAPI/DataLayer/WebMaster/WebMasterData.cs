@@ -39,9 +39,26 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchRIByCHC = "SPC_FetchRIByCHC";
         private const string FetchPHCByCHC = "SPC_FetchPHCByCHC";
         private const string FetchAllPNDTLocation = "SPC_FetchAllPNDTLocation";
+        private const string FetchAllZygosity = "SPC_FetchAllZygosity";
+        private const string FetchAllMutation = "SPC_FetchAllMutation";
         public WebMasterData()
         {
 
+        }
+        public List<LoadCommon> GetAllZygosity()
+        {
+            string stProc = FetchAllZygosity;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> GetAllMutuation()
+        {
+            string stProc = FetchAllMutation;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
         }
         public List<LoadCommon> GetAllPNDTLocation()
         {
