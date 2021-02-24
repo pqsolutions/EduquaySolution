@@ -20,5 +20,6 @@ namespace EduquayAPI.Models.MolecularLab
         public string reasonForClose { get; set; }
         public string testDate { get; set; }
         public int userId { get; set; }
+        public int molecularLabId { get; set; }
     }
 }

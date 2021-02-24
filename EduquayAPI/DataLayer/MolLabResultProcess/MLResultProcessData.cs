@@ -50,7 +50,7 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
 
         public MolecularMsg AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest rData)
         {
-            string stProc = AddMolecularBloodTestResult;
+            string stProc = AddMolecularSpecimenTestResult;
             var pList = new List<SqlParameter>()
             {
                 new SqlParameter("@UniqueSubjectId", rData.uniqueSubjectId),
@@ -66,6 +66,7 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
                 new SqlParameter("@ReasonForClose", rData.reasonForClose),
                 new SqlParameter("@TestDate", rData.testDate),
                 new SqlParameter("@UserId", rData.userId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
             };
             var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
             return allReceivedSubject;
