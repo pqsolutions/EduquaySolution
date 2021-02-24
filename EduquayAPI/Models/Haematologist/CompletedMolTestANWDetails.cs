@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Models.Hematologist
+namespace EduquayAPI.Models.Haematologist
 {
     public class CompletedMolTestANWDetails : IFill
     {

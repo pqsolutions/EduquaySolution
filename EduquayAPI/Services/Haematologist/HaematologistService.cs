@@ -1,23 +1,53 @@
-﻿using EduquayAPI.Contracts.V1.Response.Hematologist;
-using EduquayAPI.DataLayer.Hematologist;
+﻿using EduquayAPI.Contracts.V1.Request.Haematologist;
+using EduquayAPI.Contracts.V1.Response.Haematologist;
+using EduquayAPI.DataLayer.Haematologist;
+using EduquayAPI.Models.Haematologist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Services.Hematologist
+namespace EduquayAPI.Services.Haematologist
 {
-    public class HematologistService : IHematologistService
+    public class HaematologistService : IHaematologistService
     {
-        private readonly IHematologistData _hematologistData;
+        private readonly IHaematologistData _haematologistData;
 
-        public HematologistService(IHematologistDataFactory hematologistDataFactory)
+        public HaematologistService(IHaematologistDataFactory haematologistDataFactory)
         {
-            _hematologistData = new HematologistDataFactory().Create();
+            _haematologistData = new HaematologistDataFactory().Create();
         }
+
+        public async Task<ReviewResultResponse> AddDecision(AddPregnancyDecisionRequest prData)
+        {
+            var rResponse = new ReviewResultResponse();
+            var cvsSamples = new List<CVSSampleRefIdDetail>();
+            var cvsSamplesRefIdDetail = new CVSSampleRefIdDetail();
+            try
+            {
+                foreach (var sample in prData.updateRequest)
+                {
+                    var slist = new CVSSampleRefIdDetail();
+                    cvsSamplesRefIdDetail = _haematologistData.AddDecision(sample);
+                    slist.cvsSampleRefId = cvsSamplesRefIdDetail.cvsSampleRefId;
+                    cvsSamples.Add(slist);
+                }
+                rResponse.Status = "true";
+                rResponse.Message = cvsSamples.Count + " Samples successfully updated";
+                rResponse.data = cvsSamples;
+            }
+            catch (Exception e)
+            {
+                rResponse.Status = "false";
+                rResponse.Message = e.Message;
+                rResponse.data = cvsSamples;
+            }
+            return rResponse;
+        }
+
         public async Task<CompletedMolecularTestResponse> RetrieveCompletedMolecularDetail(int molecularLabId)
         {
-            var completedMolecularTestDetail = _hematologistData.RetrieveCompletedMolecularDetail(molecularLabId);
+            var completedMolecularTestDetail = _haematologistData.RetrieveCompletedMolecularDetail(molecularLabId);
             var completedTestResponse = new CompletedMolecularTestResponse();
             var completedMolTestANWDetail = new List<CompletedMolTestANWDetail>();
             try
@@ -95,13 +125,15 @@ namespace EduquayAPI.Services.Hematologist
                 completedTestResponse.data = completedMolTestANWDetail;
                 completedTestResponse.Status = "true";
                 completedTestResponse.Message = string.Empty;
+                return completedTestResponse;
             }
             catch (Exception e)
             {
                 completedTestResponse.Status = "false";
                 completedTestResponse.Message = e.Message;
+                return completedTestResponse;
             }
-            return completedTestResponse;
+            // return completedTestResponse;
         }
     }
 }

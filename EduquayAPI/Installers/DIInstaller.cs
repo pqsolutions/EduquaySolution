@@ -12,7 +12,7 @@ using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.DataLayer.CHCReport;
 using EduquayAPI.DataLayer.DistrictCoordinator;
-using EduquayAPI.DataLayer.Hematologist;
+using EduquayAPI.DataLayer.Haematologist;
 using EduquayAPI.DataLayer.MobileMaster;
 using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.DataLayer.MolecularLab;
@@ -36,7 +36,7 @@ using EduquayAPI.Services.CHCNotifications;
 using EduquayAPI.Services.CHCReceipt;
 using EduquayAPI.Services.CHCReport;
 using EduquayAPI.Services.DistrictCoordinator;
-using EduquayAPI.Services.Hematologist;
+using EduquayAPI.Services.Haematologist;
 using EduquayAPI.Services.MobileMaster;
 using EduquayAPI.Services.MobileSubject;
 using EduquayAPI.Services.MolecularLab;
@@ -199,8 +199,8 @@ namespace EduquayAPI.Installers
             services.AddScoped<IMLResultProcessDataFactory, MLResultProcessDataFactory>();
             services.AddScoped<IMLResultProcessService, MLResultProcessService>();
 
-            services.AddScoped<IHematologistDataFactory, HematologistDataFactory>();
-            services.AddScoped<IHematologistService, HematologistService>();
+            services.AddScoped<IHaematologistDataFactory, HaematologistDataFactory>();
+            services.AddScoped<IHaematologistService, HaematologistService>();
 
             services.AddSingleton<DbConnect>();
         }
