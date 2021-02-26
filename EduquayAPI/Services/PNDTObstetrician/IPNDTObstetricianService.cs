@@ -13,9 +13,7 @@ namespace EduquayAPI.Services.PNDTObstetrician
         List<PNDTPending> GetPNDTPending(ObstetricianRequest oData);
         Task<AddPNDTResponse> AddPNDTest(AddPNDTestRequest aData);
         List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData);
-        List<PNDTCompletedSummary> GetPNDTCompletedSummary();
-        //List<PNDTCompletedSummary> GetPNDTCompletedSummary(PNDTCompletedSummaryRequest oData);
-
+        Task<PNDTCompletedSummaryResponse> GetPNDTCompletedSummary(int molecularLabId);
         Task<AddPNDTResponse> AddPNDTestNew(AddPNDTRequest aData);
     }
 }
