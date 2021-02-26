@@ -72,6 +72,7 @@ namespace EduquayAPI.Services.Haematologist
                         molTestANWDetail.ga = testDetil.ga;
                         molTestANWDetail.obstetricScore = testDetil.obstetricScore;
                         molTestANWDetail.lmpDate = testDetil.lmpDate;
+                        molTestANWDetail.anwCBCTestResult = testDetil.anwCBCTestResult;
                         molTestANWDetail.anwSSTestResult = testDetil.anwSSTestResult;
                         molTestANWDetail.anwHPLCTestResult = testDetil.anwHPLCTestResult;
                         molTestANWDetail.anwHPLCDiagnosis = testDetil.anwHPLCDiagnosis;
@@ -97,6 +98,7 @@ namespace EduquayAPI.Services.Haematologist
                         molTestANWDetail.pndtComplecations = testDetil.pndtComplecations;
                         molTestANWDetail.motherVoided = testDetil.motherVoided;
                         molTestANWDetail.motherVitalStable = testDetil.motherVitalStable;
+                        molTestANWDetail.foetalHeartRateDocumentScan = testDetil.foetalHeartRateDocumentScan;
                         molTestANWDetail.anwMCV = testDetil.anwMCV;
                         molTestANWDetail.anwRDW = testDetil.anwRDW;
                         molTestANWDetail.anwRBC = testDetil.anwRBC;

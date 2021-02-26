@@ -90,24 +90,25 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
-        /// Used to retrieve  PNDT  Completed Summary
-        /// </summary>
+        /// Used for get ANW Details with Completed PNDT Test Result Details 
         [HttpGet]
-        [Route("RetrievePNDTCompletedSummary")]
-        public PNDTCompletedSummaryResponse GetPNDTCompleted()
+        [Route("RetrievePNDTCompletedSummary/{molecularId}")]
+        public async Task<IActionResult> GetPNDTCompleted(int molecularId)
         {
-            try
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(molecularId)}");
+            var testDetailResponse = await _pndtObstetricianService.GetPNDTCompletedSummary(molecularId);
+            _logger.LogInformation($"get ANW Details with Completed Specimen PNDT Test Result Details {testDetailResponse}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(testDetailResponse)}");
+
+            return Ok(new PNDTCompletedSummaryResponse
             {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                var completed = _pndtObstetricianService.GetPNDTCompletedSummary();
-                return completed.Count == 0 ? new PNDTCompletedSummaryResponse { Status = "true", Message = "No subjects found", data = new List<PNDTCompletedSummary>() }
-                : new PNDTCompletedSummaryResponse { Status = "true", Message = string.Empty, data = completed };
-            }
-            catch (Exception e)
-            {
-                return new PNDTCompletedSummaryResponse { Status = "false", Message = e.Message, data = null };
-            }
+                Status = testDetailResponse.Status,
+                Message = testDetailResponse.Message,
+                data = testDetailResponse.data,
+            });
         }
+
 
 
         /// <summary>

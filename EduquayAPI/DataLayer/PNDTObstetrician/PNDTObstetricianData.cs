@@ -87,12 +87,19 @@ namespace EduquayAPI.DataLayer.PNDTObstetrician
             return pndtTest;
         }
 
-        public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
+        public PNDTCompletedSummary GetPNDTCompletedSummary(int molecularLabId)
         {
             string stProc = FetchSubjectsPNDTCompleted;
-            var pList = new List<SqlParameter>();
-            var summaryData = UtilityDL.FillData<PNDTCompletedSummary>(stProc, pList);
-            return summaryData;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allANWDetail = UtilityDL.FillData<PNDTCompletedANWDetail>(stProc, pList);
+            var allFoetusDetail = UtilityDL.FillData<PNDTCompletedFoetusDetail>(stProc, pList);
+            var allPNDTDetail = new PNDTCompletedSummary();
+            allPNDTDetail.anwDetail = allANWDetail;
+            allPNDTDetail.foetusDetail = allFoetusDetail;
+            return allPNDTDetail;
         }
 
         public List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData)

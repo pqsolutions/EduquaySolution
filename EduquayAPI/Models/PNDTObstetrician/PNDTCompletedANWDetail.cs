@@ -4,9 +4,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduquayAPI.Models.Haematologist
+namespace EduquayAPI.Models.PNDTObstetrician
 {
-    public class CompletedMolTestANWDetails : IFill
+    public class PNDTCompletedANWDetail : IFill
     {
         public string anwSubjectId { get; set; }
         public string subjectName { get; set; }
@@ -65,7 +65,7 @@ namespace EduquayAPI.Models.Haematologist
         public string spouseHbD { get; set; }
         public string anwPathoRemarks { get; set; }
         public string spousePathoRemarks { get; set; }
-        public List<CompletedFoetusMolTestDetail>  foetusDetail { get; set; }
+        public List<PNDTCompletedFoetusDetail> foetusDetail { get; set; }
         public void Fill(SqlDataReader reader)
         {
 
@@ -120,8 +120,8 @@ namespace EduquayAPI.Models.Haematologist
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWHPLCDiagnosis"))
                 this.anwHPLCDiagnosis = Convert.ToString(reader["ANWHPLCDiagnosis"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseHPLCDiagnosis"))
-                this.spouseHPLCDiagnosis = Convert.ToString(reader["SpouseHPLCDiagnosis"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SPouseHPLCDiagnosis"))
+                this.spouseHPLCDiagnosis = Convert.ToString(reader["SPouseHPLCDiagnosis"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseCBCResult"))
                 this.spouseCBCTestResult = Convert.ToString(reader["SpouseCBCResult"]);
@@ -239,8 +239,6 @@ namespace EduquayAPI.Models.Haematologist
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbD"))
                 this.spouseHbD = Convert.ToString(reader["Spouse_HbD"]);
-
-
         }
     }
 }

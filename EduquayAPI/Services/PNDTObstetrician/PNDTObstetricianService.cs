@@ -170,11 +170,11 @@ namespace EduquayAPI.Services.PNDTObstetrician
             }
         }
 
-        public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
-        {
-            var completedData = _pndtObstetricianData.GetPNDTCompletedSummary();
-            return completedData;
-        }
+        //public List<PNDTCompletedSummary> GetPNDTCompletedSummary()
+        //{
+        //    var completedData = _pndtObstetricianData.GetPNDTCompletedSummary();
+        //    return completedData;
+        //}
 
         public List<PNDTNotCompleted> GetPNDTNotCompleted(ObstetricianRequest oData)
         {
@@ -186,6 +186,96 @@ namespace EduquayAPI.Services.PNDTObstetrician
         {
             var pendingData = _pndtObstetricianData.GetPNDTPending(oData);
             return pendingData;
+        }
+
+        public async Task<PNDTCompletedSummaryResponse> GetPNDTCompletedSummary(int molecularLabId)
+        {
+            var completedTestDetail = _pndtObstetricianData.GetPNDTCompletedSummary(molecularLabId);
+            var completedTestResponse = new PNDTCompletedSummaryResponse();
+            var completedTestANWDetail = new List<PNDTCompletedDetail>();
+            try
+            {
+                int pndTestId = 0;
+                foreach (var testDetil in completedTestDetail.anwDetail)
+                {
+
+                    if (pndTestId != testDetil.pndTestId)
+                    {
+                        var testANWDetail = new PNDTCompletedDetail();
+                        var foetusDetail = completedTestDetail.foetusDetail.Where(sd => sd.pndTestId == testDetil.pndTestId).ToList();
+                        testANWDetail.anwSubjectId = testDetil.anwSubjectId;
+                        testANWDetail.subjectName = testDetil.subjectName;
+                        testANWDetail.spouseSubjectId = testDetil.spouseSubjectId;
+                        testANWDetail.spouseName = testDetil.spouseName;
+                        testANWDetail.rchId = testDetil.rchId;
+                        testANWDetail.contactNo = testDetil.contactNo;
+                        testANWDetail.age = testDetil.age;
+                        testANWDetail.spouseAge = testDetil.spouseAge;
+                        testANWDetail.ecNumber = testDetil.ecNumber;
+                        testANWDetail.ga = testDetil.ga;
+                        testANWDetail.obstetricScore = testDetil.obstetricScore;
+                        testANWDetail.lmpDate = testDetil.lmpDate;
+                        testANWDetail.anwCBCTestResult = testDetil.anwCBCTestResult;
+                        testANWDetail.anwSSTestResult = testDetil.anwSSTestResult;
+                        testANWDetail.anwHPLCTestResult = testDetil.anwHPLCTestResult;
+                        testANWDetail.anwHPLCDiagnosis = testDetil.anwHPLCDiagnosis;
+                        testANWDetail.spouseCBCTestResult = testDetil.spouseCBCTestResult;
+                        testANWDetail.spouseSSTestResult = testDetil.spouseSSTestResult;
+                        testANWDetail.spouseHPLCTestResult = testDetil.spouseHPLCTestResult;
+                        testANWDetail.spouseHPLCDiagnosis = testDetil.spouseHPLCDiagnosis;
+                        testANWDetail.prePNDTCounsellingId = testDetil.prePNDTCounsellingId;
+                        testANWDetail.schedulingId = testDetil.schedulingId;
+                        testANWDetail.counsellingDateTime = testDetil.counsellingDateTime;
+                        testANWDetail.counsellorId = testDetil.counsellorId;
+                        testANWDetail.counsellorName = testDetil.counsellorName;
+                        testANWDetail.obstetricianId = testDetil.obstetricianId;
+                        testANWDetail.obstetricianName = testDetil.obstetricianName;
+                        testANWDetail.schedulePNDTDate = testDetil.schedulePNDTDate;
+                        testANWDetail.schedulePNDTTime = testDetil.schedulePNDTTime;
+                        testANWDetail.counsellingRemarks = testDetil.counsellingRemarks;
+                        testANWDetail.counsellingStatus = testDetil.counsellingStatus;
+                        testANWDetail.pndTestId = testDetil.pndTestId;
+                        testANWDetail.clinicalHistory = testDetil.clinicalHistory;
+                        testANWDetail.examination = testDetil.examination;
+                        testANWDetail.procedureofTesting = testDetil.procedureofTesting;
+                        testANWDetail.pndtComplecations = testDetil.pndtComplecations;
+                        testANWDetail.motherVoided = testDetil.motherVoided;
+                        testANWDetail.motherVitalStable = testDetil.motherVitalStable;
+                        testANWDetail.foetalHeartRateDocumentScan = testDetil.foetalHeartRateDocumentScan;
+                        testANWDetail.anwMCV = testDetil.anwMCV;
+                        testANWDetail.anwRDW = testDetil.anwRDW;
+                        testANWDetail.anwRBC = testDetil.anwRBC;
+                        testANWDetail.anwHbA0 = testDetil.anwHbA0;
+                        testANWDetail.anwHbA2 = testDetil.anwHbA2;
+                        testANWDetail.anwHbF = testDetil.anwHbF;
+                        testANWDetail.anwHbS = testDetil.anwHbS;
+                        testANWDetail.anwHbD = testDetil.anwHbD;
+                        testANWDetail.spouseMCV = testDetil.spouseMCV;
+                        testANWDetail.spouseRDW = testDetil.spouseRDW;
+                        testANWDetail.spouseRBC = testDetil.spouseRBC;
+                        testANWDetail.spouseHbA0 = testDetil.spouseHbA0;
+                        testANWDetail.spouseHbA2 = testDetil.spouseHbA2;
+                        testANWDetail.spouseHbF = testDetil.spouseHbF;
+                        testANWDetail.spouseHbS = testDetil.spouseHbS;
+                        testANWDetail.spouseHbD = testDetil.spouseHbD;
+                        testANWDetail.anwPathoRemarks = testDetil.anwPathoRemarks;
+                        testANWDetail.spousePathoRemarks = testDetil.spousePathoRemarks;
+                        testANWDetail.foetusDetail = foetusDetail;
+                        pndTestId = testDetil.pndTestId;
+                        completedTestANWDetail.Add(testANWDetail);
+                    }
+                }
+                completedTestResponse.data = completedTestANWDetail;
+                completedTestResponse.Status = "true";
+                completedTestResponse.Message = string.Empty;
+                return completedTestResponse;
+            }
+            catch (Exception e)
+            {
+                completedTestResponse.Status = "false";
+                completedTestResponse.Message = e.Message;
+                return completedTestResponse;
+            }
         }
     }
 }

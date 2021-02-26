@@ -43,6 +43,7 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
                 new SqlParameter("@ReasonForClose", rData.reasonForClose),
                 new SqlParameter("@TestDate", rData.testDate),
                 new SqlParameter("@UserId", rData.userId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
             };
             var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
             return allReceivedSubject;
