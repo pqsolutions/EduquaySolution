@@ -410,7 +410,7 @@ namespace EduquayAPI.Controllers
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Collect multiple samples in mobile app- {JsonConvert.SerializeObject(ssData)}");
-            var sclResponse = await _mobileSubjectService.AddSampleCollection(ssData);
+            var sclResponse = await _mobileSubjectService.AddSampleCollectionNew(ssData);
 
             if (!sclResponse.Valid)
             {

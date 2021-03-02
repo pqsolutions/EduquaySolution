@@ -5,6 +5,7 @@ using EduquayAPI.Contracts.V1.Request.MobileAppSubjectRegistration;
 using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
+using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void SubjectParent(ParentDetailRequest spaData);
         SubjectRegDetail MobileSubjectRegDetail(int userId);
         void SampleColection(SampleCollectionsRequest ssData);
+        List<ErrorBarcodeId> NewSampleCollection(SampleCollectionsRequest ssData);
+        ErrorBarcodeSMSDetail ErrorSMSTrigger(int getId);
         List<SampleCollection> MobileSampleDetail(int userId);
         void AddShipment(MobileShipmentRequest msData);
         void AddTimeoutExpiry(MobileAddExpiryRequest meData);

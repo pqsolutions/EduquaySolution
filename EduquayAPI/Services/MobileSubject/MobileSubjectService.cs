@@ -9,9 +9,13 @@ using EduquayAPI.DataLayer.MobileSubject;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.MobileSubject
@@ -19,10 +23,11 @@ namespace EduquayAPI.Services.MobileSubject
     public class MobileSubjectService : IMobileSubjectService
     {
         private readonly IMobileSubjectData _mobileSubjectData;
+        private readonly IConfiguration _config;
 
-        public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory)
+        public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory, IConfiguration config)
         {
-            _mobileSubjectData = new MobileSubjectDataFactory().Create();
+            _mobileSubjectData = new MobileSubjectDataFactory().Create(); _config = config;
         }
 
         public async Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData)
@@ -859,6 +864,92 @@ namespace EduquayAPI.Services.MobileSubject
             }
             return dcResponse;
         }
+
+        public async Task<SampleCollectionListResponse> AddSampleCollectionNew(SampleCollectRequest ssData)
+        {
+            List<BarcodeSampleDetail> barcodes = new List<BarcodeSampleDetail>();
+            SampleCollectionListResponse slResponse = new SampleCollectionListResponse();
+            var barcodeNo = "";
+            try
+            {
+                var checkdevice = _mobileSubjectData.CheckDevice(ssData.data.SampleCollectionsRequest[0].samples.collectedBy, ssData.deviceId);
+                if (checkdevice.valid == false)
+                {
+                    slResponse.Valid = false;
+                    slResponse.Status = "false";
+                    slResponse.Message = checkdevice.msg;
+                }
+                else
+                {
+                    foreach (var sample in ssData.data.SampleCollectionsRequest)
+                    {
+                        var slist = new BarcodeSampleDetail();
+                        barcodeNo = sample.samples.barcodeNo;
+                        var getId=_mobileSubjectData.NewSampleCollection(sample.samples);
+                        if(getId[0].getId != 0)
+                        {
+                            SMSTrigger(getId[0].getId);
+                        }
+
+                        slist.barcodeNo = sample.samples.barcodeNo;
+                        barcodes.Add(slist);
+                    }
+                    slResponse.Status = "true";
+                    slResponse.Valid = true;
+                    slResponse.Message = barcodes.Count + " Samples collected successfully";
+                    slResponse.Barcodes = barcodes;
+                }
+            }
+            catch (Exception e)
+            {
+                slResponse.Valid = true;
+                slResponse.Status = "false";
+                slResponse.Message = "Partially " + barcodes.Count + " samples collected successfully, From this (" + barcodeNo + ") onwards not collected. " + e.Message;
+                slResponse.Barcodes = barcodes;
+            }
+            return slResponse;
+        }
+
+        public void SMSTrigger(int id)
+        {
+            var errorSMSDetail = _mobileSubjectData.ErrorSMSTrigger(id);
+            var barcode = errorSMSDetail.barcode;
+            var uniqueSubjectId = errorSMSDetail.uniqueSubjectId;
+            var subjectMobileNo = errorSMSDetail.subjectMobileNo;
+            var sampleCollectionDate = errorSMSDetail.sampleCollectionDate;
+            var anmName = errorSMSDetail.anmName;
+            var anmMobileNo = errorSMSDetail.anmMobileNo;
+            var existUniqueSubjectId = errorSMSDetail.existUniqueSubjectId;
+            var existSubjectMobileNo = errorSMSDetail.existSubjectMobileNo;
+            var existSampleCollectionDate = errorSMSDetail.existSampleCollectionDate;
+            var existANMName = errorSMSDetail.existANMName;
+            var existANMMobileNo = errorSMSDetail.existANMMobileNo;
+            var smsURL = _config.GetSection("ErrorBarcodeSMS").GetSection("ErrorSMS").Value;
+            var smsURLLink = smsURL.Replace("#Barcode", barcode).Replace("#ANMName", anmName).Replace("#MobileNo", anmMobileNo);
+            GetResponse(smsURLLink);
+        }
+
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
     }
 }
 
