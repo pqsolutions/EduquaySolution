@@ -17,6 +17,7 @@ namespace EduquayAPI.Services.MobileSubject
         Task<SubRegSuccessResponse> AddSubjectRegistration(AddSubjectRequest subRegData);
         Task<SubjectResigrationListResponse> RetrieveDetail(MobileRetrieveRequest mrData);
         Task<SampleCollectionListResponse> AddSampleCollection(SampleCollectRequest ssData);
+        Task<SampleCollectionListResponse> AddSampleCollectionNew(SampleCollectRequest ssData);
         Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData);
         Task<NotificationListResponse> RetrieveNotifications(MobileRetrieveRequest mrData);
         Task<TimeoutResponse> AddMoveTimeout(AddTimeoutExpireMobileRequest eData);

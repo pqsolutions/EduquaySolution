@@ -6,6 +6,7 @@ using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
+using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,7 +26,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchMobileSubjectsDetail = "SPC_FetchMobileSubjectDetail";
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchMobileSampleDetailList = "SPC_FetchMobileSampleDetailList";
-        private const string AddShipments = "SPC_AddANMMobileShipments";
+        private const string AddShipments = "SPC_AddANMMobileShipmentsNew";
         private const string FetchShipmentLog = "SPC_FetchMobileANMShipmentLog";
         private const string FetchDamagedSamples = "SPC_FetchMobileNotificationDamaged";
         private const string FetchTimooutExpiry = "SPC_FetchMobileNotificationTimeout";
@@ -82,6 +83,11 @@ namespace EduquayAPI.DataLayer.MobileSubject
         private const string FetchMobileAppLeftSideMenu = "SPC_FetchMobileAppLeftSideMenu";
         private const string FetchMobileAppAlert = "SPC_FetchMobileAppAlert";
         private const string FetchMobileMetricsReportMessage = "SPC_FetchMobileMetricsReportMessage";
+
+        #region new Changes
+        private const string AddSampleCollectionNew = "SPC_AddSampleCollectionNew";
+        private const string FetchErrorBarcodeDetailForSMS = "SPC_FetchErrorBarcodeDetailForSMS";
+        #endregion
         public MobileSubjectData()
         {
 
@@ -120,7 +126,6 @@ namespace EduquayAPI.DataLayer.MobileSubject
 
         public void subjectPrimary(PrimaryDetailRequest sprData)
         {
-
             try
             {
                 string stProc = AddPrimaryDetail;
@@ -164,7 +169,6 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@SpouseWillingness", sprData.spouseWillingness ?? true),
                 };
                 UtilityDL.ExecuteNonQuery(stProc, pList);
-
             }
             catch (Exception e)
             {
@@ -174,7 +178,6 @@ namespace EduquayAPI.DataLayer.MobileSubject
 
         public void SubjectPregnancy(PregnancyDetailRequest spData)
         {
-
             try
             {
                 var stProc = AddSubjectPregnancyDetail;
@@ -832,6 +835,48 @@ namespace EduquayAPI.DataLayer.MobileSubject
             var pList = new List<SqlParameter>();
             var msg = UtilityDL.FillEntity<MobileMetricSummaryMessage>(stProc, pList);
             return msg;
+        }
+
+        public List<ErrorBarcodeId> NewSampleCollection(SampleCollectionsRequest ssData)
+        {
+            try
+            {
+                var stProc = AddSampleCollectionNew;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@UniqueSubjectID", ssData.uniqueSubjectId ?? ssData.uniqueSubjectId),
+                    new SqlParameter("@BarcodeNo", ssData.barcodeNo  ?? ssData.barcodeNo),
+                    new SqlParameter("@SampleCollectionDate", ssData.sampleCollectionDate ?? ssData.sampleCollectionDate),
+                    new SqlParameter("@SampleCollectionTime", ssData.sampleCollectionTime ?? ssData.sampleCollectionTime),
+                    new SqlParameter("@Reason", ssData.reason ?? ssData.reason),
+                    new SqlParameter("@CollectionFrom", ssData.collectionFrom),
+                    new SqlParameter("@CollectedBy", ssData.collectedBy),
+                };
+                var msg = UtilityDL.FillData<ErrorBarcodeId>(stProc, pList);
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ErrorBarcodeSMSDetail ErrorSMSTrigger(int getId)
+        {
+            try
+            {
+                var stProc = FetchErrorBarcodeDetailForSMS;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Id", getId),
+                };
+                var smsDetail = UtilityDL.FillEntity<ErrorBarcodeSMSDetail>(stProc, pList);
+                return smsDetail;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
