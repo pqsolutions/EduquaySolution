@@ -252,11 +252,11 @@ namespace EduquayAPI.Services
                     var mobile = users[0].mobileNo;
                     var userFullName = users[0].name;
                     var otp = GenerateOTPNumber();
-                    var host = _config.GetSection("ForgotPasswordSMTP").GetSection("host").Value;
-                    var port = _config.GetSection("ForgotPasswordSMTP").GetSection("port").Value;
-                    var uName = _config.GetSection("ForgotPasswordSMTP").GetSection("username").Value;
-                    string pwd = _config.GetSection("ForgotPasswordSMTP").GetSection("pwd").Value;
-                    string from = _config.GetSection("ForgotPasswordSMTP").GetSection("from").Value;
+                    var host = _config.GetSection("SMTPDetails").GetSection("host").Value;
+                    var port = _config.GetSection("SMTPDetails").GetSection("port").Value;
+                    var uName = _config.GetSection("SMTPDetails").GetSection("username").Value;
+                    string pwd = _config.GetSection("SMTPDetails").GetSection("pwd").Value;
+                    string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
                     string cc = _config.GetSection("ForgotPasswordSMTP").GetSection("recipients").Value;
                     string recipients = email + cc;
                     string subject = _config.GetSection("ForgotPasswordSMTP").GetSection("subject").Value;

@@ -6,6 +6,7 @@ using EduquayAPI.Contracts.V1.Response.ANMSubjectRegistration;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
 using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
+using EduquayAPI.Models.UserDetails;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         void SampleColection(SampleCollectionsRequest ssData);
         List<ErrorBarcodeId> NewSampleCollection(SampleCollectionsRequest ssData);
         ErrorBarcodeSMSDetail ErrorSMSTrigger(int getId);
+        DCSPCDetails FetchDCSPCDetails(int anmId, int existANMId);
         List<SampleCollection> MobileSampleDetail(int userId);
         void AddShipment(MobileShipmentRequest msData);
         void AddTimeoutExpiry(MobileAddExpiryRequest meData);
