@@ -7,6 +7,7 @@ using EduquayAPI.Models;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.MobileSubject;
 using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
+using EduquayAPI.Models.UserDetails;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -87,6 +88,7 @@ namespace EduquayAPI.DataLayer.MobileSubject
         #region new Changes
         private const string AddSampleCollectionNew = "SPC_AddSampleCollectionNew";
         private const string FetchErrorBarcodeDetailForSMS = "SPC_FetchErrorBarcodeDetailForSMS";
+        private const string FetchSCDCDetail = "SPC_FetchSCDCDetails";
         #endregion
         public MobileSubjectData()
         {
@@ -871,6 +873,25 @@ namespace EduquayAPI.DataLayer.MobileSubject
                     new SqlParameter("@Id", getId),
                 };
                 var smsDetail = UtilityDL.FillEntity<ErrorBarcodeSMSDetail>(stProc, pList);
+                return smsDetail;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DCSPCDetails FetchDCSPCDetails(int anmId, int existANMId)
+        {
+            try
+            {
+                var stProc = FetchSCDCDetail;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ANMId", anmId),
+                    new SqlParameter("@ExistANMId", existANMId),
+                };
+                var smsDetail = UtilityDL.FillEntity<DCSPCDetails>(stProc, pList);
                 return smsDetail;
             }
             catch (Exception ex)

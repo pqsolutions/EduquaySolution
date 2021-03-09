@@ -61,7 +61,7 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Received subject for molecular blood test complete  - {JsonConvert.SerializeObject(molecularLabId)}");
-                var subjects = _mlResultProcessService.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
+                var subjects = _mlResultProcessService.RetriveSubjectForMolecularBloodTestEdit(molecularLabId);
                 return subjects.Count == 0 ? new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularSubjectsForBloodTestStatus>() }
                 : new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
             }
@@ -82,7 +82,7 @@ namespace EduquayAPI.Controllers
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
                 _logger.LogDebug($"Received subject for molecular blood test complete  - {JsonConvert.SerializeObject(molecularLabId)}");
-                var subjects = _mlResultProcessService.RetriveSubjectForMolecularBloodTestEdit(molecularLabId);
+                var subjects = _mlResultProcessService.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
                 return subjects.Count == 0 ? new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularSubjectsForBloodTestStatus>() }
                 : new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
             }
