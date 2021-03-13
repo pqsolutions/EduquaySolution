@@ -25,6 +25,7 @@ using EduquayAPI.DataLayer.PNDTandMTPMaster;
 using EduquayAPI.DataLayer.PNDTObstetrician;
 using EduquayAPI.DataLayer.Reports;
 using EduquayAPI.DataLayer.SPC;
+using EduquayAPI.DataLayer.Support;
 using EduquayAPI.DataLayer.WebMaster;
 using EduquayAPI.Services;
 using EduquayAPI.Services.ANMCHCPickandPack;
@@ -49,6 +50,7 @@ using EduquayAPI.Services.PNDTandMTPMaster;
 using EduquayAPI.Services.PNDTObstetrician;
 using EduquayAPI.Services.Reports;
 using EduquayAPI.Services.SPC;
+using EduquayAPI.Services.Support;
 using EduquayAPI.Services.WebMaster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -201,6 +203,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<IHaematologistDataFactory, HaematologistDataFactory>();
             services.AddScoped<IHaematologistService, HaematologistService>();
+
+            services.AddScoped<ISupportDataFactory, SupportDataFactory>();
+            services.AddScoped<ISupportService, SupportService>();
 
             services.AddSingleton<DbConnect>();
         }
