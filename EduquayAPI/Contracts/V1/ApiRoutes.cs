@@ -11,16 +11,6 @@ namespace EduquayAPI.Contracts.V1
         public const string Version = "v1";
         public const string Base = Root + "/" + Version;
 
-        public static class Posts
-        {
-            public const string AddPatient = "Add";
-        }
-        public static class Gets
-        {
-            public const string GetPatient = "Patient{pId}";
-            public const string GetPatients = "Patients";
-        }
-
         public static class Identity
         {
             public const string Register = "Register";
