@@ -28,7 +28,8 @@ namespace EduquayAPI.Services.MobileSubject
 
         public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory, IConfiguration config)
         {
-            _mobileSubjectData = new MobileSubjectDataFactory().Create(); _config = config;
+            _mobileSubjectData = new MobileSubjectDataFactory().Create(); 
+            _config = config;
         }
 
         public async Task<ShipmentListResponse> AddANMShipment(MobileShipmentsRequest msData)
@@ -987,7 +988,7 @@ namespace EduquayAPI.Services.MobileSubject
             string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
             string cc = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("recipients").Value;
 
-            string recipients = dcEmail + ", " + existDCEmail + ", " + scEmail + cc;
+            string recipients = dcEmail + ", " + existDCEmail + ", " + scEmail ;
             string subject = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("MailSubject").Value;
             string mailTemplateBody = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("Body").Value;
             string mailBody = "";
@@ -1000,6 +1001,7 @@ namespace EduquayAPI.Services.MobileSubject
                 .Replace("#SampleCollectionDate", sampleCollectionDate).Replace("#ANMName", anmName).Replace("#ANMMobileNo", anmMobileNo)
                 .Replace("#CHC", chcName).Replace("#PHC", phcName).Replace("#DCName", dcName).Replace("#DCContactNo", dcContactNo);
             var mailMessage = new MailMessage(from, recipients, mailSubject, mailBody);
+            mailMessage.CC.Add(cc);
             mailMessage.IsBodyHtml = true;
             var client = new SmtpClient(host, int.Parse(port))
             {

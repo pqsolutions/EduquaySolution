@@ -11,6 +11,7 @@ namespace EduquayAPI.Contracts.V1.Response.Support
         public string status { get; set; }
         public string message { get; set; }
         public bool barcodeExist { get; set; }
+        public bool barcodeValid { get; set; }
         public BarcodeErrorDetail data { get; set; }
 }
 }

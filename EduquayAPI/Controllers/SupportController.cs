@@ -92,6 +92,7 @@ namespace EduquayAPI.Controllers
                 status = sample.status,
                 message = sample.message,
                 barcodeExist = sample.barcodeExist,
+                barcodeValid = sample.barcodeValid,
                 data = sample.data
             });
         }
