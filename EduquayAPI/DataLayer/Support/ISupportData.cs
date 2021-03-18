@@ -13,6 +13,7 @@ namespace EduquayAPI.DataLayer.Support
         List<BarcodeErrorDetail> FetchBarcodeDetailsForErrorCorrection(string barcodeNo);
         BarcodeErrorDetail FetchBarcodeExist(string barcodeNo);
         UpdateBarcodeMsg UpdateErrorBarcode(UpdateBarcodeRequest bData);
+        List<BarcodeUpdationDetails> FetchUpdatedBarcodeDetails(string ids);
     }
     public interface ISupportDataFactory
     {

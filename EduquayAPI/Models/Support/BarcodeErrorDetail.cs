@@ -19,6 +19,7 @@ namespace EduquayAPI.Models.Support
         public string dcContact { get; set; }
         public string loginStatus { get; set; }
         public bool loginIconEnableStatus { get; set; }
+        public bool barcodeValid { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
@@ -54,6 +55,9 @@ namespace EduquayAPI.Models.Support
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "LoginIconEnableStatus"))
                 this.loginIconEnableStatus = Convert.ToBoolean(reader["LoginIconEnableStatus"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeValid"))
+                this.barcodeValid = Convert.ToBoolean(reader["BarcodeValid"]);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.Support;
+using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
 using EduquayAPI.Models.Support;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,29 @@ namespace EduquayAPI.DataLayer.Support
         private const string FetchBarcodeForErrorCorrection = "SPC_FetchBarcodeForErrorCorrection";
         private const string FetchBarcodeExists = "SPC_FetchBarcodeExist";
         private const string UpdateErrorBarcodeDetail = "SPC_UpdateErrorBarcodeDetail";
+        private const string FetchErrorBarcodeDetailForSMS = "SPC_FetchErrorBarcodeDetailForSMS";
+        private const string FetchUpdateBarcodeDetail = "SPC_FetchUpdateBarcodeDetail";
         public SupportData()
         {
 
+        }
+
+        public ErrorBarcodeSMSDetail ErrorSMSTrigger(int getId)
+        {
+            try
+            {
+                var stProc = FetchErrorBarcodeDetailForSMS;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Id", getId),
+                };
+                var smsDetail = UtilityDL.FillEntity<ErrorBarcodeSMSDetail>(stProc, pList);
+                return smsDetail;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<BarcodeErrorDetail> FetchBarcodeDetailsForErrorCorrection(string barcodeNo)
@@ -40,6 +61,14 @@ namespace EduquayAPI.DataLayer.Support
             string stProc = FetchErrorBarcodeCorrection;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<BarcodeUpdationDetails> FetchUpdatedBarcodeDetails(string ids)
+        {
+            string stProc = FetchUpdateBarcodeDetail;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", ids) };
+            var allData = UtilityDL.FillData<BarcodeUpdationDetails>(stProc, pList);
             return allData;
         }
 
