@@ -41,8 +41,8 @@ namespace EduquayAPI.Models.Support
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DCName"))
                 this.dcName = Convert.ToString(reader["DCName"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DCContact"))
-                this.dcMobile = Convert.ToString(reader["DCContact"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "DCMobile"))
+                this.dcMobile = Convert.ToString(reader["DCMobile"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DCEmail"))
                 this.dcEmail = Convert.ToString(reader["DCEmail"]);
