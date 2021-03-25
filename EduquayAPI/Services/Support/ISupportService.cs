@@ -15,5 +15,8 @@ namespace EduquayAPI.Services.Support
         List<BarcodeErrorDetail> FetchBarcodeDetailsForErrorCorrection(string barcodeNo);
         Task<CheckBarcodeResponse> CheckbarcodeExist(string barcodeNo);
         Task<ServiceResponse> UpdateErrorBarcode(UpdateBarcodeRequest bData);
+        List<BarcodeErrorDetail> FetchDetailsForRCHCorrection(string input);
+        Task<ServiceResponse> UpdateRCHId(UpdateRCHIDRequest rData);
+        Task<CheckRCHResponse> CheckRCHIDExist(string rchId);
     }
 }

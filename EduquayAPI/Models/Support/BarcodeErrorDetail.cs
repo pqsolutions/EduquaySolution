@@ -10,6 +10,8 @@ namespace EduquayAPI.Models.Support
     {
         public string barcodeNo { get; set; }
         public string subjectId { get; set; }
+        public string rchId { get; set; }
+        public string lmpDate { get; set; }
         public string subjectName { get; set; }
         public string anmName { get; set; }
         public string anmCode { get; set; }
@@ -23,6 +25,12 @@ namespace EduquayAPI.Models.Support
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
+                this.rchId = Convert.ToString(reader["RCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMPDate"))
+                this.lmpDate = Convert.ToString(reader["LMPDate"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
 

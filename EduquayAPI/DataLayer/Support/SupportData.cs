@@ -17,6 +17,12 @@ namespace EduquayAPI.DataLayer.Support
         private const string UpdateErrorBarcodeDetail = "SPC_UpdateErrorBarcodeDetail";
         private const string FetchErrorBarcodeDetailForSMS = "SPC_FetchErrorBarcodeDetailForSMS";
         private const string FetchUpdateBarcodeDetail = "SPC_FetchUpdateBarcodeDetail";
+
+        private const string FetchDetailForRCHIDCorrection = "SPC_FetchDetailForRCHIDCorrection";
+        private const string UpdateRCHIdDetail = "SPC_UpdateRCHIdDetail";
+        private const string FetchUpdateRCHIDDetail = "SPC_FetchUpdateRCHIDDetail";
+        private const string FetchRCHIDExist = "SPC_FetchRCHIDExist";
+
         public SupportData()
         {
 
@@ -40,6 +46,8 @@ namespace EduquayAPI.DataLayer.Support
             }
         }
 
+
+
         public List<BarcodeErrorDetail> FetchBarcodeDetailsForErrorCorrection(string barcodeNo)
         {
             string stProc = FetchBarcodeForErrorCorrection;
@@ -56,10 +64,26 @@ namespace EduquayAPI.DataLayer.Support
             return allData;
         }
 
+        public List<BarcodeErrorDetail> FetchDetailsForRCHCorrection(string input)
+        {
+            string stProc = FetchDetailForRCHIDCorrection;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Input", input) };
+            var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
         public List<BarcodeErrorDetail> FetchErrorBarcodeDetails()
         {
             string stProc = FetchErrorBarcodeCorrection;
             var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<BarcodeErrorDetail> FetchRCHIDExists(string input)
+        {
+            string stProc = FetchRCHIDExist;
+            var pList = new List<SqlParameter>() { new SqlParameter("@RCHID", input) };
             var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
             return allData;
         }
@@ -69,6 +93,14 @@ namespace EduquayAPI.DataLayer.Support
             string stProc = FetchUpdateBarcodeDetail;
             var pList = new List<SqlParameter>() { new SqlParameter("@ID", ids) };
             var allData = UtilityDL.FillData<BarcodeUpdationDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<RCHUpdationDetails> FetchUpdatedRCHIDDetails(string ids)
+        {
+            string stProc = FetchUpdateRCHIDDetail;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", ids) };
+            var allData = UtilityDL.FillData<RCHUpdationDetails>(stProc, pList);
             return allData;
         }
 
@@ -82,6 +114,19 @@ namespace EduquayAPI.DataLayer.Support
                 new SqlParameter("@UserId", bData.userId),
             };
             var allData = UtilityDL.FillEntity<UpdateBarcodeMsg>(stProc, pList);
+            return allData;
+        }
+
+        public UpdateRCHIDMsg UpdateRCHId(UpdateRCHIDRequest rData)
+        {
+            string stProc = UpdateRCHIdDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@OldRCHId", rData.rchId),
+                new SqlParameter("@NewRCHId", rData.revisedRCHID),
+                new SqlParameter("@UserId", rData.userId),
+            };
+            var allData = UtilityDL.FillEntity<UpdateRCHIDMsg>(stProc, pList);
             return allData;
         }
     }

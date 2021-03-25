@@ -114,5 +114,70 @@ namespace EduquayAPI.Controllers
                 Message = subjectSample.Message,
             });
         }
+
+        /// <summary>
+        /// Used for fetch the  detail for RCH ID error correction
+        /// </summary>
+
+        [HttpGet]
+        [Route("RetrieveDetailsForRCHIdErrorCorrection/{rchId}")]
+        public ErrorBarcodeDetailResponse FetchDetailForRCHIdCorrection(string rchId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorRCHId = _supportService.FetchDetailsForRCHCorrection(rchId);
+
+                _logger.LogInformation($"Received error rch id data {errorRCHId}");
+                return errorRCHId.Count == 0 ?
+                    new ErrorBarcodeDetailResponse { status = "true", message = "No record found", data = new List<BarcodeErrorDetail>() }
+                    : new ErrorBarcodeDetailResponse { status = "true", message = string.Empty, data = errorRCHId };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving rch id error data {e.StackTrace}");
+                return new ErrorBarcodeDetailResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for Check rchId exist
+        /// </summary>
+        [HttpPost]
+        [Route("CheckRCHIDExist/{rchId}")]
+        public async Task<IActionResult> CheckRchId(string rchId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var sample = await _supportService.CheckRCHIDExist(rchId);
+            return Ok(new CheckRCHResponse
+            {
+                status = sample.status,
+                message = sample.message,
+                rchExist = sample.rchExist,
+                rchValid = sample.rchValid,
+                data = sample.data
+            });
+        }
+
+        /// <summary>
+        /// Used for Update the RCH ID into Revised RCHID
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateRCHIDError")]
+        public async Task<IActionResult> UpdateErrorRCHID(UpdateRCHIDRequest rData)
+        {
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Updating the Error RCHID - {JsonConvert.SerializeObject(rData)}");
+            var subjectSample = await _supportService.UpdateRCHId(rData);
+            return Ok(new ServiceResponse
+            {
+                Status = subjectSample.Status,
+                Message = subjectSample.Message,
+            });
+        }
+
+
     }
 }
