@@ -10,6 +10,8 @@ namespace EduquayAPI.Models.MobileSubject.MobileSampleCollection
     {
         public string barcode { get; set; }
         public string uniqueSubjectId { get; set; }
+        public string rchId { get; set; }
+        public string lmpDate { get; set; }
         public string subjectName { get; set; }
         public string sampleCollectionDate { get; set; }
         public string subjectMobileNo { get; set; }
@@ -34,6 +36,12 @@ namespace EduquayAPI.Models.MobileSubject.MobileSampleCollection
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "RCHID"))
+                this.rchId = Convert.ToString(reader["RCHID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LMPDate"))
+                this.lmpDate = Convert.ToString(reader["LMPDate"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CHCName"))
                 this.chcName = Convert.ToString(reader["CHCName"]);
 
