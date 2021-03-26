@@ -12,9 +12,12 @@ namespace SentinelAPI.DataLayer.MolecularLab
         MolecularLabReceipts RetrieveMolecularLabReceipts(int molecularLabId);
         void AddReceivedShipment(AddMolecularReceiptRequest mrData);
         List<SubjectDetailsForTest> RetriveSubjectForMolecularTest(int molecularLabId);
+        List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId);
+        List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId);
         string AddMolecularResult(AddMolecularResultRequest mrData);
         List<MolecularResultsDetail> RetriveMolecularTestResultsDetail(int molecularLabId);
         List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData);
+        MolecularMsg AddBloodSamplesTestResult(AddBloodSampleTestRequest rData);
     }
 
     public interface IMolecularLabDataFactory

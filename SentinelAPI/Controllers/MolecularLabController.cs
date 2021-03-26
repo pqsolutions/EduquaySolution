@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SentinelAPI.Contracts.V1.Request.MolecularLab;
+using SentinelAPI.Contracts.V1.Response;
 using SentinelAPI.Contracts.V1.Response.MolecularLab;
 using SentinelAPI.Models.MolecularLab;
 using SentinelAPI.Services.MolecularLab;
@@ -63,26 +64,7 @@ namespace SentinelAPI.Controllers
             });
         }
 
-        /// <summary>
-        /// Used for get  received samples  for molecular test 
-        /// </summary>
-        [HttpGet]
-        [Route("RetrieveSubjectsForTest/{molecularLabId}")]
-        public MolecularLabSubjectResponse RetrieveReceivedSubjects(int molecularLabId)
-        {
-            try
-            {
-                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received subject for molecular test  - {JsonConvert.SerializeObject(molecularLabId)}");
-                var subjects = _molecularLabService.RetriveSubjectForMolecularTest(molecularLabId);
-                return subjects.Count == 0 ? new MolecularLabSubjectResponse { Status = "true", Message = "No subjects found", Subjects = new List<SubjectDetailsForTest>() }
-                : new MolecularLabSubjectResponse { Status = "true", Message = string.Empty, Subjects = subjects };
-            }
-            catch (Exception e)
-            {
-                return new MolecularLabSubjectResponse { Status = "false", Message = e.Message, Subjects = null };
-            }
-        }
+      
 
 
         /// <summary>
@@ -143,6 +125,88 @@ namespace SentinelAPI.Controllers
             {
                 return new MolecularReportResponse { Status = "false", Message = e.Message, Subjects = null };
             }
+        }
+
+        /// <summary>
+        /// Used for get  received samples  for molecular test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSubjectsForTest/{molecularLabId}")]
+        public MolecularLabSubjectResponse RetrieveReceivedSubjects(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular test  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _molecularLabService.RetriveSubjectForMolecularTest(molecularLabId);
+                return subjects.Count == 0 ? new MolecularLabSubjectResponse { Status = "true", Message = "No subjects found", Subjects = new List<SubjectDetailsForTest>() }
+                : new MolecularLabSubjectResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularLabSubjectResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for get  received Blood samples  for molecular test 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveBloodTestEdit/{molecularLabId}")]
+        public FetchMLBloodTestEditCompleteResponse RetrieveBloodSamplesEdit(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular blood test complete  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _molecularLabService.RetriveSubjectForMolecularBloodTestEdit(molecularLabId);
+                return subjects.Count == 0 ? new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularSubjectsForBloodTestStatus>() }
+                : new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new FetchMLBloodTestEditCompleteResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for get  received Blood samples  for molecular test Complete
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveBloodTestComplete/{molecularLabId}")]
+        public FetchMLBloodTestEditCompleteResponse RetrieveBloodSamplesComplete(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular blood test complete  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _molecularLabService.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
+                return subjects.Count == 0 ? new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = "No subjects found", Subjects = new List<MolecularSubjectsForBloodTestStatus>() }
+                : new FetchMLBloodTestEditCompleteResponse { Status = "true", Message = string.Empty, Subjects = subjects };
+            }
+            catch (Exception e)
+            {
+                return new FetchMLBloodTestEditCompleteResponse { Status = "false", Message = e.Message, Subjects = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add or update the molecular blood test result 
+        /// </summary>
+        [HttpPost]
+        [Route("AddMolecularBloodTestResult")]
+        public async Task<IActionResult> AddMolecularBloodTestResult(AddBloodSampleTestRequest mrRequest)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Blood samples to update molecular test result - {JsonConvert.SerializeObject(mrRequest)}");
+            var rsResponse = await _molecularLabService.AddMolecularBloodResult(mrRequest);
+
+            return Ok(new ServiceResponse
+            {
+                Status = rsResponse.Status,
+                Message = rsResponse.Message,
+            });
         }
 
     }

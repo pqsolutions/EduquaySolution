@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SentinelAPI.DataLayer.MolecularLab
 {
-    public class MolecularLabData : IMolecularLabData
+    public class MolecularLabData : IMolecularLabData 
     {
         private const string FetchShipmentReceiptInMolecularLab = "SPC_FetchShipmentReceiptInMolecularLab";
         private const string AddMolecularLabReceipts = "SPC_AddMolecularLabReceipt";
@@ -17,9 +17,37 @@ namespace SentinelAPI.DataLayer.MolecularLab
         private const string AddMolecularTestResult = "SPC_AddMolecularTestResult";
         private const string FetchrMolecularTestResultsDetail = "SPC_FetchrMolecularTestResultsDetail";
         private const string FetchMolecularTestReports = "SPC_FetchMolecularTestReports";
+
+        private const string AddMolecularBloodTestResult = "SPC_AddMolecularBloodTestResult";
+        private const string FetchSubjectsForMolecularBloodTestEdit = "SPC_FetchSubjectsForMolecularBloodTestEdit";
+        private const string FetchSubjectsForMolecularBloodTestComplete = "SPC_FetchSubjectsForMolecularBloodTestComplete";
         public MolecularLabData()
         {
 
+        }
+
+        public MolecularMsg AddBloodSamplesTestResult(AddBloodSampleTestRequest rData)
+        {
+            string stProc = AddMolecularBloodTestResult;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@BabySubjectId", rData.babySubjectId),
+                new SqlParameter("@Barcode", rData.barcodeNo),
+                new SqlParameter("@ZygosityId", rData.zygosityId),
+                new SqlParameter("@Mutation1Id", rData.mutation1Id),
+                new SqlParameter("@Mutation2Id", rData.mutation2Id),
+                new SqlParameter("@Mutation3", rData.mutation3),
+                new SqlParameter("@TestResult", rData.testResult),
+                new SqlParameter("@IsDamaged", rData.sampleDamaged),
+                new SqlParameter("@IsProcessed", rData.sampleProcessed),
+                new SqlParameter("@IsComplete", rData.completeStatus),
+                new SqlParameter("@ReasonForClose", rData.reasonForClose),
+                new SqlParameter("@TestDate", rData.testDate),
+                new SqlParameter("@UserId", rData.userId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
+            return allReceivedSubject;
         }
 
         public string AddMolecularResult(AddMolecularResultRequest mrData)
@@ -110,6 +138,28 @@ namespace SentinelAPI.DataLayer.MolecularLab
             };
             var allSubjects = UtilityDL.FillData<MolecularResultsDetail>(stProc, pList);
             return allSubjects;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId)
+        {
+            string stProc = FetchSubjectsForMolecularBloodTestComplete;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForBloodTestStatus>(stProc, pList);
+            return allReceivedSubject;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId)
+        {
+            string stProc = FetchSubjectsForMolecularBloodTestEdit;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForBloodTestStatus>(stProc, pList);
+            return allReceivedSubject;
         }
 
         public List<SubjectDetailsForTest> RetriveSubjectForMolecularTest(int molecularLabId)
