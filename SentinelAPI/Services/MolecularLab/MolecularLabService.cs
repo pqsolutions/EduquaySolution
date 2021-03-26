@@ -1,4 +1,5 @@
 ﻿using SentinelAPI.Contracts.V1.Request.MolecularLab;
+using SentinelAPI.Contracts.V1.Response;
 using SentinelAPI.Contracts.V1.Response.MolecularLab;
 using SentinelAPI.DataLayer.MolecularLab;
 using SentinelAPI.Models.MolecularLab;
@@ -177,6 +178,92 @@ namespace SentinelAPI.Services.MolecularLab
         public List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData)
         {
             var allSubject = _molecularLabReceiptData.RetriveMolecularReports(mrData);
+            return allSubject;
+        }
+
+        public string CheckVal(AddBloodSampleTestRequest mrData)
+        {
+            string msg = "";
+            if (string.IsNullOrEmpty(mrData.babySubjectId))
+            {
+                msg = "Baby Subjectid is missing";
+            }
+            else if (string.IsNullOrEmpty(mrData.barcodeNo))
+            {
+                msg = "Barcode is missing";
+            }
+            else if (mrData.sampleProcessed == true)
+            {
+                if (mrData.zygosityId <= 0)
+                {
+                    msg = "Invalid zygosity Id";
+                }
+                else if (mrData.testResult == "")
+                {
+                    msg = "Test result is missing";
+                }
+            }
+            else if (mrData.sampleProcessed == false)
+            {
+                if (string.IsNullOrEmpty(mrData.reasonForClose))
+                {
+                    msg = "Reason for close is missing";
+                }
+            }
+            if (mrData.userId <= 0)
+            {
+                msg = "Invalid user Id";
+            }
+            return msg;
+        }
+
+
+        public async Task<ServiceResponse> AddMolecularBloodResult(AddBloodSampleTestRequest mrData)
+        {
+            var sResponse = new ServiceResponse();
+            string message = CheckVal(mrData);
+            try
+            {
+                if (message == "")
+                {
+                    var result = _molecularLabReceiptData.AddBloodSamplesTestResult(mrData);
+                    if (string.IsNullOrEmpty(result.message))
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = $"Unable to update the molecular blood result for this babySubjectid - {mrData.babySubjectId}";
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result.message;
+                        return sResponse;
+                    }
+                }
+                else
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = message;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to update the molecular blood result - {e.Message}";
+                return sResponse;
+            }
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveSubjectForMolecularBloodTestEdit(molecularLabId);
+            return allSubject;
+        }
+
+        public List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId)
+        {
+            var allSubject = _molecularLabReceiptData.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
             return allSubject;
         }
     }
