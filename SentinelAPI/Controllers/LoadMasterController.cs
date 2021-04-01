@@ -367,5 +367,48 @@ namespace SentinelAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveAllZygosity")]
+        public CommonMasterResponse RetrieveAllZygosity()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _loadMasterService.GetAllZygosity();
+
+                _logger.LogInformation($"Received Zygosity master data {data}");
+                return data.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving zygosity data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("RetrieveAllMutuation")]
+        public CommonMasterResponse RetrieveAllMutuation()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _loadMasterService.GetAllMutuation();
+
+                _logger.LogInformation($"Received mutuation master data {data}");
+                return data.Count == 0 ?
+                    new CommonMasterResponse { Status = "true", Message = "No record found", data = new List<LoadCommonMaster>() }
+                    : new CommonMasterResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving mutuation data {e.StackTrace}");
+                return new CommonMasterResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
     }
 }

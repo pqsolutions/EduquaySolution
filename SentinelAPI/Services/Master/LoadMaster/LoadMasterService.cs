@@ -16,6 +16,18 @@ namespace SentinelAPI.Services.Master.LoadMaster
             _loadMasterData = new LoadMasterDataFactory().Create();
         }
 
+        public List<LoadCommonMaster> GetAllMutuation()
+        {
+            var mutuation = _loadMasterData.GetAllMutuation();
+            return mutuation;
+        }
+
+        public List<LoadCommonMaster> GetAllZygosity()
+        {
+            var zygosity = _loadMasterData.GetAllZygosity();
+            return zygosity;
+        }
+
         public List<LoadBirthStatus> RetrieveBirthStatus()
         {
             var allBirthStatus = _loadMasterData.RetrieveBirthStatus();

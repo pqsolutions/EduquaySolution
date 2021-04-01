@@ -27,6 +27,8 @@ namespace SentinelAPI.DataLayer.LoadMaster
         private const string FetchMolecularSampleStatus = "SPC_FetchMolecularSampleStatus";
         private const string FetchMolecularResultMaster = "SPC_FetchMolecularResultMaster";
         private const string FetchDiagnosis = "SPC_FetchDiagnosis";
+        private const string FetchAllZygosity = "SPC_FetchAllZygosity";
+        private const string FetchAllMutation = "SPC_FetchAllMutation";
 
         public LoadMasterData()
         {
@@ -155,6 +157,22 @@ namespace SentinelAPI.DataLayer.LoadMaster
         public List<LoadCommonMaster> RetrieveResults()
         {
             string stProc = FetchMolecularResultMaster;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> GetAllZygosity()
+        {
+            string stProc = FetchAllZygosity;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommonMaster> GetAllMutuation()
+        {
+            string stProc = FetchAllMutation;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<LoadCommonMaster>(stProc, pList);
             return allData;
