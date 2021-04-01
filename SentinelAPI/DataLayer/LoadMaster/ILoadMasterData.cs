@@ -25,6 +25,8 @@ namespace SentinelAPI.DataLayer.LoadMaster
         List<LoadCommonMaster> RetrieveHospitalbyMolecularLab(int molecularLabId);
         List<LoadCommonMaster> RetrieveDiagnosis();
         List<LoadCommonMaster> RetrieveResults();
+        List<LoadCommonMaster> GetAllZygosity();
+        List<LoadCommonMaster> GetAllMutuation();
 
     }
 
