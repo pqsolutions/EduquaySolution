@@ -1,5 +1,7 @@
-﻿using EduquayAPI.Contracts.V1.Request.Support;
+﻿using EduquayAPI.Contracts.V1.Request.AdminSupport;
+using EduquayAPI.Contracts.V1.Request.Support;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.AdminSupport;
 using EduquayAPI.Contracts.V1.Response.Support;
 using EduquayAPI.Models.Support;
 using System;
@@ -18,5 +20,7 @@ namespace EduquayAPI.Services.Support
         List<BarcodeErrorDetail> FetchDetailsForRCHCorrection(string input);
         Task<ServiceResponse> UpdateRCHId(UpdateRCHIDRequest rData);
         Task<CheckRCHResponse> CheckRCHIDExist(string rchId);
+
+        Task<AddANMResponse> AddNewANMUser(AddANMRequest aData);
     }
 }

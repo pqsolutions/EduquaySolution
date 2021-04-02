@@ -1,5 +1,7 @@
-﻿using EduquayAPI.Contracts.V1.Request.Support;
+﻿using EduquayAPI.Contracts.V1.Request.AdminSupport;
+using EduquayAPI.Contracts.V1.Request.Support;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.AdminSupport;
 using EduquayAPI.Contracts.V1.Response.Support;
 using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.Support;
@@ -441,6 +443,90 @@ namespace EduquayAPI.Services.Support
             }
         }
 
-      
+        public async Task<AddANMResponse> AddNewANMUser(AddANMRequest aData)
+        {
+            var sResponse = new AddANMResponse();
+            string message = CheckValANM(aData);
+            try
+            {
+                if (message == "")
+                {
+                    var hashPassword = BCrypt.Net.BCrypt.HashPassword("odisha");
+                    var result = _supportData.AddNewANM(aData, hashPassword);
+                    if (result.success == true)
+                    {
+                        sResponse.Status = "true";
+                        sResponse.Message = result.msg;
+                        return sResponse;
+                    }
+                    else
+                    {
+                        sResponse.Status = "false";
+                        sResponse.Message = result.msg;
+                        return sResponse;
+                    }
+                }
+                else
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = message;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to add the new ANM - {e.Message}";
+                return sResponse;
+            }
+        }
+
+        public string CheckValANM(AddANMRequest aData)
+        {
+            string msg = "";
+            if (string.IsNullOrEmpty(aData.userGovCode))
+            {
+                msg = "ANM Code is missing";
+            }
+            else if (aData.districtId <= 0)
+            {
+                msg = "Invalid district id";
+            }
+            else if (aData.blockId <= 0)
+            {
+                msg = "Invalid block id";
+            }
+            else if (aData.chcId <= 0)
+            {
+                msg = "Invalid chc id";
+            }
+            else if (aData.phcId <= 0)
+            {
+                msg = "Invalid phc id";
+            }
+            else if (aData.scId <= 0)
+            {
+                msg = "Invalid SC id";
+            }
+            else if (string.IsNullOrEmpty(aData.riId))
+            {
+                msg = "RIID is missing";
+            }
+            else if (string.IsNullOrEmpty(aData.firstName))
+            {
+                msg = "First Name is missing";
+            }
+            else if (string.IsNullOrEmpty(aData.contactNo1))
+            {
+                msg = "Contact No is missing";
+            }
+            else if (aData.userId <= 0)
+            {
+                msg = "Invalid user id";
+            }
+            return msg;
+        }
     } 
+
+
 }

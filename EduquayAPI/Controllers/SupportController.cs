@@ -1,6 +1,8 @@
 ﻿using EduquayAPI.Contracts.V1;
+using EduquayAPI.Contracts.V1.Request.AdminSupport;
 using EduquayAPI.Contracts.V1.Request.Support;
 using EduquayAPI.Contracts.V1.Response;
+using EduquayAPI.Contracts.V1.Response.AdminSupport;
 using EduquayAPI.Contracts.V1.Response.Support;
 using EduquayAPI.Models.Support;
 using EduquayAPI.Services.Support;
@@ -175,6 +177,25 @@ namespace EduquayAPI.Controllers
             {
                 Status = subjectSample.Status,
                 Message = subjectSample.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used to add New ANM User
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewANMSUser")]
+        public async Task<IActionResult> AddANMUser(AddANMRequest aData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request- {JsonConvert.SerializeObject(aData)}");
+            var data = await _supportService.AddNewANMUser(aData);
+            _logger.LogInformation($"Add new ANM Data {data}");
+            _logger.LogDebug($"Response Adding new ANM Data - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddANMResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
             });
         }
 

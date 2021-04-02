@@ -1,4 +1,6 @@
-﻿using EduquayAPI.Contracts.V1.Request.Support;
+﻿using EduquayAPI.Contracts.V1.Request.AdminSupport;
+using EduquayAPI.Contracts.V1.Request.Support;
+using EduquayAPI.Models.AdminiSupport;
 using EduquayAPI.Models.Support;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace EduquayAPI.DataLayer.Support
         List<BarcodeErrorDetail> FetchRCHIDExists(string input);
         UpdateRCHIDMsg UpdateRCHId(UpdateRCHIDRequest rData);
         List<RCHUpdationDetails> FetchUpdatedRCHIDDetails(string ids);
+        ANMCreation AddNewANM(AddANMRequest addUser, string password);
     }
     public interface ISupportDataFactory
     {
