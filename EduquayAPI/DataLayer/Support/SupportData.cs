@@ -1,4 +1,7 @@
-﻿using EduquayAPI.Contracts.V1.Request.Support;
+﻿using EduquayAPI.Contracts.V1.Request.AdminSupport;
+using EduquayAPI.Contracts.V1.Request.Support;
+using EduquayAPI.Models;
+using EduquayAPI.Models.AdminiSupport;
 using EduquayAPI.Models.MobileSubject.MobileSampleCollection;
 using EduquayAPI.Models.Support;
 using System;
@@ -23,9 +26,47 @@ namespace EduquayAPI.DataLayer.Support
         private const string FetchUpdateRCHIDDetail = "SPC_FetchUpdateRCHIDDetail";
         private const string FetchRCHIDExist = "SPC_FetchRCHIDExist";
 
+        private const string AddANMUser = "SPC_AddANMUser";
+
         public SupportData()
         {
 
+        }
+
+        public ANMCreation AddNewANM(AddANMRequest addUser, string password)
+        {
+            try
+            {
+                var stProc = AddANMUser;
+                var pList = new List<SqlParameter>()
+                {
+                    new SqlParameter("@User_gov_code", addUser.userGovCode),
+                    new SqlParameter("@Password", password),
+                    new SqlParameter("@DistrictID", addUser.districtId),
+                    new SqlParameter("@BlockID", addUser.blockId),
+                    new SqlParameter("@CHCID", addUser.chcId),
+                    new SqlParameter("@PHCID", addUser.phcId),
+                    new SqlParameter("@SCID", addUser.scId),
+                    new SqlParameter("@RIID", addUser.riId ?? addUser.riId),
+                    new SqlParameter("@FirstName", addUser.firstName ?? addUser.firstName),
+                    new SqlParameter("@MiddleName", addUser.middleName.ToCheckNull()),
+                    new SqlParameter("@LastName", addUser.lastName.ToCheckNull()),
+                    new SqlParameter("@ContactNo1", addUser.contactNo1 ?? addUser.contactNo1),
+                    new SqlParameter("@ContactNo2", addUser.contactNo2.ToCheckNull()),
+                    new SqlParameter("@Email", addUser.email.ToCheckNull()),
+                    new SqlParameter("@GovIDType_ID", addUser.govIdTypeId),
+                    new SqlParameter("@GovIDDetails", addUser.govIdDetails.ToCheckNull()),
+                    new SqlParameter("@Address", addUser.address.ToCheckNull()),
+                    new SqlParameter("@Pincode", addUser.pincode.ToCheckNull()),
+                    new SqlParameter("@UserId", addUser.userId),
+                };
+                var allData = UtilityDL.FillEntity<ANMCreation>(stProc, pList);
+                return allData;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ErrorBarcodeSMSDetail ErrorSMSTrigger(int getId)
