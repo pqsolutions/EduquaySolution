@@ -24,10 +24,13 @@ namespace SentinelAPI.Models.MolecularLab
         public string testResult { get; set; }
         public string reasonForClose { get; set; }
         public string testDate { get; set; }
-
+        public string sampleCollectionDateTime { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDateTime"))
+                this.sampleCollectionDateTime = Convert.ToString(reader["SampleCollectionDateTime"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestDate"))
                 this.testDate = Convert.ToString(reader["TestDate"]);
 

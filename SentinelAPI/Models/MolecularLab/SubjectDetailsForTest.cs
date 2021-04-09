@@ -16,9 +16,13 @@ namespace SentinelAPI.Models.MolecularLab
         public string babyHospitalNo { get; set; }
         public string district { get; set; }
         public bool sampleDamaged { get; set; }
+        public string sampleCollectionDateTime { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleCollectionDateTime"))
+                this.sampleCollectionDateTime = Convert.ToString(reader["SampleCollectionDateTime"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SampleDamaged"))
                 this.sampleDamaged = Convert.ToBoolean(reader["SampleDamaged"]);
 

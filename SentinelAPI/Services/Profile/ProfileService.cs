@@ -323,14 +323,6 @@ namespace SentinelAPI.Services.Profile
             {
                 message = "Missing gender";
             }
-            else if (brData.babyFirstName == "")
-            {
-                message = "Missing baby firstname";
-            }
-            else if (brData.babyLastName == "")
-            {
-                message = "Missing baby lastname";
-            }
             else if (brData.birthWeight == "")
             {
                 message = "Missing birth weight";
