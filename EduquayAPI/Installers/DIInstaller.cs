@@ -24,6 +24,7 @@ using EduquayAPI.DataLayer.PNDT;
 using EduquayAPI.DataLayer.PNDTandMTPMaster;
 using EduquayAPI.DataLayer.PNDTObstetrician;
 using EduquayAPI.DataLayer.Reports;
+using EduquayAPI.DataLayer.SA;
 using EduquayAPI.DataLayer.SPC;
 using EduquayAPI.DataLayer.Support;
 using EduquayAPI.DataLayer.WebMaster;
@@ -49,6 +50,7 @@ using EduquayAPI.Services.PNDT;
 using EduquayAPI.Services.PNDTandMTPMaster;
 using EduquayAPI.Services.PNDTObstetrician;
 using EduquayAPI.Services.Reports;
+using EduquayAPI.Services.SA;
 using EduquayAPI.Services.SPC;
 using EduquayAPI.Services.Support;
 using EduquayAPI.Services.WebMaster;
@@ -206,6 +208,9 @@ namespace EduquayAPI.Installers
 
             services.AddScoped<ISupportDataFactory, SupportDataFactory>();
             services.AddScoped<ISupportService, SupportService>();
+
+            services.AddScoped<ISADataFactory, SADataFactory>();
+            services.AddScoped<ISAService, SAService>();
 
             services.AddSingleton<DbConnect>();
         }
