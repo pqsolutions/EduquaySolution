@@ -95,8 +95,8 @@ namespace SentinelAPI.DataLayer.Profile
                 {
                     new SqlParameter("@BabySubjectId", brData.babySubjectId),
                     new SqlParameter("@HospitalNo", brData.hospitalNo ?? brData.hospitalNo),
-                    new SqlParameter("@BabyFirstName", brData.babyFirstName ?? brData.babyFirstName),
-                    new SqlParameter("@BabyLastName", brData.babyLastName ?? brData.babyLastName),
+                    new SqlParameter("@BabyFirstName", brData.babyFirstName.ToCheckNull()),
+                    new SqlParameter("@BabyLastName", brData.babyLastName.ToCheckNull()),
                     new SqlParameter("@Gender", brData.gender.ToCheckNull()),
                     new SqlParameter("@BirthWeight", brData.birthWeight ?? brData.birthWeight),
                     new SqlParameter("@DeliveryDateTime", brData.deliveryDateTime ?? brData.deliveryDateTime),

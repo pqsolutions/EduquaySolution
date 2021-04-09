@@ -198,7 +198,5 @@ namespace EduquayAPI.Controllers
                 Message = data.Message,
             });
         }
-
-
     }
 }
