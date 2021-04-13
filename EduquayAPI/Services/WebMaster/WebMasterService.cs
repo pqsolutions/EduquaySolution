@@ -208,5 +208,11 @@ namespace EduquayAPI.Services.WebMaster
             var mutuation = _webMasterData.GetAllMutuation();
             return mutuation;
         }
+
+        public List<LoadCommon> RetrieveTestingCHCByDistrict(int id)
+        {
+            var data = _webMasterData.RetrieveTestingCHCByDistrict(id);
+            return data;
+        }
     }
 }

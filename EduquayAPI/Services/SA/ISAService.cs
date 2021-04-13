@@ -23,5 +23,19 @@ namespace EduquayAPI.Services.SA
         List<DistrictDetail> RetrieveDistrictById(int id);
         List<DistrictDetail> RetrieveAllDistricts();
         #endregion
+
+        #region Block Master
+        Task<AddEditResponse> AddBlockDetail(AddBlockRequest data);
+        Task<AddEditResponse> UpdateBlockDetail(UpdateBlockRequest data);
+        List<BlockDetail> RetrieveBlockById(int id);
+        List<BlockDetail> RetrieveAllBlocks();
+        #endregion
+
+        #region CHC Master
+        Task<AddEditResponse> AddCHCDetail(AddCHCRequest data);
+        Task<AddEditResponse> UpdateCHCDetail(UpdateCHCRequest data);
+        List<CHCDetail> RetrieveCHCById(int id);
+        List<CHCDetail> RetrieveAllCHCs();
+        #endregion
     }
 }

@@ -40,6 +40,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCommon> GetAllPNDTLocation();
         List<LoadCommon> GetAllZygosity();
         List<LoadCommon> GetAllMutuation();
+        List<LoadCommon> RetrieveTestingCHCByDistrict(int id);
     }
     public interface IWebMasterDataFactory
     {
