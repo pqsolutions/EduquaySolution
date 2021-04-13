@@ -12,13 +12,10 @@ namespace EduquayAPI.Services.SA
     public class SAService : ISAService
     {
         private readonly ISAData _saData;
-
         public SAService(ISADataFactory saDataFactory)
         {
             _saData = new SADataFactory().Create();
         }
-
-      
 
         #region State Master
         public async Task<AddEditResponse> AddStateDetail(AddStateRequest sData)
@@ -175,5 +172,186 @@ namespace EduquayAPI.Services.SA
             }
         }
         #endregion
+
+        #region Block Master
+        public async Task<AddEditResponse> AddBlockDetail(AddBlockRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.blockGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter block gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter block name";
+                }
+                else if (data.districtId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid district";
+                }
+                else
+                {
+                    var addEditResponse = _saData.AddBlockDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+
+        public async Task<AddEditResponse> UpdateBlockDetail(UpdateBlockRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.blockGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter block gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter block name";
+                }
+                else if (data.districtId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid district";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdateBlockDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+
+        public List<BlockDetail> RetrieveBlockById(int id)
+        {
+            var data = _saData.RetrieveBlockById(id);
+            return data;
+        }
+
+        public List<BlockDetail> RetrieveAllBlocks()
+        {
+            var data = _saData.RetrieveAllBlocks();
+            return data;
+        }
+
+        #endregion
+
+        public async Task<AddEditResponse> AddCHCDetail(AddCHCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.chcGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter chc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter chc name";
+                }
+                else if (data.districtId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid district";
+                }
+                else if (data.blockId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid block";
+                }
+                else
+                {
+                    var addEditResponse = _saData.AddCHCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+
+        public async Task<AddEditResponse> UpdateCHCDetail(UpdateCHCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.chcGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter chc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter chc name";
+                }
+                else if (data.districtId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid district";
+                }
+                else if (data.blockId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid block";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdateCHCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+
+        public List<CHCDetail> RetrieveCHCById(int id)
+        {
+            var data = _saData.RetrieveCHCById(id);
+            return data;
+        }
+
+        public List<CHCDetail> RetrieveAllCHCs()
+        {
+            var data = _saData.RetrieveAllCHCs();
+            return data;
+        }
     }
 }

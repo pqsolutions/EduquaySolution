@@ -166,7 +166,7 @@ namespace EduquayAPI.Controllers
         /// Used for add new district
         /// </summary>
         [HttpPost]
-        [Route("AddNewSDistrict")]
+        [Route("AddNewDistrict")]
         public async Task<IActionResult> AddNewDistrict(AddDistrictRequest sData)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
@@ -201,5 +201,177 @@ namespace EduquayAPI.Controllers
                 Message = data.Message,
             });
         }
+
+        /// <summary>
+        /// Used for retrieve  all blocks 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllBlocks")]
+        public SABlockResponse GetBlocks()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllBlocks();
+                _logger.LogInformation($"Received Blocks {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SABlockResponse { Status = "true", Message = "No block found", data = new List<BlockDetail>() }
+                : new SABlockResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve block {e.StackTrace}");
+                return new SABlockResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve block by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveBlockById/{id}")]
+        public SABlockResponse GetBlock(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveBlockById(id);
+                _logger.LogInformation($"Received block by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SABlockResponse { Status = "true", Message = "No block found", data = new List<BlockDetail>() }
+                : new SABlockResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve block by id {e.StackTrace}");
+                return new SABlockResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new block
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewBlock")]
+        public async Task<IActionResult> AddNewBlock(AddBlockRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddBlockDetail(sData);
+            _logger.LogInformation($"Response - Add New Block {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update  vlock
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateBlock")]
+        public async Task<IActionResult> UpdateBlock(UpdateBlockRequest uData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(uData)}");
+            var data = await _saService.UpdateBlockDetail(uData);
+            _logger.LogInformation($"Response - update block {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for retrieve  all chcs 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllCHCs")]
+        public SACHCResponse GetCHCs()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllCHCs();
+                _logger.LogInformation($"Received all CHC {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SACHCResponse { Status = "true", Message = "No chc found", data = new List<CHCDetail>() }
+                : new SACHCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve chc {e.StackTrace}");
+                return new SACHCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve chc by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveCHCById/{id}")]
+        public SACHCResponse GetCHC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveCHCById(id);
+                _logger.LogInformation($"Received chc by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SACHCResponse { Status = "true", Message = "No chc found", data = new List<CHCDetail>() }
+                : new SACHCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve chc by id {e.StackTrace}");
+                return new SACHCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new chc
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewCHC")]
+        public async Task<IActionResult> AddNewCHC(AddCHCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddCHCDetail(sData);
+            _logger.LogInformation($"Response - Add New CHC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update chc
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateCHC")]
+        public async Task<IActionResult> UpdateCHC(UpdateCHCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.UpdateCHCDetail(sData);
+            _logger.LogInformation($"Response - Update CHC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
     }
 }

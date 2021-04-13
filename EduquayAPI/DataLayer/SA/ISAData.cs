@@ -16,12 +16,25 @@ namespace EduquayAPI.DataLayer.SA
         List<StateDetails> RetrieveAllStates();
         #endregion
 
-
         #region District Master
         AddUpdateMaster AddDistrictDetail(AddDistrictRequest data);
         AddUpdateMaster UpdateDistrictDetail(UpdateDistrictRequest data);
         List<DistrictDetail> RetrieveDistrictById(int id);
         List<DistrictDetail> RetrieveAllDistricts();
+        #endregion
+
+        #region Block Master
+        AddUpdateMaster AddBlockDetail(AddBlockRequest data);
+        AddUpdateMaster UpdateBlockDetail(UpdateBlockRequest data);
+        List<BlockDetail> RetrieveBlockById(int id);
+        List<BlockDetail> RetrieveAllBlocks();
+        #endregion
+
+        #region CHC Master
+        AddUpdateMaster AddCHCDetail(AddCHCRequest data);
+        AddUpdateMaster UpdateCHCDetail(UpdateCHCRequest data);
+        List<CHCDetail> RetrieveCHCById(int id);
+        List<CHCDetail> RetrieveAllCHCs();
         #endregion
 
     }

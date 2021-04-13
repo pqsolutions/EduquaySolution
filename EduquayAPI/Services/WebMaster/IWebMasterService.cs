@@ -40,5 +40,6 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadCommon> GetAllPNDTLocation();
         List<LoadCommon> GetAllZygosity();
         List<LoadCommon> GetAllMutuation();
+        List<LoadCommon> RetrieveTestingCHCByDistrict(int id);
     }
 }

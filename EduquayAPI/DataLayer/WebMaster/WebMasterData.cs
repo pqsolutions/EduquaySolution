@@ -41,6 +41,8 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchAllPNDTLocation = "SPC_FetchAllPNDTLocation";
         private const string FetchAllZygosity = "SPC_FetchAllZygosity";
         private const string FetchAllMutation = "SPC_FetchAllMutation";
+
+        private const string FetchAllTestingCHCByDistrict = "SPC_FetchAllTestingCHCByDistrict";
         public WebMasterData()
         {
 
@@ -298,6 +300,12 @@ namespace EduquayAPI.DataLayer.WebMaster
             return allData;
         }
 
-       
+        public List<LoadCommon> RetrieveTestingCHCByDistrict(int id)
+        {
+            string stProc = FetchAllTestingCHCByDistrict;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
     }
 }

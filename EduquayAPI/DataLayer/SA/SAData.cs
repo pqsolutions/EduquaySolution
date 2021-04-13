@@ -1,4 +1,5 @@
 ﻿using EduquayAPI.Contracts.V1.Request.AdminSupport;
+using EduquayAPI.Models;
 using EduquayAPI.Models.AdminiSupport;
 using EduquayAPI.Models.Masters;
 using System;
@@ -145,6 +146,159 @@ namespace EduquayAPI.DataLayer.SA
             {
                 throw e;
             }
+        }
+        #endregion
+
+        #region District Master Declaration
+        private const string FetchAllBlocks = "SPC_FetchAllBlockDetail";
+        private const string FetchBlock = "SPC_FetchBlockDetail";
+        private const string AddBlock = "SPC_SA_AddBlock";
+        private const string UpdateBlock = "SPC_SA_UpdateBlock";
+        #endregion
+
+        #region Block Master 
+        public AddUpdateMaster AddBlockDetail(AddBlockRequest data)
+        {
+            try
+            {
+                string stProc = AddBlock;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@Block_gov_code", data.blockGovCode ?? data.blockGovCode),
+                    new SqlParameter("@Blockname", data.name ?? data.name),
+                    new SqlParameter("@DistrictID", data.districtId ),
+                    new SqlParameter("@Comments", data.comments ?? data.comments),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public AddUpdateMaster UpdateBlockDetail(UpdateBlockRequest data)
+        {
+            try
+            {
+                string stProc = UpdateBlock;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@Id", data.Id ),
+                    new SqlParameter("@Block_gov_code", data.blockGovCode ?? data.blockGovCode),
+                    new SqlParameter("@Blockname", data.name ?? data.name),
+                    new SqlParameter("@DistrictID", data.districtId ),
+                    new SqlParameter("@Isactive", data.isActive),
+                    new SqlParameter("@Comments", data.comments ?? data.comments),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<BlockDetail> RetrieveBlockById(int id)
+        {
+            string stProc = FetchBlock;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<BlockDetail>(stProc, pList);
+            return allData;
+        }
+        public List<BlockDetail> RetrieveAllBlocks()
+        {
+            string stProc = FetchAllBlocks;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<BlockDetail>(stProc, pList);
+            return allData;
+        }
+        #endregion
+
+        #region District Master Declaration
+        private const string FetchAllCHCs = "SPC_FetchAllCHCDetail";
+        private const string FetchCHC = "SPC_FetchCHCDetail";
+        private const string AddCHC = "SPC_SA_AddCHC";
+        private const string UpdateCHC = "SPC_SA_UpdateCHC";
+        #endregion
+
+        #region CHC Master 
+        public AddUpdateMaster AddCHCDetail(AddCHCRequest data)
+        {
+            try
+            {
+                string stProc = AddCHC;
+                var pList = new List<SqlParameter>
+                {
+                    
+                    new SqlParameter("@BlockID", data.blockId),
+                    new SqlParameter("@DistrictID", data.districtId),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@CHC_gov_code", data.chcGovCode),
+                    new SqlParameter("@CHCname", data.name  ?? data.name),
+                    new SqlParameter("@Istestingfacility", data.isTestingFacility ),
+                    new SqlParameter("@TestingCHCID", data.testingCHCId),
+                    new SqlParameter("@CentralLabId", data.centralLabId),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public AddUpdateMaster UpdateCHCDetail(UpdateCHCRequest data)
+        {
+            try
+            {
+                string stProc = UpdateCHC;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@Id", data.id),
+                    new SqlParameter("@BlockID", data.blockId),
+                    new SqlParameter("@DistrictID", data.districtId),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@CHC_gov_code", data.chcGovCode),
+                    new SqlParameter("@CHCname", data.name  ?? data.name),
+                    new SqlParameter("@Istestingfacility", data.isTestingFacility),
+                    new SqlParameter("@TestingCHCID", data.testingCHCId),
+                    new SqlParameter("@CentralLabId", data.centralLabId),
+                    new SqlParameter("@IsActive", data.isActive),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<CHCDetail> RetrieveCHCById(int id)
+        {
+            string stProc = FetchCHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<CHCDetail>(stProc, pList);
+            return allData;
+        }
+        public List<CHCDetail> RetrieveAllCHCs()
+        {
+            string stProc = FetchAllCHCs;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<CHCDetail>(stProc, pList);
+            return allData;
         }
         #endregion
     }
