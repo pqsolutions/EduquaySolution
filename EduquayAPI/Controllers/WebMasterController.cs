@@ -718,7 +718,7 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
-        [Route("RetrieveTestingCHCBydistrict/{id}")]
+        [Route("RetrieveTestingCHCByDistrict/{id}")]
         public LoadCommonResponse RetrieveTestingCHCBydistrict(int id)
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");

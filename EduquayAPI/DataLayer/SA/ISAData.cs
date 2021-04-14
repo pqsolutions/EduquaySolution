@@ -37,6 +37,20 @@ namespace EduquayAPI.DataLayer.SA
         List<CHCDetail> RetrieveAllCHCs();
         #endregion
 
+        #region PHC Master
+        AddUpdateMaster AddPHCDetail(AddPHCRequest data);
+        AddUpdateMaster UpdatePHCDetail(UpdatePHCRequest data);
+        List<PHCDetail> RetrievePHCById(int id);
+        List<PHCDetail> RetrieveAllPHCs();
+        #endregion
+
+        #region SC Master
+        AddUpdateMaster AddSCDetail(AddSCRequest data);
+        AddUpdateMaster UpdateSCDetail(UpdateSCRequest data);
+        List<SCDetail> RetrieveSCById(int id);
+        List<SCDetail> RetrieveAllSCs();
+        #endregion
+
     }
     public interface ISADataFactory
     {

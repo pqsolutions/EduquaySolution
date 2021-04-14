@@ -37,5 +37,19 @@ namespace EduquayAPI.Services.SA
         List<CHCDetail> RetrieveCHCById(int id);
         List<CHCDetail> RetrieveAllCHCs();
         #endregion
+
+        #region PHC Master
+        Task<AddEditResponse> AddPHCDetail(AddPHCRequest data);
+        Task<AddEditResponse> UpdatePHCDetail(UpdatePHCRequest data);
+        List<PHCDetail> RetrievePHCById(int id);
+        List<PHCDetail> RetrieveAllPHCs();
+        #endregion
+
+        #region PHC Master
+        Task<AddEditResponse> AddSCDetail(AddSCRequest data);
+        Task<AddEditResponse> UpdateSCDetail(UpdateSCRequest data);
+        List<SCDetail> RetrieveSCById(int id);
+        List<SCDetail> RetrieveAllSCs();
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.SA
 {
-    public class SAService : ISAService
+    public class SAService : ISAService 
     {
         private readonly ISAData _saData;
         public SAService(ISADataFactory saDataFactory)
@@ -48,16 +48,6 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-        public List<StateDetails> RetrieveAllStates()
-        {
-            var data = _saData.RetrieveAllStates();
-            return data;
-        }
-        public List<StateDetails> RetrieveStateById(int id)
-        {
-            var data = _saData.RetrieveStateById(id);
-            return data;
-        }
         public async Task<AddEditResponse> UpdateStatedetail(UpdateStateRequest sData)
         {
             var response = new AddEditResponse();
@@ -87,6 +77,16 @@ namespace EduquayAPI.Services.SA
                 response.Message = $"Unable to process - {e.Message}";
                 return response;
             }
+        }
+        public List<StateDetails> RetrieveAllStates()
+        {
+            var data = _saData.RetrieveAllStates();
+            return data;
+        }
+        public List<StateDetails> RetrieveStateById(int id)
+        {
+            var data = _saData.RetrieveStateById(id);
+            return data;
         }
         #endregion
 
@@ -126,16 +126,6 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-        public List<DistrictDetail> RetrieveAllDistricts()
-        {
-            var data = _saData.RetrieveAllDistricts();
-            return data;
-        }
-        public List<DistrictDetail> RetrieveDistrictById(int id)
-        {
-            var data = _saData.RetrieveDistrictById(id);
-            return data;
-        }
         public async Task<AddEditResponse> UpdateDistrictDetail(UpdateDistrictRequest data)
         {
             var response = new AddEditResponse();
@@ -170,6 +160,16 @@ namespace EduquayAPI.Services.SA
                 response.Message = $"Unable to process - {e.Message}";
                 return response;
             }
+        }
+        public List<DistrictDetail> RetrieveAllDistricts()
+        {
+            var data = _saData.RetrieveAllDistricts();
+            return data;
+        }
+        public List<DistrictDetail> RetrieveDistrictById(int id)
+        {
+            var data = _saData.RetrieveDistrictById(id);
+            return data;
         }
         #endregion
 
@@ -209,7 +209,6 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-
         public async Task<AddEditResponse> UpdateBlockDetail(UpdateBlockRequest data)
         {
             var response = new AddEditResponse();
@@ -245,21 +244,19 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-
         public List<BlockDetail> RetrieveBlockById(int id)
         {
             var data = _saData.RetrieveBlockById(id);
             return data;
         }
-
         public List<BlockDetail> RetrieveAllBlocks()
         {
             var data = _saData.RetrieveAllBlocks();
             return data;
         }
-
         #endregion
 
+        #region CHC Master
         public async Task<AddEditResponse> AddCHCDetail(AddCHCRequest data)
         {
             var response = new AddEditResponse();
@@ -300,7 +297,6 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-
         public async Task<AddEditResponse> UpdateCHCDetail(UpdateCHCRequest data)
         {
             var response = new AddEditResponse();
@@ -341,17 +337,192 @@ namespace EduquayAPI.Services.SA
                 return response;
             }
         }
-
         public List<CHCDetail> RetrieveCHCById(int id)
         {
             var data = _saData.RetrieveCHCById(id);
             return data;
         }
-
         public List<CHCDetail> RetrieveAllCHCs()
         {
             var data = _saData.RetrieveAllCHCs();
             return data;
         }
+        #endregion
+
+        #region PHC Master
+        public async Task<AddEditResponse> AddPHCDetail(AddPHCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.phcGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter phc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter phc name";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.AddPHCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public async Task<AddEditResponse> UpdatePHCDetail(UpdatePHCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.phcGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter phc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter phc name";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdatePHCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public List<PHCDetail> RetrievePHCById(int id)
+        {
+            var data = _saData.RetrievePHCById(id);
+            return data;
+        }
+        public List<PHCDetail> RetrieveAllPHCs()
+        {
+            var data = _saData.RetrieveAllPHCs();
+            return data;
+        }
+        #endregion
+
+        #region SC Master
+        public async Task<AddEditResponse> AddSCDetail(AddSCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.scGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter sc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter sc name";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else if (data.phcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid phc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.AddSCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public async Task<AddEditResponse> UpdateSCDetail(UpdateSCRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.scGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter sc gov code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter sc name";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else if (data.phcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid phc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdateSCDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public List<SCDetail> RetrieveSCById(int id)
+        {
+            var data = _saData.RetrieveSCById(id);
+            return data;
+        }
+        public List<SCDetail> RetrieveAllSCs()
+        {
+            var data = _saData.RetrieveAllSCs();
+            return data;
+        }
+        #endregion
     }
 }

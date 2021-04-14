@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.DataLayer.SA
 {
-    public class SAData: ISAData
+    public class SAData : ISAData
     {
         #region State Master Declaration
         private const string FetchAllStates = "SPC_FetchAllStates";
@@ -217,7 +217,7 @@ namespace EduquayAPI.DataLayer.SA
         }
         #endregion
 
-        #region District Master Declaration
+        #region CHC Master Declaration
         private const string FetchAllCHCs = "SPC_FetchAllCHCDetail";
         private const string FetchCHC = "SPC_FetchCHCDetail";
         private const string AddCHC = "SPC_SA_AddCHC";
@@ -232,7 +232,7 @@ namespace EduquayAPI.DataLayer.SA
                 string stProc = AddCHC;
                 var pList = new List<SqlParameter>
                 {
-                    
+
                     new SqlParameter("@BlockID", data.blockId),
                     new SqlParameter("@DistrictID", data.districtId),
                     new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
@@ -298,6 +298,165 @@ namespace EduquayAPI.DataLayer.SA
             string stProc = FetchAllCHCs;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<CHCDetail>(stProc, pList);
+            return allData;
+        }
+        #endregion
+
+        #region PHC Master Declaration
+        private const string FetchAllPHCs = "SPC_FetchAllPHCDetail";
+        private const string FetchPHC = "SPC_FetchPHCDetail";
+        private const string AddPHC = "SPC_SA_AddPHC";
+        private const string UpdatePHC = "SPC_SA_UpdatePHC";
+        #endregion
+
+        #region PHC Master 
+        public AddUpdateMaster AddPHCDetail(AddPHCRequest data)
+        {
+            try
+            {
+                string stProc = AddPHC;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHC_gov_code", data.phcGovCode),
+                    new SqlParameter("@PHCname", data.name  ?? data.name),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public AddUpdateMaster UpdatePHCDetail(UpdatePHCRequest data)
+        {
+            try
+            {
+                string stProc = UpdatePHC;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@Id", data.id),
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHC_gov_code", data.phcGovCode),
+                    new SqlParameter("@PHCname", data.name  ?? data.name),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@IsActive", data.isActive),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<PHCDetail> RetrievePHCById(int id)
+        {
+            string stProc = FetchPHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<PHCDetail>(stProc, pList);
+            return allData;
+        }
+        public List<PHCDetail> RetrieveAllPHCs()
+        {
+            string stProc = FetchAllPHCs;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<PHCDetail>(stProc, pList);
+            return allData;
+        }
+        #endregion
+
+        #region SC Master Declaration
+        private const string FetchAllSCs = "SPC_FetchAllSCDetail";
+        private const string FetchSC = "SPC_FetchSCDetail";
+        private const string AddSC = "SPC_SA_AddSC";
+        private const string UpdateSC = "SPC_SA_UpdateSC";
+        #endregion
+
+        #region SC Master 
+        public AddUpdateMaster AddSCDetail(AddSCRequest data)
+        {
+            try
+            {
+                string stProc = AddSC;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHCID", data.phcId),
+                    new SqlParameter("@PHC_gov_code", data.scGovCode),
+                    new SqlParameter("@SCname", data.name  ?? data.name),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@SCAddress", data.scAddress.ToCheckNull()),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public AddUpdateMaster UpdateSCDetail(UpdateSCRequest data)
+        {
+            try
+            {
+                string stProc = UpdateSC;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@ID", data.id),
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHCID", data.phcId),
+                    new SqlParameter("@PHC_gov_code", data.scGovCode),
+                    new SqlParameter("@SCname", data.name  ?? data.name),
+                    new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@SCAddress", data.scAddress.ToCheckNull()),
+                    new SqlParameter("@IsActive", data.isActive),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<SCDetail> RetrieveSCById(int id)
+        {
+            string stProc = FetchSC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<SCDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<SCDetail> RetrieveAllSCs()
+        {
+            string stProc = FetchAllSCs;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<SCDetail>(stProc, pList);
             return allData;
         }
         #endregion
