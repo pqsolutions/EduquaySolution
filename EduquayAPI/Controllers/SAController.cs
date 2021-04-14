@@ -373,5 +373,177 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Used for retrieve  all phcs 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllPHCs")]
+        public SAPHCResponse GetPHCs()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllPHCs();
+                _logger.LogInformation($"Received all PHC {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SAPHCResponse { Status = "true", Message = "No phc found", data = new List<PHCDetail>() }
+                : new SAPHCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve phc {e.StackTrace}");
+                return new SAPHCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve phc by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrievePHCById/{id}")]
+        public SAPHCResponse GetPHC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrievePHCById(id);
+                _logger.LogInformation($"Received phc by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SAPHCResponse { Status = "true", Message = "No chc found", data = new List<PHCDetail>() }
+                : new SAPHCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve phc by id {e.StackTrace}");
+                return new SAPHCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new phc
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewPHC")]
+        public async Task<IActionResult> AddNewPHC(AddPHCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddPHCDetail(sData);
+            _logger.LogInformation($"Response - Add New PHC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update phc
+        /// </summary>
+        [HttpPost]
+        [Route("UpdatePHC")]
+        public async Task<IActionResult> UpdateCHC(UpdatePHCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.UpdatePHCDetail(sData);
+            _logger.LogInformation($"Response - Update PHC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for retrieve  all scs 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllSCs")]
+        public SASCResponse GetSCs()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllSCs();
+                _logger.LogInformation($"Received all AC {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SASCResponse { Status = "true", Message = "No sc found", data = new List<SCDetail>() }
+                : new SASCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve sc {e.StackTrace}");
+                return new SASCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve sc by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveSCById/{id}")]
+        public SASCResponse GetSC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveSCById(id);
+                _logger.LogInformation($"Received sc by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SASCResponse { Status = "true", Message = "No sc found", data = new List<SCDetail>() }
+                : new SASCResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve phc by id {e.StackTrace}");
+                return new SASCResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new sc
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewSC")]
+        public async Task<IActionResult> AddNewSC(AddSCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddSCDetail(sData);
+            _logger.LogInformation($"Response - Add New SC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update sc
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateSC")]
+        public async Task<IActionResult> UpdateSC(UpdateSCRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.UpdateSCDetail(sData);
+            _logger.LogInformation($"Response - Update SC {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
     }
 }
