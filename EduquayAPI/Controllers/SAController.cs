@@ -470,7 +470,7 @@ namespace EduquayAPI.Controllers
             try
             {
                 var data = _saService.RetrieveAllSCs();
-                _logger.LogInformation($"Received all AC {data}");
+                _logger.LogInformation($"Received all SC {data}");
                 _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
                 return data.Count == 0 ? new SASCResponse { Status = "true", Message = "No sc found", data = new List<SCDetail>() }
                 : new SASCResponse { Status = "true", Message = string.Empty, data = data };
@@ -500,7 +500,7 @@ namespace EduquayAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in  retrieve phc by id {e.StackTrace}");
+                _logger.LogError($"Error in  retrieve ilr by id {e.StackTrace}");
                 return new SASCResponse { Status = "false", Message = e.Message, data = null };
             }
         }
@@ -545,5 +545,199 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Used for retrieve  all ILR 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllILR")]
+        public SAILRResponse GetILRs()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllILR();
+                _logger.LogInformation($"Received all ILR {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SAILRResponse { Status = "true", Message = "No ilr found", data = new List<ILRDetail>() }
+                : new SAILRResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve ILR {e.StackTrace}");
+                return new SAILRResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve ILR by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveILRById/{id}")]
+        public SAILRResponse GetILR(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveILRById(id);
+                _logger.LogInformation($"Received ilr by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SAILRResponse { Status = "true", Message = "No ilr found", data = new List<ILRDetail>() }
+                : new SAILRResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve ilr by id {e.StackTrace}");
+                return new SAILRResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new ILR
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewILR")]
+        public async Task<IActionResult> AddNewILR(AddILRRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddILRDetail(sData);
+            _logger.LogInformation($"Response - Add New ILR {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for update ILR
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateILR")]
+        public async Task<IActionResult> UpdateILR(UpdateILRRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.UpdateILRDetail(sData);
+            _logger.LogInformation($"Response - Update ILR {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for retrieve  all RI 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveAllRISites")]
+        public SARIResponse GetRISitess()
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveAllRI();
+                _logger.LogInformation($"Received all RI {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SARIResponse { Status = "true", Message = "No RI found", data = new List<RISiteDetail>() }
+                : new SARIResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve RI {e.StackTrace}");
+                return new SARIResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve RI by id 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveRISiteById/{id}")]
+        public SARIResponse GetRISite(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveRIById(id);
+                _logger.LogInformation($"Received ri by Id {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SARIResponse { Status = "true", Message = "No RI found", data = new List<RISiteDetail>() }
+                : new SARIResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve ri by id {e.StackTrace}");
+                return new SARIResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve RI by sc 
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveRIBySC/{id}")]
+        public SARIResponse GetRISiteBySC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var data = _saService.RetrieveRIBySC(id);
+                _logger.LogInformation($"Received ri by sc {data}");
+                _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+                return data.Count == 0 ? new SARIResponse { Status = "true", Message = "No RI found", data = new List<RISiteDetail>() }
+                : new SARIResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in  retrieve ri by sc {e.StackTrace}");
+                return new SARIResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for add new RI
+        /// </summary>
+        [HttpPost]
+        [Route("AddNewRISites")]
+        public async Task<IActionResult> AddNewRISites(AddRISitesRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.AddRIDetail(sData);
+            _logger.LogInformation($"Response - Add New RIs {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for Update RI
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateRISite")]
+        public async Task<IActionResult> UpdateRISite(UpdateRISiteRequest sData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(sData)}");
+
+            var data = await _saService.UpdateRIDetail(sData);
+            _logger.LogInformation($"Response - Update RI {data}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(data)}");
+            return Ok(new AddEditResponse
+            {
+                Status = data.Status,
+                Message = data.Message,
+            });
+        }
     }
 }

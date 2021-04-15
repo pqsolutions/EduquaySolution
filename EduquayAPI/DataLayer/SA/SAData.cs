@@ -413,7 +413,6 @@ namespace EduquayAPI.DataLayer.SA
                 throw e;
             }
         }
-
         public AddUpdateMaster UpdateSCDetail(UpdateSCRequest data)
         {
             try
@@ -443,7 +442,6 @@ namespace EduquayAPI.DataLayer.SA
                 throw e;
             }
         }
-
         public List<SCDetail> RetrieveSCById(int id)
         {
             string stProc = FetchSC;
@@ -451,12 +449,169 @@ namespace EduquayAPI.DataLayer.SA
             var allData = UtilityDL.FillData<SCDetail>(stProc, pList);
             return allData;
         }
-
         public List<SCDetail> RetrieveAllSCs()
         {
             string stProc = FetchAllSCs;
             var pList = new List<SqlParameter>();
             var allData = UtilityDL.FillData<SCDetail>(stProc, pList);
+            return allData;
+        }
+        #endregion
+
+        #region ILR Master Declaration
+        private const string FetchAllILR = "SPC_FetchAllILRDetail";
+        private const string FetchILR = "SPC_FetchILRDetail";
+        private const string AddILR = "SPC_SA_AddILR";
+        private const string UpdateILR = "SPC_SA_UpdateILR";
+        #endregion
+
+        #region ILR Master 
+        public AddUpdateMaster AddILRDetail(AddILRRequest data)
+        {
+            try
+            {
+                string stProc = AddILR;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@ILRCode", data.ilrCode),
+                    new SqlParameter("@ILRPoint", data.name  ?? data.name),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public AddUpdateMaster UpdateILRDetail(UpdateILRRequest data)
+        {
+            try
+            {
+                string stProc = UpdateILR;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@ID", data.id),
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@ILRCode", data.ilrCode),
+                    new SqlParameter("@ILRPoint", data.name  ?? data.name),
+                    new SqlParameter("@IsActive", data.isActive),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<ILRDetail> RetrieveILRById(int id)
+        {
+            string stProc = FetchILR;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<ILRDetail>(stProc, pList);
+            return allData;
+        }
+        public List<ILRDetail> RetrieveAllILR()
+        {
+            string stProc = FetchAllILR;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<ILRDetail>(stProc, pList);
+            return allData;
+        }
+        #endregion
+
+        #region RI Master Declaration
+        private const string FetchAllRI = "SPC_FetchAllRIDetail";
+        private const string FetchRI = "SPC_FetchRIDetail";
+        private const string AddRISite = "SPC_SA_AddRISite";
+        private const string UpdateRISite = "SPC_SA_UpdateRISite";
+        private const string FetchRIBySC = "SPC_FetchRIBySC";
+        #endregion
+
+        #region RI Site Master 
+        public AddUpdateMaster AddRIDetail(AddRISiteRequest data)
+        {
+            try
+            {
+                string stProc = AddRISite;
+                var pList = new List<SqlParameter>
+                {
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHCID", data.phcId),
+                    new SqlParameter("@SCID", data.scId),
+                    new SqlParameter("@TestingCHCId", data.testingCHCId),
+                    new SqlParameter("@RI_gov_code", data.riGovCode),
+                    new SqlParameter("@RISite", data.name  ?? data.name),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@ILRId", data.ilrId),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public AddUpdateMaster UpdateRIDetail(UpdateRISiteRequest data)
+        {
+            try
+            {
+                string stProc = UpdateRISite;
+                var pList = new List<SqlParameter>
+                {
+                     new SqlParameter("@ID", data.id),
+                    new SqlParameter("@CHCID", data.chcId),
+                    new SqlParameter("@PHCID", data.phcId),
+                    new SqlParameter("@SCID", data.scId),
+                    new SqlParameter("@TestingCHCId", data.testingCHCId),
+                    new SqlParameter("@RI_gov_code", data.riGovCode),
+                    new SqlParameter("@RISite", data.name  ?? data.name),
+                    new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
+                    new SqlParameter("@ILRId", data.ilrId),
+                    new SqlParameter("@IsActive", data.isActive),
+                    new SqlParameter("@Latitude", data.latitude.ToCheckNull()),
+                    new SqlParameter("@Longitude", data.longitude.ToCheckNull()),
+                    new SqlParameter("@Comments", data.comments.ToCheckNull()),
+                    new SqlParameter("@UserId", data.userId),
+                };
+                var returnData = UtilityDL.FillEntity<AddUpdateMaster>(stProc, pList);
+                return returnData;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<RISiteDetail> RetrieveRIById(int id)
+        {
+            string stProc = FetchRI;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<RISiteDetail>(stProc, pList);
+            return allData;
+        }
+        public List<RISiteDetail> RetrieveAllRI()
+        {
+            string stProc = FetchAllRI;
+            var pList = new List<SqlParameter>();
+            var allData = UtilityDL.FillData<RISiteDetail>(stProc, pList);
+            return allData;
+        }
+        public List<RISiteDetail> RetrieveRIBySC(int id)
+        {
+            string stProc = FetchRIBySC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@ID", id) };
+            var allData = UtilityDL.FillData<RISiteDetail>(stProc, pList);
             return allData;
         }
         #endregion

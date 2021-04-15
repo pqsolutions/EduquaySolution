@@ -41,5 +41,6 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadCommon> GetAllZygosity();
         List<LoadCommon> GetAllMutuation();
         List<LoadCommon> RetrieveTestingCHCByDistrict(int id);
+        List<LoadCommon> RetrieveSCByPHC(int id);
     }
 }
