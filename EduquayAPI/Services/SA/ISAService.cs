@@ -45,11 +45,26 @@ namespace EduquayAPI.Services.SA
         List<PHCDetail> RetrieveAllPHCs();
         #endregion
 
-        #region PHC Master
+        #region SC Master
         Task<AddEditResponse> AddSCDetail(AddSCRequest data);
         Task<AddEditResponse> UpdateSCDetail(UpdateSCRequest data);
         List<SCDetail> RetrieveSCById(int id);
         List<SCDetail> RetrieveAllSCs();
+        #endregion
+
+        #region ILR Master
+        Task<AddEditResponse> AddILRDetail(AddILRRequest data);
+        Task<AddEditResponse> UpdateILRDetail(UpdateILRRequest data);
+        List<ILRDetail> RetrieveILRById(int id);
+        List<ILRDetail> RetrieveAllILR();
+        #endregion
+
+        #region RI Master
+        Task<AddEditResponse> AddRIDetail(AddRISitesRequest data);
+        Task<AddEditResponse> UpdateRIDetail(UpdateRISiteRequest data);
+        List<RISiteDetail> RetrieveRIById(int id);
+        List<RISiteDetail> RetrieveAllRI();
+        List<RISiteDetail> RetrieveRIBySC(int id);
         #endregion
     }
 }

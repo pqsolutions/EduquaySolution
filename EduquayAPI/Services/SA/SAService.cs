@@ -524,5 +524,182 @@ namespace EduquayAPI.Services.SA
             return data;
         }
         #endregion
+
+        #region ILR Master
+        public async Task<AddEditResponse> AddILRDetail(AddILRRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.ilrCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter ILR Code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter ILR Point";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.AddILRDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public async Task<AddEditResponse> UpdateILRDetail(UpdateILRRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.ilrCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter ILR Code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter ILR Point";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdateILRDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public List<ILRDetail> RetrieveILRById(int id)
+        {
+            var data = _saData.RetrieveILRById(id);
+            return data;
+        }
+        public List<ILRDetail> RetrieveAllILR()
+        {
+            var data = _saData.RetrieveAllILR();
+            return data;
+        }
+        #endregion
+
+        #region RI Master
+        public async Task<AddEditResponse> AddRIDetail(AddRISitesRequest data)
+        {
+            var riSiteName = "";
+            var response = new AddEditResponse();
+            try
+            {
+                foreach (var riRequestData in data.RISiteData)
+                {
+                    var riResponse = _saData.AddRIDetail(riRequestData);
+                    if(riResponse.message != "")
+                    {
+                        riSiteName = riSiteName + riResponse.message + ",";
+                    }
+                }
+                riSiteName= riSiteName.Remove(riSiteName.Length - 1);
+                response.Status = "true";
+                response.Message = $"{riSiteName} - added Successfully ";
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public async Task<AddEditResponse> UpdateRIDetail(UpdateRISiteRequest data)
+        {
+            var response = new AddEditResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(data.riGovCode))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter RI Code";
+                }
+                else if (string.IsNullOrEmpty(data.name))
+                {
+                    response.Status = "false";
+                    response.Message = "Please enter RI site";
+                }
+                else if (data.chcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid chc";
+                }
+                else if (data.phcId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid phc";
+                }
+                else if (data.scId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid sc";
+                }
+                else if (data.testingCHCId <= 0)
+                {
+                    response.Status = "false";
+                    response.Message = "Invalid testing chc";
+                }
+                else
+                {
+                    var addEditResponse = _saData.UpdateRIDetail(data);
+                    response.Status = "true";
+                    response.Message = addEditResponse.message;
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Status = "false";
+                response.Message = $"Unable to process - {e.Message}";
+                return response;
+            }
+        }
+        public List<RISiteDetail> RetrieveRIById(int id)
+        {
+            var data = _saData.RetrieveRIById(id);
+            return data;
+        }
+        public List<RISiteDetail> RetrieveAllRI()
+        {
+            var data = _saData.RetrieveAllRI();
+            return data;
+        }
+        public List<RISiteDetail> RetrieveRIBySC(int id)
+        {
+            var data = _saData.RetrieveRIBySC(id);
+            return data;
+        }
+        #endregion
     }
 }

@@ -214,5 +214,11 @@ namespace EduquayAPI.Services.WebMaster
             var data = _webMasterData.RetrieveTestingCHCByDistrict(id);
             return data;
         }
+
+        public List<LoadCommon> RetrieveSCByPHC(int id)
+        {
+            var data = _webMasterData.RetrieveSCByPHC(id);
+            return data;
+        }
     }
 }

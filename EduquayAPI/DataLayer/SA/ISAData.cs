@@ -51,6 +51,21 @@ namespace EduquayAPI.DataLayer.SA
         List<SCDetail> RetrieveAllSCs();
         #endregion
 
+        #region ILR Master
+        AddUpdateMaster AddILRDetail(AddILRRequest data);
+        AddUpdateMaster UpdateILRDetail(UpdateILRRequest data);
+        List<ILRDetail> RetrieveILRById(int id);
+        List<ILRDetail> RetrieveAllILR();
+        #endregion
+
+        #region RI Master
+        AddUpdateMaster AddRIDetail(AddRISiteRequest data);
+        AddUpdateMaster UpdateRIDetail(UpdateRISiteRequest data);
+        List<RISiteDetail> RetrieveRIById(int id);
+        List<RISiteDetail> RetrieveAllRI();
+        List<RISiteDetail> RetrieveRIBySC(int id);
+        #endregion
+
     }
     public interface ISADataFactory
     {
