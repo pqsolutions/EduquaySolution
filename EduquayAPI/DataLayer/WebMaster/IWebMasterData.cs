@@ -42,6 +42,7 @@ namespace EduquayAPI.DataLayer.WebMaster
         List<LoadCommon> GetAllMutuation();
         List<LoadCommon> RetrieveTestingCHCByDistrict(int id);
         List<LoadCommon> RetrieveSCByPHC(int id);
+        List<LoadCommon> RetrieveILRByCHC(int id);
     }
     public interface IWebMasterDataFactory
     {
