@@ -220,5 +220,11 @@ namespace EduquayAPI.Services.WebMaster
             var data = _webMasterData.RetrieveSCByPHC(id);
             return data;
         }
+
+        public List<LoadCommon> RetrieveILRByCHC(int id)
+        {
+            var data = _webMasterData.RetrieveILRByCHC(id);
+            return data;
+        }
     }
 }

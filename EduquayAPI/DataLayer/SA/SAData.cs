@@ -395,7 +395,7 @@ namespace EduquayAPI.DataLayer.SA
                 {
                     new SqlParameter("@CHCID", data.chcId),
                     new SqlParameter("@PHCID", data.phcId),
-                    new SqlParameter("@PHC_gov_code", data.scGovCode),
+                    new SqlParameter("@SC_gov_code", data.scGovCode),
                     new SqlParameter("@SCname", data.name  ?? data.name),
                     new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
                     new SqlParameter("@Pincode", data.pincode.ToCheckNull()),
@@ -423,7 +423,7 @@ namespace EduquayAPI.DataLayer.SA
                     new SqlParameter("@ID", data.id),
                     new SqlParameter("@CHCID", data.chcId),
                     new SqlParameter("@PHCID", data.phcId),
-                    new SqlParameter("@PHC_gov_code", data.scGovCode),
+                    new SqlParameter("@SC_gov_code", data.scGovCode),
                     new SqlParameter("@SCname", data.name  ?? data.name),
                     new SqlParameter("@HNIN_ID", data.hninId ?? data.hninId),
                     new SqlParameter("@Pincode", data.pincode.ToCheckNull()),

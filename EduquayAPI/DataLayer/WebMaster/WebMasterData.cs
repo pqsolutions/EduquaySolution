@@ -44,6 +44,7 @@ namespace EduquayAPI.DataLayer.WebMaster
 
         private const string FetchAllTestingCHCByDistrict = "SPC_FetchAllTestingCHCByDistrict";
         private const string FetchSCByPHC = "SPC_FetchSCByPHC";
+        private const string FetchILRByCHC = "SPC_FetchILRByCHC";
         public WebMasterData()
         {
 
@@ -312,6 +313,14 @@ namespace EduquayAPI.DataLayer.WebMaster
         public List<LoadCommon> RetrieveSCByPHC(int id)
         {
             string stProc = FetchSCByPHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveILRByCHC(int id)
+        {
+            string stProc = FetchILRByCHC;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
             var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
             return allData;
