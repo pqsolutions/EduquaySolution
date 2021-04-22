@@ -21,11 +21,11 @@ namespace EduquayAPI.DataLayer.PNDT
         List<PostPNDTScheduling> GetPostPNDTScheduling(PNDTSchedulingRequest psData);
         CounsellingDateTime AddPostPNDTScheduling(AddSchedulingRequest asData);
         List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData);
-        List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
+        PostPNDTCounsellingDetail GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData);
         MTPScheduleDateTime AddPostPNDTCounselling(AddPostPNDTCounsellingRequest acData);
-        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
-        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
-        List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
+        PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData);
+        PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData);
+        PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData);
         void AutomaticPostPNDTCousellingUpdate();
         List<PNDTPickAndPack> RetrievePickAndPack(int pndtLocationId);
         List<PNDTShipments> AddPNDTShipment(AddPNDTShipmentRequest sData);

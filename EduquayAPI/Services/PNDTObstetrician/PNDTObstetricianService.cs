@@ -188,9 +188,9 @@ namespace EduquayAPI.Services.PNDTObstetrician
             return pendingData;
         }
 
-        public async Task<PNDTCompletedSummaryResponse> GetPNDTCompletedSummary(int molecularLabId)
+        public async Task<PNDTCompletedSummaryResponse> GetPNDTCompletedSummary()
         {
-            var completedTestDetail = _pndtObstetricianData.GetPNDTCompletedSummary(molecularLabId);
+            var completedTestDetail = _pndtObstetricianData.GetPNDTCompletedSummary();
             var completedTestResponse = new PNDTCompletedSummaryResponse();
             var completedTestANWDetail = new List<PNDTCompletedDetail>();
             try

@@ -32,12 +32,10 @@ namespace EduquayAPI.Models.PNDT
         public string prePNDTCounsellingStatus { get; set; }
         public string schedulePrePNDTDate { get; set; }
         public string schedulePrePNDTTime { get; set; }
+        public int pndTestId { get; set; }
         public string pndtDateTime { get; set; }
         public string pndtObstetrician { get; set; }
-        public string pndtResults { get; set; }
-        public bool foetalDisease { get; set; }
         public string pndtCounsellorName { get; set; }
-        public string pndtDiagnosis { get; set; }
         public int postPNDTCounsellorId { get; set; }
         public string postPNDTCounsellorName { get; set; }
         public int postPNDTSchedulingId { get; set; }
@@ -70,6 +68,7 @@ namespace EduquayAPI.Models.PNDT
         public string spouseHbS { get; set; }
         public string spouseHbD { get; set; }
 
+        public List<PNDTFoetusDetail> foetusDetail { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ANWSubjectId"))
@@ -144,23 +143,17 @@ namespace EduquayAPI.Models.PNDT
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "SchedulePNDTTime"))
                 this.schedulePrePNDTTime = Convert.ToString(reader["SchedulePNDTTime"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTTestID"))
+                this.pndTestId = Convert.ToInt32(reader["PNDTTestID"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDDateTime"))
                 this.pndtDateTime = Convert.ToString(reader["PNDDateTime"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTestObstetrician"))
                 this.pndtObstetrician = Convert.ToString(reader["PNDTestObstetrician"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTResults"))
-                this.pndtResults = Convert.ToString(reader["PNDTResults"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "foetalDisease"))
-                this.foetalDisease = Convert.ToBoolean(reader["foetalDisease"]);
-
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PrePNDTCounsellorName"))
                 this.pndtCounsellorName = Convert.ToString(reader["PrePNDTCounsellorName"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTDiagnosisName"))
-                this.pndtDiagnosis = Convert.ToString(reader["PNDTDiagnosisName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "CounsellorId"))
                 this.postPNDTCounsellorId = Convert.ToInt32(reader["CounsellorId"]);

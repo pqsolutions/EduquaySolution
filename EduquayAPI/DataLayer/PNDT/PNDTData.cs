@@ -20,6 +20,7 @@ namespace EduquayAPI.DataLayer.PNDT
         private const string FetchSubjectsPrePNDTCounseledNo = "SPC_FetchSubjectsPrePNDTCounseledNo";
         private const string FetchSubjectsPrePNDTCounseledPending = "SPC_FetchSubjectsPrePNDTCounseledPending";
         private const string UpdatePrePNDTCounsellingByAutomatic = "SPC_UpdatePrePNDTCounsellingByAutomatic";
+
         private const string FetchSubjectsPostPNDTScheduling = "SPC_FetchSubjectsPostPNDTScheduling";
         private const string AddPostPNDTsScheduling = "SPC_AddPostPNDTScheduling";
         private const string FetchSubjectsPostPNDTScheduled = "SPC_FetchSubjectsPostPNDTScheduled";
@@ -269,7 +270,7 @@ namespace EduquayAPI.DataLayer.PNDT
             return scheduledData;
         }
 
-        public List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData)
+        public PostPNDTCounsellingDetail GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData)
         {
             string stProc = FetchSubjectsPostPNDTCounselling;
             var pList = new List<SqlParameter>()
@@ -280,7 +281,11 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@PHCId", psData.phcId),
                 new SqlParameter("@ANMId", psData.anmId)
             };
-            var counsellingData = UtilityDL.FillData<PostPNDTCounselling>(stProc, pList);
+            var allANWDetail = UtilityDL.FillData<PostPNDTCounselling>(stProc, pList);
+            var allFoetusDetail = UtilityDL.FillData<PNDTFoetusDetail>(stProc, pList);
+            var counsellingData = new PostPNDTCounsellingDetail();
+            counsellingData.anwDetail = allANWDetail;
+            counsellingData.foetusDetail = allFoetusDetail;
             return counsellingData;
         }
 
@@ -309,7 +314,7 @@ namespace EduquayAPI.DataLayer.PNDT
             return schedulingData;
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData)
+        public PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData)
         {
             string stProc = FetchSubjectsPostPNDTCounselledYes;
             var pList = new List<SqlParameter>()
@@ -320,11 +325,16 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@PHCId", pcData.phcId),
                 new SqlParameter("@ANMId", pcData.anmId)
             };
-            var counseledYesData = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+
+            var allANWDetail = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+            var allFoetusDetail = UtilityDL.FillData<PNDTFoetusDetail>(stProc, pList);
+            var counseledYesData = new PostPNDTCounselledDetail();
+            counseledYesData.anwDetail = allANWDetail;
+            counseledYesData.foetusDetail = allFoetusDetail;
             return counseledYesData;
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData)
+        public PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData)
         {
             string stProc = FetchSubjectsPostPNDTCounselledNo;
             var pList = new List<SqlParameter>()
@@ -335,11 +345,15 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@PHCId", pcData.phcId),
                 new SqlParameter("@ANMId", pcData.anmId)
             };
-            var counseledNoData = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+            var allANWDetail = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+            var allFoetusDetail = UtilityDL.FillData<PNDTFoetusDetail>(stProc, pList);
+            var counseledNoData = new PostPNDTCounselledDetail();
+            counseledNoData.anwDetail = allANWDetail;
+            counseledNoData.foetusDetail = allFoetusDetail;
             return counseledNoData;
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData)
+        public PostPNDTCounselledDetail GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData)
         {
             string stProc = FetchSubjectsPostPNDTCounselledPending;
             var pList = new List<SqlParameter>()
@@ -350,7 +364,11 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@PHCId", pcData.phcId),
                 new SqlParameter("@ANMId", pcData.anmId)
             };
-            var counseledPendingData = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+            var allANWDetail = UtilityDL.FillData<PostPNDTCounselled>(stProc, pList);
+            var allFoetusDetail = UtilityDL.FillData<PNDTFoetusDetail>(stProc, pList);
+            var counseledPendingData = new PostPNDTCounselledDetail();
+            counseledPendingData.anwDetail = allANWDetail;
+            counseledPendingData.foetusDetail = allFoetusDetail;
             return counseledPendingData;
         }
 
