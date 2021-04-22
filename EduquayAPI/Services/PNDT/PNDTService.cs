@@ -301,11 +301,87 @@ namespace EduquayAPI.Services.PNDT
             return counsellingData;
         }
 
-        public List<PostPNDTCounselling> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData)
+        public async Task<PostPNDTCounsellingResponse> GetScheduledForPostPNDTCounselling(PNDTSchedulingRequest psData)
         {
             _pndtData.AutomaticPostPNDTCousellingUpdate();
             var counsellingData = _pndtData.GetScheduledForPostPNDTCounselling(psData);
-            return counsellingData;
+            var postPNDTCounsellingResponse = new PostPNDTCounsellingResponse();
+            var postPNDTCounsellingANWDetail = new List<PostPNDTCounsellingANWDetail>();
+            try
+            {
+
+                int pndTestId = 0;
+                foreach (var cd in counsellingData.anwDetail)
+                {
+                    if (pndTestId != cd.pndTestId)
+                    {
+                        var anwDetail = new PostPNDTCounsellingANWDetail();
+                        var foetusDetail = counsellingData.foetusDetail.Where(sd => sd.pndTestId == cd.pndTestId).ToList();
+                        anwDetail.anwSubjectId = cd.anwSubjectId;
+                        anwDetail.subjectName = cd.subjectName;
+                        anwDetail.spouseSubjectId = cd.spouseSubjectId;
+                        anwDetail.spouseName = cd.spouseName;
+                        anwDetail.rchId = cd.rchId;
+                        anwDetail.contactNo = cd.contactNo;
+                        anwDetail.age = cd.age;
+                        anwDetail.spouseAge = cd.spouseAge;
+                        anwDetail.ecNumber = cd.ecNumber;
+                        anwDetail.ga = cd.ga;
+                        anwDetail.obstetricScore = cd.obstetricScore;
+                        anwDetail.lmpDate = cd.lmpDate;
+                        anwDetail.anwCBCTestResult = cd.anwCBCTestResult;
+                        anwDetail.anwSSTestResult = cd.anwSSTestResult;
+                        anwDetail.anwHPLCTestResult = cd.anwHPLCTestResult;
+                        anwDetail.spouseCBCTestResult = cd.spouseCBCTestResult;
+                        anwDetail.spouseSSTestResult = cd.spouseSSTestResult;
+                        anwDetail.spouseHPLCTestResult = cd.spouseHPLCTestResult;
+                        anwDetail.prePNDTCounsellingDateTime = cd.prePNDTCounsellingDateTime;
+                        anwDetail.prePNDTCounsellorName = cd.prePNDTCounsellorName;
+                        anwDetail.prePNDTCounsellingRemarks = cd.prePNDTCounsellingRemarks;
+                        anwDetail.prePNDTCounsellingStatus = cd.prePNDTCounsellingStatus;
+                        anwDetail.schedulePrePNDTDate = cd.schedulePrePNDTDate;
+                        anwDetail.schedulePrePNDTTime = cd.schedulePrePNDTTime;
+                        anwDetail.pndtDateTime = cd.pndtDateTime;
+                        anwDetail.pndtObstetrician = cd.pndtObstetrician;
+                        anwDetail.pndtCounsellorName = cd.pndtCounsellorName;
+                        anwDetail.postPNDTCounsellorId = cd.postPNDTCounsellorId;
+                        anwDetail.postPNDTCounsellorName = cd.postPNDTCounsellorName;
+                        anwDetail.postPNDTSchedulingId = cd.postPNDTSchedulingId;
+                        anwDetail.postPNDTCounsellingDateTime = cd.postPNDTCounsellingDateTime;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwRDW = cd.anwRDW;
+                        anwDetail.anwRBC = cd.anwRBC;
+                        anwDetail.anwHbA0 = cd.anwHbA0;
+                        anwDetail.anwHbA2 = cd.anwHbA2;
+                        anwDetail.anwHbF = cd.anwHbF;
+                        anwDetail.anwHbS = cd.anwHbS;
+                        anwDetail.anwHbD = cd.anwHbD;
+                        anwDetail.spouseMCV = cd.spouseMCV;
+                        anwDetail.spouseRDW = cd.spouseRDW;
+                        anwDetail.spouseRBC = cd.spouseRBC;
+                        anwDetail.spouseHbA0 = cd.spouseHbA0;
+                        anwDetail.spouseHbA2 = cd.spouseHbA2;
+                        anwDetail.spouseHbF = cd.spouseHbF;
+                        anwDetail.spouseHbS = cd.spouseHbS;
+                        anwDetail.spouseHbD = cd.spouseHbD;
+                        anwDetail.foetusDetail = foetusDetail;
+                        pndTestId = cd.pndTestId;
+                        postPNDTCounsellingANWDetail.Add(anwDetail);
+                    }
+                }
+                postPNDTCounsellingResponse.data = postPNDTCounsellingANWDetail;
+                postPNDTCounsellingResponse.Status = "true";
+                postPNDTCounsellingResponse.Message = string.Empty;
+
+                return postPNDTCounsellingResponse;
+            }
+            catch (Exception e)
+            {
+                postPNDTCounsellingResponse.Status = "false";
+                postPNDTCounsellingResponse.Message = e.Message;
+                return postPNDTCounsellingResponse;
+            }
         }
 
         public List<PrePNDTCounselled> GetSubjectsCounselledNo(PNDTSchedulingRequest pcData)
@@ -326,22 +402,287 @@ namespace EduquayAPI.Services.PNDT
             return counseledYesData;
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData)
+        public async Task<PostPNDTCounselledResponse> GetSubjectsPostPNDTCounselledNo(PNDTSchedulingRequest pcData)
         {
-            var counseledNoData = _pndtData.GetSubjectsPostPNDTCounselledNo(pcData);
-            return counseledNoData;
+            var counselledData = _pndtData.GetSubjectsPostPNDTCounselledNo(pcData);
+            var postPNDTCounselledResponse = new PostPNDTCounselledResponse();
+            var postPNDTCounselledANWDetail = new List<PostPNDTCounselledANWDetail>();
+            try
+            {
+                int pndTestId = 0;
+                foreach (var cd in counselledData.anwDetail)
+                {
+                    if (pndTestId != cd.pndTestId)
+                    {
+                        var anwDetail = new PostPNDTCounselledANWDetail();
+                        var foetusDetail = counselledData.foetusDetail.Where(sd => sd.pndTestId == cd.pndTestId).ToList();
+                        anwDetail.anwSubjectId = cd.anwSubjectId;
+                        anwDetail.subjectName = cd.subjectName;
+                        anwDetail.spouseSubjectId = cd.spouseSubjectId;
+                        anwDetail.spouseName = cd.spouseName;
+                        anwDetail.rchId = cd.rchId;
+                        anwDetail.contactNo = cd.contactNo;
+                        anwDetail.age = cd.age;
+                        anwDetail.spouseAge = cd.spouseAge;
+                        anwDetail.ecNumber = cd.ecNumber;
+                        anwDetail.ga = cd.ga;
+                        anwDetail.obstetricScore = cd.obstetricScore;
+                        anwDetail.lmpDate = cd.lmpDate;
+                        anwDetail.anwCBCTestResult = cd.anwCBCTestResult;
+                        anwDetail.anwSSTestResult = cd.anwSSTestResult;
+                        anwDetail.anwHPLCTestResult = cd.anwHPLCTestResult;
+                        anwDetail.spouseCBCTestResult = cd.spouseCBCTestResult;
+                        anwDetail.spouseSSTestResult = cd.spouseSSTestResult;
+                        anwDetail.spouseHPLCTestResult = cd.spouseHPLCTestResult;
+                        anwDetail.prePNDTCounsellingDateTime = cd.prePNDTCounsellingDateTime;
+                        anwDetail.prePNDTCounsellorName = cd.prePNDTCounsellorName;
+                        anwDetail.prePNDTCounsellingRemarks = cd.prePNDTCounsellingRemarks;
+                        anwDetail.prePNDTCounsellingStatus = cd.prePNDTCounsellingStatus;
+                        anwDetail.schedulePrePNDTDate = cd.schedulePrePNDTDate;
+                        anwDetail.schedulePrePNDTTime = cd.schedulePrePNDTTime;
+                        anwDetail.pndTestId = cd.pndTestId;
+                        anwDetail.pndtDateTime = cd.pndtDateTime;
+                        anwDetail.pndtObstetrician = cd.pndtObstetrician;
+                        anwDetail.pndtCounsellorName = cd.pndtCounsellorName;
+                        anwDetail.postPNDTCounsellorId = cd.postPNDTCounsellorId;
+                        anwDetail.postPNDTCounsellorName = cd.postPNDTCounsellorName;
+
+                        anwDetail.postPNDTSchedulingId = cd.postPNDTSchedulingId;
+                        anwDetail.postPNDTCounsellingId = cd.postPNDTCounsellingId;
+                        anwDetail.postPNDTObstetricianId = cd.postPNDTObstetricianId;
+                        anwDetail.postPNDTCounsellingDateTime = cd.postPNDTCounsellingDateTime;
+                        anwDetail.mtpScheduleDate = cd.mtpScheduleDate;
+                        anwDetail.mtpScheduleTime = cd.mtpScheduleTime;
+                        anwDetail.postPNDTCounsellingRemarks = cd.postPNDTCounsellingRemarks;
+                        anwDetail.fileName = cd.fileName;
+                        anwDetail.fileLocation = cd.fileLocation;
+
+                        anwDetail.isMTPAgreeYes = cd.isMTPAgreeYes;
+                        anwDetail.isMTPAgreeNo = cd.isMTPAgreeNo;
+                        anwDetail.isMTPAgreePending = cd.isMTPAgreePending;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwRDW = cd.anwRDW;
+                        anwDetail.anwRBC = cd.anwRBC;
+                        anwDetail.anwHbA0 = cd.anwHbA0;
+                        anwDetail.anwHbA2 = cd.anwHbA2;
+                        anwDetail.anwHbF = cd.anwHbF;
+                        anwDetail.anwHbS = cd.anwHbS;
+                        anwDetail.anwHbD = cd.anwHbD;
+                        anwDetail.spouseMCV = cd.spouseMCV;
+                        anwDetail.spouseRDW = cd.spouseRDW;
+                        anwDetail.spouseRBC = cd.spouseRBC;
+                        anwDetail.spouseHbA0 = cd.spouseHbA0;
+                        anwDetail.spouseHbA2 = cd.spouseHbA2;
+                        anwDetail.spouseHbF = cd.spouseHbF;
+                        anwDetail.spouseHbS = cd.spouseHbS;
+                        anwDetail.spouseHbD = cd.spouseHbD;
+                        anwDetail.foetusDetail = foetusDetail;
+                        pndTestId = cd.pndTestId;
+                        postPNDTCounselledANWDetail.Add(anwDetail);
+                    }
+                }
+                postPNDTCounselledResponse.data = postPNDTCounselledANWDetail;
+                postPNDTCounselledResponse.Status = "true";
+                postPNDTCounselledResponse.Message = string.Empty;
+                return postPNDTCounselledResponse;
+            }
+            catch (Exception e)
+            {
+                postPNDTCounselledResponse.Status = "false";
+                postPNDTCounselledResponse.Message = e.Message;
+                return postPNDTCounselledResponse;
+            }
+
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData)
+        public async Task<PostPNDTCounselledResponse> GetSubjectsPostPNDTCounselledPending(PNDTSchedulingRequest pcData)
         {
-            var counseledNoData = _pndtData.GetSubjectsPostPNDTCounselledPending(pcData);
-            return counseledNoData;
+
+            var counselledData = _pndtData.GetSubjectsPostPNDTCounselledPending(pcData);
+            var postPNDTCounselledResponse = new PostPNDTCounselledResponse();
+            var postPNDTCounselledANWDetail = new List<PostPNDTCounselledANWDetail>();
+            try
+            {
+                int pndTestId = 0;
+                foreach (var cd in counselledData.anwDetail)
+                {
+                    if (pndTestId != cd.pndTestId)
+                    {
+                        var anwDetail = new PostPNDTCounselledANWDetail();
+                        var foetusDetail = counselledData.foetusDetail.Where(sd => sd.pndTestId == cd.pndTestId).ToList();
+                        anwDetail.anwSubjectId = cd.anwSubjectId;
+                        anwDetail.subjectName = cd.subjectName;
+                        anwDetail.spouseSubjectId = cd.spouseSubjectId;
+                        anwDetail.spouseName = cd.spouseName;
+                        anwDetail.rchId = cd.rchId;
+                        anwDetail.contactNo = cd.contactNo;
+                        anwDetail.age = cd.age;
+                        anwDetail.spouseAge = cd.spouseAge;
+                        anwDetail.ecNumber = cd.ecNumber;
+                        anwDetail.ga = cd.ga;
+                        anwDetail.obstetricScore = cd.obstetricScore;
+                        anwDetail.lmpDate = cd.lmpDate;
+                        anwDetail.anwCBCTestResult = cd.anwCBCTestResult;
+                        anwDetail.anwSSTestResult = cd.anwSSTestResult;
+                        anwDetail.anwHPLCTestResult = cd.anwHPLCTestResult;
+                        anwDetail.spouseCBCTestResult = cd.spouseCBCTestResult;
+                        anwDetail.spouseSSTestResult = cd.spouseSSTestResult;
+                        anwDetail.spouseHPLCTestResult = cd.spouseHPLCTestResult;
+                        anwDetail.prePNDTCounsellingDateTime = cd.prePNDTCounsellingDateTime;
+                        anwDetail.prePNDTCounsellorName = cd.prePNDTCounsellorName;
+                        anwDetail.prePNDTCounsellingRemarks = cd.prePNDTCounsellingRemarks;
+                        anwDetail.prePNDTCounsellingStatus = cd.prePNDTCounsellingStatus;
+                        anwDetail.schedulePrePNDTDate = cd.schedulePrePNDTDate;
+                        anwDetail.schedulePrePNDTTime = cd.schedulePrePNDTTime;
+                        anwDetail.pndTestId = cd.pndTestId;
+                        anwDetail.pndtDateTime = cd.pndtDateTime;
+                        anwDetail.pndtObstetrician = cd.pndtObstetrician;
+                        anwDetail.pndtCounsellorName = cd.pndtCounsellorName;
+                        anwDetail.postPNDTCounsellorId = cd.postPNDTCounsellorId;
+                        anwDetail.postPNDTCounsellorName = cd.postPNDTCounsellorName;
+
+                        anwDetail.postPNDTSchedulingId = cd.postPNDTSchedulingId;
+                        anwDetail.postPNDTCounsellingId = cd.postPNDTCounsellingId;
+                        anwDetail.postPNDTObstetricianId = cd.postPNDTObstetricianId;
+                        anwDetail.postPNDTCounsellingDateTime = cd.postPNDTCounsellingDateTime;
+                        anwDetail.mtpScheduleDate = cd.mtpScheduleDate;
+                        anwDetail.mtpScheduleTime = cd.mtpScheduleTime;
+                        anwDetail.postPNDTCounsellingRemarks = cd.postPNDTCounsellingRemarks;
+                        anwDetail.fileName = cd.fileName;
+                        anwDetail.fileLocation = cd.fileLocation;
+
+                        anwDetail.isMTPAgreeYes = cd.isMTPAgreeYes;
+                        anwDetail.isMTPAgreeNo = cd.isMTPAgreeNo;
+                        anwDetail.isMTPAgreePending = cd.isMTPAgreePending;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwRDW = cd.anwRDW;
+                        anwDetail.anwRBC = cd.anwRBC;
+                        anwDetail.anwHbA0 = cd.anwHbA0;
+                        anwDetail.anwHbA2 = cd.anwHbA2;
+                        anwDetail.anwHbF = cd.anwHbF;
+                        anwDetail.anwHbS = cd.anwHbS;
+                        anwDetail.anwHbD = cd.anwHbD;
+                        anwDetail.spouseMCV = cd.spouseMCV;
+                        anwDetail.spouseRDW = cd.spouseRDW;
+                        anwDetail.spouseRBC = cd.spouseRBC;
+                        anwDetail.spouseHbA0 = cd.spouseHbA0;
+                        anwDetail.spouseHbA2 = cd.spouseHbA2;
+                        anwDetail.spouseHbF = cd.spouseHbF;
+                        anwDetail.spouseHbS = cd.spouseHbS;
+                        anwDetail.spouseHbD = cd.spouseHbD;
+                        anwDetail.foetusDetail = foetusDetail;
+                        pndTestId = cd.pndTestId;
+                        postPNDTCounselledANWDetail.Add(anwDetail);
+                    }
+                }
+                postPNDTCounselledResponse.data = postPNDTCounselledANWDetail;
+                postPNDTCounselledResponse.Status = "true";
+                postPNDTCounselledResponse.Message = string.Empty;
+                return postPNDTCounselledResponse;
+            }
+            catch (Exception e)
+            {
+                postPNDTCounselledResponse.Status = "false";
+                postPNDTCounselledResponse.Message = e.Message;
+                return postPNDTCounselledResponse;
+            }
+
         }
 
-        public List<PostPNDTCounselled> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData)
+        public async Task<PostPNDTCounselledResponse> GetSubjectsPostPNDTCounselledYes(PNDTSchedulingRequest pcData)
         {
-            var counseledNoData = _pndtData.GetSubjectsPostPNDTCounselledYes(pcData);
-            return counseledNoData;
+            var counselledData = _pndtData.GetSubjectsPostPNDTCounselledYes(pcData);
+            var postPNDTCounselledResponse = new PostPNDTCounselledResponse();
+            var postPNDTCounselledANWDetail = new List<PostPNDTCounselledANWDetail>();
+            try
+            {
+                int pndTestId = 0;
+                foreach (var cd in counselledData.anwDetail)
+                {
+                    if (pndTestId != cd.pndTestId)
+                    {
+                        var anwDetail = new PostPNDTCounselledANWDetail();
+                        var foetusDetail = counselledData.foetusDetail.Where(sd => sd.pndTestId == cd.pndTestId).ToList();
+                        anwDetail.anwSubjectId = cd.anwSubjectId;
+                        anwDetail.subjectName = cd.subjectName;
+                        anwDetail.spouseSubjectId = cd.spouseSubjectId;
+                        anwDetail.spouseName = cd.spouseName;
+                        anwDetail.rchId = cd.rchId;
+                        anwDetail.contactNo = cd.contactNo;
+                        anwDetail.age = cd.age;
+                        anwDetail.spouseAge = cd.spouseAge;
+                        anwDetail.ecNumber = cd.ecNumber;
+                        anwDetail.ga = cd.ga;
+                        anwDetail.obstetricScore = cd.obstetricScore;
+                        anwDetail.lmpDate = cd.lmpDate;
+                        anwDetail.anwCBCTestResult = cd.anwCBCTestResult;
+                        anwDetail.anwSSTestResult = cd.anwSSTestResult;
+                        anwDetail.anwHPLCTestResult = cd.anwHPLCTestResult;
+                        anwDetail.spouseCBCTestResult = cd.spouseCBCTestResult;
+                        anwDetail.spouseSSTestResult = cd.spouseSSTestResult;
+                        anwDetail.spouseHPLCTestResult = cd.spouseHPLCTestResult;
+                        anwDetail.prePNDTCounsellingDateTime = cd.prePNDTCounsellingDateTime;
+                        anwDetail.prePNDTCounsellorName = cd.prePNDTCounsellorName;
+                        anwDetail.prePNDTCounsellingRemarks = cd.prePNDTCounsellingRemarks;
+                        anwDetail.prePNDTCounsellingStatus = cd.prePNDTCounsellingStatus;
+                        anwDetail.schedulePrePNDTDate = cd.schedulePrePNDTDate;
+                        anwDetail.schedulePrePNDTTime = cd.schedulePrePNDTTime;
+                        anwDetail.pndTestId = cd.pndTestId;
+                        anwDetail.pndtDateTime = cd.pndtDateTime;
+                        anwDetail.pndtObstetrician = cd.pndtObstetrician;
+                        anwDetail.pndtCounsellorName = cd.pndtCounsellorName;
+                        anwDetail.postPNDTCounsellorId = cd.postPNDTCounsellorId;
+                        anwDetail.postPNDTCounsellorName = cd.postPNDTCounsellorName;
+
+                        anwDetail.postPNDTSchedulingId = cd.postPNDTSchedulingId;
+                        anwDetail.postPNDTCounsellingId = cd.postPNDTCounsellingId;
+                        anwDetail.postPNDTObstetricianId = cd.postPNDTObstetricianId;
+                        anwDetail.postPNDTCounsellingDateTime = cd.postPNDTCounsellingDateTime;
+                        anwDetail.mtpScheduleDate = cd.mtpScheduleDate;
+                        anwDetail.mtpScheduleTime = cd.mtpScheduleTime;
+                        anwDetail.postPNDTCounsellingRemarks = cd.postPNDTCounsellingRemarks;
+                        anwDetail.fileName = cd.fileName;
+                        anwDetail.fileLocation = cd.fileLocation;
+
+                        anwDetail.isMTPAgreeYes = cd.isMTPAgreeYes;
+                        anwDetail.isMTPAgreeNo = cd.isMTPAgreeNo;
+                        anwDetail.isMTPAgreePending = cd.isMTPAgreePending;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwMCV = cd.anwMCV;
+                        anwDetail.anwRDW = cd.anwRDW;
+                        anwDetail.anwRBC = cd.anwRBC;
+                        anwDetail.anwHbA0 = cd.anwHbA0;
+                        anwDetail.anwHbA2 = cd.anwHbA2;
+                        anwDetail.anwHbF = cd.anwHbF;
+                        anwDetail.anwHbS = cd.anwHbS;
+                        anwDetail.anwHbD = cd.anwHbD;
+                        anwDetail.spouseMCV = cd.spouseMCV;
+                        anwDetail.spouseRDW = cd.spouseRDW;
+                        anwDetail.spouseRBC = cd.spouseRBC;
+                        anwDetail.spouseHbA0 = cd.spouseHbA0;
+                        anwDetail.spouseHbA2 = cd.spouseHbA2;
+                        anwDetail.spouseHbF = cd.spouseHbF;
+                        anwDetail.spouseHbS = cd.spouseHbS;
+                        anwDetail.spouseHbD = cd.spouseHbD;
+                        anwDetail.foetusDetail = foetusDetail;
+                        pndTestId = cd.pndTestId;
+                        postPNDTCounselledANWDetail.Add(anwDetail);
+                    }
+                }
+                postPNDTCounselledResponse.data = postPNDTCounselledANWDetail;
+                postPNDTCounselledResponse.Status = "true";
+                postPNDTCounselledResponse.Message = string.Empty;
+                return postPNDTCounselledResponse;
+            }
+            catch (Exception e)
+            {
+                postPNDTCounselledResponse.Status = "false";
+                postPNDTCounselledResponse.Message = e.Message;
+                return postPNDTCounselledResponse;
+            }
+
         }
 
         public List<PostPNDTScheduled> GetSubjectsPostPNDTScheduled(PNDTSchedulingRequest psData)

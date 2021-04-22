@@ -92,12 +92,12 @@ namespace EduquayAPI.Controllers
         /// <summary>
         /// Used for get ANW Details with Completed PNDT Test Result Details 
         [HttpGet]
-        [Route("RetrievePNDTCompletedSummary/{molecularId}")]
-        public async Task<IActionResult> GetPNDTCompleted(int molecularId)
+        [Route("RetrievePNDTCompletedSummary")]
+        public async Task<IActionResult> GetPNDTCompleted()
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-            _logger.LogDebug($"Request - {JsonConvert.SerializeObject(molecularId)}");
-            var testDetailResponse = await _pndtObstetricianService.GetPNDTCompletedSummary(molecularId);
+           
+            var testDetailResponse = await _pndtObstetricianService.GetPNDTCompletedSummary();
             _logger.LogInformation($"get ANW Details with Completed Specimen PNDT Test Result Details {testDetailResponse}");
             _logger.LogDebug($"Response - {JsonConvert.SerializeObject(testDetailResponse)}");
 
