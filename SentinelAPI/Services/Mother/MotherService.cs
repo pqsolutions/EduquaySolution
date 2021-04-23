@@ -70,14 +70,6 @@ namespace SentinelAPI.Services.Mother
             {
                 message = "Invalid Mother name";
             }
-            else if (mrData.motherLastName == "")
-            {
-                message = "Invalid Last name";
-            }
-            else if (mrData.pincode == "")
-            {
-                message = "Invalid pincode";
-            }
             else if (mrData.stateId <= 0)
             {
                 message = "Invalid state";
