@@ -45,6 +45,19 @@ namespace EduquayAPI.Models.MolecularLab
         public string reasonForClose { get; set; }
         public string testDate { get; set; }
 
+        public string spouseSubjectId { get; set; }
+        public string spouseName { get; set; }
+        public string spouseMCV { get; set; }
+        public string spouseRDW { get; set; }
+        public string spouseRBC { get; set; }
+        public string spouseHbA0 { get; set; }
+        public string spouseHbA2 { get; set; }
+        public string spouseHbF { get; set; }
+        public string spouseHbS { get; set; }
+        public string spouseHbD { get; set; }
+        public string spouseCBCTestResult { get; set; }
+        public string spouseSSTestResult { get; set; }
+        public string spouseHPLCTestResult { get; set; }
         public void Fill(SqlDataReader reader)
         {
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestDate"))
@@ -155,6 +168,44 @@ namespace EduquayAPI.Models.MolecularLab
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ReasonForClose"))
                 this.reasonForClose = Convert.ToString(reader["ReasonForClose"]);
 
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseSubjectID"))
+                this.spouseSubjectId = Convert.ToString(reader["SpouseSubjectID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseName"))
+                this.spouseName = Convert.ToString(reader["SpouseName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseCBCResult"))
+                this.spouseCBCTestResult = Convert.ToString(reader["SpouseCBCResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseSSTResult"))
+                this.spouseSSTestResult = Convert.ToString(reader["SpouseSSTResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseHPLCResult"))
+                this.spouseHPLCTestResult = Convert.ToString(reader["SpouseHPLCResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_MCV"))
+                this.spouseMCV = Convert.ToString(reader["Spouse_MCV"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_RDW"))
+                this.spouseRDW = Convert.ToString(reader["Spouse_RDW"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_RBC"))
+                this.spouseRBC = Convert.ToString(reader["Spouse_RBC"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbA0"))
+                this.spouseHbA0 = Convert.ToString(reader["Spouse_HbA0"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbA2"))
+                this.spouseHbA2 = Convert.ToString(reader["Spouse_HbA2"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbF"))
+                this.spouseHbF = Convert.ToString(reader["Spouse_HbF"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbS"))
+                this.spouseHbS = Convert.ToString(reader["Spouse_HbS"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "Spouse_HbD"))
+                this.spouseHbD = Convert.ToString(reader["Spouse_HbD"]);
         }
     }
 }

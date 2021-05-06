@@ -458,7 +458,7 @@ namespace EduquayAPI.Controllers
         /// </summary>
         [HttpPost]
         [Route("RetrievePostPNDTCounselledYes")]
-        public async Task<IActionResult> GetScheduledForPostPNDTCounselledPYes(PNDTSchedulingRequest pcData)
+        public async Task<IActionResult> GetScheduledForPostPNDTCounselledYes(PNDTSchedulingRequest pcData)
         {
 
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
