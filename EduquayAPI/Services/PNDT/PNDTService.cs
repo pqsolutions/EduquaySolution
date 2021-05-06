@@ -90,7 +90,7 @@ namespace EduquayAPI.Services.PNDT
             var sResponse = new FileResponse();
             var fd = new FileDetails();
 
-            var extension = "";
+            var extension = ""; 
             var fileNames = "";
             var fullPath = "";
             var postPNDTFileLocation = _config.GetSection("Key").GetSection("PostPNDTFileFolder").Value;

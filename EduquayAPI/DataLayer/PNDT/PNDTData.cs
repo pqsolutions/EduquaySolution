@@ -307,7 +307,6 @@ namespace EduquayAPI.DataLayer.PNDT
                 new SqlParameter("@ScheduleMTPTime", acData.scheduleMTPTime ?? acData.scheduleMTPTime),
                 new SqlParameter("@FileName", acData.fileName.ToCheckNull()),
                 new SqlParameter("@FileLocation", acData.fileLocation.ToCheckNull()),
-                new SqlParameter("@IsFoetalDisease", acData.isFoetalDisease),
                 new SqlParameter("@CreatedBy", acData.userId),
             };
             var schedulingData = UtilityDL.FillEntity<MTPScheduleDateTime>(stProc, pList);

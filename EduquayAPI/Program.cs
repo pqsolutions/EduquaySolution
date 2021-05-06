@@ -46,6 +46,7 @@ namespace EduquayAPI
                     logging.AddConsole();
                     logging.AddNLog();
                     logging.SetMinimumLevel(LogLevel.Trace);
+                    logging.SetMinimumLevel(LogLevel.Information);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

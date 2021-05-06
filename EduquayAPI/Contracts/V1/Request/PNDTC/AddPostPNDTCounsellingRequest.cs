@@ -19,7 +19,6 @@ namespace EduquayAPI.Contracts.V1.Request.PNDTC
         public bool isMTPAgreePending { get; set; }
         public string scheduleMTPDate { get; set; }
         public string scheduleMTPTime { get; set; }
-        public bool isFoetalDisease { get; set; }
         public int userId { get; set; }
         public string fileName { get; set; }
         public string fileLocation { get; set; }
