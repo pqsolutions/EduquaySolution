@@ -20,6 +20,9 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
         private const string AddMolecularBloodTestResult = "SPC_AddMolecularBloodTestResult";
         private const string AddMolecularSpecimenTestResult = "SPC_AddMolecularSpecimenTestResult";
 
+        private const string FetchMolecularLabBloodTestReports = "SPC_FetchMolecularLabBloodTestReports";
+        private const string FetchMolecularLabSpecimenTestReports = "SPC_FetchMolecularLabSpecimenTestReports";
+
         public MLResultProcessData()
         {
 
@@ -137,6 +140,32 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
             };
             var allReceivedSubject = UtilityDL.FillData<MolecularSubjectsForBloodTestStatus>(stProc, pList);
             return allReceivedSubject;
+        }
+
+        public List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(int molecularLabId)
+        {
+            string stProc = FetchMolecularLabBloodTestReports;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularLabBloodReport>(stProc, pList);
+            return allReceivedSubject;
+        }
+
+        public SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(int molecularLabId)
+        {
+            string stProc = FetchMolecularLabSpecimenTestReports;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var awDetail = UtilityDL.FillData<MolecularLabSpecimenReport>(stProc, pList);
+            var foetusDetail = UtilityDL.FillData<MolecularLabFoetusResult>(stProc, pList);
+            var report = new SpecimenReport();
+            report.anwDetail = awDetail;
+            report.foetusDetail = foetusDetail;
+            return report;
         }
     }
 }
