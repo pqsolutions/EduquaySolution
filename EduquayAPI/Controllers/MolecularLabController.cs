@@ -184,5 +184,7 @@ namespace EduquayAPI.Controllers
                 Barcodes = rsResponse.Barcodes,
             });
         }
+
+       
     }
 }

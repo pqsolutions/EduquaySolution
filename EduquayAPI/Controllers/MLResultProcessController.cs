@@ -93,6 +93,27 @@ namespace EduquayAPI.Controllers
         }
 
         /// <summary>
+        /// Used for get  received Blood samples  for molecular test reports
+        /// </summary>
+        [HttpGet]
+        [Route("RetrieveBloodTestReports/{molecularLabId}")]
+        public MolecularLabBloodTestReportsResponse RetrieveBloodTestReports(int molecularLabId)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received subject for molecular blood test report  - {JsonConvert.SerializeObject(molecularLabId)}");
+                var subjects = _mlResultProcessService.RetriveSubjectForMolecularBloodTestReports(molecularLabId);
+                return subjects.Count == 0 ? new MolecularLabBloodTestReportsResponse { Status = "true", Message = "No subjects found", data = new List<MolecularLabBloodReport>() }
+                : new MolecularLabBloodTestReportsResponse { Status = "true", Message = string.Empty, data = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularLabBloodTestReportsResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
         /// Used for add to update the molecular blood test result 
         /// </summary>
         [HttpPost]
@@ -189,6 +210,26 @@ namespace EduquayAPI.Controllers
             {
                 Status = rsResponse.Status,
                 Message = rsResponse.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for specimens Test Reports 
+        [HttpGet]
+        [Route("RetrieveSpecimenTestReports/{molecularLabId}")]
+        public async Task<IActionResult> RetrieveSpecimenTestReports(int molecularLabId)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var response = await _mlResultProcessService.RetriveSubjectForMolecularSpecimenTestReports(molecularLabId);
+            _logger.LogInformation($"get Specimen detail report {response}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(response)}");
+
+            return Ok(new SpecimenReportResponse
+            {
+                Status = response.Status,
+                Message = response.Message,
+                data = response.data,
             });
         }
 
