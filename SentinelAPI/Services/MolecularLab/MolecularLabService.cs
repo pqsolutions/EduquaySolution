@@ -266,5 +266,11 @@ namespace SentinelAPI.Services.MolecularLab
             var allSubject = _molecularLabReceiptData.RetriveSubjectForMolecularBloodTestComplete(molecularLabId);
             return allSubject;
         }
+
+        public List<MolecularLabReport> RetrieveMolecularTestResultsReport(int molecularLabId)
+        {
+            var allSubject = _molecularLabReceiptData.RetrieveMolecularTestResultsReport(molecularLabId);
+            return allSubject;
+        }
     }
 }

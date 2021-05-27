@@ -21,6 +21,8 @@ namespace SentinelAPI.DataLayer.MolecularLab
         private const string AddMolecularBloodTestResult = "SPC_AddMolecularBloodTestResult";
         private const string FetchSubjectsForMolecularBloodTestEdit = "SPC_FetchSubjectsForMolecularBloodTestEdit";
         private const string FetchSubjectsForMolecularBloodTestComplete = "SPC_FetchSubjectsForMolecularBloodTestComplete";
+
+        private const string FetchSubjectsForBabyBloodTestReport = "SPC_FetchSubjectsForBabyBloodTestReport";
         public MolecularLabData()
         {
 
@@ -111,6 +113,17 @@ namespace SentinelAPI.DataLayer.MolecularLab
             molecularLabReceipt.ReceiptLog = allMolecularLabReceiptLog;
             molecularLabReceipt.ReceiptDetail = allReceiptDetail;
             return molecularLabReceipt;
+        }
+
+        public List<MolecularLabReport> RetrieveMolecularTestResultsReport(int molecularLabId)
+        {
+            string stProc = FetchSubjectsForBabyBloodTestReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", molecularLabId),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularLabReport>(stProc, pList);
+            return allReceivedSubject;
         }
 
         public List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData)
