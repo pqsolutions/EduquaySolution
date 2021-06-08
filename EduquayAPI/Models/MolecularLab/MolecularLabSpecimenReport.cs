@@ -40,11 +40,14 @@ namespace EduquayAPI.Models.MolecularLab
         public string orderingPhysician { get; set; }
         public string molecularResultEnteredBy { get; set; }
         public int pndTestId { get; set; }
-
+        public string labTechnician { get; set; }
         public List<MolecularLabFoetusResult> foetusDetail { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabTechnician"))
+                this.labTechnician = Convert.ToString(reader["LabTechnician"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTestId"))
                 this.pndTestId = Convert.ToInt32(reader["PNDTestId"]);
 

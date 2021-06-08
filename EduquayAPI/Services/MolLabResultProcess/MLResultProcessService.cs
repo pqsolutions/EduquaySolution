@@ -203,15 +203,15 @@ namespace EduquayAPI.Services.MolLabResultProcess
             }
         }
 
-        public List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(int molecularLabId)
+        public List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(MolecularLabReportRequest rData)
         {
-            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularBloodTestReports(molecularLabId);
+            var allSubject = _mlResultProcessData.RetriveSubjectForMolecularBloodTestReports(rData);
             return allSubject;
         }
 
-        public async Task<SpecimenReportResponse> RetriveSubjectForMolecularSpecimenTestReports(int molecularLabId)
+        public async Task<SpecimenReportResponse> RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData)
         {
-            var specimenReport = _mlResultProcessData.RetriveSubjectForMolecularSpecimenTestReports(molecularLabId);
+            var specimenReport = _mlResultProcessData.RetriveSubjectForMolecularSpecimenTestReports(rData);
             var specimenResponse = new SpecimenReportResponse();
             var anwDetails = new List<MolecularLabSpecimenReports>();
             try
@@ -256,6 +256,7 @@ namespace EduquayAPI.Services.MolLabResultProcess
                         testANWDetail.orderingPhysician = testDetil.orderingPhysician;
                         testANWDetail.molecularResultEnteredBy = testDetil.molecularResultEnteredBy;
                         testANWDetail.pndTestId = testDetil.pndTestId;
+                        testANWDetail.labTechnician = testDetil.labTechnician;
                         testANWDetail.foetusDetail = foetusDetail;
                         pndTestId = testDetil.pndTestId;
                         anwDetails.Add(testANWDetail);

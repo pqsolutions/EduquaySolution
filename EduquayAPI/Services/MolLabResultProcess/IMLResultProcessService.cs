@@ -15,12 +15,12 @@ namespace EduquayAPI.Services.MolLabResultProcess
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId);
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId);
         Task<ServiceResponse> AddMolecularBloodResult(AddBloodSampleTestRequest mrData);
-        List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(int molecularLabId);
+        List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(MolecularLabReportRequest rData);
         List<MLabSpecimenForTest> RetriveSpecimenSubjectForMolecularTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularEditTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularTestComplete(int molecularLabId);
         Task<ServiceResponse> AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest mrData);
-        Task<SpecimenReportResponse> RetriveSubjectForMolecularSpecimenTestReports(int molecularLabId);
+        Task<SpecimenReportResponse> RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData);
 
     }
 }

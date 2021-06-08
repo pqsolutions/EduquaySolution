@@ -12,14 +12,14 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
         List<MolecularSubjectsForTest> RetriveSubjectForMolecularBloodTest(int molecularLabId);
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestEdit(int molecularLabId);
         List<MolecularSubjectsForBloodTestStatus> RetriveSubjectForMolecularBloodTestComplete(int molecularLabId);
-        List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(int molecularLabId);
+        List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(MolecularLabReportRequest rData);
         MolecularMsg AddBloodSamplesTestResult(AddBloodSampleTestRequest rData);
 
         List<MLabSpecimenForTest> RetriveSpecimenSubjectForMolecularTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularEditTest(int molecularLabId);
         List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularTestComplete(int molecularLabId);
         MolecularMsg AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest rData);
-        SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(int molecularLabId);
+        SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData);
     }
 
     public interface IMLResultProcessDataFactory

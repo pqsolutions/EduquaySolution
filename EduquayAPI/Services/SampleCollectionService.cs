@@ -24,7 +24,7 @@ namespace EduquayAPI.Services
             _config = config;
         }
 
-        public async  Task<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
+        public async Task<ServiceResponse> AddSample(AddSubjectSampleRequest ssData)
         {
             ServiceResponse sResponse = new ServiceResponse();
             try
@@ -66,11 +66,11 @@ namespace EduquayAPI.Services
                     return sResponse;
                 }
 
-                var barcode =  _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
+                var barcode = _sampleCollectionData.FetchBarcode(ssData.barcodeNo);
                 if (barcode.Count <= 0)
                 {
                     var result = _sampleCollectionData.AddSample(ssData);
-                    if(string.IsNullOrEmpty(result))
+                    if (string.IsNullOrEmpty(result))
                     {
                         sResponse.Status = "false";
                         sResponse.Message = $"Unable to collect sample for this uniquesubjectid - {ssData.uniqueSubjectId}";
@@ -78,16 +78,26 @@ namespace EduquayAPI.Services
                     }
                     else
                     {
+                        var reason = ssData.reason;
                         var smsSampleDetails = _sampleCollectionData.FetchSMSSamples(ssData.barcodeNo, ssData.uniqueSubjectId);
                         var barcodeNo = smsSampleDetails.barcodeNo;
                         var subjectMobileNo = smsSampleDetails.subjectMobileNo;
                         var subjectName = smsSampleDetails.subjectName;
                         var anmName = smsSampleDetails.anmName;
                         var anmMobileNo = smsSampleDetails.anmMobileNo;
-                        var smsURL = _config.GetSection("RegistrationSamplingSMS").GetSection("SMSAPILink").Value;
 
-                        var smsURLLink = smsURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#SubjectId", ssData.uniqueSubjectId).Replace("#BarcodeNo", ssData.barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
-                        GetResponse(smsURLLink);
+                        if (reason.ToUpper() == "FIRST TIME COLLECTION")
+                        {
+                            var smsURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMSNewSampleAPILink").Value;
+                            var smsURLLink = smsURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#SubjectId", ssData.uniqueSubjectId).Replace("#BarcodeNo", ssData.barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLLink);
+                        }
+                        else
+                        {
+                            var smsURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMSNewSampleRecollectionAPILink").Value;
+                            var smsURLLink = smsURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#SubjectId", ssData.uniqueSubjectId).Replace("#BarcodeNo", ssData.barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLLink);
+                        }
 
                         sResponse.Status = "true";
                         sResponse.Message = result;
