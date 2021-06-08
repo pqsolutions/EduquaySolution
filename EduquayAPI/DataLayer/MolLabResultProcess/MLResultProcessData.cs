@@ -142,23 +142,31 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
             return allReceivedSubject;
         }
 
-        public List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(int molecularLabId)
+        public List<MolecularLabBloodReport> RetriveSubjectForMolecularBloodTestReports(MolecularLabReportRequest rData)
         {
             string stProc = FetchMolecularLabBloodTestReports;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@MolecularLabId", molecularLabId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
             };
             var allReceivedSubject = UtilityDL.FillData<MolecularLabBloodReport>(stProc, pList);
             return allReceivedSubject;
         }
 
-        public SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(int molecularLabId)
+        public SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData)
         {
             string stProc = FetchMolecularLabSpecimenTestReports;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@MolecularLabId", molecularLabId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
             };
             var awDetail = UtilityDL.FillData<MolecularLabSpecimenReport>(stProc, pList);
             var foetusDetail = UtilityDL.FillData<MolecularLabFoetusResult>(stProc, pList);

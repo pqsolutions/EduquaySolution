@@ -18,17 +18,20 @@ using System.Net;
 using System.Text;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using EduquayAPI.DataLayer;
 
 namespace EduquayAPI.Services.MobileSubject
 {
     public class MobileSubjectService : IMobileSubjectService
     {
         private readonly IMobileSubjectData _mobileSubjectData;
+        private readonly ISampleCollectionData _sampleCollectionData;
         private readonly IConfiguration _config;
 
-        public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory, IConfiguration config)
+        public MobileSubjectService(IMobileSubjectDataFactory mobileSubjectDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
-            _mobileSubjectData = new MobileSubjectDataFactory().Create(); 
+            _mobileSubjectData = new MobileSubjectDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
             _config = config;
         }
 
@@ -893,6 +896,28 @@ namespace EduquayAPI.Services.MobileSubject
                             SMSTrigger(getId[0].getId);
                         }
 
+                        var reason = sample.samples.reason;
+                        var smsSampleDetails = _sampleCollectionData.FetchSMSSamples(sample.samples.barcodeNo, sample.samples.uniqueSubjectId);
+                        var barcode = smsSampleDetails.barcodeNo;
+                        var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                        var subjectName = smsSampleDetails.subjectName;
+                        var anmName = smsSampleDetails.anmName;
+                        var anmMobileNo = smsSampleDetails.anmMobileNo;
+
+                        if (reason.ToUpper() == "FIRST TIME COLLECTION")
+                        {
+                            var smsURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMSNewSampleAPILink").Value;
+                            var smsURLLink = smsURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#SubjectId", sample.samples.uniqueSubjectId).Replace("#BarcodeNo", sample.samples.barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLLink);
+                        }
+                        else
+                        {
+                            var smsURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMSNewSampleRecollectionAPILink").Value;
+                            var smsURLLink = smsURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#SubjectId", sample.samples.uniqueSubjectId).Replace("#BarcodeNo", sample.samples.barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLLink);
+                        }
+
+
                         slist.barcodeNo = sample.samples.barcodeNo;
                         barcodes.Add(slist);
                     }
@@ -988,7 +1013,7 @@ namespace EduquayAPI.Services.MobileSubject
             string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
             string cc = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("recipients").Value;
 
-            string recipients = dcEmail + ", " + existDCEmail + ", " + scEmail ;
+            string recipients = dcEmail + ", " + existDCEmail + ", " + scEmail;
             string subject = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("MailSubject").Value;
             string mailTemplateBody = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("Body").Value;
             string mailBody = "";

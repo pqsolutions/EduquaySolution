@@ -40,9 +40,13 @@ namespace EduquayAPI.Models.MolecularLab
         public string molecularLabName { get; set; }
         public string orderingPhysician { get; set; }
         public string molecularResultEnteredBy { get; set; }
+        public string labTechnician { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabTechnician"))
+                this.labTechnician = Convert.ToString(reader["LabTechnician"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ResultEnteredBy"))
                 this.molecularResultEnteredBy = Convert.ToString(reader["ResultEnteredBy"]);
 

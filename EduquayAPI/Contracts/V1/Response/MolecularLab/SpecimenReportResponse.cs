@@ -46,6 +46,7 @@ namespace EduquayAPI.Contracts.V1.Response.MolecularLab
         public string orderingPhysician { get; set; }
         public string molecularResultEnteredBy { get; set; }
         public int pndTestId { get; set; }
+        public string labTechnician { get; set; }
         public List<MolecularLabFoetusResult> foetusDetail { get; set; }
     }
 }
