@@ -235,5 +235,46 @@ namespace EduquayAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Used for get  received individual Blood samples  for molecular test reports
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveIndividualBloodTestReports")]
+        public MolecularLabBloodTestReportsResponse RetrieveIndividualBloodTestReports(MolLabReportIndividualRequest rData)
+        {
+            try
+            {
+                _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+                _logger.LogDebug($"Received individual subject for molecular blood test report  - {JsonConvert.SerializeObject(rData)}");
+                var subjects = _mlResultProcessService.RetriveIndividualSubjectForBloodTestReports(rData);
+                return subjects.Count == 0 ? new MolecularLabBloodTestReportsResponse { Status = "true", Message = "No subjects found", data = new List<MolecularLabBloodReport>() }
+                : new MolecularLabBloodTestReportsResponse { Status = "true", Message = string.Empty, data = subjects };
+            }
+            catch (Exception e)
+            {
+                return new MolecularLabBloodTestReportsResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for retrieve invidual subjects specimens Test Reports 
+        [HttpPost]
+        [Route("RetrieveIndividualSubectSpecimenTestReports")]
+        public async Task<IActionResult> RetrieveIndividualSpecimenTestReports(MolLabReportIndividualRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+
+            var response = await _mlResultProcessService.RetriveIndividualSubjectForSpecimenTestReports(rData);
+            _logger.LogInformation($"get invidual subject Specimen detail report {response}");
+            _logger.LogDebug($"Response - {JsonConvert.SerializeObject(response)}");
+
+            return Ok(new SpecimenReportResponse
+            {
+                Status = response.Status,
+                Message = response.Message,
+                data = response.data,
+            });
+        }
     }
 }

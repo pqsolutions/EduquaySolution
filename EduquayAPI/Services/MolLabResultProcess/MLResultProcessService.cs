@@ -275,5 +275,78 @@ namespace EduquayAPI.Services.MolLabResultProcess
                 return specimenResponse;
             }
         }
+
+        public List<MolecularLabBloodReport> RetriveIndividualSubjectForBloodTestReports(MolLabReportIndividualRequest rData)
+        {
+            var allSubject = _mlResultProcessData.RetriveIndividualSubjectForBloodTestReports(rData);
+            return allSubject;
+        }
+
+        public async Task<SpecimenReportResponse> RetriveIndividualSubjectForSpecimenTestReports(MolLabReportIndividualRequest rData)
+        {
+            var specimenReport = _mlResultProcessData.RetriveIndividualSubjectForSpecimenTestReports(rData);
+            var specimenResponse = new SpecimenReportResponse();
+            var anwDetails = new List<MolecularLabSpecimenReports>();
+            try
+            {
+                int pndTestId = 0;
+                foreach (var testDetil in specimenReport.anwDetail)
+                {
+
+                    if (pndTestId != testDetil.pndTestId)
+                    {
+                        var testANWDetail = new MolecularLabSpecimenReports();
+                        var foetusDetail = specimenReport.foetusDetail.Where(sd => sd.pndTestId == testDetil.pndTestId).ToList();
+                        testANWDetail.uniqueSubjectId = testDetil.uniqueSubjectId;
+                        testANWDetail.subjectName = testDetil.subjectName;
+                        testANWDetail.subjectType = testDetil.subjectType;
+                        testANWDetail.spouseSubjectId = testDetil.spouseSubjectId;
+                        testANWDetail.spouseName = testDetil.spouseName;
+                        testANWDetail.rchId = testDetil.rchId;
+                        testANWDetail.contactNo = testDetil.contactNo;
+                        testANWDetail.age = testDetil.age;
+                        testANWDetail.dob = testDetil.dob;
+                        testANWDetail.gender = testDetil.gender;
+                        testANWDetail.ecNumber = testDetil.ecNumber;
+                        testANWDetail.ga = testDetil.ga;
+                        testANWDetail.obstetricScore = testDetil.obstetricScore;
+                        testANWDetail.lmpDate = testDetil.lmpDate;
+                        testANWDetail.address = testDetil.address;
+                        testANWDetail.barcodeNo = testDetil.barcodeNo;
+                        testANWDetail.district = testDetil.district;
+                        testANWDetail.block = testDetil.block;
+                        testANWDetail.chc = testDetil.chc;
+                        testANWDetail.phc = testDetil.phc;
+                        testANWDetail.sc = testDetil.sc;
+                        testANWDetail.ri = testDetil.ri;
+                        testANWDetail.anmName = testDetil.anmName;
+                        testANWDetail.registrationDate = testDetil.registrationDate;
+                        testANWDetail.sampleCollectionDate = testDetil.sampleCollectionDate;
+                        testANWDetail.molecularTestResult = testDetil.molecularTestResult;
+                        testANWDetail.testDate = testDetil.testDate;
+                        testANWDetail.spouseMolecularTestResult = testDetil.spouseMolecularTestResult;
+                        testANWDetail.molecularLabName = testDetil.molecularLabName;
+                        testANWDetail.orderingPhysician = testDetil.orderingPhysician;
+                        testANWDetail.molecularResultEnteredBy = testDetil.molecularResultEnteredBy;
+                        testANWDetail.pndTestId = testDetil.pndTestId;
+                        testANWDetail.labTechnician = testDetil.labTechnician;
+                        testANWDetail.foetusDetail = foetusDetail;
+                        pndTestId = testDetil.pndTestId;
+                        anwDetails.Add(testANWDetail);
+                    }
+                }
+                specimenResponse.data = anwDetails;
+                specimenResponse.Status = "true";
+                specimenResponse.Message = string.Empty;
+                return specimenResponse;
+            }
+
+            catch (Exception e)
+            {
+                specimenResponse.Status = "false";
+                specimenResponse.Message = e.Message;
+                return specimenResponse;
+            }
+        }
     }
 }

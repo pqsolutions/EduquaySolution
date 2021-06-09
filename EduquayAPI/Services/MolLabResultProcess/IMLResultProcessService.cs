@@ -22,5 +22,7 @@ namespace EduquayAPI.Services.MolLabResultProcess
         Task<ServiceResponse> AddSpecimenSamplesTestResult(AddSpecimenSampleTestRequest mrData);
         Task<SpecimenReportResponse> RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData);
 
+        List<MolecularLabBloodReport> RetriveIndividualSubjectForBloodTestReports(MolLabReportIndividualRequest rData);
+        Task<SpecimenReportResponse> RetriveIndividualSubjectForSpecimenTestReports(MolLabReportIndividualRequest rData);
     }
 }
