@@ -23,6 +23,9 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
         private const string FetchMolecularLabBloodTestReports = "SPC_FetchMolecularLabBloodTestReports";
         private const string FetchMolecularLabSpecimenTestReports = "SPC_FetchMolecularLabSpecimenTestReports";
 
+        private const string FetchMolecularLabBloodTestReportIndividual = "SPC_FetchMolecularLabBloodTestReportIndividual";
+        private const string FetchMolecularLabSpecimenTestReportIndividual = "SPC_FetchMolecularLabSpecimenTestReportIndividual";
+
         public MLResultProcessData()
         {
 
@@ -75,6 +78,8 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
             var allReceivedSubject = UtilityDL.FillEntity<MolecularMsg>(stProc, pList);
             return allReceivedSubject;
         }
+
+       
 
         public List<MLabSpecimenForTestStatus> RetriveSpecimenForMolecularEditTest(int molecularLabId)
         {
@@ -157,6 +162,18 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
             return allReceivedSubject;
         }
 
+        public List<MolecularLabBloodReport> RetriveIndividualSubjectForBloodTestReports(MolLabReportIndividualRequest rData)
+        {
+            string stProc = FetchMolecularLabBloodTestReportIndividual;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+                new SqlParameter("@Input", rData.input),
+            };
+            var allReceivedSubject = UtilityDL.FillData<MolecularLabBloodReport>(stProc, pList);
+            return allReceivedSubject;
+        }
+
         public SpecimenReport RetriveSubjectForMolecularSpecimenTestReports(MolecularLabReportRequest rData)
         {
             string stProc = FetchMolecularLabSpecimenTestReports;
@@ -167,6 +184,22 @@ namespace EduquayAPI.DataLayer.MolLabResultProcess
                 new SqlParameter("@ToDate", rData.toDate),
                 new SqlParameter("@DistrictID", rData.districtId),
                 new SqlParameter("@CHCID", rData.chcId),
+            };
+            var awDetail = UtilityDL.FillData<MolecularLabSpecimenReport>(stProc, pList);
+            var foetusDetail = UtilityDL.FillData<MolecularLabFoetusResult>(stProc, pList);
+            var report = new SpecimenReport();
+            report.anwDetail = awDetail;
+            report.foetusDetail = foetusDetail;
+            return report;
+        }
+
+        public SpecimenReport RetriveIndividualSubjectForSpecimenTestReports(MolLabReportIndividualRequest rData)
+        {
+            string stProc = FetchMolecularLabSpecimenTestReportIndividual;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+                new SqlParameter("@Input", rData.input),
             };
             var awDetail = UtilityDL.FillData<MolecularLabSpecimenReport>(stProc, pList);
             var foetusDetail = UtilityDL.FillData<MolecularLabFoetusResult>(stProc, pList);
