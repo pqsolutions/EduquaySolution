@@ -115,12 +115,14 @@ namespace SentinelAPI.DataLayer.MolecularLab
             return molecularLabReceipt;
         }
 
-        public List<MolecularLabReport> RetrieveMolecularTestResultsReport(int molecularLabId)
+        public List<MolecularLabReport> RetrieveMolecularTestResultsReport(MolecularLabBloodReportRequest rData)
         {
             string stProc = FetchSubjectsForBabyBloodTestReport;
             var pList = new List<SqlParameter>()
             {
-                new SqlParameter("@MolecularLabId", molecularLabId),
+                new SqlParameter("@MolecularLabId", rData.molecularLabId),
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
             };
             var allReceivedSubject = UtilityDL.FillData<MolecularLabReport>(stProc, pList);
             return allReceivedSubject;
