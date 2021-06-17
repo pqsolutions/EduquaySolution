@@ -43,5 +43,6 @@ namespace EduquayAPI.Services.WebMaster
         List<LoadCommon> RetrieveTestingCHCByDistrict(int id);
         List<LoadCommon> RetrieveSCByPHC(int id);
         List<LoadCommon> RetrieveILRByCHC(int id);
+        List<LoadCommon> RetrieveTestingCHCByBlock(int id);
     }
 }

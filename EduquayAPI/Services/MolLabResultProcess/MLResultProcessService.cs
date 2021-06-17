@@ -227,6 +227,7 @@ namespace EduquayAPI.Services.MolLabResultProcess
                         testANWDetail.uniqueSubjectId = testDetil.uniqueSubjectId;
                         testANWDetail.subjectName = testDetil.subjectName;
                         testANWDetail.subjectType = testDetil.subjectType;
+                        testANWDetail.spouseBarcodeNo = testDetil.spouseBarcodeNo;
                         testANWDetail.spouseSubjectId = testDetil.spouseSubjectId;
                         testANWDetail.spouseName = testDetil.spouseName;
                         testANWDetail.rchId = testDetil.rchId;
@@ -254,7 +255,11 @@ namespace EduquayAPI.Services.MolLabResultProcess
                         testANWDetail.spouseMolecularTestResult = testDetil.spouseMolecularTestResult;
                         testANWDetail.molecularLabName = testDetil.molecularLabName;
                         testANWDetail.orderingPhysician = testDetil.orderingPhysician;
-                        testANWDetail.molecularResultEnteredBy = testDetil.molecularResultEnteredBy;
+                        testANWDetail.labInchargeName = testDetil.labInchargeName;
+                        testANWDetail.labInchargeDesignation = testDetil.labInchargeDesignation;
+                        testANWDetail.labInchargeDepartment = testDetil.labInchargeDepartment;
+                        testANWDetail.inCharge = testDetil.inCharge;
+                        testANWDetail.labInchargeAddress = testDetil.labInchargeAddress;
                         testANWDetail.pndTestId = testDetil.pndTestId;
                         testANWDetail.labTechnician = testDetil.labTechnician;
                         testANWDetail.foetusDetail = foetusDetail;
@@ -327,7 +332,11 @@ namespace EduquayAPI.Services.MolLabResultProcess
                         testANWDetail.spouseMolecularTestResult = testDetil.spouseMolecularTestResult;
                         testANWDetail.molecularLabName = testDetil.molecularLabName;
                         testANWDetail.orderingPhysician = testDetil.orderingPhysician;
-                        testANWDetail.molecularResultEnteredBy = testDetil.molecularResultEnteredBy;
+                        testANWDetail.labInchargeName = testDetil.labInchargeName;
+                        testANWDetail.labInchargeDesignation = testDetil.labInchargeDesignation;
+                        testANWDetail.labInchargeDepartment = testDetil.labInchargeDepartment;
+                        testANWDetail.inCharge = testDetil.inCharge;
+                        testANWDetail.labInchargeAddress = testDetil.labInchargeAddress;
                         testANWDetail.pndTestId = testDetil.pndTestId;
                         testANWDetail.labTechnician = testDetil.labTechnician;
                         testANWDetail.foetusDetail = foetusDetail;

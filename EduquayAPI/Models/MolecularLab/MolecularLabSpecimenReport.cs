@@ -33,26 +33,46 @@ namespace EduquayAPI.Models.MolecularLab
         public string sampleCollectionDate { get; set; }
         public string molecularTestResult { get; set; }
         public string testDate { get; set; }
+        public string spouseBarcodeNo { get; set; }
         public string spouseSubjectId { get; set; }
         public string spouseName { get; set; }
         public string spouseMolecularTestResult { get; set; }
         public string molecularLabName { get; set; }
         public string orderingPhysician { get; set; }
-        public string molecularResultEnteredBy { get; set; }
+        public string labInchargeName { get; set; }
+        public string labInchargeDesignation { get; set; }
+        public string labInchargeDepartment { get; set; }
+        public string inCharge { get; set; }
+        public string labInchargeAddress { get; set; }
         public int pndTestId { get; set; }
         public string labTechnician { get; set; }
         public List<MolecularLabFoetusResult> foetusDetail { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SpouseBarcodeNo"))
+                this.spouseBarcodeNo = Convert.ToString(reader["SpouseBarcodeNo"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabTechnician"))
                 this.labTechnician = Convert.ToString(reader["LabTechnician"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "PNDTestId"))
                 this.pndTestId = Convert.ToInt32(reader["PNDTestId"]);
 
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ResultEnteredBy"))
-                this.molecularResultEnteredBy = Convert.ToString(reader["ResultEnteredBy"]);
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabInchargeAddress"))
+                this.labInchargeAddress = Convert.ToString(reader["LabInchargeAddress"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabIchargeDepartment"))
+                this.labInchargeDepartment = Convert.ToString(reader["LabIchargeDepartment"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "InCharge"))
+                this.inCharge = Convert.ToString(reader["InCharge"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabIchargeDesignation"))
+                this.labInchargeDesignation = Convert.ToString(reader["LabIchargeDesignation"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabInchargeName"))
+                this.labInchargeName = Convert.ToString(reader["LabInchargeName"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "OrderingPhysician"))
                 this.orderingPhysician = Convert.ToString(reader["OrderingPhysician"]);

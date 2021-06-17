@@ -782,5 +782,27 @@ namespace EduquayAPI.Controllers
                 return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
             }
         }
+
+        [HttpGet]
+        [Route("RetrieveTestingCHCByBlock/{id}")]
+        public LoadCommonResponse RetrieveTestingCHCByBlock(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch  Testing CHC by Block - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveTestingCHCByBlock(id);
+
+                _logger.LogInformation($"Received Testing CHC by Block {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving Testing CHC by Block data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
     }
 }

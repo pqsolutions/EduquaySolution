@@ -226,5 +226,11 @@ namespace EduquayAPI.Services.WebMaster
             var data = _webMasterData.RetrieveILRByCHC(id);
             return data;
         }
+
+        public List<LoadCommon> RetrieveTestingCHCByBlock(int id)
+        {
+            var data = _webMasterData.RetrieveTestingCHCByBlock(id);
+            return data;
+        }
     }
 }
