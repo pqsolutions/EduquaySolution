@@ -29,10 +29,36 @@ namespace SentinelAPI.Models.MolecularLab
         public string registrationDate { get; set; }
         public string molecularLabName { get; set; }
         public string orderingPhysician { get; set; }
-        public string resultEnteredBy { get; set; }
+        public string labInchargeName { get; set; }
+        public string labInchargeDesignation { get; set; }
+        public string labInchargeDepartment { get; set; }
+        public string inCharge { get; set; }
+        public string labInchargeAddress { get; set; }
+        public string labTechnician { get; set; }
 
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabInchargeAddress"))
+                this.labInchargeAddress = Convert.ToString(reader["LabInchargeAddress"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabIchargeDepartment"))
+                this.labInchargeDepartment = Convert.ToString(reader["LabIchargeDepartment"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "InCharge"))
+                this.inCharge = Convert.ToString(reader["InCharge"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabIchargeDesignation"))
+                this.labInchargeDesignation = Convert.ToString(reader["LabIchargeDesignation"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabInchargeName"))
+                this.labInchargeName = Convert.ToString(reader["LabInchargeName"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "OrderingPhysician"))
+                this.orderingPhysician = Convert.ToString(reader["OrderingPhysician"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "LabTechnician"))
+                this.labTechnician = Convert.ToString(reader["LabTechnician"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MotherAge"))
                 this.motherAge = Convert.ToInt32(reader["MotherAge"]);
 
@@ -53,12 +79,6 @@ namespace SentinelAPI.Models.MolecularLab
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "FatherName"))
                 this.fatherName = Convert.ToString(reader["FatherName"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "ResultEnteredBy"))
-                this.resultEnteredBy = Convert.ToString(reader["ResultEnteredBy"]);
-
-            if (CommonUtility.IsColumnExistsAndNotNull(reader, "OrderingPhysician"))
-                this.orderingPhysician = Convert.ToString(reader["OrderingPhysician"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "MolecularLabName"))
                 this.molecularLabName = Convert.ToString(reader["MolecularLabName"]);

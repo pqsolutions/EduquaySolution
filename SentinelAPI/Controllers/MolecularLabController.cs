@@ -212,15 +212,15 @@ namespace SentinelAPI.Controllers
         /// <summary>
         /// Used for get  subjects for molecular test  reports
         /// </summary>
-        [HttpGet]
-        [Route("RetrieveSubjectsForTestReports/{molecularLabId}")]
-        public MolecularLabTestReportResponse RetrieveSubjectsForTestReports(int molecularLabId)
+        [HttpPost]
+        [Route("RetrieveSubjectsForTestReports")]
+        public MolecularLabTestReportResponse RetrieveSubjectsForTestReports(MolecularLabBloodReportRequest rData)
         {
             try
             {
                 _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
-                _logger.LogDebug($"Received subject for molecular test reports  - {JsonConvert.SerializeObject(molecularLabId)}");
-                var subjects = _molecularLabService.RetrieveMolecularTestResultsReport(molecularLabId);
+                _logger.LogDebug($"Received subject for molecular test reports  - {JsonConvert.SerializeObject(rData)}");
+                var subjects = _molecularLabService.RetrieveMolecularTestResultsReport(rData);
                 return subjects.Count == 0 ? new MolecularLabTestReportResponse { Status = "true", Message = "No subjects found", data = new List<MolecularLabReport>() }
                 : new MolecularLabTestReportResponse { Status = "true", Message = string.Empty, data = subjects };
             }

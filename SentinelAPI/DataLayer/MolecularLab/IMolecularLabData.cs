@@ -18,7 +18,7 @@ namespace SentinelAPI.DataLayer.MolecularLab
         List<MolecularResultsDetail> RetriveMolecularTestResultsDetail(int molecularLabId);
         List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData);
         MolecularMsg AddBloodSamplesTestResult(AddBloodSampleTestRequest rData);
-        List<MolecularLabReport> RetrieveMolecularTestResultsReport(int molecularLabId);
+        List<MolecularLabReport> RetrieveMolecularTestResultsReport(MolecularLabBloodReportRequest rData);
     }
 
     public interface IMolecularLabDataFactory

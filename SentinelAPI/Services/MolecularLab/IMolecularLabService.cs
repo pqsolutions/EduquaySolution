@@ -20,7 +20,7 @@ namespace SentinelAPI.Services.MolecularLab
         List<MolecularResultsDetail> RetriveMolecularTestResultsDetail(int molecularLabId);
         List<MolecularReportsDetail> RetriveMolecularReports(FetchMolecularReportsRequest mrData);
         Task<ServiceResponse> AddMolecularBloodResult(AddBloodSampleTestRequest mrData);
-        List<MolecularLabReport> RetrieveMolecularTestResultsReport(int molecularLabId);
+        List<MolecularLabReport> RetrieveMolecularTestResultsReport(MolecularLabBloodReportRequest rData);
 
     }
 }
