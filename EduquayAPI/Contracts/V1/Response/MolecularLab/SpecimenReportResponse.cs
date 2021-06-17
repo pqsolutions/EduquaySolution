@@ -39,12 +39,17 @@ namespace EduquayAPI.Contracts.V1.Response.MolecularLab
         public string sampleCollectionDate { get; set; }
         public string molecularTestResult { get; set; }
         public string testDate { get; set; }
+        public string spouseBarcodeNo{ get; set; }
         public string spouseSubjectId { get; set; }
         public string spouseName { get; set; }
         public string spouseMolecularTestResult { get; set; }
         public string molecularLabName { get; set; }
         public string orderingPhysician { get; set; }
-        public string molecularResultEnteredBy { get; set; }
+        public string labInchargeName { get; set; }
+        public string labInchargeDesignation { get; set; }
+        public string labInchargeDepartment { get; set; }
+        public string inCharge { get; set; }
+        public string labInchargeAddress { get; set; }
         public int pndTestId { get; set; }
         public string labTechnician { get; set; }
         public List<MolecularLabFoetusResult> foetusDetail { get; set; }
