@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.DataLayer.Support
 {
-    public class SupportData : ISupportData
+    public class SupportData : ISupportData 
     {
         private const string FetchErrorBarcodeCorrection = "SPC_FetchErrorBarcodeCorrection";
         private const string FetchBarcodeForErrorCorrection = "SPC_FetchBarcodeForErrorCorrection";
@@ -25,6 +25,17 @@ namespace EduquayAPI.DataLayer.Support
         private const string UpdateRCHIdDetail = "SPC_UpdateRCHIdDetail";
         private const string FetchUpdateRCHIDDetail = "SPC_FetchUpdateRCHIDDetail";
         private const string FetchRCHIDExist = "SPC_FetchRCHIDExist";
+
+        private const string FetchDetailForLMPCorrection = "SPC_FetchDetailForLMPCorrection";
+        private const string UpdateLMPDetail = "SPC_UpdateLMPDetail";
+
+        private const string FetchDetailForSSTCorrection = "SPC_FetchDetailForSSTCorrection";
+        private const string UpdateSSTDetail = "SPC_UpdateSSTDetail";
+
+        private const string FetchBarcodeErrorCorrectionReport = "SPC_FetchBarcodeErrorCorrectionReport";
+        private const string FetchRCHIDErrorCorrectionReport = "SPC_FetchRCHIDErrorCorrectionReport";
+        private const string FetchLMPErrorCorrectionReport = "SPC_FetchLMPErrorCorrectionReport";
+        private const string FetchSSTResultCorrectionReport = "SPC_FetchSSTResultCorrectionReport";
 
         private const string AddANMUser = "SPC_AddANMUser";
 
@@ -87,13 +98,27 @@ namespace EduquayAPI.DataLayer.Support
             }
         }
 
-
-
         public List<BarcodeErrorDetail> FetchBarcodeDetailsForErrorCorrection(string barcodeNo)
         {
             string stProc = FetchBarcodeForErrorCorrection;
             var pList = new List<SqlParameter>() { new SqlParameter("@BarcodeNo", barcodeNo) };
             var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<BarcodeErrorReportDetail> FetchBarcodeErrorReport(ReportRequest rData)
+        {
+            string stProc = FetchBarcodeErrorCorrectionReport;
+            var pList = new List<SqlParameter>() 
+            { 
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId)
+            };
+            var allData = UtilityDL.FillData<BarcodeErrorReportDetail>(stProc, pList);
             return allData;
         }
 
@@ -105,11 +130,27 @@ namespace EduquayAPI.DataLayer.Support
             return allData;
         }
 
+        public List<BarcodeErrorDetail> FetchDetailsForLMPCorrection(FetchRequest rData)
+        {
+            string stProc = FetchDetailForLMPCorrection;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Input", rData.input) };
+            var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
         public List<BarcodeErrorDetail> FetchDetailsForRCHCorrection(string input)
         {
             string stProc = FetchDetailForRCHIDCorrection;
             var pList = new List<SqlParameter>() { new SqlParameter("@Input", input) };
             var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<SSTErrorDetail> FetchDetailsForSSTCorrection(FetchRequest rData)
+        {
+            string stProc = FetchDetailForSSTCorrection;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Input", rData.input) };
+            var allData = UtilityDL.FillData<SSTErrorDetail>(stProc, pList);
             return allData;
         }
 
@@ -121,11 +162,59 @@ namespace EduquayAPI.DataLayer.Support
             return allData;
         }
 
+        public List<LMPErrorReportDetail> FetchLMPErrorReport(ReportRequest rData)
+        {
+            string stProc = FetchLMPErrorCorrectionReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId)
+            };
+            var allData = UtilityDL.FillData<LMPErrorReportDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<RCHErrorReportDetail> FetchRCHErrorReport(ReportRequest rData)
+        {
+            string stProc = FetchRCHIDErrorCorrectionReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId)
+            };
+            var allData = UtilityDL.FillData<RCHErrorReportDetail>(stProc, pList);
+            return allData;
+        }
+
         public List<BarcodeErrorDetail> FetchRCHIDExists(string input)
         {
             string stProc = FetchRCHIDExist;
             var pList = new List<SqlParameter>() { new SqlParameter("@RCHID", input) };
             var allData = UtilityDL.FillData<BarcodeErrorDetail>(stProc, pList);
+            return allData;
+        }
+
+        public List<SSTCorrectionReportDetail> FetchSSTErrorReport(ReportRequest rData)
+        {
+            string stProc = FetchSSTResultCorrectionReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@DistrictID", rData.districtId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId)
+            };
+            var allData = UtilityDL.FillData<SSTCorrectionReportDetail>(stProc, pList);
             return allData;
         }
 
@@ -155,6 +244,38 @@ namespace EduquayAPI.DataLayer.Support
                 new SqlParameter("@UserId", bData.userId),
             };
             var allData = UtilityDL.FillEntity<UpdateBarcodeMsg>(stProc, pList);
+            return allData;
+        }
+
+        public ErrorMsgDetail UpdateErrorLMP(UpdateLMPRequest bData)
+        {
+            string stProc = UpdateLMPDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@SubjectId", bData.subjectId),
+                new SqlParameter("@OldLMP", bData.oldLMP),
+                new SqlParameter("@NewLMP", bData.newLMP),
+                new SqlParameter("@Remarks", bData.remarks),
+                new SqlParameter("@UserId", bData.userId),
+            };
+            var allData = UtilityDL.FillEntity<ErrorMsgDetail>(stProc, pList);
+            return allData;
+        }
+
+        public ErrorMsgDetail UpdateErrorSST(UpdateSSTRequest bData)
+        {
+            string stProc = UpdateSSTDetail;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@SSTID", bData.sstId),
+                new SqlParameter("@SubjectId", bData.subjectId),
+                new SqlParameter("@Barcode", bData.barcode),
+                new SqlParameter("@OldSST", bData.oldSST),
+                new SqlParameter("@NewSST", bData.newSST),
+                new SqlParameter("@Remarks", bData.remarks),
+                new SqlParameter("@UserId", bData.userId),
+            };
+            var allData = UtilityDL.FillEntity<ErrorMsgDetail>(stProc, pList);
             return allData;
         }
 

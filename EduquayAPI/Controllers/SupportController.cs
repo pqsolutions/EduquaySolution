@@ -180,6 +180,190 @@ namespace EduquayAPI.Controllers
             });
         }
 
+
+        /// <summary>
+        /// Used for fetch the  detail for LMP error correction
+        /// </summary>
+
+        [HttpPost]
+        [Route("RetrieveDetailsForLMPErrorCorrection")]
+        public ErrorBarcodeDetailResponse FetchDetailForLMPCorrection(FetchRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorLMP = _supportService.FetchDetailsForLMPCorrection(rData);
+
+                _logger.LogInformation($"Received error LMP data {errorLMP}");
+                return errorLMP.Count == 0 ?
+                    new ErrorBarcodeDetailResponse { status = "true", message = "No record found", data = new List<BarcodeErrorDetail>() }
+                    : new ErrorBarcodeDetailResponse { status = "true", message = string.Empty, data = errorLMP };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving LMP error data {e.StackTrace}");
+                return new ErrorBarcodeDetailResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+
+        /// <summary>
+        /// Used for Update the Old LMP into Revised LMP
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateLMP")]
+        public async Task<IActionResult> UpdateLMP(UpdateLMPRequest rData)
+        {
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Updating the LMP - {JsonConvert.SerializeObject(rData)}");
+            var subjectSample = await _supportService.UpdateLMP(rData);
+            return Ok(new ServiceResponse
+            {
+                Status = subjectSample.Status,
+                Message = subjectSample.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for fetch the  detail for SST error correction
+        /// </summary>
+
+        [HttpPost]
+        [Route("RetrieveDetailsForSSTCorrection")]
+        public ErrorSSTDetailResponse RetrieveDetailsForSSTCorrection(FetchRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorSST = _supportService.FetchDetailsForSSTCorrection(rData);
+
+                _logger.LogInformation($"Received error sst  data {errorSST}");
+                return errorSST.Count == 0 ?
+                    new ErrorSSTDetailResponse { status = "true", message = "No record found", data = new List<SSTErrorDetail>() }
+                    : new ErrorSSTDetailResponse { status = "true", message = string.Empty, data = errorSST };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving sst error data {e.StackTrace}");
+                return new ErrorSSTDetailResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for Update the Old SST into Revised SST
+        /// </summary>
+        [HttpPost]
+        [Route("UpdateSST")]
+        public async Task<IActionResult> UpdateSST(UpdateSSTRequest rData)
+        {
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Updating the SST - {JsonConvert.SerializeObject(rData)}");
+            var subjectSample = await _supportService.UpdateSST(rData);
+            return Ok(new ServiceResponse
+            {
+                Status = subjectSample.Status,
+                Message = subjectSample.Message,
+            });
+        }
+
+        /// <summary>
+        /// Used for retrieve the error barcode detail report
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveBarcodeErrorReport")]
+        public BarcodeErrorReportResponse RetrieveBarcodeErrorReport(ReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorReport = _supportService.FetchBarcodeErrorReport(rData);
+
+                _logger.LogInformation($"Received error barcode report  data {errorReport}");
+                return errorReport.Count == 0 ?
+                    new BarcodeErrorReportResponse { status = "true", message = "No record found", data = new List<BarcodeErrorReportDetail>() }
+                    : new BarcodeErrorReportResponse { status = "true", message = string.Empty, data = errorReport };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving error barcode reportr data {e.StackTrace}");
+                return new BarcodeErrorReportResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve the error RCHId detail report
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveRCHIdErrorReport")]
+        public RCHErrorReportResponse RetrieveRCHIdErrorReport(ReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorReport = _supportService.FetchRCHErrorReport(rData);
+
+                _logger.LogInformation($"Received error rchid report  data {errorReport}");
+                return errorReport.Count == 0 ?
+                    new RCHErrorReportResponse { status = "true", message = "No record found", data = new List<RCHErrorReportDetail>() }
+                    : new RCHErrorReportResponse { status = "true", message = string.Empty, data = errorReport };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving error rchid reportr data {e.StackTrace}");
+                return new RCHErrorReportResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve the error LMP detail report
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveLMPErrorReport")]
+        public LMPRerrorReportResponse RetrieveLMPErrorReport(ReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorReport = _supportService.FetchLMPErrorReport(rData);
+
+                _logger.LogInformation($"Received error lmp report  data {errorReport}");
+                return errorReport.Count == 0 ?
+                    new LMPRerrorReportResponse { status = "true", message = "No record found", data = new List<LMPErrorReportDetail>() }
+                    : new LMPRerrorReportResponse { status = "true", message = string.Empty, data = errorReport };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving error lmp reportr data {e.StackTrace}");
+                return new LMPRerrorReportResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
+        /// <summary>
+        /// Used for retrieve the error SST Rest Result detail report
+        /// </summary>
+        [HttpPost]
+        [Route("RetrieveSSTResultErrorReport")]
+        public SSTErrorReportResponse RetrieveSSTResultErrorReport(ReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            try
+            {
+                var errorReport = _supportService.FetchSSTErrorReport(rData);
+
+                _logger.LogInformation($"Received error sst result report  data {errorReport}");
+                return errorReport.Count == 0 ?
+                    new SSTErrorReportResponse { status = "true", message = "No record found", data = new List<SSTCorrectionReportDetail>() }
+                    : new SSTErrorReportResponse { status = "true", message = string.Empty, data = errorReport };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving error sst result reportr data {e.StackTrace}");
+                return new SSTErrorReportResponse { status = "false", message = e.Message, data = null };
+            }
+        }
+
         /// <summary>
         /// Used to add New ANM User
         /// </summary>

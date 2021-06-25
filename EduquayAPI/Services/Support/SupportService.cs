@@ -115,7 +115,6 @@ namespace EduquayAPI.Services.Support
             var allData = _supportData.FetchDetailsForRCHCorrection(input);
             return allData;
         }
-
         public async Task<ServiceResponse> UpdateErrorBarcode(UpdateBarcodeRequest bData)
         {
             ServiceResponse sResponse = new ServiceResponse();
@@ -152,12 +151,12 @@ namespace EduquayAPI.Services.Support
                     {
                         if (result.revisedExistCheck == 1)
                         {
-                            EmailTrigger(result.barcodeUpdateCode,1);
+                            EmailTrigger(result.barcodeUpdateCode, 1);
 
                         }
                         else
                         {
-                            EmailTrigger(result.barcodeUpdateCode,0);
+                            EmailTrigger(result.barcodeUpdateCode, 0);
                         }
 
                         sResponse.Status = "true";
@@ -173,10 +172,10 @@ namespace EduquayAPI.Services.Support
                 return sResponse;
             }
         }
-        public void EmailTrigger(string barcodeUpdateCode,int x)
+        public void EmailTrigger(string barcodeUpdateCode, int x)
         {
             var detail = _supportData.FetchUpdatedBarcodeDetails(barcodeUpdateCode);
-            if(x==0)
+            if (x == 0)
             {
                 var subjectId = detail[0].subjectId;
                 var subjectName = detail[0].subjectName;
@@ -199,7 +198,7 @@ namespace EduquayAPI.Services.Support
                 string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
                 string cc = _config.GetSection("BarcodeUpdationEmail").GetSection("recipients").Value;
                 //string recipients = "muthuswamy.sr@carisma-solutions.com.au";   // For Testing Purpose
-                string recipients = dcEmail + ", " + scEmail ;
+                string recipients = dcEmail + ", " + scEmail;
                 string subject = _config.GetSection("BarcodeUpdationEmail").GetSection("MailSubject").Value;
                 string mailSubject = subject.Replace("#OldBarcodeNo", oldBarcode).Replace("#NewBarcodeNo", revisedBarcode);
                 string mailTemplateBody = _config.GetSection("BarcodeUpdationEmail").GetSection("BarcodeBody").Value;
@@ -255,7 +254,7 @@ namespace EduquayAPI.Services.Support
                 string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
                 string cc = _config.GetSection("BarcodeUpdationEmail").GetSection("recipients").Value;
                 //string recipients = "muthuswamy.sr@carisma-solutions.com.au";   // For Testing Purpose
-                string recipients = dcEmail1  + ", " + scEmail1 + ", " + dcEmail2 ;
+                string recipients = dcEmail1 + ", " + scEmail1 + ", " + dcEmail2;
                 string subject = _config.GetSection("BarcodeUpdationEmail").GetSection("ExistMailSubject").Value;
                 string mailSubject = subject.Replace("#OldBarcodeNo1", oldBarcode1).Replace("#NewBarcodeNo1", revisedBarcode1)
                     .Replace("#OldBarcodeNo2", oldBarcode2).Replace("#NewBarcodeNo2", revisedBarcode2);
@@ -277,6 +276,208 @@ namespace EduquayAPI.Services.Support
                 };
                 client.Send(mailMessage);
             }
+        }
+        public async Task<ServiceResponse> UpdateSST(UpdateSSTRequest rData)
+        {
+            ServiceResponse sResponse = new ServiceResponse();
+            var revisedSST="";
+            try
+            {
+                if (string.IsNullOrEmpty(rData.subjectId))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "SubjectID is missing";
+                    return sResponse;
+                }
+                if (rData.sstId <= 0)
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid SST ID";
+                    return sResponse;
+                }
+                else if (string.IsNullOrEmpty(rData.oldSST))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Current SST Result is missing";
+                    return sResponse;
+                }
+               
+                else if (string.IsNullOrEmpty(rData.remarks))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Remarks is missing";
+                    return sResponse;
+                }
+                else if (rData.userId <= 0)
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid UserId";
+                    return sResponse;
+                }
+                else
+                {
+                    var result = _supportData.UpdateErrorSST(rData);
+
+                    if (rData.newSST == true)
+                    {
+                        revisedSST = "Positive";
+                    }
+                    else
+                    {
+                        revisedSST = "Negative";
+                    }
+                    EmailSSTTrigger(rData.subjectId, rData.oldSST, revisedSST);
+                    sResponse.Status = "true";
+                    sResponse.Message = result.msg;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = e.Message;
+                return sResponse;
+            }
+        }
+
+        public void EmailSSTTrigger(string subId, string oldSST, string revisedSST)
+        {
+
+            var getSub = new FetchRequest();
+            {
+                getSub.input = subId;
+            }
+
+            var detail = _supportData.FetchDetailsForSSTCorrection(getSub);
+            var subjectId = detail[0].subjectId;
+            var subjectName = detail[0].subjectName;
+            var anmName = detail[0].anmName;
+            var anmMobile = detail[0].anmContact;
+            var anmEmail = detail[0].anmEmail;
+            var dcName = detail[0].dcName;
+            var dcMobile = detail[0].dcContact;
+            var dcEmail = detail[0].dcEmail;
+            var olsSST = oldSST;
+            var newSST = revisedSST;
+            var host = _config.GetSection("SMTPDetails").GetSection("host").Value;
+            var port = _config.GetSection("SMTPDetails").GetSection("port").Value;
+            var uName = _config.GetSection("SMTPDetails").GetSection("username").Value;
+            string pwd = _config.GetSection("SMTPDetails").GetSection("pwd").Value;
+            string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
+            string cc = _config.GetSection("SSTUpdationEmail").GetSection("recipients").Value;
+            string recipients = dcEmail;
+            string subject = _config.GetSection("SSTUpdationEmail").GetSection("MailSubject").Value;
+            string mailSubject = subject.Replace("#OldSST", olsSST).Replace("#NewSST", newSST).Replace("#SubjectId", subjectId).Replace("#SubjectName", subjectName);
+            string mailTemplateBody = _config.GetSection("SSTUpdationEmail").GetSection("Body").Value;
+            string mailBody = "";
+            mailBody = mailBody + mailTemplateBody.Replace("#OldSST", olsSST).Replace("#NewSST", newSST)
+                   .Replace("#DCMobile", dcMobile).Replace("#DCName", dcName).Replace("#ANMMobile", anmMobile).Replace("#ANMName", anmName)
+                   .Replace("#SubjectId", subjectId).Replace("#SubjectName", subjectName);
+            var mailMessage = new MailMessage(from, recipients, mailSubject, mailBody);
+            mailMessage.CC.Add(cc);
+            mailMessage.IsBodyHtml = true;
+            var client = new SmtpClient(host, int.Parse(port))
+            {
+                Credentials = new NetworkCredential(uName, pwd),
+                EnableSsl = true
+            };
+            client.Send(mailMessage);
+        }
+
+        public async Task<ServiceResponse> UpdateLMP(UpdateLMPRequest rData)
+        {
+            ServiceResponse sResponse = new ServiceResponse();
+            try
+            {
+                if (string.IsNullOrEmpty(rData.subjectId))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "SubjectID is missing";
+                    return sResponse;
+                }
+                else if (string.IsNullOrEmpty(rData.oldLMP))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Current LMP is missing";
+                    return sResponse;
+                }
+                else if (string.IsNullOrEmpty(rData.newLMP))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Revised LMP is missing";
+                    return sResponse;
+                }
+                else if (string.IsNullOrEmpty(rData.remarks))
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Remarks is missing";
+                    return sResponse;
+                }
+                else if (rData.userId <= 0)
+                {
+                    sResponse.Status = "false";
+                    sResponse.Message = "Invalid UserId";
+                    return sResponse;
+                }
+                else
+                {
+                    var result = _supportData.UpdateErrorLMP(rData);
+                    EmailLMPTrigger(rData.subjectId, rData.oldLMP, rData.newLMP);
+                    sResponse.Status = "true";
+                    sResponse.Message = result.msg;
+                    return sResponse;
+                }
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = e.Message;
+                return sResponse;
+            }
+        }
+
+        public void EmailLMPTrigger(string subId, string oldLMPDate, string newLMPDate)
+        {
+
+            var getSub = new FetchRequest();
+            {
+                getSub.input = subId;
+            }
+
+            var detail = _supportData.FetchDetailsForLMPCorrection(getSub);
+            var subjectId = detail[0].subjectId;
+            var subjectName = detail[0].subjectName;
+            var anmName = detail[0].anmName;
+            var anmMobile = detail[0].anmContact;
+            var anmEmail = detail[0].anmEmail;
+            var dcName = detail[0].dcName;
+            var dcMobile = detail[0].dcContact;
+            var dcEmail = detail[0].dcEmail;
+            var oldLMP = oldLMPDate;
+            var newLMP = newLMPDate;
+            var host = _config.GetSection("SMTPDetails").GetSection("host").Value;
+            var port = _config.GetSection("SMTPDetails").GetSection("port").Value;
+            var uName = _config.GetSection("SMTPDetails").GetSection("username").Value;
+            string pwd = _config.GetSection("SMTPDetails").GetSection("pwd").Value;
+            string from = _config.GetSection("SMTPDetails").GetSection("from").Value;
+            string cc = _config.GetSection("LMPUpdationEmail").GetSection("recipients").Value;
+            string recipients = dcEmail ;
+            string subject = _config.GetSection("LMPUpdationEmail").GetSection("MailSubject").Value;
+            string mailSubject = subject.Replace("#OldLMP", oldLMP).Replace("#NewLMP", newLMP).Replace("#SubjectId", subjectId).Replace("#SubjectName", subjectName);
+            string mailTemplateBody = _config.GetSection("LMPUpdationEmail").GetSection("LMPBody").Value;
+            string mailBody = "";
+            mailBody = mailBody + mailTemplateBody.Replace("#OldLMP", oldLMP).Replace("#NewLMP", newLMP)
+                   .Replace("#DCMobile", dcMobile).Replace("#DCName", dcName).Replace("#ANMMobile", anmMobile).Replace("#ANMName", anmName)
+                   .Replace("#SubjectId", subjectId).Replace("#SubjectName", subjectName);
+            var mailMessage = new MailMessage(from, recipients, mailSubject, mailBody);
+            mailMessage.CC.Add(cc);
+            mailMessage.IsBodyHtml = true;
+            var client = new SmtpClient(host, int.Parse(port))
+            {
+                Credentials = new NetworkCredential(uName, pwd),
+                EnableSsl = true
+            };
+            client.Send(mailMessage);
         }
 
         public async Task<ServiceResponse> UpdateRCHId(UpdateRCHIDRequest rData)
@@ -526,7 +727,41 @@ namespace EduquayAPI.Services.Support
             }
             return msg;
         }
-    } 
 
+        public List<BarcodeErrorDetail> FetchDetailsForLMPCorrection(FetchRequest rData)
+        {
+            var allData = _supportData.FetchDetailsForLMPCorrection(rData);
+            return allData;
+        }
 
+        public List<SSTErrorDetail> FetchDetailsForSSTCorrection(FetchRequest rData)
+        {
+            var allData = _supportData.FetchDetailsForSSTCorrection(rData);
+            return allData;
+        }
+
+        public List<BarcodeErrorReportDetail> FetchBarcodeErrorReport(ReportRequest rData)
+        {
+            var allData = _supportData.FetchBarcodeErrorReport(rData);
+            return allData;
+        }
+
+        public List<LMPErrorReportDetail> FetchLMPErrorReport(ReportRequest rData)
+        {
+            var allData = _supportData.FetchLMPErrorReport(rData);
+            return allData;
+        }
+
+        public List<RCHErrorReportDetail> FetchRCHErrorReport(ReportRequest rData)
+        {
+            var allData = _supportData.FetchRCHErrorReport(rData);
+            return allData;
+        }
+
+        public List<SSTCorrectionReportDetail> FetchSSTErrorReport(ReportRequest rData)
+        {
+            var allData = _supportData.FetchSSTErrorReport(rData);
+            return allData;
+        }
+    }
 }
