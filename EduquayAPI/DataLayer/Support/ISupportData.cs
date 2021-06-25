@@ -21,6 +21,15 @@ namespace EduquayAPI.DataLayer.Support
         UpdateRCHIDMsg UpdateRCHId(UpdateRCHIDRequest rData);
         List<RCHUpdationDetails> FetchUpdatedRCHIDDetails(string ids);
         ANMCreation AddNewANM(AddANMRequest addUser, string password);
+        List<BarcodeErrorDetail> FetchDetailsForLMPCorrection(FetchRequest rData);
+        ErrorMsgDetail UpdateErrorLMP(UpdateLMPRequest bData);
+        List<SSTErrorDetail> FetchDetailsForSSTCorrection(FetchRequest rData);
+        ErrorMsgDetail UpdateErrorSST(UpdateSSTRequest bData);
+        List<BarcodeErrorReportDetail> FetchBarcodeErrorReport(ReportRequest rData);
+        List<LMPErrorReportDetail> FetchLMPErrorReport(ReportRequest rData);
+        List<RCHErrorReportDetail> FetchRCHErrorReport(ReportRequest rData);
+        List<SSTCorrectionReportDetail> FetchSSTErrorReport(ReportRequest rData);
+
     }
     public interface ISupportDataFactory
     {

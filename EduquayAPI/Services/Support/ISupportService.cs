@@ -18,9 +18,17 @@ namespace EduquayAPI.Services.Support
         Task<CheckBarcodeResponse> CheckbarcodeExist(string barcodeNo);
         Task<ServiceResponse> UpdateErrorBarcode(UpdateBarcodeRequest bData);
         List<BarcodeErrorDetail> FetchDetailsForRCHCorrection(string input);
+        List<BarcodeErrorDetail> FetchDetailsForLMPCorrection(FetchRequest rData);
         Task<ServiceResponse> UpdateRCHId(UpdateRCHIDRequest rData);
         Task<CheckRCHResponse> CheckRCHIDExist(string rchId);
-
+        Task<ServiceResponse> UpdateLMP(UpdateLMPRequest rData);
+        Task<ServiceResponse> UpdateSST(UpdateSSTRequest rData);
         Task<AddANMResponse> AddNewANMUser(AddANMRequest aData);
+        List<SSTErrorDetail> FetchDetailsForSSTCorrection(FetchRequest rData);
+        List<BarcodeErrorReportDetail> FetchBarcodeErrorReport(ReportRequest rData);
+        List<LMPErrorReportDetail> FetchLMPErrorReport(ReportRequest rData);
+        List<RCHErrorReportDetail> FetchRCHErrorReport(ReportRequest rData);
+        List<SSTCorrectionReportDetail> FetchSSTErrorReport(ReportRequest rData);
+
     }
 }

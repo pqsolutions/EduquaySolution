@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.Models.Support
 {
-    public class BarcodeErrorDetail : IFill
+    public class SSTErrorDetail : IFill
     {
         public string barcodeNo { get; set; }
         public string subjectId { get; set; }
@@ -24,9 +24,20 @@ namespace EduquayAPI.Models.Support
         public string loginStatus { get; set; }
         public bool loginIconEnableStatus { get; set; }
         public bool barcodeValid { get; set; }
-
+        public int sstId { get; set; }
+        public string sstResult { get; set; }
+        public string sstDate { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SSTID"))
+                this.sstId = Convert.ToInt32(reader["SSTID"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SSTResult"))
+                this.sstResult = Convert.ToString(reader["SSTResult"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SSTDate"))
+                this.sstDate = Convert.ToString(reader["SSTDate"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "DCEmail"))
                 this.dcEmail = Convert.ToString(reader["DCEmail"]);
 
