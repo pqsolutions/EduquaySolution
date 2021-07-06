@@ -47,6 +47,10 @@ namespace EduquayAPI.DataLayer.WebMaster
         private const string FetchILRByCHC = "SPC_FetchILRByCHC";
 
         private const string FetchTestingCHCByBlock = "SPC_FetchTestingCHCByBlock";
+        private const string FetchCHCByDistrict = "SPC_FetchCHCByDistrict";
+        private const string FetchANMbyPHC = "SPC_FetchANMbyPHC";
+        private const string FetchSCbyANM = "SPC_FetchSCbyANM";
+        private const string FetchRIbyANM = "SPC_FetchRIbyANM";
         public WebMasterData()
         {
 
@@ -331,6 +335,38 @@ namespace EduquayAPI.DataLayer.WebMaster
         public List<LoadCommon> RetrieveTestingCHCByBlock(int id)
         {
             string stProc = FetchTestingCHCByBlock;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveCHCByDistrict(int id)
+        {
+            string stProc = FetchCHCByDistrict;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveANMByPHC(int id)
+        {
+            string stProc = FetchANMbyPHC;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveSCByANM(int id)
+        {
+            string stProc = FetchSCbyANM;
+            var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
+            var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
+            return allData;
+        }
+
+        public List<LoadCommon> RetrieveRIByANM(int id)
+        {
+            string stProc = FetchRIbyANM;
             var pList = new List<SqlParameter>() { new SqlParameter("@Id", id) };
             var allData = UtilityDL.FillData<LoadCommon>(stProc, pList);
             return allData;

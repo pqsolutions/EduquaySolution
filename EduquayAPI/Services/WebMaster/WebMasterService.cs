@@ -232,5 +232,29 @@ namespace EduquayAPI.Services.WebMaster
             var data = _webMasterData.RetrieveTestingCHCByBlock(id);
             return data;
         }
+
+        public List<LoadCommon> RetrieveCHCByDistrict(int id)
+        {
+            var data = _webMasterData.RetrieveCHCByDistrict(id);
+            return data;
+        }
+
+        public List<LoadCommon> RetrieveANMByPHC(int id)
+        {
+            var data = _webMasterData.RetrieveANMByPHC(id);
+            return data;
+        }
+
+        public List<LoadCommon> RetrieveSCByANM(int id)
+        {
+            var data = _webMasterData.RetrieveSCByANM(id);
+            return data;
+        }
+
+        public List<LoadCommon> RetrieveRIByANM(int id)
+        {
+            var data = _webMasterData.RetrieveRIByANM(id);
+            return data;
+        }
     }
 }
