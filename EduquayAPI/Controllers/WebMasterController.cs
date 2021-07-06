@@ -34,7 +34,7 @@ namespace EduquayAPI.Controllers
 
         [HttpGet]
         [Route("RetrieveStates")]
-        public LoadStateResponse  GetState()
+        public LoadStateResponse GetState()
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             try
@@ -43,13 +43,13 @@ namespace EduquayAPI.Controllers
 
                 _logger.LogInformation($"Received state master data {states}");
                 return states.Count == 0 ?
-                    new LoadStateResponse  { Status = "true", Message = "No record found", State = new List<LoadState>() }
-                    : new LoadStateResponse   { Status = "true", Message = string.Empty, State = states };
+                    new LoadStateResponse { Status = "true", Message = "No record found", State = new List<LoadState>() }
+                    : new LoadStateResponse { Status = "true", Message = string.Empty, State = states };
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in receiving state data {e.StackTrace}");
-                return new LoadStateResponse  { Status = "false", Message = e.Message, State = null };
+                return new LoadStateResponse { Status = "false", Message = e.Message, State = null };
             }
         }
 
@@ -424,7 +424,7 @@ namespace EduquayAPI.Controllers
 
                 _logger.LogInformation($"Received Logistics Provider master data {provider}");
                 return provider.Count == 0 ?
-                    new LoadProviderResponse { Status = "true", Message = "No record found", LogisticsProvider = new List<LoadLogisticsProvider >() }
+                    new LoadProviderResponse { Status = "true", Message = "No record found", LogisticsProvider = new List<LoadLogisticsProvider>() }
                     : new LoadProviderResponse { Status = "true", Message = string.Empty, LogisticsProvider = provider };
             }
             catch (Exception e)
@@ -566,6 +566,28 @@ namespace EduquayAPI.Controllers
         }
 
         [HttpGet]
+        [Route("RetrieveCHCByDistrict/{id}")]
+        public LoadCommonResponse RetrieveCHCByDistrict(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch chc by district - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveCHCByDistrict(id);
+
+                _logger.LogInformation($"Received chc master data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving chc data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
         [Route("RetrieveCHCByBlock/{id}")]
         public LoadCommonResponse RetrieveCHCByBlock(int id)
         {
@@ -573,7 +595,7 @@ namespace EduquayAPI.Controllers
             _logger.LogDebug($"Fetch chc by block - {JsonConvert.SerializeObject(id)}");
             try
             {
-                var data = _webMasterService.RetrieveCHCByBlock(id); 
+                var data = _webMasterService.RetrieveCHCByBlock(id);
 
                 _logger.LogInformation($"Received chc master data {data}");
                 return data.Count == 0 ?
@@ -596,6 +618,28 @@ namespace EduquayAPI.Controllers
             try
             {
                 var data = _webMasterService.RetrieveANMByCHC(id);
+
+                _logger.LogInformation($"Received anm user data {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving anm user data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveANMByPHC/{id}")]
+        public LoadCommonResponse RetrieveANMByPHC(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch anm by phc - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveANMByPHC(id);
 
                 _logger.LogInformation($"Received anm user data {data}");
                 return data.Count == 0 ?
@@ -801,6 +845,50 @@ namespace EduquayAPI.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Error in receiving Testing CHC by Block data {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+
+        }
+        [HttpGet]
+        [Route("RetrieveSCByANM/{id}")]
+        public LoadCommonResponse RetrieveSCByANM(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch  SC by ANM - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveSCByANM(id);
+
+                _logger.LogInformation($"Received SC by ANM  {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving SC data by ANM   {e.StackTrace}");
+                return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveRIByANM/{id}")]
+        public LoadCommonResponse RetrieveRIByANM(int id)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Fetch  RI by ANM - {JsonConvert.SerializeObject(id)}");
+            try
+            {
+                var data = _webMasterService.RetrieveRIByANM(id);
+
+                _logger.LogInformation($"Received RI by ANM  {data}");
+                return data.Count == 0 ?
+                    new LoadCommonResponse { Status = "true", Message = "No record found", data = new List<LoadCommon>() }
+                    : new LoadCommonResponse { Status = "true", Message = string.Empty, data = data };
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in receiving RI data by ANM   {e.StackTrace}");
                 return new LoadCommonResponse { Status = "false", Message = e.Message, data = null };
             }
         }
