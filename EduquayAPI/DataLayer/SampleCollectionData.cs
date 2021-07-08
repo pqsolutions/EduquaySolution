@@ -16,6 +16,7 @@ namespace EduquayAPI.DataLayer
         private const string AddSampleCollection = "SPC_AddSampleCollection";
         private const string FetchBarcodeSample = "SPC_FetchBarcodeSample";
         private const string FetchSMSSample = "SPC_FetchSMSBarcodeSampleDetails";
+        private const string FetchSampleDetailsForSMSbyBarcode = "SPC_FetchSampleDetailsForSMSbyBarcode";
 
         public SampleCollectionData()
         {
@@ -83,6 +84,17 @@ namespace EduquayAPI.DataLayer
             {
                 new SqlParameter("@Barcode", barcodeNo),
                 new SqlParameter("@SubjectId", subjectId ),
+            };
+            var allData = UtilityDL.FillEntity<SMSSamplesDetails>(stProc, pList);
+            return allData;
+        }
+
+        public SMSSamplesDetails FetchSMSSamplesByBarcode(string barcodeNo)
+        {
+            string stProc = FetchSampleDetailsForSMSbyBarcode;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@Barcode", barcodeNo),
             };
             var allData = UtilityDL.FillEntity<SMSSamplesDetails>(stProc, pList);
             return allData;

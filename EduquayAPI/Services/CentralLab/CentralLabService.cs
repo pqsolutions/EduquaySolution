@@ -1,11 +1,16 @@
 ﻿using EduquayAPI.Contracts.V1.Request.CentralLab;
 using EduquayAPI.Contracts.V1.Response.CentralLab;
+using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.CentralLab;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.CentralLab;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.CentralLab
@@ -13,10 +18,14 @@ namespace EduquayAPI.Services.CentralLab
     public class CentralLabService : ICentralLabService
     {
         private readonly ICentralLabData _centralLabReceiptData;
+        private readonly ISampleCollectionData _sampleCollectionData;
+        private readonly IConfiguration _config;
 
-        public CentralLabService(ICentralLabDataFactory centralLabDataFactory)
+        public CentralLabService(ICentralLabDataFactory centralLabDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
             _centralLabReceiptData = new CentralLabDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
+            _config = config;
         }
 
         public async Task<CentralLabReceivedShipmentResponse> AddReceivedShipment(AddCentralLabShipmentReceiptRequest clRequest)
@@ -33,6 +42,29 @@ namespace EduquayAPI.Services.CentralLab
                     barcodeNo = sample.barcodeNo;
                     shipmentId = sample.shipmentId;
                     _centralLabReceiptData.AddReceivedShipment(sample);
+
+                    if(sample.sampleDamaged == true || sample.sampleTimeout == true)
+                    {
+                        var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(sample.barcodeNo);
+                        if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
+                        {
+                            var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                            var subjectName = smsSampleDetails.subjectName;
+                            var anmName = smsSampleDetails.anmName;
+                            var anmMobileNo = smsSampleDetails.anmMobileNo;
+                            barcodeNo = smsSampleDetails.barcodeNo;
+
+                            var smsToANMURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoANMSampleTimeoutDamaged").Value;
+                            var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLANMLink);
+
+                            var smsToSubjectURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoSubjectSampleTimeoutDamaged").Value;
+                            var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                            GetResponse(smsURLSubjectLink);
+                        }
+                    }
+
+
                     slist.barcodeNo = sample.barcodeNo;
                     barcodes.Add(slist);
                 }
@@ -47,6 +79,27 @@ namespace EduquayAPI.Services.CentralLab
                 rsResponse.Barcodes = barcodes;
             }
             return rsResponse;
+        }
+
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public List<HPLCTest> RetrieveHPLC(int CentralLabId)

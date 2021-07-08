@@ -1,12 +1,17 @@
 ﻿using EduquayAPI.Contracts.V1.Request.CHCReceiptProcessing;
 using EduquayAPI.Contracts.V1.Response.CHCReceipt;
+using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.CHCReceipt;
 using EduquayAPI.Models.ANMSubjectRegistration;
 using EduquayAPI.Models.CHCReceipt;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.CHCReceipt
@@ -14,10 +19,14 @@ namespace EduquayAPI.Services.CHCReceipt
     public class CHCReceiptService : ICHCReceiptService
     {
         private readonly ICHCReceiptData _chcReceiptData;
+        private readonly ISampleCollectionData _sampleCollectionData;
+        private readonly IConfiguration _config;
 
-        public CHCReceiptService(ICHCReceiptDataFactory chcReceiptDataFactory)
+        public CHCReceiptService(ICHCReceiptDataFactory chcReceiptDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
             _chcReceiptData = new CHCReceiptDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
+            _config = config;
         }
 
         public async Task<CHCReceivedShipmentResponse> AddReceivedShipment(AddCHCShipmentReceiptRequest chcSRRequest)
@@ -37,7 +46,29 @@ namespace EduquayAPI.Services.CHCReceipt
                         barcodeNo = sample.barcodeNo;
                         shipmentId = sample.shipmentId;
                         _chcReceiptData.AddReceivedShipment(sample);
-                        slist.barcodeNo = sample.barcodeNo;
+
+                        if (sample.sampleDamaged == true || sample.sampleTimeout == true)
+                        {
+                            var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(sample.barcodeNo);
+                            if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
+                            {
+                                var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                                var subjectName = smsSampleDetails.subjectName;
+                                var anmName = smsSampleDetails.anmName;
+                                var anmMobileNo = smsSampleDetails.anmMobileNo;
+                                barcodeNo = smsSampleDetails.barcodeNo;
+
+                                var smsToANMURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoANMSampleTimeoutDamaged").Value;
+                                var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                GetResponse(smsURLANMLink);
+
+                                var smsToSubjectURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoSubjectSampleTimeoutDamaged").Value;
+                                var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                GetResponse(smsURLSubjectLink);
+                            }
+                        }
+
+                    slist.barcodeNo = sample.barcodeNo;
                         barcodes.Add(slist);
                     }
                     rsResponse.Status = "true";
@@ -56,6 +87,26 @@ namespace EduquayAPI.Services.CHCReceipt
                 rsResponse.Barcodes = barcodes;
             }
             return rsResponse;
+        }
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public string CheckValidation(AddCHCShipmentReceiptRequest chcSRRequest)
