@@ -1,12 +1,17 @@
 ﻿using EduquayAPI.Contracts.V1.Request.ANMNotifications;
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.ANMNotifications;
+using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.ANMNotifications;
 using EduquayAPI.Models.ANMNotifications;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.ANMNotifications
@@ -14,10 +19,14 @@ namespace EduquayAPI.Services.ANMNotifications
     public class ANMNotificationsService : IANMNotificationsService
     {
         private readonly IANMNotificationsData _anmNotificationsData;
+        private readonly ISampleCollectionData _sampleCollectionData;
+        private readonly IConfiguration _config;
 
-        public ANMNotificationsService(IANMNotificationsDataFactory anmNotificationsDataFactory)
+        public ANMNotificationsService(IANMNotificationsDataFactory anmNotificationsDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
             _anmNotificationsData = new ANMNotificationsDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
+            _config = config;
         }
 
         public async Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData)
@@ -167,6 +176,31 @@ namespace EduquayAPI.Services.ANMNotifications
                     }
                     else
                     {
+                        if(usData.barcodeNo.Length>0)
+                        {
+                            List<string> barcodeList = usData.barcodeNo.Split(',').ToList();
+                            foreach (var sample in barcodeList)
+                            {
+                                var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(sample);
+                                if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
+                                {
+                                    var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                                    var subjectName = smsSampleDetails.subjectName;
+                                    var anmName = smsSampleDetails.anmName;
+                                    var anmMobileNo = smsSampleDetails.anmMobileNo;
+                                    var barcodeNo = smsSampleDetails.barcodeNo;
+
+                                    var smsToANMURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoANMSampleTimeoutDamaged").Value;
+                                    var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                    GetResponse(smsURLANMLink);
+
+                                    var smsToSubjectURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoSubjectSampleTimeoutDamaged").Value;
+                                    var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                    GetResponse(smsURLSubjectLink);
+                                }
+                            }
+                         }
+
                         response.Status = "true";
                         response.Message = result;
                     }
@@ -178,6 +212,27 @@ namespace EduquayAPI.Services.ANMNotifications
                 response.Message = e.Message;
             }
             return response;
+        }
+
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public List<ANMNotificationSample> GetANMNotificationSamples(NotificationSamplesRequest nsData)

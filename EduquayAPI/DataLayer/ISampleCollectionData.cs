@@ -15,6 +15,7 @@ namespace EduquayAPI.DataLayer
         List<SubjectSamples> Retrieve(SubjectSampleRequest ssData);
         List<BarcodeSample> FetchBarcode(string barcodeNo);
         SMSSamplesDetails FetchSMSSamples(string barcodeNo, string subjectId);
+        SMSSamplesDetails FetchSMSSamplesByBarcode(string barcodeNo);
 
     }
     public interface ISampleCollectionDataFactory

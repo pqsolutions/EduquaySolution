@@ -2,11 +2,16 @@
 using EduquayAPI.Contracts.V1.Request.CHCNotifications;
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.CHCNotifications;
+using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.CHCNotifications;
 using EduquayAPI.Models.CHCNotifications;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.CHCNotifications
@@ -14,10 +19,14 @@ namespace EduquayAPI.Services.CHCNotifications
     public class CHCNotificationsService : ICHCNotificationsService
     {
         private readonly ICHCNotificationsData _chcNotificationsData;
+        private readonly ISampleCollectionData _sampleCollectionData;
+        private readonly IConfiguration _config;
 
-        public CHCNotificationsService(ICHCNotificationsDataFactory chcNotificationsDataFactory)
+        public CHCNotificationsService(ICHCNotificationsDataFactory chcNotificationsDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
             _chcNotificationsData = new CHCNotificationsDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
+            _config = config;
         }
 
         public async Task<ServiceResponse> AddSampleRecollection(SampleRecollectionRequest srData)
@@ -112,7 +121,7 @@ namespace EduquayAPI.Services.CHCNotifications
             return positiveSubjects;
         }
 
-        public CHCTimeoutResponse MoveTimeout(CHCNotificationTimeoutRequest cnData) 
+        public CHCTimeoutResponse MoveTimeout(CHCNotificationTimeoutRequest cnData)
         {
             CHCTimeoutResponse response = new CHCTimeoutResponse();
             try
@@ -122,7 +131,7 @@ namespace EduquayAPI.Services.CHCNotifications
                     response.Status = "false";
                     response.Message = "Invalid user id";
                 }
-                else if(string.IsNullOrEmpty(cnData.barcodeNo))
+                else if (string.IsNullOrEmpty(cnData.barcodeNo))
                 {
                     response.Status = "false";
                     response.Message = "Barcode is missing";
@@ -138,6 +147,32 @@ namespace EduquayAPI.Services.CHCNotifications
                     }
                     else
                     {
+
+                        if (cnData.barcodeNo.Length > 0)
+                        {
+                            List<string> barcodeList = cnData.barcodeNo.Split(',').ToList();
+                            foreach (var sample in barcodeList)
+                            {
+                                var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(sample);
+                                if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
+                                {
+                                    var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                                    var subjectName = smsSampleDetails.subjectName;
+                                    var anmName = smsSampleDetails.anmName;
+                                    var anmMobileNo = smsSampleDetails.anmMobileNo;
+                                    var barcodeNo = smsSampleDetails.barcodeNo;
+
+                                    var smsToANMURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoANMSampleTimeoutDamaged").Value;
+                                    var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                    GetResponse(smsURLANMLink);
+
+                                    var smsToSubjectURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoSubjectSampleTimeoutDamaged").Value;
+                                    var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                                    GetResponse(smsURLSubjectLink);
+                                }
+                            }
+                        }
+
                         response.Status = "true";
                         response.Message = result;
                     }
@@ -149,6 +184,27 @@ namespace EduquayAPI.Services.CHCNotifications
                 response.Message = e.Message;
             }
             return response;
+        }
+
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         public async Task<CHCUnsentSamplesResponse> RetrieveUnsentSamples(CHCNotificationSamplesRequest cnData)

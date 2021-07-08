@@ -97,6 +97,20 @@ namespace EduquayAPI.Services.MobileSubject
                         var slist = new BarcodeSampleDetail();
                         barcodeNo = sample.samples.barcodeNo;
                         _mobileSubjectData.AddTimeoutExpiry(sample.samples);
+                        var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(barcodeNo);
+                        var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                        var subjectName = smsSampleDetails.subjectName;
+                        var anmName = smsSampleDetails.anmName;
+                        var anmMobileNo = smsSampleDetails.anmMobileNo;
+
+                        var smsToANMURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoANMSampleTimeoutDamaged").Value;
+                        var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                        GetResponse(smsURLANMLink);
+
+                        var smsToSubjectURL = _config.GetSection("RegistrationSamplingOdiyaSMStoSubject").GetSection("SMStoSubjectSampleTimeoutDamaged").Value;
+                        var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName).Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo);
+                        GetResponse(smsURLSubjectLink);
+
                         slist.barcodeNo = sample.samples.barcodeNo;
                         barcodes.Add(slist);
                     }
@@ -976,35 +990,35 @@ namespace EduquayAPI.Services.MobileSubject
             var existPHCName = errorSMSDetail.existPHCName;
             var existRegDate = errorSMSDetail.existRegDate;
 
-            var smsANMURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToANM").Value;
-            var smsExistANMURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToExistANM").Value;
-            var smsSPCDCURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToDCSPC").Value;
+            //var smsANMURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToANM").Value;
+            //var smsExistANMURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToExistANM").Value;
+            //var smsSPCDCURL = _config.GetSection("ErrorBarcodeSMSEmail").GetSection("ErrorBarcodeToDCSPC").Value;
 
-            var smsANMURLLink = smsANMURL.Replace("#Barcode", barcode).Replace("#ANMName", anmName).Replace("#ANMMobileNo", anmMobileNo)
-                .Replace("#ExistANMName", existANMName).Replace("#ExistANMSCName", existANMSCName).Replace("#SubjectName", subjectName)
-                .Replace("#SubjectId", uniqueSubjectId);
+            //var smsANMURLLink = smsANMURL.Replace("#Barcode", barcode).Replace("#ANMName", anmName).Replace("#ANMMobileNo", anmMobileNo)
+            //    .Replace("#ExistANMName", existANMName).Replace("#ExistANMSCName", existANMSCName).Replace("#SubjectName", subjectName)
+            //    .Replace("#SubjectId", uniqueSubjectId);
 
-            var smsExistANMURLLink = smsExistANMURL.Replace("#Barcode", barcode).Replace("#ANMName", anmName).Replace("#ExistANMMobileNo", existANMMobileNo)
-               .Replace("#ExistANMName", existANMName).Replace("#ANMSCName", anmSCName).Replace("#ExistSubjectName", existSubjectName)
-               .Replace("#ExistSubjectId", existUniqueSubjectId);
+            //var smsExistANMURLLink = smsExistANMURL.Replace("#Barcode", barcode).Replace("#ANMName", anmName).Replace("#ExistANMMobileNo", existANMMobileNo)
+            //   .Replace("#ExistANMName", existANMName).Replace("#ANMSCName", anmSCName).Replace("#ExistSubjectName", existSubjectName)
+            //   .Replace("#ExistSubjectId", existUniqueSubjectId);
 
-            var dcURLLink = smsSPCDCURL.Replace("#MobileNo", dcContactNo).Replace("#SPCDCName", dcName).Replace("#Barcode", barcode)
-                .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
-                .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
+            //var dcURLLink = smsSPCDCURL.Replace("#MobileNo", dcContactNo).Replace("#SPCDCName", dcName).Replace("#Barcode", barcode)
+            //    .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
+            //    .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
 
-            var existDCURLLink = smsSPCDCURL.Replace("#MobileNo", existDCContactNo).Replace("#SPCDCName", existDCName).Replace("#Barcode", barcode)
-                .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
-                .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
+            //var existDCURLLink = smsSPCDCURL.Replace("#MobileNo", existDCContactNo).Replace("#SPCDCName", existDCName).Replace("#Barcode", barcode)
+            //    .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
+            //    .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
 
-            var spcURLLink = smsSPCDCURL.Replace("#MobileNo", scContactNo).Replace("#SPCDCName", scName).Replace("#Barcode", barcode)
-                .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
-                .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
+            //var spcURLLink = smsSPCDCURL.Replace("#MobileNo", scContactNo).Replace("#SPCDCName", scName).Replace("#Barcode", barcode)
+            //    .Replace("#ANMName", anmName).Replace("#SubjectName", subjectName).Replace("#SubjectId", uniqueSubjectId)
+            //    .Replace("#ExistANMName", existANMName).Replace("#ExistSubjectName", existSubjectName).Replace("#ExistSubjectId", existUniqueSubjectId);
 
-            GetResponse(smsANMURLLink);
-            GetResponse(smsExistANMURLLink);
-            GetResponse(dcURLLink);
-            GetResponse(existDCURLLink);
-            GetResponse(spcURLLink);
+            //GetResponse(smsANMURLLink);
+            //GetResponse(smsExistANMURLLink);
+            //GetResponse(dcURLLink);
+            //GetResponse(existDCURLLink);
+            //GetResponse(spcURLLink);
 
             var host = _config.GetSection("SMTPDetails").GetSection("host").Value;
             var port = _config.GetSection("SMTPDetails").GetSection("port").Value;
