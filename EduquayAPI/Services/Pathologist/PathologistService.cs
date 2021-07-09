@@ -1,12 +1,17 @@
 ﻿using EduquayAPI.Contracts.V1.Request.Pathologist;
 using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.Pathologist;
+using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.Pathologist;
 using EduquayAPI.Models.Pathologist;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EduquayAPI.Services.Pathologist
@@ -14,10 +19,14 @@ namespace EduquayAPI.Services.Pathologist
     public class PathologistService : IPathologistService
     {
         private readonly IPathologistData _pathologistData;
+        private readonly ISampleCollectionData _sampleCollectionData;
+        private readonly IConfiguration _config;
 
-        public PathologistService(IPathologistDataFactory pathologistDataFactory)
+        public PathologistService(IPathologistDataFactory pathologistDataFactory, ISampleCollectionDataFactory sampleCollectionDataFactory, IConfiguration config)
         {
             _pathologistData = new PathologistDataFactory().Create();
+            _sampleCollectionData = new SampleCollectionDataFactory().Create();
+            _config = config;
         }
 
         public async Task<ServiceResponse> AddHPLCDiagnosisResult(AddHPLCDiagnosisResultRequest aData)
@@ -78,6 +87,33 @@ namespace EduquayAPI.Services.Pathologist
                     }
                     else
                     {
+                        if(aData.isDiagnosisComplete==true)
+                        {
+                            if(aData.isNormal==false)
+                            {
+                                var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(aData.barcodeNo);
+                                if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
+                                {
+                                    var subjectMobileNo = smsSampleDetails.subjectMobileNo;
+                                    var subjectName = smsSampleDetails.subjectName;
+                                    var anmName = smsSampleDetails.anmName;
+                                    var anmMobileNo = smsSampleDetails.anmMobileNo;
+                                    var barcodeNo = smsSampleDetails.barcodeNo;
+                                    var subjectId = smsSampleDetails.subjectId;
+
+                                    var smsToANMURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANM").Value;
+                                    var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
+                                        .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId",subjectId);
+                                    GetResponse(smsURLANMLink);
+
+                                    var smsToSubjectURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANW").Value;
+                                    var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
+                                        .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId", subjectId);
+                                    GetResponse(smsURLSubjectLink);
+                                }
+                            }
+                        }
+
                         sResponse.Status = "true";
                         sResponse.Message = result;
                         return sResponse;
@@ -89,6 +125,27 @@ namespace EduquayAPI.Services.Pathologist
                 sResponse.Status = "false";
                 sResponse.Message = $"Unable to update the hplc diagnosis result  for this uniquesubjectid - {aData.uniqueSubjectId} - {e.Message}";
                 return sResponse;
+            }
+        }
+
+        public static string GetResponse(string sURL)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.MaximumAutomaticRedirections = 4;
+            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+                string sResponse = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                return sResponse;
+            }
+            catch
+            {
+                return "";
             }
         }
 
