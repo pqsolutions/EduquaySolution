@@ -87,9 +87,9 @@ namespace EduquayAPI.Services.Pathologist
                     }
                     else
                     {
-                        if(aData.isDiagnosisComplete==true)
+                        if (aData.isDiagnosisComplete == true)
                         {
-                            if(aData.isNormal==false)
+                            if (aData.isNormal == false)
                             {
                                 var smsSampleDetails = _sampleCollectionData.FetchSMSSamplesByBarcode(aData.barcodeNo);
                                 if (!string.IsNullOrEmpty(smsSampleDetails.barcodeNo))
@@ -100,16 +100,28 @@ namespace EduquayAPI.Services.Pathologist
                                     var anmMobileNo = smsSampleDetails.anmMobileNo;
                                     var barcodeNo = smsSampleDetails.barcodeNo;
                                     var subjectId = smsSampleDetails.subjectId;
+                                    var subjectTypeId = smsSampleDetails.subjectTypeId;
 
-                                    var smsToANMURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANM").Value;
-                                    var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
-                                        .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId",subjectId);
-                                    GetResponse(smsURLANMLink);
+                                    if (subjectTypeId == 1)
+                                    {
+                                        var smsToANMURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANM").Value;
+                                        var smsURLANMLink = smsToANMURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
+                                            .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId", subjectId);
+                                        GetResponse(smsURLANMLink);
 
-                                    var smsToSubjectURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANW").Value;
-                                    var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
-                                        .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId", subjectId);
-                                    GetResponse(smsURLSubjectLink);
+                                        var smsToSubjectURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCPositiveResultSMStoANW").Value;
+                                        var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
+                                            .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId", subjectId);
+                                        GetResponse(smsURLSubjectLink);
+                                    }
+
+                                    if (subjectTypeId == 2)
+                                    {
+                                        var smsToSubjectURL = _config.GetSection("HPLCResultSMS").GetSection("HPLCSpousePositiveResultSMStoSpouse").Value;
+                                        var smsURLSubjectLink = smsToSubjectURL.Replace("#MobileNo", subjectMobileNo).Replace("#SubjectName", subjectName)
+                                            .Replace("#BarcodeNo", barcodeNo).Replace("#ANMName", anmName).Replace("#ANMMobile", anmMobileNo).Replace("#SubjectId", subjectId);
+                                        GetResponse(smsURLSubjectLink);
+                                    }
                                 }
                             }
                         }
@@ -351,7 +363,7 @@ namespace EduquayAPI.Services.Pathologist
                 hplcResultResponse.Status = "true";
                 hplcResultResponse.Message = e.Message;
             }
-            return hplcResultResponse; 
+            return hplcResultResponse;
         }
 
         public List<PathologistSampleStatus> RetrieveSampleStatus()
@@ -363,7 +375,7 @@ namespace EduquayAPI.Services.Pathologist
         public List<PathoReports> RetrivePathologistReports(PathoReportsRequest prData)
         {
             var allSubject = _pathologistData.RetrivePathologistReports(prData);
-            return allSubject; 
+            return allSubject;
         }
     }
 }
