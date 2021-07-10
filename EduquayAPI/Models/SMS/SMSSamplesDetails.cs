@@ -14,8 +14,12 @@ namespace EduquayAPI.Models.SMS
         public string subjectMobileNo { get; set; }
         public string anmName { get; set; }
         public string anmMobileNo { get; set; }
+        public int subjectTypeId { get; set; }
         public void Fill(SqlDataReader reader)
         {
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "SubjectTypeID"))
+                this.subjectTypeId = Convert.ToInt32(reader["SubjectTypeID"]);
+
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "BarcodeNo"))
                 this.barcodeNo = Convert.ToString(reader["BarcodeNo"]);
 
