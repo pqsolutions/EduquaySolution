@@ -477,6 +477,67 @@ namespace EduquayAPI.Services.CentralLab
             }
             return hplcResponse;
         }
+
+        public async Task<CLReportResponse> RetriveCLReciptReportsDetail(CLReportRequest rData)
+        {
+            var tResponse = new CLReportResponse();
+            try
+            {
+                if (rData.searchSection == 1)
+                {
+                    var result = _centralLabReceiptData.RetrieveSampleRecpReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 2)
+                {
+                    var result = _centralLabReceiptData.RetrieveTimeoutDamagedReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 3)
+                {
+                    var result = _centralLabReceiptData.RetrieveTestPendingReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 4)
+                {
+                    var result = _centralLabReceiptData.RetrieveAbnormalReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 5)
+                {
+                    var result = _centralLabReceiptData.RetrieveNormalReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 6)
+                {
+                    var result = _centralLabReceiptData.RetrieveShipmentStatusReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else
+                {
+                    tResponse.status = "false";
+                    tResponse.message = "Please give some valid search section";
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.status = "false";
+                tResponse.message = e.Message;
+            }
+            return tResponse;
+        }
     }
     
 }

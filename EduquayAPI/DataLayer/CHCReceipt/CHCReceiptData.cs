@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduquayAPI.DataLayer.CHCReceipt
 {
-    public class CHCReceiptData : ICHCReceiptData
+    public class CHCReceiptData : ICHCReceiptData 
     {
         private const string FetchShipmentReceiptInCHC = "SPC_FetchShipmentReceiptInCHC";
         private const string AddCHCReceipt = "SPC_AddCHCReceipt";
@@ -25,6 +25,16 @@ namespace EduquayAPI.DataLayer.CHCReceipt
 
         private const string FetchReceivedSubjectforCBCTest = "SPC_FetchReceivedSubjectforCBCTest";
         private const string AddCBCTestResults = "SPC_AddCBCTestResults";
+
+        #region Reports
+        private const string CHCSampleRecpReport = "SPC_CHCSampleRecpReport";
+        private const string CHCRecTimeoutDamagedReport = "SPC_CHCRecTimeoutDamagedReport";
+        private const string CHCSampleCBCPendingReport = "SPC_CHCSampleCBCPendingReport";
+        private const string CHCSampleSSTPendingReport = "SPC_CHCSampleSSTPendingReport";
+        private const string CHCSampleTestPositiveReport = "SPC_CHCSampleTestPositiveReport";
+        private const string CHCSampleTestNegativeReport = "SPC_CHCSampleTestNegativeReport";
+        private const string CHCSampleShipmentStatusReport = "SPC_CHCSampleShipmentStatusReport";
+        #endregion
 
 
         public CHCReceiptData()
@@ -252,6 +262,118 @@ namespace EduquayAPI.DataLayer.CHCReceipt
                 throw ex;
             }
 
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveSampleRecpReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleRecpReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveTimeoutDamagedReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCRecTimeoutDamagedReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveCBCPendingReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleCBCPendingReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveSSTPendingReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleSSTPendingReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrievePositiveReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleTestPositiveReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveNegativeReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleTestNegativeReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CHCReceiptReportDetails> RetrieveShipmentStatusReport(CHCSampleReportRequest rData)
+        {
+            string stProc = CHCSampleShipmentStatusReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CHCReceiptReportDetails>(stProc, pList);
+            return allData;
         }
     }
 }

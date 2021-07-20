@@ -23,5 +23,6 @@ namespace EduquayAPI.Services.CHCReceipt
         List<CHCSampleStatus> RetrieveSampleStatus();
         List<CBCTest> RetrieveCBCTest(int testingCHCId);
         Task<AddCBCResponse> AddCBC(AddCBCTestResultRequest cbcData);
+        Task<CHCReciptReportResponse> RetriveCHCReciptReportsDetail(CHCSampleReportRequest rData);
     }
 }

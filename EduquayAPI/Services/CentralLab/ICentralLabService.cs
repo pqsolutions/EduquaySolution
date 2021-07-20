@@ -23,5 +23,6 @@ namespace EduquayAPI.Services.CentralLab
         Task<AddHPLCResponse> AddHPLCTestResult(AddHPLCTestResultRequest hplcData);
         Task<AddHPLCResponse> UpdateHPLCTestResult(UpdateStagingRequest hplcData);
         Task<AddHPLCResponse> UpdateProcessedHPLCTestResult(UpdateProcessedResultRequest hplcData);
+        Task<CLReportResponse> RetriveCLReciptReportsDetail(CLReportRequest rData);
     }
 }

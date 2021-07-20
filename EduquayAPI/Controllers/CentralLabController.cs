@@ -338,5 +338,24 @@ namespace EduquayAPI.Controllers
                 return File(readStream, mimeType, fileName);
             }
         }
+
+        /// <summary>
+        /// Used to fetch subjects detail for central lab receipt reports
+        /// </summary>
+        [HttpPost]
+        [Route("CLReceiptReportsDetail")]
+        public async Task<IActionResult> RetrieveCLReceiptsReports(CLReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve subject detail for cl receipt report- {JsonConvert.SerializeObject(rData)}");
+            var chcReports = await _centralLabService.RetriveCLReciptReportsDetail(rData);
+            _logger.LogInformation($"Fetch Subjects for cl receipt reports {chcReports}");
+            return Ok(new CLReportResponse
+            {
+                status = chcReports.status,
+                message = chcReports.message,
+                data = chcReports.data,
+            });
+        }
     }
 }

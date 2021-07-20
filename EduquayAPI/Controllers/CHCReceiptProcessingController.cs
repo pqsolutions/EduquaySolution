@@ -309,5 +309,24 @@ namespace EduquayAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Used to fetch subjects detail for chc receipt reports
+        /// </summary>
+        [HttpPost]
+        [Route("CHCReceiptReportsDetail")]
+        public async Task<IActionResult> RetrieveCHCReceiptsReports(CHCSampleReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve subject detail for chc receipt report- {JsonConvert.SerializeObject(rData)}");
+            var chcReports = await _chcReceiptService.RetriveCHCReciptReportsDetail(rData);
+            _logger.LogInformation($"Fetch Subjects for chc receipt reports {chcReports}");
+            return Ok(new CHCReciptReportResponse
+            {
+                status = chcReports.status,
+                message = chcReports.message,
+                data = chcReports.data,
+            });
+        }
+
     }
 }
