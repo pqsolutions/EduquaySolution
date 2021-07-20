@@ -421,5 +421,73 @@ namespace EduquayAPI.Services.CHCReceipt
             }
             return cbcResponse;
         }
+
+        public async Task<CHCReciptReportResponse> RetriveCHCReciptReportsDetail(CHCSampleReportRequest rData)
+        {
+            var tResponse = new CHCReciptReportResponse();
+            try
+            {
+                if (rData.searchSection == 1)
+                {
+                    var result = _chcReceiptData.RetrieveSampleRecpReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 2)
+                {
+                    var result = _chcReceiptData.RetrieveTimeoutDamagedReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 3)
+                {
+                    var result = _chcReceiptData.RetrieveCBCPendingReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 4)
+                {
+                    var result = _chcReceiptData.RetrieveSSTPendingReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 5)
+                {
+                    var result = _chcReceiptData.RetrievePositiveReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 6)
+                {
+                    var result = _chcReceiptData.RetrieveNegativeReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 7)
+                {
+                    var result = _chcReceiptData.RetrieveShipmentStatusReport(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else
+                {
+                    tResponse.status = "false";
+                    tResponse.message = "Please give some valid search section";
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.status = "false";
+                tResponse.message = e.Message;
+            }
+            return tResponse;
+        }
     }
 }

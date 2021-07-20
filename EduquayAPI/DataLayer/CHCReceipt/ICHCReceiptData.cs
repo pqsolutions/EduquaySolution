@@ -22,6 +22,16 @@ namespace EduquayAPI.DataLayer.CHCReceipt
         List<CHCSampleStatus> RetrieveSampleStatus();
         List<CBCTest> RetrieveCBCTest(int testingCHCId);
         CBCResultMsg AddCBCTestResult(AddCBCTestResultRequest cbcData);
+
+        #region Report
+        List<CHCReceiptReportDetails> RetrieveSampleRecpReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrieveTimeoutDamagedReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrieveCBCPendingReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrieveSSTPendingReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrievePositiveReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrieveNegativeReport(CHCSampleReportRequest rData);
+        List<CHCReceiptReportDetails> RetrieveShipmentStatusReport(CHCSampleReportRequest rData);
+        #endregion
     }
     public interface ICHCReceiptDataFactory
     {

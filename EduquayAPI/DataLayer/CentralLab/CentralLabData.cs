@@ -25,6 +25,14 @@ namespace EduquayAPI.DataLayer.CentralLab
         private const string UpdateStagingHPLCTestDetails = "SPC_UpdateStagingHPLCTestDetails";
         private const string UpdateProcessedHPLCTestDetails = "SPC_UpdateProcessedHPLCTestDetails";
 
+        #region Reports
+        private const string CLSampleRecpReport = "SPC_CLSampleRecpReport";
+        private const string CLTimeoutDamagedReport = "SPC_CLTimeoutDamagedReport";
+        private const string CLTestPendingReport = "SPC_CLTestPendingReport";
+        private const string CLTestAbnormalReport = "SPC_CLTestAbnormalReport";
+        private const string CLTestNormalReport = "SPC_CLTestNormalReport";
+        private const string CLShipmentStatusReport = "SPC_CLShipmentStatusReport";
+        #endregion
 
         public CentralLabData()
         {
@@ -267,6 +275,114 @@ namespace EduquayAPI.DataLayer.CentralLab
             {
                 throw ex;
             }
+        }
+
+        public List<CentralLabReportdetails> RetrieveSampleRecpReport(CLReportRequest rData)
+        {
+            string stProc = CLSampleRecpReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabReportdetails> RetrieveTimeoutDamagedReport(CLReportRequest rData)
+        {
+            string stProc = CLTimeoutDamagedReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabReportdetails> RetrieveTestPendingReport(CLReportRequest rData)
+        {
+            string stProc = CLTestPendingReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabReportdetails> RetrieveAbnormalReport(CLReportRequest rData)
+        {
+            string stProc = CLTestAbnormalReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabReportdetails> RetrieveNormalReport(CLReportRequest rData)
+        {
+            string stProc = CLTestNormalReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
+        }
+
+        public List<CentralLabReportdetails> RetrieveShipmentStatusReport(CLReportRequest rData)
+        {
+            string stProc = CLShipmentStatusReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentalLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<CentralLabReportdetails>(stProc, pList);
+            return allData;
         }
     }
 }
