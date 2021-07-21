@@ -348,13 +348,13 @@ namespace EduquayAPI.Controllers
         {
             _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
             _logger.LogDebug($"Retrieve subject detail for cl receipt report- {JsonConvert.SerializeObject(rData)}");
-            var chcReports = await _centralLabService.RetriveCLReciptReportsDetail(rData);
-            _logger.LogInformation($"Fetch Subjects for cl receipt reports {chcReports}");
+            var clReports = await _centralLabService.RetriveCLReciptReportsDetail(rData);
+            _logger.LogInformation($"Fetch Subjects for cl receipt reports {clReports}");
             return Ok(new CLReportResponse
             {
-                status = chcReports.status,
-                message = chcReports.message,
-                data = chcReports.data,
+                status = clReports.status,
+                message = clReports.message,
+                data = clReports.data,
             });
         }
     }
